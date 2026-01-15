@@ -6,9 +6,16 @@
 //
 
 import SwiftUI
+#if DEBUG
+import HotSwiftUI  // 导入库
+#endif
 
 struct MessagesView: View {
     @StateObject private var viewModel = MessagesViewModel()
+    
+    #if DEBUG
+    @ObserveInjection var redraw
+    #endif
     
     var body: some View {
         NavigationStack {
@@ -33,6 +40,7 @@ struct MessagesView: View {
                     }
                 }
         }
+        .enableInjection()
     }
     
     @ViewBuilder

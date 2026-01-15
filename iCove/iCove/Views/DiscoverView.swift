@@ -6,9 +6,16 @@
 //
 
 import SwiftUI
+#if DEBUG
+import HotSwiftUI  // 导入库
+#endif
 
 struct DiscoverView: View {
     @StateObject private var viewModel = DiscoverViewModel()
+    
+    #if DEBUG
+    @ObserveInjection var redraw
+    #endif
     
     var body: some View {
         NavigationStack {
@@ -19,6 +26,7 @@ struct DiscoverView: View {
                     await viewModel.refresh()
                 }
         }
+        .enableInjection()
     }
     
     @ViewBuilder

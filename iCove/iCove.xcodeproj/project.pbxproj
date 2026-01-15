@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		DD7AE1F62F18D90A0042B373 /* HotSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = DD7AE1F52F18D90A0042B373 /* HotSwiftUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		DDA9E84C2F1783FA0018E398 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD7AE1F62F18D90A0042B373 /* HotSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,7 @@
 			);
 			name = iCove;
 			packageProductDependencies = (
+				DD7AE1F52F18D90A0042B373 /* HotSwiftUI */,
 			);
 			productName = iCove;
 			productReference = DDA9E83E2F1783F90018E398 /* iCove.app */;
@@ -195,6 +201,9 @@
 			);
 			mainGroup = DDA9E8352F1783F90018E398;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				DD7AE1F42F18D9090042B373 /* XCRemoteSwiftPackageReference "HotSwiftUI" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = DDA9E83F2F1783F90018E398 /* Products */;
 			projectDirPath = "";
@@ -305,6 +314,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = M7A59P87QQ;
+				EMIT_FRONTEND_COMMAND_LINES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -369,6 +379,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = M7A59P87QQ;
+				EMIT_FRONTEND_COMMAND_LINES = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -410,6 +421,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				"OTHER_LDFLAGS[arch=*]" = (
+					"-Xlinker",
+					"-interposable",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jswqsgwlhywr.icove.iCove;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -558,6 +573,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DD7AE1F42F18D9090042B373 /* XCRemoteSwiftPackageReference "HotSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/johnno1962/HotSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DD7AE1F52F18D90A0042B373 /* HotSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DD7AE1F42F18D9090042B373 /* XCRemoteSwiftPackageReference "HotSwiftUI" */;
+			productName = HotSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DDA9E8362F1783F90018E398 /* Project object */;
 }

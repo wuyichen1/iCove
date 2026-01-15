@@ -6,11 +6,18 @@
 //
 
 import SwiftUI
+#if DEBUG
+import HotSwiftUI  // 导入库
+#endif
 
 struct ProfileView: View {
-    @StateObject private var viewModel = ProfileViewModel()
+    @ObservedObject var viewModel: ProfileViewModel
     @State private var showingEditBio = false
     @State private var editedBio = ""
+    
+    #if DEBUG
+    @ObserveInjection var redraw
+    #endif
     
     var body: some View {
         NavigationStack {
@@ -21,6 +28,7 @@ struct ProfileView: View {
                     await viewModel.refresh()
                 }
         }
+        .enableInjection()
     }
     
     @ViewBuilder
@@ -226,5 +234,5 @@ struct EditBioSheet: View {
 }
 
 #Preview {
-    ProfileView()
+    ProfileView(viewModel: ProfileViewModel(authManager: AuthenticationManager()))
 }

@@ -16,8 +16,12 @@ class ProfileViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var settings: [SettingItem] = []
     
+    // MARK: - Private Properties
+    private let authManager: AuthenticationManager
+    
     // MARK: - Initialization
-    init() {
+    init(authManager: AuthenticationManager) {
+        self.authManager = authManager
         Task {
             await loadUserProfile()
             loadSettings()
@@ -85,8 +89,14 @@ class ProfileViewModel: ObservableObject {
         case .about:
             print("打开关于")
         case .logout:
-            print("退出登录")
+            Task {
+                await logout()
+            }
         }
+    }
+    
+    func logout() async {
+        await authManager.logout()
     }
     
     // MARK: - Private Methods
@@ -102,32 +112,3 @@ class ProfileViewModel: ObservableObject {
     }
 }
 
-// MARK: - Supporting Types
-struct UserProfile {
-    let id: String
-    var username: String
-    var bio: String
-    let avatar: String?
-    var followerCount: Int
-    var followingCount: Int
-    var postCount: Int
-    var isFollowing: Bool
-    let joinDate: Date
-}
-
-struct SettingItem: Identifiable {
-    let id = UUID()
-    let title: String
-    let icon: String
-    let type: SettingType
-    var isDestructive: Bool = false
-}
-
-enum SettingType {
-    case account
-    case privacy
-    case notification
-    case appearance
-    case about
-    case logout
-}

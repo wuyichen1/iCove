@@ -128,14 +128,3 @@ class MessagesViewModel: ObservableObject {
     }
 }
 
-// MARK: - Supporting Types
-struct Conversation: Identifiable {
-    let id: String
-    let participantName: String
-    let participantAvatar: String?
-    let lastMessage: String
-    let timestamp: Date
-    var unreadCount: Int
-    var isUnread: Bool
-    var isPinned: Bool
-}

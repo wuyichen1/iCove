@@ -101,19 +101,3 @@ class HomeViewModel: ObservableObject {
     }
 }
 
-// MARK: - Supporting Types
-struct FeedItem: Identifiable {
-    let id: String
-    let title: String
-    let content: String
-    let author: String
-    let timestamp: Date
-    var likeCount: Int
-    var commentCount: Int
-    var isLiked: Bool
-}
-
-enum RefreshState {
-    case idle
-    case refreshing
-}
