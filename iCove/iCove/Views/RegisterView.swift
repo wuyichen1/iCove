@@ -196,42 +196,16 @@ struct RegisterView: View {
     
     // MARK: - Register Button
     private var registerButton: some View {
-        Button(action: {
-            Task {
-                await handleRegister()
-            }
-        }) {
-            HStack {
-                if viewModel.isLoading {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                } else {
-                    Text("SIGN UP")
-                        .fontWeight(.semibold)
+        PrimaryButton(
+            title: "SIGN UP",
+            action: {
+                Task {
+                    await handleRegister()
                 }
-            }
-            .frame(maxWidth: .infinity)
-            .frame(height: 56)
-            .foregroundColor(.white)
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                Color(red: 0.6, green: 0.3, blue: 0.8),
-                                Color(red: 0.5, green: 0.2, blue: 0.7)
-                            ],
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
-                    )
-            )
-            .overlay {
-                RoundedRectangle(cornerRadius: 16)
-                    .stroke(Color.white.opacity(0.3), lineWidth: 1)
-            }
-        }
-        .disabled(!viewModel.isFormValid || viewModel.isLoading)
+            },
+            isLoading: viewModel.isLoading,
+            isEnabled: viewModel.isFormValid
+        )
         .padding(.top, 8)
     }
     
