@@ -17,12 +17,20 @@ class DiscoverViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     
+    // 新的帖子相关属性
+    @Published var collectedPosts: [Post] = []  // 收藏的帖子
+    @Published var allPosts: [Post] = []  // 全部帖子
+    
     // MARK: - Private Properties
     private var currentPage: Int = 1
     private let pageSize: Int = 15
+    private let postService: PostDataServiceProtocol
     
     // MARK: - Initialization
-    init() {
+    init(
+        postService: PostDataServiceProtocol = PostDataService.shared
+    ) {
+        self.postService = postService
         Task {
             await loadInitialData()
         }
@@ -41,6 +49,10 @@ class DiscoverViewModel: ObservableObject {
         // 加载推荐内容和热门话题
         recommendedItems = generateMockRecommendedItems()
         trendingTopics = generateMockTrendingTopics()
+        
+        // 加载帖子数据
+        collectedPosts = generateMockCollectedPosts()
+        allPosts = generateMockAllPosts()
         
         isLoading = false
     }
@@ -120,6 +132,15 @@ class DiscoverViewModel: ObservableObject {
                 trend: index < 3 ? .up : .stable
             )
         }
+    }
+    
+    // MARK: - Post Methods
+    private func generateMockCollectedPosts() -> [Post] {
+        return postService.loadCollectedPosts()
+    }
+    
+    private func generateMockAllPosts() -> [Post] {
+        return postService.loadAllPosts()
     }
 }
 

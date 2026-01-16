@@ -33,9 +33,27 @@
 		DDA9E8552F1783FA0018E398 /* iCoveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iCoveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		DD31F1AE2F18FF6D00AF71E6 /* Exceptions for "iCove" folder in "iCove" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = DDA9E83D2F1783F90018E398 /* iCove */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		DD31F1CA2F19D77200AF71E6 /* Videos */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Videos;
+			sourceTree = "<group>";
+		};
 		DDA9E8402F1783F90018E398 /* iCove */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				DD31F1AE2F18FF6D00AF71E6 /* Exceptions for "iCove" folder in "iCove" target */,
+			);
 			path = iCove;
 			sourceTree = "<group>";
 		};
@@ -80,10 +98,11 @@
 		DDA9E8352F1783F90018E398 = {
 			isa = PBXGroup;
 			children = (
-				DDA9E8402F1783F90018E398 /* iCove */,
+				DD31F1CA2F19D77200AF71E6 /* Videos */,
 				DDA9E84E2F1783FA0018E398 /* iCoveTests */,
 				DDA9E8582F1783FA0018E398 /* iCoveUITests */,
 				DDA9E83F2F1783F90018E398 /* Products */,
+				DDA9E8402F1783F90018E398 /* iCove */,
 			);
 			sourceTree = "<group>";
 		};
@@ -113,6 +132,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				DD31F1CA2F19D77200AF71E6 /* Videos */,
 				DDA9E8402F1783F90018E398 /* iCove */,
 			);
 			name = iCove;
@@ -411,6 +431,7 @@
 				DEVELOPMENT_TEAM = M7A59P87QQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iCove/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -443,6 +464,7 @@
 				DEVELOPMENT_TEAM = M7A59P87QQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iCove/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

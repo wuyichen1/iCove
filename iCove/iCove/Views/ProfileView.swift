@@ -233,6 +233,6 @@ struct EditBioSheet: View {
     }
 }
 
-#Preview {
-    ProfileView(viewModel: ProfileViewModel(authManager: AuthenticationManager()))
-}
+// #Preview {
+//     ProfileView(viewModel: ProfileViewModel(authManager: AuthenticationManager()))
+// }

@@ -235,6 +235,6 @@ struct RegisterView: View {
     }
 }
 
-#Preview {
-    RegisterView(authManager: AuthenticationManager())
-}
+// #Preview {
+//     RegisterView(authManager: AuthenticationManager())
+// }

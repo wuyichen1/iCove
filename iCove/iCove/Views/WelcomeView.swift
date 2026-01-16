@@ -11,7 +11,8 @@ import SwiftUI
 struct WelcomeView: View {
     @EnvironmentObject var authManager: AuthenticationManager
     @State private var showingEmailLogin = false
-    @State private var agreedToTerms = false
+    @State private var agreedToTerms = true
+    @State private var showingAgreementAlert = false
 
     /*
         @ObserveInjection var redraw：名字随意（redraw / inject / forceUpdate 都行），它会监听 InjectionIII 的注入通知。
@@ -55,6 +56,11 @@ struct WelcomeView: View {
         .fullScreenCover(isPresented: $showingEmailLogin) {
             AuthenticationView()
                 .environmentObject(authManager)
+        }
+        .alert("请同意协议", isPresented: $showingAgreementAlert) {
+            Button("确定", role: .cancel) { }
+        } message: {
+            Text("请先同意用户协议和隐私政策后再继续")
         }
         .enableInjection()  // 这行关键：强制 SwiftUI 重建 body，实现热重载
     }
@@ -129,7 +135,7 @@ struct WelcomeView: View {
 
             // App 名称
             Text("iCove")
-                .font(.system(size: 32, weight: .bold))
+                .font(.custom("FredokaOne-Regular", size: 30))
                 .foregroundColor(.white)
         }
     }
@@ -141,16 +147,14 @@ struct WelcomeView: View {
             PrimaryButton(
                 title: "Login by email",
                 action: {
-                    showingEmailLogin = true
+                    handleLoginButtonTap()
                 },
                 width: 260,
             )
             PrimaryButton(
                 title: "I'm new",
                 action: {
-                    Task {
-                        await handleQuickLogin()
-                    }
+                    handleNewButtonTap()
                 },
                 width: 260,
                 backgroundColor: Color("btnpink"),
@@ -163,12 +167,15 @@ struct WelcomeView: View {
         VStack(spacing: 60) {
             // Sign up 链接
             Button(action: {
-                showingEmailLogin = true
+                handleLoginButtonTap()
             }) {
                 HStack(spacing: 4) {
                     Text("Don't have an account?")
-                        .foregroundColor(.white.opacity(0.8))
+                        .font(.system(size: 14))
+                        .foregroundColor(.white)
+                        .padding(.trailing, 4)
                     Text("Sign up")
+                        .font(.system(size: 14, weight: .bold))
                         .foregroundColor(.white)
                         .underline()
                 }
@@ -187,7 +194,7 @@ struct WelcomeView: View {
 
                 HStack(spacing: 4) {
                     Text("Agree with")
-                        .foregroundColor(.white.opacity(0.8))
+                        .foregroundColor(.white)
                         .font(.system(size: 12))
 
                     Button(action: {
@@ -200,7 +207,7 @@ struct WelcomeView: View {
                     }
 
                     Text("and")
-                        .foregroundColor(.white.opacity(0.8))
+                        .foregroundColor(.white)
                         .font(.system(size: 12))
 
                     Button(action: {
@@ -217,6 +224,24 @@ struct WelcomeView: View {
     }
 
     // MARK: - Actions
+    private func handleLoginButtonTap() {
+        if agreedToTerms {
+            showingEmailLogin = true
+        } else {
+            showingAgreementAlert = true
+        }
+    }
+    
+    private func handleNewButtonTap() {
+        if agreedToTerms {
+            Task {
+                await handleQuickLogin()
+            }
+        } else {
+            showingAgreementAlert = true
+        }
+    }
+    
     private func handleQuickLogin() async {
         do {
             try await authManager.quickLogin()
@@ -227,7 +252,7 @@ struct WelcomeView: View {
     }
 }
 
-#Preview {
-    WelcomeView()
-        .environmentObject(AuthenticationManager())
-}
+// #Preview {
+//     WelcomeView()
+//         .environmentObject(AuthenticationManager())
+// }

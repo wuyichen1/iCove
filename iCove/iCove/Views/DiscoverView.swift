@@ -12,236 +12,322 @@ import HotSwiftUI  // 导入库
 
 struct DiscoverView: View {
     @StateObject private var viewModel = DiscoverViewModel()
+    @State private var selectedCollectionIndex: Int = 0
+    @EnvironmentObject var router: Router
     
     #if DEBUG
     @ObserveInjection var redraw
     #endif
     
     var body: some View {
-        NavigationStack {
-            contentView
-                .navigationTitle("发现")
-                .navigationBarTitleDisplayMode(.large)
-                .refreshable {
-                    await viewModel.refresh()
+        ZStack {
+            // 背景图片 - 深紫色背景，右上角有浅紫色点状图案
+            Color(red: 0.25, green: 0.18, blue: 0.35)
+                .ignoresSafeArea()
+            
+            // 背景图案（可选，如果需要点状图案）
+            // 这里可以添加自定义背景图案视图
+            
+            VStack(spacing: 0) {
+                // 顶部标题区域 - 始终显示
+                headerSection
+                
+                // 内容区域 - 根据加载状态显示不同内容
+                if viewModel.isLoading && viewModel.collectedPosts.isEmpty && viewModel.allPosts.isEmpty {
+                    loadingView
+                } else {
+                    contentView
                 }
+            }
         }
+        .navigationBarHidden(true)
         .enableInjection()
     }
     
-    @ViewBuilder
-    private var contentView: some View {
-        if viewModel.isLoading && viewModel.recommendedItems.isEmpty {
-            ProgressView("加载中...")
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-        } else if let error = viewModel.errorMessage {
-            ErrorView(message: error) {
-                Task {
-                    await viewModel.loadInitialData()
-                }
+    // MARK: - Header Section
+    private var headerSection: some View {
+        VStack(spacing: 0) {
+            // Discover 标题
+            HStack {
+                Text("Discover")
+                    .font(.custom("FredokaOne-Regular", size: 32))
+                    .foregroundColor(.white)
+                
+                Spacer()
             }
-        } else {
-            ScrollView {
-                VStack(spacing: 20) {
-                    // 热门话题
-                    trendingTopicsSection
-                    
-                    // 分类选择
-                    categorySection
-                    
-                    // 推荐内容
-                    recommendedContentSection
-                }
-                .padding()
-            }
-        }
-    }
-    
-    // MARK: - Trending Topics Section
-    private var trendingTopicsSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("热门话题")
-                .font(.headline)
-                .padding(.horizontal, 4)
+            .padding(.horizontal, 20)
+            .padding(.top, 60)
+            .padding(.bottom, 16)
             
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
-                    ForEach(viewModel.trendingTopics) { topic in
-                        TrendingTopicChip(topic: topic) {
-                            viewModel.toggleFollow(for: topic)
-                        }
-                    }
-                }
-                .padding(.horizontal, 4)
-            }
-        }
-    }
-    
-    // MARK: - Category Section
-    private var categorySection: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 12) {
-                ForEach(DiscoverCategory.allCases, id: \.self) { category in
-                    CategoryChip(
-                        category: category,
-                        isSelected: viewModel.selectedCategory == category
-                    ) {
-                        viewModel.selectCategory(category)
-                    }
-                }
-            }
-            .padding(.horizontal, 4)
-        }
-    }
-    
-    // MARK: - Recommended Content Section
-    private var recommendedContentSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text("推荐内容")
-                .font(.headline)
-                .padding(.horizontal, 4)
-            
-            LazyVStack(spacing: 16) {
-                ForEach(viewModel.recommendedItems) { item in
-                    DiscoverItemCard(item: item)
+            // My collection 文字
+            HStack {
+                Text("My collection")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(.green)
+                
+                // 两个星星图标
+                HStack(spacing: 4) {
+                    Image(systemName: "sparkle")
+                        .font(.system(size: 12))
+                        .foregroundColor(.green)
+                    Image(systemName: "sparkle")
+                        .font(.system(size: 12))
+                        .foregroundColor(.green)
                 }
                 
-                if viewModel.isLoading {
-                    ProgressView()
-                        .padding()
-                } else if !viewModel.recommendedItems.isEmpty {
-                    LoadMoreButton {
-                        Task {
-                            await viewModel.loadMore()
-                        }
+                Spacer()
+            }
+            .padding(.horizontal, 20)
+            .padding(.bottom, 16)
+        }
+    }
+    
+    // MARK: - Loading View
+    private var loadingView: some View {
+        VStack(spacing: 20) {
+            Spacer()
+            ProgressView()
+                .scaleEffect(1.5)
+                .tint(.white)
+            
+            Text("加载中...")
+                .font(.system(size: 16))
+                .foregroundColor(.white.opacity(0.8))
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+    // MARK: - Content View
+    private var contentView: some View {
+        VStack(spacing: 0) {
+            // 收藏图片轮播
+            if !viewModel.collectedPosts.isEmpty {
+                collectionCarousel
+                    .padding(.bottom, 20)
+            }
+            
+            // All 和 + 按钮
+            HStack(spacing: 12) {
+                // All 按钮
+                Button(action: {
+                    // 显示全部
+                }) {
+                    HStack(spacing: 4) {
+                        Text("All")
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundColor(.white)
+                        Image(systemName: "sparkle")
+                            .font(.system(size: 12))
+                            .foregroundColor(.white)
+                        Image(systemName: "sparkle")
+                            .font(.system(size: 12))
+                            .foregroundColor(.white)
                     }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 14)
+                    .background(Color.green)
+                    .cornerRadius(12)
+                }
+                
+                // + 按钮
+                Button(action: {
+                    // 添加操作
+                }) {
+                    Image(systemName: "plus")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(.black)
+                        .frame(width: 50, height: 50)
+                        .background(Color.white)
+                        .cornerRadius(12)
+                }
+            }
+            .padding(.horizontal, 20)
+            .padding(.bottom, 20)
+            
+            // 帖子列表
+            ScrollView {
+                LazyVStack(spacing: 16) {
+                    ForEach(viewModel.allPosts) { post in
+                        PostCard(post: post)
+                            .onTapGesture {
+                                // 跳转到详情页
+                                router.push(.postDetail(postId: post.id))
+                            }
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 100)  // 为底部导航栏留出空间
+            }
+        }
+    }
+    
+    // MARK: - Collection Carousel
+    private var collectionCarousel: some View {
+        TabView(selection: $selectedCollectionIndex) {
+            ForEach(Array(viewModel.collectedPosts.enumerated()), id: \.element.id) { index, post in
+                if let firstImage = post.imageNames.first {
+                    Image(firstImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(height: 250)
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .overlay(
+                            // 星星图标覆盖层（底部）
+                            VStack {
+                                Spacer()
+                                HStack {
+                                    Button(action: {
+                                        // 收藏操作
+                                    }) {
+                                        Image(systemName: post.isCollected ? "star.fill" : "star")
+                                            .font(.system(size: 18))
+                                            .foregroundColor(.white)
+                                            .padding(8)
+                                            .background(Color.purple.opacity(0.7))
+                                            .clipShape(Circle())
+                                            .overlay(
+                                                Circle()
+                                                    .stroke(Color.white, lineWidth: 1.5)
+                                            )
+                                    }
+                                    .padding(.leading, 12)
+                                    .padding(.bottom, 12)
+                                    Spacer()
+                                }
+                            }
+                        )
+                        .padding(.horizontal, 20)
+                        .tag(index)
                 }
             }
         }
+        .tabViewStyle(.page(indexDisplayMode: .never))
+        .frame(height: 250)
     }
 }
 
-// MARK: - Trending Topic Chip
-struct TrendingTopicChip: View {
-    let topic: TrendingTopic
-    let onFollowTapped: () -> Void
+// MARK: - Post Card
+struct PostCard: View {
+    let post: Post
     
     var body: some View {
-        HStack(spacing: 8) {
-            if topic.trend == .up {
-                Image(systemName: "arrow.up.right")
-                    .font(.caption2)
-                    .foregroundColor(.red)
+        VStack(alignment: .leading, spacing: 0) {
+            // 头部：头像、用户名、更多选项
+            HStack(alignment: .top) {
+                // 头像
+                if let avatar = post.authorAvatar {
+                    Image(avatar)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 50, height: 50)
+                        .clipShape(Circle())
+                        .overlay(
+                            Circle()
+                                .stroke(
+                                    LinearGradient(
+                                        gradient: Gradient(colors: [Color.pink, Color.purple]),
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    ),
+                                    lineWidth: 2.5
+                                )
+                        )
+                } else {
+                    Circle()
+                        .fill(
+                            LinearGradient(
+                                gradient: Gradient(colors: [Color.pink.opacity(0.3), Color.purple.opacity(0.3)]),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .frame(width: 50, height: 50)
+                        .overlay {
+                            Text(String(post.authorUsername.prefix(1)))
+                                .font(.headline)
+                                .foregroundColor(.pink)
+                        }
+                        .overlay(
+                            Circle()
+                                .stroke(
+                                    LinearGradient(
+                                        gradient: Gradient(colors: [Color.pink, Color.purple]),
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    ),
+                                    lineWidth: 2.5
+                                )
+                        )
+                }
+                
+                // 用户名
+                Text(post.authorUsername)
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(.white)
+                
+                Spacer()
+                
+                // 更多选项
+                Button(action: {
+                    // 更多选项
+                }) {
+                    Image(systemName: "ellipsis")
+                        .font(.system(size: 18))
+                        .foregroundColor(.white)
+                }
             }
+            .padding(.horizontal, 20)
+            .padding(.top, 20)
+            .padding(.bottom, 12)
             
-            Text(topic.name)
-                .font(.subheadline)
-                .fontWeight(.medium)
+            // 帖子内容
+            Text(post.content)
+                .font(.system(size: 14))
+                .foregroundColor(.white)
+                .lineLimit(3)
+                .padding(.horizontal, 20)
+                .padding(.bottom, 12)
             
-            Text("\(topic.postCount)")
-                .font(.caption)
-                .foregroundColor(.secondary)
-            
-            Button(action: onFollowTapped) {
-                Image(systemName: topic.isFollowing ? "checkmark.circle.fill" : "plus.circle")
-                    .foregroundColor(topic.isFollowing ? .blue : .secondary)
+            // 图片网格
+            if !post.imageNames.isEmpty {
+                HStack(spacing: 8) {
+                    ForEach(Array(post.imageNames.prefix(3).enumerated()), id: \.offset) { index, imageName in
+                        Image(imageName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: (UIScreen.main.bounds.width - 60) / 3, height: (UIScreen.main.bounds.width - 60) / 3)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                    
+                    // 如果图片超过3张，显示"+N"
+                    if post.imageNames.count > 3 {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.white.opacity(0.9))
+                            
+                            Text("+\(post.imageNames.count - 3)")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(.black)
+                        }
+                        .frame(width: (UIScreen.main.bounds.width - 60) / 3, height: (UIScreen.main.bounds.width - 60) / 3)
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 20)
             }
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
-        .background(Color(.systemGray6))
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [Color.pink.opacity(0.8), Color.purple.opacity(0.8)]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
         .cornerRadius(20)
     }
 }
 
-// MARK: - Category Chip
-struct CategoryChip: View {
-    let category: DiscoverCategory
-    let isSelected: Bool
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            Text(category.displayName)
-                .font(.subheadline)
-                .fontWeight(isSelected ? .semibold : .regular)
-                .foregroundColor(isSelected ? .white : .primary)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-                .background(isSelected ? Color.blue : Color(.systemGray6))
-                .cornerRadius(20)
-        }
-    }
-}
-
-// MARK: - Discover Item Card
-struct DiscoverItemCard: View {
-    let item: DiscoverItem
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            // 分类标签
-            HStack {
-                Text(item.category.displayName)
-                    .font(.caption)
-                    .fontWeight(.medium)
-                    .foregroundColor(.blue)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
-                    .background(Color.blue.opacity(0.1))
-                    .cornerRadius(8)
-                
-                Spacer()
-                
-                Text(item.viewCount.formatted() + " 浏览")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-            
-            // 标题和描述
-            VStack(alignment: .leading, spacing: 6) {
-                Text(item.title)
-                    .font(.headline)
-                    .multilineTextAlignment(.leading)
-                
-                Text(item.description)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .lineLimit(2)
-            }
-            
-            // 作者和时间
-            HStack {
-                Circle()
-                    .fill(Color.green.opacity(0.3))
-                    .frame(width: 24, height: 24)
-                    .overlay {
-                        Text(String(item.author.prefix(1)))
-                            .font(.caption2)
-                            .foregroundColor(.green)
-                    }
-                
-                Text(item.author)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                
-                Text("·")
-                    .foregroundColor(.secondary)
-                
-                Text(item.timestamp, style: .relative)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                
-                Spacer()
-            }
-        }
-        .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(12)
-        .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
-    }
-}
-
-#Preview {
-    DiscoverView()
-}
+// #Preview {
+//     DiscoverView()
+// }

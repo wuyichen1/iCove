@@ -8,7 +8,7 @@
 import SwiftUI
 
 #if DEBUG
-import HotSwiftUI
+    import HotSwiftUI
 #endif
 
 /// 自定义主要按钮组件 - 带渐变背景
@@ -19,14 +19,14 @@ struct PrimaryButton: View {
     var isEnabled: Bool = true
     var width: CGFloat? = nil
     var height: CGFloat = 52
-    var fontSize: CGFloat = 18
+    var fontSize: CGFloat = 20
     var fontWeight: Font.Weight = .semibold
     var backgroundColor: Color = Color("buttonPurple")
 
     #if DEBUG
-    @ObserveInjection var redraw
+        @ObserveInjection var redraw
     #endif
-    
+
     var body: some View {
         Button(action: action) {
             HStack {
@@ -35,12 +35,14 @@ struct PrimaryButton: View {
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                 } else {
                     Text(title)
-                        .font(.system(size: fontSize, weight: fontWeight))
+                        .font(.custom("FredokaOne-Regular", size: fontSize))
+                    // Text(title)
+                    //     .font(.system(size: fontSize, weight: fontWeight))
                 }
             }
             .frame(width: width, height: height)
             .frame(maxWidth: width == nil ? .infinity : nil)
-            .foregroundColor(.white) // 文本颜色
+            .foregroundColor(.white)  // 文本颜色
             .background(
                 RoundedRectangle(cornerRadius: 16)
                     .fill(backgroundColor)
@@ -53,7 +55,7 @@ struct PrimaryButton: View {
         .disabled(!isEnabled || isLoading)
         .opacity(isEnabled && !isLoading ? 1.0 : 0.6)
         .enableInjection()
-        .fixedSize(horizontal: width != nil, vertical: false) //设置了宽度时防止水平拉伸
+        .fixedSize(horizontal: width != nil, vertical: false)  //设置了宽度时防止水平拉伸
     }
 }
 
@@ -68,7 +70,7 @@ struct SecondaryButton: View {
     var fontWeight: Font.Weight = .semibold
     var borderColor: Color = .white.opacity(0.5)
     var borderWidth: CGFloat = 1.5
-    
+
     var body: some View {
         Button(action: action) {
             HStack {
@@ -97,32 +99,32 @@ struct SecondaryButton: View {
     }
 }
 
-#Preview {
-    VStack(spacing: 20) {
-        PrimaryButton(title: "Primary Button", action: {})
-        
-        PrimaryButton(
-            title: "Custom Color",
-            action: {},
-            backgroundColor: .blue
-        )
-        
-        PrimaryButton(
-            title: "Custom Gradient",
-            action: {},
-            backgroundColor: Color(red: 0.6, green: 0.3, blue: 0.8)
-        )
-        
-        PrimaryButton(title: "Loading...", action: {}, isLoading: true)
-        
-        PrimaryButton(title: "Disabled", action: {}, isEnabled: false)
-        
-        SecondaryButton(title: "Secondary Button", action: {})
-        
-        SecondaryButton(title: "Loading...", action: {}, isLoading: true)
-        
-        SecondaryButton(title: "Disabled", action: {}, isEnabled: false)
-    }
-    .padding()
-    .background(Color(red: 0.2, green: 0.1, blue: 0.3))
-}
+// #Preview {
+//     VStack(spacing: 20) {
+//         PrimaryButton(title: "Primary Button", action: {})
+
+//         PrimaryButton(
+//             title: "Custom Color",
+//             action: {},
+//             backgroundColor: .blue
+//         )
+
+//         PrimaryButton(
+//             title: "Custom Gradient",
+//             action: {},
+//             backgroundColor: Color(red: 0.6, green: 0.3, blue: 0.8)
+//         )
+
+//         PrimaryButton(title: "Loading...", action: {}, isLoading: true)
+
+//         PrimaryButton(title: "Disabled", action: {}, isEnabled: false)
+
+//         SecondaryButton(title: "Secondary Button", action: {})
+
+//         SecondaryButton(title: "Loading...", action: {}, isLoading: true)
+
+//         SecondaryButton(title: "Disabled", action: {}, isEnabled: false)
+//     }
+//     .padding()
+//     .background(Color(red: 0.2, green: 0.1, blue: 0.3))
+// }

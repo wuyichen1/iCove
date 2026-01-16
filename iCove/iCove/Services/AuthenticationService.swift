@@ -15,20 +15,69 @@ protocol AuthenticationServiceProtocol {
     func quickLogin() async throws -> AuthResponse
     func deleteQuickLoginUser(userId: String) async throws
     func resetPassword(email: String, newPassword: String) async throws
+    func getUserById(_ userId: String) -> User?
 }
 
 class AuthenticationService: AuthenticationServiceProtocol {
     // MARK: - Singleton (仅用于服务层，ViewModel 不使用)
     static let shared = AuthenticationService()
     
-    // 模拟用户数据库
-    private var mockUsers: [String: MockUser] = [
-        "test@example.com": MockUser(
-            email: "test@example.com",
-            password: "123456",
+    // 模拟用户数据库 - 使用 userId 作为 key
+    private var users: [String: User] = [
+        // 可登录用户
+        "user_001": User(
+            id: "user_001",
+            email: "test@gmail.com",
             username: "测试用户",
-            userId: "user_001"
+            avatar: "eitJTglOzkSfZvNi1",
+            balance: 1000
+        ),
+        // 示例用户数据（不需要邮箱和密码）
+        "user_002": User(
+            id: "user_002",
+            email: "",
+            username: "Fashionista",
+            avatar: "eitJTglOzkSfZvNi2",
+            balance: 850
+        ),
+        "user_003": User(
+            id: "user_003",
+            email: "",
+            username: "StyleGuide",
+            avatar: "eitJTglOzkSfZvNi3",
+            balance: 1200
+        ),
+        "user_004": User(
+            id: "user_004",
+            email: "",
+            username: "DailyWear",
+            avatar: "eitJTglOzkSfZvNi4",
+            balance: 650
+        ),
+        "user_005": User(
+            id: "user_005",
+            email: "",
+            username: "WeekendStyle",
+            avatar: "eitJTglOzkSfZvNi5",
+            balance: 950
+        ),
+        "user_006": User(
+            id: "user_006",
+            email: "",
+            username: "StreetFashion",
+            avatar: "eitJTglOzkSfZvNi6",
+            balance: 1100
         )
+    ]
+    
+    // 邮箱到用户 ID 的映射（仅用于可登录用户）
+    private var emailToUserId: [String: String] = [
+        "test@gmail.com": "user_001"
+    ]
+    
+    // 密码存储：email -> password（仅用于可登录用户）
+    private var passwords: [String: String] = [
+        "test@gmail.com": "123456"
     ]
     
     private init() {}
@@ -54,26 +103,23 @@ class AuthenticationService: AuthenticationServiceProtocol {
         }
         
         // 查找用户
-        guard let user = mockUsers[email.lowercased()] else {
+        let emailKey = email.lowercased()
+        guard let userId = emailToUserId[emailKey],
+              let user = users[userId] else {
             throw AuthError.userNotFound("用户不存在")
         }
         
         // 验证密码
-        guard user.password == password else {
+        guard passwords[emailKey] == password else {
             throw AuthError.invalidCredentials("邮箱或密码错误")
         }
         
         // 生成 token
-        let token = generateToken(for: user.userId)
+        let token = generateToken(for: user.id)
         
         return AuthResponse(
             token: token,
-            user: User(
-                id: user.userId,
-                email: user.email,
-                username: user.username,
-                avatar: nil
-            )
+            user: user
         )
     }
     
@@ -104,31 +150,29 @@ class AuthenticationService: AuthenticationServiceProtocol {
         
         // 检查邮箱是否已注册
         let emailKey = email.lowercased()
-        if mockUsers[emailKey] != nil {
+        if emailToUserId[emailKey] != nil {
             throw AuthError.emailAlreadyExists("该邮箱已被注册")
         }
         
         // 创建新用户
         let userId = "user_\(UUID().uuidString.prefix(8))"
-        let newUser = MockUser(
+        let newUser = User(
+            id: userId,
             email: emailKey,
-            password: password,
             username: username,
-            userId: userId
+            avatar: nil,
+            balance: 0
         )
-        mockUsers[emailKey] = newUser
+        users[userId] = newUser
+        emailToUserId[emailKey] = userId
+        passwords[emailKey] = password
         
         // 生成 token
         let token = generateToken(for: userId)
         
         return AuthResponse(
             token: token,
-            user: User(
-                id: userId,
-                email: emailKey,
-                username: username,
-                avatar: nil
-            )
+            user: newUser
         )
     }
     
@@ -149,32 +193,30 @@ class AuthenticationService: AuthenticationServiceProtocol {
         // 检查是否有保存的快速登录用户
         if let quickLoginUser = getQuickLoginUser() {
             // 使用保存的快速登录用户登录
-            let token = generateToken(for: quickLoginUser.userId)
+            let token = generateToken(for: quickLoginUser.id)
             return AuthResponse(
                 token: token,
-                user: User(
-                    id: quickLoginUser.userId,
-                    email: quickLoginUser.email,
-                    username: quickLoginUser.username,
-                    avatar: nil
-                )
+                user: quickLoginUser
             )
         } else {
             // 创建新的快速登录用户
             let userId = "quick_\(UUID().uuidString.prefix(8))"
             let email = "quick_\(UUID().uuidString.prefix(8))@quicklogin.local"
-            let username = "快速用户\(Int.random(in: 1000...9999))"
+            let username = "Quick\(Int.random(in: 1000...9999))"
             let password = UUID().uuidString
             
-            let newUser = MockUser(
+            let newUser = User(
+                id: userId,
                 email: email,
-                password: password,
                 username: username,
-                userId: userId
+                avatar: "icove_logo",
+                balance: 500
             )
             
             // 保存快速登录用户
-            mockUsers[email] = newUser
+            users[userId] = newUser
+            emailToUserId[email] = userId
+            passwords[email] = password
             saveQuickLoginUser(newUser)
             
             // 生成 token
@@ -182,12 +224,7 @@ class AuthenticationService: AuthenticationServiceProtocol {
             
             return AuthResponse(
                 token: token,
-                user: User(
-                    id: userId,
-                    email: email,
-                    username: username,
-                    avatar: nil
-                )
+                user: newUser
             )
         }
     }
@@ -199,27 +236,31 @@ class AuthenticationService: AuthenticationServiceProtocol {
         
         // 从内存中删除
         if let quickLoginUser = getQuickLoginUser(),
-           quickLoginUser.userId == userId {
-            mockUsers.removeValue(forKey: quickLoginUser.email)
+           quickLoginUser.id == userId {
+            users.removeValue(forKey: userId)
+            if !quickLoginUser.email.isEmpty {
+                emailToUserId.removeValue(forKey: quickLoginUser.email)
+                passwords.removeValue(forKey: quickLoginUser.email)
+            }
             clearQuickLoginUser()
         }
     }
     
     // MARK: - Quick Login User Management
-    private func saveQuickLoginUser(_ user: MockUser) {
+    private func saveQuickLoginUser(_ user: User) {
         if let userData = try? JSONEncoder().encode(user) {
             UserDefaults.standard.set(userData, forKey: "quick_login_user")
         }
     }
     
-    private func getQuickLoginUser() -> MockUser? {
+    private func getQuickLoginUser() -> User? {
         guard let userData = UserDefaults.standard.data(forKey: "quick_login_user"),
-              let user = try? JSONDecoder().decode(MockUser.self, from: userData) else {
+              let user = try? JSONDecoder().decode(User.self, from: userData) else {
             return nil
         }
         
         // 验证用户是否还存在
-        return mockUsers[user.email]
+        return users[user.id]
     }
     
     private func clearQuickLoginUser() {
@@ -243,24 +284,23 @@ class AuthenticationService: AuthenticationServiceProtocol {
         
         // 查找用户
         let emailKey = email.lowercased()
-        guard let user = mockUsers[emailKey] else {
+        guard emailToUserId[emailKey] != nil else {
             throw AuthError.userNotFound("用户不存在")
         }
         
         // 更新密码
-        let updatedUser = MockUser(
-            email: user.email,
-            password: newPassword,
-            username: user.username,
-            userId: user.userId
-        )
-        mockUsers[emailKey] = updatedUser
+        passwords[emailKey] = newPassword
         
         // 如果这是快速登录用户，也需要更新
         if let quickLoginUser = getQuickLoginUser(),
            quickLoginUser.email == emailKey {
-            saveQuickLoginUser(updatedUser)
+            saveQuickLoginUser(quickLoginUser)
         }
+    }
+    
+    // MARK: - Get User By ID
+    func getUserById(_ userId: String) -> User? {
+        return users[userId]
     }
     
     // MARK: - Private Helpers

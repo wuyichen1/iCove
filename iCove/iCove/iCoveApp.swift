@@ -8,7 +8,7 @@
 import SwiftUI
 
 #if DEBUG
-@_exported import HotSwiftUI  // 全局导出 .enableInjection() 和 @ObserveInjection
+    @_exported import HotSwiftUI  // 全局导出 .enableInjection() 和 @ObserveInjection
 #endif
 
 @main
@@ -18,20 +18,28 @@ struct iCoveApp: App {
     // private static let loadInjection: Void = {
     //     // 加载 bundle（模拟器用 iOSInjection.bundle）
     //     Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/iOSInjection.bundle")?.load()
-        
+
     //     // 如果是 tvOS 项目，用 tvOSInjection.bundle
     //     // 如果是 macOS，用 macOSInjection.bundle
     // }()
     // #endif
     // 或者 //
     init() {
+        // #if DEBUG
+        // Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/iOSInjection.bundle")?.load()
+        // #endif
+        // 升级 InjectionNext 加载方式（推荐，自动找 bundle）
         #if DEBUG
-        Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/iOSInjection.bundle")?.load()
+            if let path = Bundle.main.path(forResource: "iOSInjection", ofType: "bundle")
+                ?? Bundle.main.path(forResource: "macOSInjection", ofType: "bundle")
+            {
+                Bundle(path: path)!.load()
+            }
         #endif
     }
 
     @StateObject private var authManager = AuthenticationManager()
-    
+
     var body: some Scene {
         WindowGroup {
             RootView()
@@ -43,11 +51,11 @@ struct iCoveApp: App {
 /// 根视图 - 根据登录状态切换显示内容
 struct RootView: View {
     @EnvironmentObject var authManager: AuthenticationManager
-    
+
     #if DEBUG
-    @ObserveInjection var redraw
+        @ObserveInjection var redraw
     #endif
-    
+
     var body: some View {
         Group {
             if authManager.isAuthenticated {

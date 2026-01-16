@@ -21,14 +21,41 @@ struct User: Codable {
     let email: String
     let username: String
     let avatar: String?
-}
-
-/// 模拟用户模型（仅用于 Service 层）
-struct MockUser: Codable {
-    let email: String
-    let password: String
-    let username: String
-    let userId: String
+    let balance: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case email
+        case username
+        case avatar
+        case balance
+    }
+    
+    init(id: String, email: String, username: String, avatar: String? = nil, balance: Int = 0) {
+        self.id = id
+        self.email = email
+        self.username = username
+        self.avatar = avatar
+        self.balance = balance
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        email = try container.decode(String.self, forKey: .email)
+        username = try container.decode(String.self, forKey: .username)
+        avatar = try container.decodeIfPresent(String.self, forKey: .avatar)
+        balance = try container.decodeIfPresent(Int.self, forKey: .balance) ?? 0
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(email, forKey: .email)
+        try container.encode(username, forKey: .username)
+        try container.encodeIfPresent(avatar, forKey: .avatar)
+        try container.encode(balance, forKey: .balance)
+    }
 }
 
 /// 认证错误类型
