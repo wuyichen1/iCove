@@ -11,6 +11,7 @@ import Foundation
 protocol PostDataServiceProtocol {
     func loadAllPosts() -> [Post]
     func loadCollectedPosts() -> [Post]
+    func loadCollectedPosts(by postIds: [String]) -> [Post]  // 根据帖子ID列表获取收藏的帖子
     func getPostById(_ postId: String) -> Post?
     func updatePost(_ post: Post)
 }
@@ -18,101 +19,81 @@ protocol PostDataServiceProtocol {
 /// 帖子数据服务 - 负责帖子数据的存储和管理
 class PostDataService: PostDataServiceProtocol {
     static let shared = PostDataService()
-    
-    private var allPosts: [Post] = []
-    private var collectedPosts: [Post] = []
-    
-    private init() {
-        initializeSamplePosts()
-    }
-    
+
+    // MARK: - 持久化示例帖子数据
+
+    /// 全部帖子数据（写死的示例数据）
+    private let allPosts: [Post] = [
+        // Maddison的帖子（根据UI图）
+        Post(
+            id: "post_001",
+            imageNames: [
+                "qC2VdAxOOOikJD6i11",
+                "qC2VdAxOOOikJD6i12",
+                "qC2VdAxOOOikJD6i13",
+            ],
+            authorId: "user_002",
+            content:
+                "A must-read for office workers! My colleagues thought I had changed five wardrobes every week without repeating my commute! Go on an autumn date! Caramel-colored outfit + beret, walking among the fallen leaves feels like a movie scene, gentle to the core",
+            timestamp: Date().addingTimeInterval(-3600),
+            isCollected: false
+        ),
+        Post(
+            id: "post_002",
+            imageNames: [
+                "qC2VdAxOOOikJD6i21",
+                "qC2VdAxOOOikJD6i22",
+                "qC2VdAxOOOikJD6i23",
+                "qC2VdAxOOOikJD6i24",
+            ],
+            authorId: "user_003",
+            content:
+                "Spring collection is here! Fresh and elegant style for your daily commute. Perfect combination of comfort and fashion.",
+            timestamp: Date().addingTimeInterval(-7200),
+            isCollected: false
+        ),
+        Post(
+            id: "post_003",
+            imageNames: [
+                "qC2VdAxOOOikJD6i31",
+                "qC2VdAxOOOikJD6i32",
+                "qC2VdAxOOOikJD6i33",
+                "qC2VdAxOOOikJD6i34",
+                "qC2VdAxOOOikJD6i35",
+            ],
+            authorId: "user_001",
+            content:
+                "Weekend vibes! Casual chic outfit perfect for a day out. Comfortable yet stylish, this is how I spend my weekends.",
+            timestamp: Date().addingTimeInterval(-14400),
+            isCollected: false
+        ),
+    ]
+
+    private init() {}
+
     // MARK: - Public Methods
-    
+
     func loadAllPosts() -> [Post] {
         return allPosts
     }
-    
+
     func loadCollectedPosts() -> [Post] {
-        return collectedPosts
+        // 此方法已废弃，收藏的帖子现在根据用户收藏ID列表动态获取
+        return []
     }
-    
+
+    func loadCollectedPosts(by postIds: [String]) -> [Post] {
+        // 根据帖子ID列表从全部帖子中筛选出收藏的帖子
+        return allPosts.filter { postIds.contains($0.id) }
+    }
+
     func getPostById(_ postId: String) -> Post? {
-        return allPosts.first(where: { $0.id == postId }) ?? collectedPosts.first(where: { $0.id == postId })
+        return allPosts.first(where: { $0.id == postId })
     }
-    
+
     func updatePost(_ post: Post) {
-        if let index = allPosts.firstIndex(where: { $0.id == post.id }) {
-            allPosts[index] = post
-        }
-        if let index = collectedPosts.firstIndex(where: { $0.id == post.id }) {
-            collectedPosts[index] = post
-        }
-    }
-    
-    // MARK: - Private Methods
-    
-    private func initializeSamplePosts() {
-        // 生成收藏的帖子数据
-        let mockImageNames = [
-            ["1akQNNqBpWFE3YsJ0J", "ZOVugBKGBc2g0HA3", "Qc4hYFPT1LVSkXq5"],
-            ["f2YTqp3rK3ZgautI", "YLXVqZ8wbqT0SSgp1"],
-            ["1akQNNqBpWFE3YsJ0J", "ZOVugBKGBc2g0HA3", "Qc4hYFPT1LVSkXq5", "f2YTqp3rK3ZgautI"],
-        ]
-        
-        collectedPosts = mockImageNames.enumerated().map { index, images in
-            Post(
-                id: "collected_\(index)",
-                imageNames: images,
-                authorId: "user_00\(index + 1)",
-                authorUsername: "用户\(index + 1)",
-                authorAvatar: nil,
-                content: "这是一个收藏的帖子内容 \(index + 1)",
-                timestamp: Date().addingTimeInterval(-Double(index * 3600)),
-                isCollected: true
-            )
-        }
-        
-        // 生成全部帖子数据，包含Maddison的示例帖子
-        var posts: [Post] = []
-        
-        // Maddison的帖子（根据UI图）
-        posts.append(Post(
-            id: "post_maddison_001",
-            imageNames: [
-                "1akQNNqBpWFE3YsJ0J",
-                "ZOVugBKGBc2g0HA3",
-                "Qc4hYFPT1LVSkXq5",
-                "f2YTqp3rK3ZgautI",
-                "YLXVqZ8wbqT0SSgp1"
-            ],
-            authorId: "user_maddison",
-            authorUsername: "Maddison",
-            authorAvatar: "1akQNNqBpWFE3YsJ0J",
-            content: "A must-read for office workers! My colleagues thought I had changed five wardrobes every week without repeating my commute! Go on an autumn date! Caramel-colored outfit + beret, walking among the fallen leaves feels like a movie scene, gentle to the core",
-            timestamp: Date().addingTimeInterval(-3600),
-            isCollected: false
-        ))
-        
-        // 更多示例帖子
-        let mockImageSets = [
-            ["1akQNNqBpWFE3YsJ0J", "ZOVugBKGBc2g0HA3"],
-            ["Qc4hYFPT1LVSkXq5", "f2YTqp3rK3ZgautI", "YLXVqZ8wbqT0SSgp1"],
-            ["1akQNNqBpWFE3YsJ0J", "ZOVugBKGBc2g0HA3", "Qc4hYFPT1LVSkXq5"],
-        ]
-        
-        for (index, images) in mockImageSets.enumerated() {
-            posts.append(Post(
-                id: "post_\(index)",
-                imageNames: images,
-                authorId: "user_00\(index + 2)",
-                authorUsername: "用户\(index + 2)",
-                authorAvatar: nil,
-                content: "这是帖子内容 \(index + 1)，展示了一些好看的搭配。",
-                timestamp: Date().addingTimeInterval(-Double(index * 7200)),
-                isCollected: index % 2 == 0
-            ))
-        }
-        
-        allPosts = posts
+        // 注意：由于 allPosts 是 let 常量，这里无法直接修改
+        // 在实际应用中，应该使用可变的数据源或持久化存储
+        // 这里保持接口一致性，实际更新需要在持久化层处理
     }
 }

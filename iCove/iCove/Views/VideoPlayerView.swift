@@ -161,6 +161,6 @@ struct VideoPlayerView: View {
     }
 }
 
-#Preview {
-    VideoPlayerView(videoName: "YLXVqZ8wbqT0SSgp1")
-}
+// #Preview {
+//     VideoPlayerView(videoName: "YLXVqZ8wbqT0SSgp1")
+// }

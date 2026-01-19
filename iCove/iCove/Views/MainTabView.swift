@@ -8,92 +8,110 @@
 import SwiftUI
 
 #if DEBUG
-    import HotSwiftUI  // 导入库
+  import HotSwiftUI  // 导入库
 #endif
 
 struct MainTabView: View {
-    @EnvironmentObject var authManager: AuthenticationManager
-    @StateObject private var router = Router()
-    @State private var selectedTab: TabItem = .home
+  @EnvironmentObject var authManager: AuthenticationManager
+  @StateObject private var router = Router()
+  @State private var selectedTab: TabItem = .home
 
-    #if DEBUG
-        @ObserveInjection var redraw
-    #endif
+  #if DEBUG
+    @ObserveInjection var redraw
+  #endif
 
-    var body: some View {
-        ZStack(alignment: .bottom) {
-            // 页面内容
-            Group {
-                switch selectedTab {
-                case .home:
-                    AppNavigationView {
-                        HomeView()
-                    }
-                    .environmentObject(router)
-                case .discover:
-                    AppNavigationView {
-                        DiscoverView()
-                    }
-                    .environmentObject(router)
-                case .messages:
-                    MessagesView()
-                case .profile:
-                    ProfileViewWrapper()
-                        .environmentObject(authManager)
-                }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            
-            // 悬浮底部导航栏 - 只在主页面显示
-            if shouldShowTabBar {
-                FloatingTabBar(selectedTab: $selectedTab)
-            }
+  var body: some View {
+    ZStack(alignment: .bottom) {
+      // 页面内容
+      Group {
+        switch selectedTab {
+        case .home:
+          AppNavigationView {
+            HomeView()
+          }
+          .environmentObject(router)
+          .environmentObject(authManager)
+        case .discover:
+          AppNavigationView {
+            DiscoverView()
+          }
+          .environmentObject(router)
+          .environmentObject(authManager)
+        case .messages:
+          AppNavigationView {
+            MessagesView()
+          }
+          .environmentObject(authManager)
+          .environmentObject(router)
+        case .profile:
+          ProfileViewWrapper()
+            .environmentObject(authManager)
+            .environmentObject(router)
         }
-        .ignoresSafeArea(edges: .bottom)
-        .enableInjection()
+      }
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+      // 悬浮底部导航栏 - 只在主页面显示
+      if shouldShowTabBar {
+        FloatingTabBar(selectedTab: $selectedTab)
+      }
     }
-    
-    /// 是否显示底部导航栏
-    private var shouldShowTabBar: Bool {
-        // 如果不在 home tab，总是显示
-        if selectedTab != .home {
-            return true
-        }
-        // 如果在 home tab，只有在根页面（无二级页面）时才显示
-        return router.isAtRoot
+    .ignoresSafeArea(edges: .bottom)
+    .enableInjection()
+  }
+
+  /// 是否显示底部导航栏
+  private var shouldShowTabBar: Bool {
+    // 如果有二级页面（不在根页面），隐藏底部导航栏
+    if !router.isAtRoot {
+      return false
     }
+    // 在根页面时，始终显示底部导航栏
+    return true
+  }
 }
 
 /// ProfileView 包装器 - 用于正确初始化 ViewModel
 struct ProfileViewWrapper: View {
-    @EnvironmentObject var authManager: AuthenticationManager
+  @EnvironmentObject var authManager: AuthenticationManager
+  @EnvironmentObject var router: Router
+  let userId: String?
 
-    var body: some View {
-        ProfileViewContainer(authManager: authManager)
-    }
+  init(userId: String? = nil) {
+    self.userId = userId
+  }
+
+  var body: some View {
+    ProfileViewContainer(authManager: authManager, userId: userId)
+      .environmentObject(router)
+  }
 }
 
 /// ProfileView 容器 - 创建并管理 ViewModel
 private struct ProfileViewContainer: View {
-    let authManager: AuthenticationManager
-    @StateObject private var viewModel: ProfileViewModel
+  let authManager: AuthenticationManager
+  let userId: String?
+  @StateObject private var viewModel: ProfileViewModel
 
-    init(authManager: AuthenticationManager) {
-        self.authManager = authManager
-        _viewModel = StateObject(wrappedValue: ProfileViewModel(authManager: authManager))
-    }
+  init(authManager: AuthenticationManager, userId: String?) {
+    self.authManager = authManager
+    self.userId = userId
+    _viewModel = StateObject(
+      wrappedValue: ProfileViewModel(authManager: authManager, userId: userId))
+  }
 
-    var body: some View {
-        ProfileView(viewModel: viewModel)
-    }
+  var body: some View {
+    ProfileView(viewModel: viewModel)
+      .environmentObject(authManager)
+  }
 }
 
 // MARK: - Tab Item Enum
 enum TabItem {
-    case home
-    case discover
-    case messages
-    case profile
+  case home
+  case discover
+  case messages
+  case profile
 }
 
 // #Preview {

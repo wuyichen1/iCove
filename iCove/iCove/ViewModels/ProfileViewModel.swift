@@ -18,13 +18,27 @@ class ProfileViewModel: ObservableObject {
     
     // MARK: - Private Properties
     private let authManager: AuthenticationManager
+    private let targetUserId: String?
+    
+    // MARK: - Computed Properties
+    /// 是否是当前用户的资料页
+    var isCurrentUser: Bool {
+        guard let targetUserId = targetUserId,
+              let currentUserId = authManager.currentUser?.id else {
+            return targetUserId == nil
+        }
+        return targetUserId == currentUserId
+    }
     
     // MARK: - Initialization
-    init(authManager: AuthenticationManager) {
+    init(authManager: AuthenticationManager, userId: String? = nil) {
         self.authManager = authManager
+        self.targetUserId = userId
         Task {
             await loadUserProfile()
-            loadSettings()
+            if isCurrentUser {
+                loadSettings()
+            }
         }
     }
     
@@ -38,18 +52,36 @@ class ProfileViewModel: ObservableObject {
         // 模拟网络请求延迟
         try? await Task.sleep(nanoseconds: 1_000_000_000)
         
-        // 生成模拟用户资料
-        userProfile = UserProfile(
-            id: UUID().uuidString,
-            username: "用户昵称",
-            bio: "这是我的个人简介，分享生活点滴",
-            avatar: nil,
-            followerCount: 1234,
-            followingCount: 567,
-            postCount: 89,
-            isFollowing: false,
-            joinDate: Date().addingTimeInterval(-365 * 24 * 3600)
-        )
+        // 如果是当前用户，使用当前用户信息；否则加载指定用户信息
+        if isCurrentUser {
+            // 当前用户资料
+            if let currentUser = authManager.currentUser {
+                userProfile = UserProfile(
+                    id: currentUser.id,
+                    username: currentUser.username,
+                    bio: "这是我的个人简介，分享生活点滴",
+                    avatar: currentUser.avatar,
+                    followerCount: 1234,
+                    followingCount: 567,
+                    postCount: 89,
+                    isFollowing: false,
+                    joinDate: Date().addingTimeInterval(-365 * 24 * 3600)
+                )
+            }
+        } else if let userId = targetUserId {
+            // 其他用户资料（模拟数据）
+            userProfile = UserProfile(
+                id: userId,
+                username: "Cormac",
+                bio: "这是其他用户的个人简介",
+                avatar: nil,
+                followerCount: 218,
+                followingCount: 100,
+                postCount: 45,
+                isFollowing: false,
+                joinDate: Date().addingTimeInterval(-200 * 24 * 3600)
+            )
+        }
         
         isLoading = false
     }
@@ -59,7 +91,7 @@ class ProfileViewModel: ObservableObject {
     }
     
     func toggleFollow() {
-        guard var profile = userProfile else { return }
+        guard var profile = userProfile, !isCurrentUser else { return }
         profile.isFollowing.toggle()
         if profile.isFollowing {
             profile.followerCount += 1
@@ -67,6 +99,53 @@ class ProfileViewModel: ObservableObject {
             profile.followerCount = max(0, profile.followerCount - 1)
         }
         userProfile = profile
+    }
+    
+    func sendMessage(router: Router) {
+        guard let targetUserId = targetUserId,
+              let currentUserId = authManager.currentUser?.id,
+              targetUserId != currentUserId else {
+            return
+        }
+        
+        // 查找或创建会话
+        let conversationId = findOrCreateConversation(
+            currentUserId: currentUserId,
+            otherUserId: targetUserId
+        )
+        
+        // 跳转到聊天页面
+        router.push(.chatDetail(conversationId: conversationId, otherUserId: targetUserId))
+    }
+    
+    // MARK: - Private Methods
+    private func findOrCreateConversation(currentUserId: String, otherUserId: String) -> String {
+        let conversationService = ConversationDataService.shared
+        let allConversations = conversationService.loadAllConversations()
+        
+        // 查找是否已存在会话
+        if let existingConversation = allConversations.first(where: { conversation in
+            conversation.participantIds.contains(currentUserId) &&
+            conversation.participantIds.contains(otherUserId) &&
+            conversation.participantIds.count == 2
+        }) {
+            return existingConversation.id
+        }
+        
+        // 创建新会话
+        let newConversationId = "conv_\(UUID().uuidString.prefix(8))"
+        let newConversation = Conversation(
+            id: newConversationId,
+            participantIds: [currentUserId, otherUserId],
+            lastMessage: "",
+            timestamp: Date(),
+            unreadCount: 0,
+            isUnread: false,
+            isPinned: false
+        )
+        conversationService.saveConversation(newConversation)
+        
+        return newConversationId
     }
     
     func updateBio(_ newBio: String) {

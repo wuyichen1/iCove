@@ -35,13 +35,13 @@ struct HomeView: View {
                     VStack(spacing: 0) {
                         // 顶部：App名称和AI形象区域
                         topSection
-                            .padding(.top, 60)
+                            .padding(.top, 50)
                             .padding(.horizontal, 20)
 
                         // 热门视频列表
                         popularVideosSection
                             .padding(.top, 24)
-                            .padding(.bottom, 100)  // 为底部导航栏留出空间
+                            .padding(.bottom, 130)  // 为底部导航栏留出空间
                     }
                 }
                 .refreshable {
@@ -112,7 +112,7 @@ struct HomeView: View {
                 .overlay(
                     // 只绘制上边框
                     TopBorderShape(cornerRadius: 33)
-                        .stroke(Color.green, lineWidth: 3)
+                        .stroke(Color.green, lineWidth: 2)
                 )
                 .cornerRadius(12, corners: [.topLeft, .topRight])
                 .padding(.top, 40)

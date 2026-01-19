@@ -22,6 +22,7 @@ struct User: Codable {
     let username: String
     let avatar: String?
     let balance: Int
+    var collectedPostIds: [String]  // 收藏的帖子ID列表
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -29,14 +30,16 @@ struct User: Codable {
         case username
         case avatar
         case balance
+        case collectedPostIds
     }
     
-    init(id: String, email: String, username: String, avatar: String? = nil, balance: Int = 0) {
+    init(id: String, email: String, username: String, avatar: String? = nil, balance: Int = 0, collectedPostIds: [String] = []) {
         self.id = id
         self.email = email
         self.username = username
         self.avatar = avatar
         self.balance = balance
+        self.collectedPostIds = collectedPostIds
     }
     
     init(from decoder: Decoder) throws {
@@ -46,6 +49,7 @@ struct User: Codable {
         username = try container.decode(String.self, forKey: .username)
         avatar = try container.decodeIfPresent(String.self, forKey: .avatar)
         balance = try container.decodeIfPresent(Int.self, forKey: .balance) ?? 0
+        collectedPostIds = try container.decodeIfPresent([String].self, forKey: .collectedPostIds) ?? []
     }
     
     func encode(to encoder: Encoder) throws {
@@ -55,6 +59,7 @@ struct User: Codable {
         try container.encode(username, forKey: .username)
         try container.encodeIfPresent(avatar, forKey: .avatar)
         try container.encode(balance, forKey: .balance)
+        try container.encode(collectedPostIds, forKey: .collectedPostIds)
     }
 }
 

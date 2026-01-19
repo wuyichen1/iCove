@@ -25,6 +25,7 @@ class DiscoverViewModel: ObservableObject {
     private var currentPage: Int = 1
     private let pageSize: Int = 15
     private let postService: PostDataServiceProtocol
+    private var authManager: AuthenticationManager?
     
     // MARK: - Initialization
     init(
@@ -44,7 +45,7 @@ class DiscoverViewModel: ObservableObject {
         errorMessage = nil
         
         // 模拟网络请求延迟
-        try? await Task.sleep(nanoseconds: 1_200_000_000)
+        // try? await Task.sleep(nanoseconds: 1_200_000_000)
         
         // 加载推荐内容和热门话题
         recommendedItems = generateMockRecommendedItems()
@@ -136,11 +137,28 @@ class DiscoverViewModel: ObservableObject {
     
     // MARK: - Post Methods
     private func generateMockCollectedPosts() -> [Post] {
-        return postService.loadCollectedPosts()
+        // 根据当前用户的收藏列表来获取收藏的帖子
+        if let currentUser = authManager?.currentUser, !currentUser.collectedPostIds.isEmpty {
+            return postService.loadCollectedPosts(by: currentUser.collectedPostIds)
+        }
+        // 如果没有登录用户或没有收藏，返回空列表
+        return []
     }
     
     private func generateMockAllPosts() -> [Post] {
         return postService.loadAllPosts()
+    }
+    
+    /// 刷新收藏列表（当用户收藏状态改变时调用）
+    func refreshCollectedPosts() {
+        collectedPosts = generateMockCollectedPosts()
+    }
+    
+    /// 更新authManager引用（用于在View的onAppear中设置）
+    func updateAuthManager(_ authManager: AuthenticationManager) {
+        self.authManager = authManager
+        // 刷新收藏列表以反映当前用户的收藏状态
+        refreshCollectedPosts()
     }
 }
 

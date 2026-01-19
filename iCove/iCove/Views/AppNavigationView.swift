@@ -14,6 +14,7 @@ import SwiftUI
 /// 导航容器视图 - 承载 NavigationStack
 struct AppNavigationView<Content: View>: View {
     @EnvironmentObject var router: Router
+    @EnvironmentObject var authManager: AuthenticationManager
     let content: () -> Content
 
     #if DEBUG
@@ -48,6 +49,19 @@ struct AppNavigationView<Content: View>: View {
         case .postDetail(let postId):
             PostDetailView(postId: postId)
                 .environmentObject(router)
+                .toolbar(.hidden, for: .tabBar)
+        case .chatDetail(let conversationId, let otherUserId):
+            ChatDetailView(conversationId: conversationId, otherUserId: otherUserId)
+                .environmentObject(router)
+                .toolbar(.hidden, for: .tabBar)
+        case .videoCall(let conversationId, let otherUserId):
+            VideoCallView(conversationId: conversationId, otherUserId: otherUserId)
+                .environmentObject(router)
+                .toolbar(.hidden, for: .tabBar)
+        case .profile(let userId):
+            ProfileViewWrapper(userId: userId)
+                .environmentObject(router)
+                .environmentObject(authManager)
                 .toolbar(.hidden, for: .tabBar)
         }
     }

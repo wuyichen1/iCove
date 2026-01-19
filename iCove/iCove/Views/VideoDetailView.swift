@@ -40,54 +40,15 @@ struct VideoDetailView: View {
             // .overlay(Color.black.opacity(0.4))  // 半透明遮罩让内容清晰
 
             // 顶部操作栏（放在视频内容之上）
-            VStack {
-                HStack {
-                    // 返回按钮
-                    Button(action: {
-                        router.pop()
-                    }) {
-                        Image(systemName: "arrowshape.backward.fill")
-                            .font(.system(size: 18, weight: .semibold))
-                            .foregroundColor(Color("buttonPurple"))
-                            .frame(width: 44, height: 44)
-                            .background(Color.white)
-                            .clipShape(Circle())
-                            .overlay(
-                                Circle()
-                                    .stroke(Color("buttonPurple"), lineWidth: 1.5)
-                            )
-                    }
-
-                    Spacer()
-
-                    // 更多操作按钮
-                    Button(action: {
-                        // 更多选项
-                    }) {
-                        HStack(spacing: 3) {
-                            Circle()
-                                .fill(Color("buttonPurple"))
-                                .frame(width: 4, height: 4)
-                            Circle()
-                                .fill(Color("buttonPurple"))
-                                .frame(width: 4, height: 4)
-                            Circle()
-                                .fill(Color("buttonPurple"))
-                                .frame(width: 4, height: 4)
-                        }
-                        .frame(width: 44, height: 44)
-                        .background(Color.white)
-                        .clipShape(Circle())
-                        .overlay(
-                            Circle()
-                                .stroke(Color("buttonPurple"), lineWidth: 1.5)
-                        )
-                    }
-                }
-                .padding(.horizontal, 20)
-
-                Spacer()
-            }
+            TopActionBar(
+                onBack: {
+                    router.pop()
+                },
+                onMore: {
+                    // 更多选项
+                },
+            )
+            
             // 底部信息栏
             VStack {
                 Spacer()
@@ -251,14 +212,14 @@ class VideoDetailViewModel: ObservableObject {
     }
 }
 
-#Preview {
-    VideoDetailView(
-        video: VideoItem(
-            imageName: "1akQNNqBpWFE3YsJ0J",
-            videoName: "春季穿搭",
-            title: "Today's outfit, wear the tenderness of spring on your body...",
-            authorId: "user_001",
-            likeCount: 346,
-            isLiked: false
-        ))
-}
+// #Preview {
+//     VideoDetailView(
+//         video: VideoItem(
+//             imageName: "1akQNNqBpWFE3YsJ0J",
+//             videoName: "春季穿搭",
+//             title: "Today's outfit, wear the tenderness of spring on your body...",
+//             authorId: "user_001",
+//             likeCount: 346,
+//             isLiked: false
+//         ))
+// }

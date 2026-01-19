@@ -109,6 +109,35 @@ class AuthenticationManager: ObservableObject {
         clearAuthState(keepQuickLogin: false)
     }
     
+    // MARK: - Update User Collection
+    /// 添加收藏的帖子ID
+    func addCollectedPostId(_ postId: String) {
+        guard var user = currentUser else { return }
+        if !user.collectedPostIds.contains(postId) {
+            user.collectedPostIds.append(postId)
+            currentUser = user
+            saveAuthState(token: authToken ?? "", user: user, loginType: isQuickLogin ? "quick" : "normal")
+        }
+    }
+    
+    /// 移除收藏的帖子ID
+    func removeCollectedPostId(_ postId: String) {
+        guard var user = currentUser else { return }
+        user.collectedPostIds.removeAll { $0 == postId }
+        currentUser = user
+        saveAuthState(token: authToken ?? "", user: user, loginType: isQuickLogin ? "quick" : "normal")
+    }
+    
+    /// 切换收藏状态
+    func toggleCollectedPostId(_ postId: String) {
+        guard let user = currentUser else { return }
+        if user.collectedPostIds.contains(postId) {
+            removeCollectedPostId(postId)
+        } else {
+            addCollectedPostId(postId)
+        }
+    }
+    
     // MARK: - Private Methods
     private func saveAuthState(token: String, user: User, loginType: String) {
         UserDefaults.standard.set(token, forKey: tokenKey)

@@ -12,4 +12,7 @@ enum Route: Hashable {
     case home
     case detail(id: String)
     case postDetail(postId: String)
+    case chatDetail(conversationId: String, otherUserId: String)
+    case videoCall(conversationId: String, otherUserId: String)
+    case profile(userId: String)
 }

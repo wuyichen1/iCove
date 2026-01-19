@@ -17,20 +17,24 @@ class MessagesViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var unreadCount: Int = 0
     
+    // MARK: - Private Properties
+    private let conversationService: ConversationDataServiceProtocol
+    
     // MARK: - Computed Properties
     var filteredConversations: [Conversation] {
         if searchText.isEmpty {
             return conversations
         } else {
             return conversations.filter { conversation in
-                conversation.participantName.localizedCaseInsensitiveContains(searchText) ||
+                // 根据消息内容过滤
                 conversation.lastMessage.localizedCaseInsensitiveContains(searchText)
             }
         }
     }
     
     // MARK: - Initialization
-    init() {
+    init(conversationService: ConversationDataServiceProtocol = ConversationDataService.shared) {
+        self.conversationService = conversationService
         Task {
             await loadConversations()
         }
@@ -44,10 +48,10 @@ class MessagesViewModel: ObservableObject {
         errorMessage = nil
         
         // 模拟网络请求延迟
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
+        try? await Task.sleep(nanoseconds: 500_000_000)
         
-        // 生成模拟会话数据
-        conversations = generateMockConversations()
+        // 从持久化存储加载会话数据
+        conversations = conversationService.loadAllConversations()
         updateUnreadCount()
         
         isLoading = false
@@ -55,9 +59,10 @@ class MessagesViewModel: ObservableObject {
     
     func refresh() async {
         // 模拟刷新延迟
-        try? await Task.sleep(nanoseconds: 800_000_000)
+        try? await Task.sleep(nanoseconds: 500_000_000)
         
-        conversations = generateMockConversations()
+        // 从持久化存储重新加载会话数据
+        conversations = conversationService.loadAllConversations()
         updateUnreadCount()
     }
     
@@ -65,18 +70,24 @@ class MessagesViewModel: ObservableObject {
         if let index = conversations.firstIndex(where: { $0.id == conversation.id }) {
             conversations[index].isUnread = false
             conversations[index].unreadCount = 0
+            // 持久化更新
+            conversationService.updateConversation(conversations[index])
             updateUnreadCount()
         }
     }
     
     func deleteConversation(_ conversation: Conversation) {
         conversations.removeAll { $0.id == conversation.id }
+        // 持久化删除
+        conversationService.deleteConversation(conversation.id)
         updateUnreadCount()
     }
     
     func pinConversation(_ conversation: Conversation) {
         if let index = conversations.firstIndex(where: { $0.id == conversation.id }) {
             conversations[index].isPinned.toggle()
+            // 持久化更新
+            conversationService.updateConversation(conversations[index])
             // 重新排序：置顶的在前
             let pinned = conversations.filter { $0.isPinned }
             let unpinned = conversations.filter { !$0.isPinned }
@@ -84,47 +95,16 @@ class MessagesViewModel: ObservableObject {
         }
     }
     
+    /// 刷新会话列表（当消息更新时调用）
+    func refreshConversations() {
+        conversations = conversationService.loadAllConversations()
+        updateUnreadCount()
+    }
+    
     // MARK: - Private Methods
     private func updateUnreadCount() {
         unreadCount = conversations.reduce(0) { $0 + $1.unreadCount }
     }
     
-    private func generateMockConversations() -> [Conversation] {
-        let names = ["张三", "李四", "王五", "赵六", "钱七", "孙八", "周九", "吴十",
-                     "郑十一", "王十二", "冯十三", "陈十四", "褚十五", "卫十六"]
-        
-        return names.enumerated().map { index, name in
-            let isUnread = Bool.random() && index < 5
-            let unreadCount = isUnread ? Int.random(in: 1...99) : 0
-            let isPinned = index < 2
-            
-            return Conversation(
-                id: UUID().uuidString,
-                participantName: name,
-                participantAvatar: nil,
-                lastMessage: generateRandomMessage(),
-                timestamp: Date().addingTimeInterval(-Double(index * 3600 + Int.random(in: 0...3600))),
-                unreadCount: unreadCount,
-                isUnread: isUnread,
-                isPinned: isPinned
-            )
-        }
-    }
-    
-    private func generateRandomMessage() -> String {
-        let messages = [
-            "你好，最近怎么样？",
-            "这个项目进展如何？",
-            "明天有时间一起讨论一下吗？",
-            "收到了，谢谢！",
-            "好的，我会尽快处理",
-            "这个想法很不错",
-            "可以发给我看看吗？",
-            "没问题，我来安排",
-            "👍",
-            "好的，明白了"
-        ]
-        return messages.randomElement() ?? "新消息"
-    }
 }
 

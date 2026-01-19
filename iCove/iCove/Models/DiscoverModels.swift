@@ -54,9 +54,7 @@ enum TrendDirection {
 struct Post: Identifiable {
     let id: String
     let imageNames: [String]  // 图片名称数组
-    let authorId: String
-    let authorUsername: String
-    let authorAvatar: String?
+    let authorId: String  // 作者ID，通过此ID查找用户信息
     let content: String
     let timestamp: Date
     var isCollected: Bool  // 是否收藏
