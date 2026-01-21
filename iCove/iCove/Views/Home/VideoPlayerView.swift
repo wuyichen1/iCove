@@ -129,13 +129,37 @@ struct VideoPlayerView: View {
   }
 
   private func loadVideo() {
-    guard
-      let url = Bundle.main.url(
-        forResource: videoName,
-        withExtension: fileExtension
-      )
-    else {
-      print("⚠️ 视频文件未找到: \(videoName).\(fileExtension)")
+    var videoURL: URL?
+
+    // 首先尝试从 Bundle 加载（asset 资源）
+    if let bundleURL = Bundle.main.url(forResource: videoName, withExtension: fileExtension) {
+      videoURL = bundleURL
+    } else if let bundleURL = Bundle.main.url(forResource: videoName, withExtension: "mov") {
+      // 尝试 mov 格式
+      videoURL = bundleURL
+    } else {
+      // 尝试从用户上传的视频目录加载
+      if let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        .first
+      {
+        let userVideosURL = documentsPath.appendingPathComponent("UserVideos")
+          .appendingPathComponent(videoName)
+
+        if FileManager.default.fileExists(atPath: userVideosURL.path) {
+          videoURL = userVideosURL
+        } else {
+          // 尝试带 mp4 扩展名
+          let userVideosWithExtURL = documentsPath.appendingPathComponent("UserVideos")
+            .appendingPathComponent("\(videoName).mp4")
+          if FileManager.default.fileExists(atPath: userVideosWithExtURL.path) {
+            videoURL = userVideosWithExtURL
+          }
+        }
+      }
+    }
+
+    guard let url = videoURL else {
+      print("⚠️ 视频文件未找到: \(videoName)")
       return
     }
 

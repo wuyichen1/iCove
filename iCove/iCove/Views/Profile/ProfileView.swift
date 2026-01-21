@@ -294,8 +294,8 @@ struct ProfileView: View {
     } label: {
       ZStack(alignment: .center) {
         // 视频封面
-        Image(video.imageName)
-          .resizable()
+        // Image(video.imageName)
+        DynamicImage(imageName: video.imageName)
           .scaledToFill()
           .frame(width: cardWidth, height: 200)
           .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
@@ -326,11 +326,7 @@ struct ProfileView: View {
               Color.white.opacity(0.3)
                 // .blur(radius: 3)
                 .clipShape(RoundedCorner(radius: 20, corners: [.bottomLeft, .bottomRight]))
-              // LinearGradient(
-              //   colors: [.black.opacity(0.9), .clear],
-              //   startPoint: .bottom,
-              //   endPoint: .top
-              // )
+
             )
         }
       }

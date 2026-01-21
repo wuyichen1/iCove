@@ -198,9 +198,7 @@ struct DiscoverView: View {
     TabView(selection: $selectedCollectionIndex) {
       ForEach(Array(viewModel.collectedPosts.enumerated()), id: \.element.id) { index, post in
         if let firstImage = post.imageNames.first {
-          Image(firstImage)
-            .resizable()
-            .aspectRatio(contentMode: .fill)
+          DynamicImage(imageName: firstImage)
             .frame(height: 200)
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .overlay(
@@ -325,15 +323,13 @@ struct PostCard: View {
             .lineLimit(3)
             .padding(.bottom, 6)
 
-          // 图片网格
+          // 图片网格 - 支持加载用户上传的图片
           if !post.imageNames.isEmpty {
             HStack(spacing: 8) {
               ForEach(Array(post.imageNames.prefix(3).enumerated()), id: \.offset) {
                 index, imageName in
                 ZStack {
-                  Image(imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
+                  DynamicImage(imageName: imageName)
                     .frame(
                       width: (UIScreen.main.bounds.width - 150) / 3,
                       height: (UIScreen.main.bounds.width - 150) / 3

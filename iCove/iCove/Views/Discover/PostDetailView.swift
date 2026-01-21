@@ -75,11 +75,9 @@ struct PostDetailView: View {
             // 右侧：大图显示区域 - 撑满剩余空间
             GeometryReader { geometry in
               VStack(spacing: 0) {
-                // 大图显示 - 撑满剩余空间
+                // 大图显示 - 撑满剩余空间，支持加载用户上传的图片
                 if selectedImageIndex < post.imageNames.count {
-                  Image(post.imageNames[selectedImageIndex])
-                    .resizable()
-                    .scaledToFill()
+                  DynamicImage(imageName: post.imageNames[selectedImageIndex])
                     .frame(width: geometry.size.width, height: geometry.size.height - 160)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                     .clipped()
@@ -122,9 +120,7 @@ struct PostDetailView: View {
           Button(action: {
             selectedImageIndex = index
           }) {
-            Image(imageName)
-              .resizable()
-              .aspectRatio(contentMode: .fill)
+            DynamicImage(imageName: imageName)
               .frame(width: 62, height: 88)
               .clipShape(RoundedRectangle(cornerRadius: 12))
               .overlay(

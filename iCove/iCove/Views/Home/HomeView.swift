@@ -245,11 +245,9 @@ struct VideoCard: View {
 
   var body: some View {
     ZStack(alignment: .topLeading) {
-      // 视频封面
-      Image(video.imageName)
-        .resizable()
-        .aspectRatio(contentMode: .fill)
-        .frame(width: cardWidth, height: 200)
+      // 视频封面 - 支持加载用户上传的图片
+      DynamicImage(imageName: video.imageName)
+        .frame(width: cardWidth, height: 220)
         .clipped()
         .cornerRadius(14)
         .overlay(
