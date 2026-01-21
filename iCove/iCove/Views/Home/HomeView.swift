@@ -156,12 +156,14 @@ struct HomeView: View {
               Image("ZOVugBKGBc2g0HA3")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(width: 150, height: 48)
+                .frame(width: 155, height: 48)
                 .clipped()
                 .cornerRadius(8)
-              Text("Popular videos")
-                .font(.custom("FredokaOne-Regular", size: 17))
-                .foregroundColor(.black)
+              StarText(
+                text: "Popular videos",
+                textColor: .black,
+                textSize: 16
+              )
             }
             .frame(height: 45)
           }

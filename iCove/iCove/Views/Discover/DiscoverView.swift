@@ -106,19 +106,11 @@ struct DiscoverView: View {
         VStack {
           // My collection 文字
           HStack {
-            Text("My collection")
-              .font(.system(size: 16, weight: .medium))
-              .foregroundColor(.green)
-
-            // 两个星星图标
-            HStack(spacing: 4) {
-              Image(systemName: "sparkle")
-                .font(.system(size: 12))
-                .foregroundColor(.green)
-              Image(systemName: "sparkle")
-                .font(.system(size: 12))
-                .foregroundColor(.green)
-            }
+            StarText(
+              text: "My collection",
+              textColor: Color("yinguanglv"),
+              textSize: 18
+            )
 
             Spacer()
           }
@@ -155,9 +147,11 @@ struct DiscoverView: View {
                 .clipped()
 
               HStack {
-                Text("All")
-                  .font(.custom("FredokaOne-Regular", size: 18))
-                  .foregroundColor(.black)
+                StarText(
+                  text: "All",
+                  textColor: .black,
+                  textSize: 18
+                )
               }
 
             }

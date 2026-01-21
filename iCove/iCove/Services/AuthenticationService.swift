@@ -88,21 +88,21 @@ class AuthenticationService: AuthenticationServiceProtocol {
   // MARK: - Login
   func login(email: String, password: String) async throws -> AuthResponse {
     // 模拟网络延迟
-    try await Task.sleep(nanoseconds: 1_500_000_000)
+    try await Task.sleep(nanoseconds: 1_000_000_000)
 
     // 模拟网络错误（10% 概率）
     if Int.random(in: 1...10) == 1 {
-      throw AuthError.networkError("网络连接失败，请稍后重试")
+      throw AuthError.networkError("Network connection failed, please try again later.")
     }
 
     // 验证邮箱格式
     guard isValidEmail(email) else {
-      throw AuthError.invalidEmail("邮箱格式不正确")
+      throw AuthError.invalidEmail("Incorrect email format.")
     }
 
     // 验证密码长度
     guard password.count >= 6 else {
-      throw AuthError.invalidPassword("密码长度至少为 6 位")
+      throw AuthError.invalidPassword("The password must be at least 6 characters long.")
     }
 
     // 查找用户
@@ -110,12 +110,12 @@ class AuthenticationService: AuthenticationServiceProtocol {
     guard let userId = emailToUserId[emailKey],
       let user = users[userId]
     else {
-      throw AuthError.userNotFound("用户不存在")
+      throw AuthError.userNotFound("User does not exist.")
     }
 
     // 验证密码
     guard passwords[emailKey] == password else {
-      throw AuthError.invalidCredentials("邮箱或密码错误")
+      throw AuthError.invalidCredentials("Incorrect email or password.")
     }
 
     // 生成 token
@@ -134,28 +134,28 @@ class AuthenticationService: AuthenticationServiceProtocol {
 
     // 模拟网络错误（10% 概率）
     if Int.random(in: 1...10) == 1 {
-      throw AuthError.networkError("网络连接失败，请稍后重试")
+      throw AuthError.networkError("Network connection failed, please try again later.")
     }
 
     // 验证邮箱格式
     guard isValidEmail(email) else {
-      throw AuthError.invalidEmail("邮箱格式不正确")
+      throw AuthError.invalidEmail("Incorrect email format.")
     }
 
     // 验证密码长度
     guard password.count >= 6 else {
-      throw AuthError.invalidPassword("密码长度至少为 6 位")
+      throw AuthError.invalidPassword("The password must be at least 6 characters long.")
     }
 
     // 验证用户名长度
     guard username.count >= 2 && username.count <= 20 else {
-      throw AuthError.invalidUsername("用户名长度应在 2-20 个字符之间")
+      throw AuthError.invalidUsername("The username must be between 2 and 20 characters long.")
     }
 
     // 检查邮箱是否已注册
     let emailKey = email.lowercased()
     if emailToUserId[emailKey] != nil {
-      throw AuthError.emailAlreadyExists("该邮箱已被注册")
+      throw AuthError.emailAlreadyExists("The email has already been registered.")
     }
 
     // 创建新用户
@@ -283,7 +283,8 @@ class AuthenticationService: AuthenticationServiceProtocol {
 
     // 如果是快速登录用户，也移除本地缓存
     if let quickLoginUser = getQuickLoginUser(),
-       quickLoginUser.id == userId {
+      quickLoginUser.id == userId
+    {
       clearQuickLoginUser()
     }
   }
@@ -317,18 +318,18 @@ class AuthenticationService: AuthenticationServiceProtocol {
 
     // 验证邮箱格式
     guard isValidEmail(email) else {
-      throw AuthError.invalidEmail("邮箱格式不正确")
+      throw AuthError.invalidEmail("Incorrect email format.")
     }
 
     // 验证密码长度
     guard newPassword.count >= 6 else {
-      throw AuthError.invalidPassword("密码长度至少为 6 位")
+      throw AuthError.invalidPassword("The password must be at least 6 characters long.")
     }
 
     // 查找用户
     let emailKey = email.lowercased()
     guard emailToUserId[emailKey] != nil else {
-      throw AuthError.userNotFound("用户不存在")
+      throw AuthError.userNotFound("User does not exist.")
     }
 
     // 更新密码

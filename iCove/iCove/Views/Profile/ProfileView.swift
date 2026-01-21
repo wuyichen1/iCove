@@ -244,10 +244,11 @@ struct ProfileView: View {
           .frame(width: 110, height: 45)
           .clipped()
 
-        Text("Works")
-          .font(.custom("FredokaOne-Regular", size: 18))
-          .foregroundColor(.black)
-
+        StarText(
+          text: "Works",
+          textColor: .black,
+          textSize: 18
+        )
       }
 
       // 视频网格
@@ -268,13 +269,13 @@ struct ProfileView: View {
       }
     }
   }
-  
+
   // MARK: - Video Grid
   private var videoGrid: some View {
     let screenWidth = UIScreen.main.bounds.width
     let availableWidth = screenWidth - 40  // 减去左右 padding (20 * 2)
     let cardWidth = (availableWidth - 16) / 2  // 减去中间 spacing
-    
+
     return LazyVGrid(
       columns: [
         GridItem(.fixed(cardWidth), spacing: 16),
