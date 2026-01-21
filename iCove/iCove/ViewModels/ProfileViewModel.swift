@@ -15,10 +15,12 @@ class ProfileViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     @Published var settings: [SettingItem] = []
+    @Published var userVideos: [VideoItem] = []
     
     // MARK: - Private Properties
     private let authManager: AuthenticationManager
     private let targetUserId: String?
+    private let authService: AuthenticationServiceProtocol
     
     // MARK: - Computed Properties
     /// 是否是当前用户的资料页
@@ -31,9 +33,14 @@ class ProfileViewModel: ObservableObject {
     }
     
     // MARK: - Initialization
-    init(authManager: AuthenticationManager, userId: String? = nil) {
+    init(
+        authManager: AuthenticationManager,
+        userId: String? = nil,
+        authService: AuthenticationServiceProtocol = AuthenticationService.shared
+    ) {
         self.authManager = authManager
         self.targetUserId = userId
+        self.authService = authService
         Task {
             await loadUserProfile()
             if isCurrentUser {
@@ -50,37 +57,59 @@ class ProfileViewModel: ObservableObject {
         errorMessage = nil
         
         // 模拟网络请求延迟
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
+        // try? await Task.sleep(nanoseconds: 500_000_000)
         
         // 如果是当前用户，使用当前用户信息；否则加载指定用户信息
-        if isCurrentUser {
-            // 当前用户资料
-            if let currentUser = authManager.currentUser {
-                userProfile = UserProfile(
-                    id: currentUser.id,
-                    username: currentUser.username,
-                    bio: "这是我的个人简介，分享生活点滴",
-                    avatar: currentUser.avatar,
-                    followerCount: 1234,
-                    followingCount: 567,
-                    postCount: 89,
-                    isFollowing: false,
-                    joinDate: Date().addingTimeInterval(-365 * 24 * 3600)
-                )
+        let userIdToLoad = targetUserId ?? authManager.currentUser?.id
+        
+        if let userId = userIdToLoad {
+            // 先加载该用户发布的视频
+            loadUserVideos(userId: userId)
+            
+            if isCurrentUser {
+                // 当前用户资料
+                if let currentUser = authManager.currentUser {
+                    userProfile = UserProfile(
+                        id: currentUser.id,
+                        username: currentUser.username,
+                        bio: "这是我的个人简介，分享生活点滴",
+                        avatar: currentUser.avatar,
+                        followerCount: 1234,
+                        followingCount: 567,
+                        postCount: userVideos.count,
+                        isFollowing: false,
+                        joinDate: Date().addingTimeInterval(-365 * 24 * 3600)
+                    )
+                }
+            } else {
+                // 他人资料：优先从认证服务中读取真实用户信息
+                if let otherUser = authService.getUserById(userId) {
+                    userProfile = UserProfile(
+                        id: otherUser.id,
+                        username: otherUser.username,
+                        bio: "这是其他用户的个人简介",
+                        avatar: otherUser.avatar,
+                        followerCount: 218,
+                        followingCount: 100,
+                        postCount: userVideos.count,
+                        isFollowing: false,
+                        joinDate: Date().addingTimeInterval(-200 * 24 * 3600)
+                    )
+                } else {
+                    // 回退：根据 userId 构造一个占位用户
+                    userProfile = UserProfile(
+                        id: userId,
+                        username: "用户\(userId.suffix(4))",
+                        bio: "这是其他用户的个人简介",
+                        avatar: nil,
+                        followerCount: 218,
+                        followingCount: 100,
+                        postCount: userVideos.count,
+                        isFollowing: false,
+                        joinDate: Date().addingTimeInterval(-200 * 24 * 3600)
+                    )
+                }
             }
-        } else if let userId = targetUserId {
-            // 其他用户资料（模拟数据）
-            userProfile = UserProfile(
-                id: userId,
-                username: "Cormac",
-                bio: "这是其他用户的个人简介",
-                avatar: nil,
-                followerCount: 218,
-                followingCount: 100,
-                postCount: 45,
-                isFollowing: false,
-                joinDate: Date().addingTimeInterval(-200 * 24 * 3600)
-            )
         }
         
         isLoading = false
@@ -88,6 +117,13 @@ class ProfileViewModel: ObservableObject {
     
     func refresh() async {
         await loadUserProfile()
+    }
+    
+    // MARK: - Load User Videos
+    private func loadUserVideos(userId: String) {
+        let allVideos = VideoDataService.shared.loadVideos()
+        userVideos = allVideos.filter { $0.authorId == userId }
+            .sorted { $0.timestamp > $1.timestamp } // 最新的在前
     }
     
     func toggleFollow() {

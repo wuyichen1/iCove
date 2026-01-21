@@ -89,7 +89,7 @@ struct DiscoverView: View {
         .scaleEffect(1.5)
         .tint(.white)
 
-      Text("加载中...")
+      Text("Loading...")
         .font(.system(size: 16))
         .foregroundColor(.white.opacity(0.8))
       Spacer()
@@ -165,12 +165,12 @@ struct DiscoverView: View {
 
             // + 按钮
             Button(action: {
-              // 添加操作
+              router.push(.publish(type: .imagePost))
             }) {
               Image("Tz0wJDM3mdSWeD0Y")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(width: 80, height: 43)
+                .frame(width: 66, height: 43)
                 .clipped()
             }
           }
@@ -248,6 +248,8 @@ struct DiscoverView: View {
 struct PostCard: View {
   let post: Post
   @StateObject private var viewModel: PostCardViewModel
+  @EnvironmentObject var router: Router
+  @EnvironmentObject var authManager: AuthenticationManager
 
   init(post: Post) {
     self.post = post
@@ -259,11 +261,18 @@ struct PostCard: View {
       HStack(alignment: .top) {
         // 头像
         if let author = viewModel.author, let avatar = author.avatar {
-          Image(avatar)
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .frame(width: 46, height: 46)
-            .clipShape(Circle())
+          Button(action: {
+            // 点击头像跳转到用户页
+            if let author = viewModel.author {
+              router.push(.profile(userId: author.id))
+            }
+          }) {
+            Image(avatar)
+              .resizable()
+              .aspectRatio(contentMode: .fill)
+              .frame(width: 46, height: 46)
+              .clipShape(Circle())
+          }
           // .overlay(
           //   Circle()
           //     .stroke(
@@ -366,13 +375,18 @@ struct PostCard: View {
     .background(
       LinearGradient(
         gradient: Gradient(colors: [
-          Color(red: 216 / 255, green: 72 / 255, blue: 227 / 255), Color(.white),
+          Color(red: 216 / 255, green: 72 / 255, blue: 227 / 255),
+          Color(red: 216 / 255, green: 177 / 255, blue: 227 / 255),
+          // Color.white,
         ]),
         startPoint: .topLeading,
         endPoint: .bottomTrailing
       )
     )
     .cornerRadius(20)
+    .onAppear {
+      viewModel.setAuthManager(authManager)
+    }
   }
 }
 
@@ -381,17 +395,36 @@ struct PostCard: View {
 class PostCardViewModel: ObservableObject {
   @Published var author: User?
   private let authService: AuthenticationServiceProtocol
+  private let authorId: String
+  private weak var authManager: AuthenticationManager?
 
   init(
     authorId: String,
-    authService: AuthenticationServiceProtocol = AuthenticationService.shared
+    authService: AuthenticationServiceProtocol = AuthenticationService.shared,
+    authManager: AuthenticationManager? = nil
   ) {
     self.authService = authService
+    self.authorId = authorId
+    self.authManager = authManager
     loadAuthor(authorId: authorId)
   }
 
+  func setAuthManager(_ authManager: AuthenticationManager) {
+    self.authManager = authManager
+    // 如果之前没有找到作者信息，重新尝试加载
+    if author == nil {
+      loadAuthor(authorId: authorId)
+    }
+  }
+
   private func loadAuthor(authorId: String) {
+    // 首先尝试从 AuthenticationService 获取用户信息
     author = authService.getUserById(authorId)
+
+    // 如果找不到，检查是否是当前登录用户
+    if author == nil, let currentUser = authManager?.currentUser, currentUser.id == authorId {
+      author = currentUser
+    }
   }
 }
 

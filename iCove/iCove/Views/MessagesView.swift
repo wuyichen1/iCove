@@ -44,9 +44,13 @@ struct MessagesView: View {
     .navigationBarHidden(true)
     .enableInjection()
     .onAppear {
+      viewModel.currentUserId = authManager.currentUser?.id
       Task {
         await viewModel.loadConversations()
       }
+    }
+    .onChange(of: authManager.currentUser?.id) { _, newUserId in
+      viewModel.currentUserId = newUserId
     }
     .onChange(of: router.path.count) { _, _ in
       // 当从聊天详情页返回时，刷新会话列表
@@ -113,7 +117,8 @@ struct MessagesView: View {
               viewModel.markAsRead(conversation)
               // 获取对方用户ID并跳转到聊天详情页
               if let currentUserId = authManager.currentUser?.id,
-                 let otherUserId = conversation.participantIds.first(where: { $0 != currentUserId }) {
+                let otherUserId = conversation.participantIds.first(where: { $0 != currentUserId })
+              {
                 router.push(.chatDetail(conversationId: conversation.id, otherUserId: otherUserId))
               }
             }
@@ -132,11 +137,12 @@ struct MessagesView: View {
         .scaleEffect(1.5)
         .tint(.white)
 
-      Text("加载中...")
+      Text("Loading...")
         .font(.system(size: 16))
         .foregroundColor(.white.opacity(0.8))
       Spacer()
     }
+    .padding(.bottom, 100)
     .frame(maxWidth: .infinity, maxHeight: .infinity)
   }
 
@@ -157,6 +163,7 @@ struct MessagesView: View {
         .foregroundColor(.white.opacity(0.6))
       Spacer()
     }
+    .padding(.bottom, 100)
     .frame(maxWidth: .infinity, maxHeight: .infinity)
   }
 }

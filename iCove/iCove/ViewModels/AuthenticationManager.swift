@@ -90,6 +90,80 @@ class AuthenticationManager: ObservableObject {
         saveAuthState(token: response.token, user: response.user, loginType: "quick")
     }
     
+    // MARK: - Update Profile
+    /// 更新当前用户用户名并持久化
+    func updateUsername(_ newUsername: String) {
+        guard var user = currentUser else { return }
+        user = User(
+            id: user.id,
+            email: user.email,
+            username: newUsername,
+            avatar: user.avatar,
+            balance: user.balance,
+            collectedPostIds: user.collectedPostIds,
+            blockedUserIds: user.blockedUserIds
+        )
+        currentUser = user
+        saveAuthState(token: authToken ?? "", user: user, loginType: isQuickLogin ? "quick" : "normal")
+    }
+    
+    /// 增加用户余额（购买胡萝卜）
+    func addBalance(_ amount: Int) {
+        guard var user = currentUser else { return }
+        user = User(
+            id: user.id,
+            email: user.email,
+            username: user.username,
+            avatar: user.avatar,
+            balance: user.balance + amount,
+            collectedPostIds: user.collectedPostIds,
+            blockedUserIds: user.blockedUserIds
+        )
+        currentUser = user
+        saveAuthState(token: authToken ?? "", user: user, loginType: isQuickLogin ? "quick" : "normal")
+    }
+    
+    /// 扣除用户余额（消费）
+    func deductBalance(_ amount: Int) {
+        guard var user = currentUser else { return }
+        let newBalance = max(0, user.balance - amount)  // 确保余额不会为负数
+        user = User(
+            id: user.id,
+            email: user.email,
+            username: user.username,
+            avatar: user.avatar,
+            balance: newBalance,
+            collectedPostIds: user.collectedPostIds,
+            blockedUserIds: user.blockedUserIds
+        )
+        currentUser = user
+        saveAuthState(token: authToken ?? "", user: user, loginType: isQuickLogin ? "quick" : "normal")
+    }
+    
+    // MARK: - Block User Management
+    /// 添加拉黑的用户ID
+    func addBlockedUserId(_ userId: String) {
+        guard var user = currentUser else { return }
+        if !user.blockedUserIds.contains(userId) {
+            user.blockedUserIds.append(userId)
+            currentUser = user
+            saveAuthState(token: authToken ?? "", user: user, loginType: isQuickLogin ? "quick" : "normal")
+        }
+    }
+    
+    /// 移除拉黑的用户ID
+    func removeBlockedUserId(_ userId: String) {
+        guard var user = currentUser else { return }
+        user.blockedUserIds.removeAll { $0 == userId }
+        currentUser = user
+        saveAuthState(token: authToken ?? "", user: user, loginType: isQuickLogin ? "quick" : "normal")
+    }
+    
+    /// 检查用户是否被拉黑
+    func isUserBlocked(_ userId: String) -> Bool {
+        return currentUser?.blockedUserIds.contains(userId) ?? false
+    }
+    
     // MARK: - Delete Quick Login User
     func deleteQuickLoginUser() async throws {
         guard let userId = currentUser?.id else {
@@ -106,6 +180,20 @@ class AuthenticationManager: ObservableObject {
         isQuickLogin = false
         
         // 清除所有持久化存储（包括快速登录用户信息）
+        clearAuthState(keepQuickLogin: false)
+    }
+
+    // MARK: - Delete Account (通用)
+    func deleteAccount() async throws {
+        guard let userId = currentUser?.id else { return }
+
+        try await authService.deleteUserAccount(userId: userId)
+
+        // 清除本地认证状态并回到欢迎页
+        authToken = nil
+        currentUser = nil
+        isAuthenticated = false
+        isQuickLogin = false
         clearAuthState(keepQuickLogin: false)
     }
     

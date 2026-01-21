@@ -16,13 +16,14 @@ struct AuthResponse {
 }
 
 /// 用户模型
-struct User: Codable {
+struct User: Codable, Identifiable {
     let id: String
     let email: String
     let username: String
     let avatar: String?
     let balance: Int
     var collectedPostIds: [String]  // 收藏的帖子ID列表
+    var blockedUserIds: [String]  // 拉黑的用户ID列表
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -31,15 +32,17 @@ struct User: Codable {
         case avatar
         case balance
         case collectedPostIds
+        case blockedUserIds
     }
     
-    init(id: String, email: String, username: String, avatar: String? = nil, balance: Int = 0, collectedPostIds: [String] = []) {
+    init(id: String, email: String, username: String, avatar: String? = nil, balance: Int = 0, collectedPostIds: [String] = [], blockedUserIds: [String] = []) {
         self.id = id
         self.email = email
         self.username = username
         self.avatar = avatar
         self.balance = balance
         self.collectedPostIds = collectedPostIds
+        self.blockedUserIds = blockedUserIds
     }
     
     init(from decoder: Decoder) throws {
@@ -50,6 +53,7 @@ struct User: Codable {
         avatar = try container.decodeIfPresent(String.self, forKey: .avatar)
         balance = try container.decodeIfPresent(Int.self, forKey: .balance) ?? 0
         collectedPostIds = try container.decodeIfPresent([String].self, forKey: .collectedPostIds) ?? []
+        blockedUserIds = try container.decodeIfPresent([String].self, forKey: .blockedUserIds) ?? []
     }
     
     func encode(to encoder: Encoder) throws {
@@ -60,6 +64,7 @@ struct User: Codable {
         try container.encodeIfPresent(avatar, forKey: .avatar)
         try container.encode(balance, forKey: .balance)
         try container.encode(collectedPostIds, forKey: .collectedPostIds)
+        try container.encode(blockedUserIds, forKey: .blockedUserIds)
     }
 }
 

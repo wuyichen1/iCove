@@ -63,6 +63,34 @@ struct AppNavigationView<Content: View>: View {
                 .environmentObject(router)
                 .environmentObject(authManager)
                 .toolbar(.hidden, for: .tabBar)
+        case .settings:
+            SettingsView()
+                .environmentObject(router)
+                .environmentObject(authManager)
+                .toolbar(.hidden, for: .tabBar)
+        case .editProfile:
+            EditProfileView()
+                .environmentObject(router)
+                .environmentObject(authManager)
+                .toolbar(.hidden, for: .tabBar)
+        case .blacklist:
+            BlacklistView()
+                .environmentObject(router)
+                .environmentObject(authManager)
+                .toolbar(.hidden, for: .tabBar)
+        case .wallet:
+            WalletView()
+                .environmentObject(router)
+                .environmentObject(authManager)
+                .toolbar(.hidden, for: .tabBar)
+        case .ai:
+            AIView()
+                .environmentObject(authManager)
+                .toolbar(.hidden, for: .tabBar)
+        case .publish(let type):
+            PublishView(publishType: type)
+                .environmentObject(authManager)
+                .toolbar(.hidden, for: .tabBar)
         }
     }
 

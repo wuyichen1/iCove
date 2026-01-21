@@ -44,9 +44,11 @@ struct MainTabView: View {
           .environmentObject(authManager)
           .environmentObject(router)
         case .profile:
-          ProfileViewWrapper()
-            .environmentObject(authManager)
-            .environmentObject(router)
+          AppNavigationView {
+            ProfileViewWrapper()
+          }
+          .environmentObject(router)
+          .environmentObject(authManager)
         }
       }
       .frame(maxWidth: .infinity, maxHeight: .infinity)

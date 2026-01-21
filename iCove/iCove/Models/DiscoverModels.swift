@@ -51,11 +51,64 @@ enum TrendDirection {
 }
 
 /// 帖子模型
-struct Post: Identifiable {
+struct Post: Identifiable, Codable, Hashable {
     let id: String
     let imageNames: [String]  // 图片名称数组
     let authorId: String  // 作者ID，通过此ID查找用户信息
     let content: String
     let timestamp: Date
     var isCollected: Bool  // 是否收藏
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case imageNames
+        case authorId
+        case content
+        case timestamp
+        case isCollected
+    }
+    
+    init(id: String = UUID().uuidString,
+         imageNames: [String],
+         authorId: String,
+         content: String,
+         timestamp: Date = Date(),
+         isCollected: Bool = false) {
+        self.id = id
+        self.imageNames = imageNames
+        self.authorId = authorId
+        self.content = content
+        self.timestamp = timestamp
+        self.isCollected = isCollected
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        imageNames = try container.decode([String].self, forKey: .imageNames)
+        authorId = try container.decode(String.self, forKey: .authorId)
+        content = try container.decode(String.self, forKey: .content)
+        let timestampInterval = try container.decode(TimeInterval.self, forKey: .timestamp)
+        timestamp = Date(timeIntervalSince1970: timestampInterval)
+        isCollected = try container.decode(Bool.self, forKey: .isCollected)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(imageNames, forKey: .imageNames)
+        try container.encode(authorId, forKey: .authorId)
+        try container.encode(content, forKey: .content)
+        try container.encode(timestamp.timeIntervalSince1970, forKey: .timestamp)
+        try container.encode(isCollected, forKey: .isCollected)
+    }
+    
+    // MARK: - Hashable
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func == (lhs: Post, rhs: Post) -> Bool {
+        return lhs.id == rhs.id
+    }
 }

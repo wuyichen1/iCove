@@ -35,6 +35,21 @@ class DiscoverViewModel: ObservableObject {
         Task {
             await loadInitialData()
         }
+        
+        // 监听通知，当有新帖子发布时刷新
+        NotificationCenter.default.addObserver(
+            forName: NSNotification.Name("PostPublished"),
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in
+                self?.refreshPosts()
+            }
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Public Methods
@@ -159,6 +174,12 @@ class DiscoverViewModel: ObservableObject {
         self.authManager = authManager
         // 刷新收藏列表以反映当前用户的收藏状态
         refreshCollectedPosts()
+    }
+    
+    /// 刷新帖子列表（当有新帖子发布时调用）
+    private func refreshPosts() {
+        collectedPosts = generateMockCollectedPosts()
+        allPosts = generateMockAllPosts()
     }
 }
 

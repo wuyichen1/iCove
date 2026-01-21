@@ -14,16 +14,17 @@ protocol PostDataServiceProtocol {
     func loadCollectedPosts(by postIds: [String]) -> [Post]  // 根据帖子ID列表获取收藏的帖子
     func getPostById(_ postId: String) -> Post?
     func updatePost(_ post: Post)
+    func addPost(_ post: Post)  // 添加新帖子
 }
 
 /// 帖子数据服务 - 负责帖子数据的存储和管理
 class PostDataService: PostDataServiceProtocol {
     static let shared = PostDataService()
 
-    // MARK: - 持久化示例帖子数据
-
-    /// 全部帖子数据（写死的示例数据）
-    private let allPosts: [Post] = [
+    private let postsKey = "saved_posts"
+    
+    // MARK: - 示例帖子数据（用于初始化）
+    private let samplePosts: [Post] = [
         // Maddison的帖子（根据UI图）
         Post(
             id: "post_001",
@@ -69,12 +70,27 @@ class PostDataService: PostDataServiceProtocol {
         ),
     ]
 
-    private init() {}
+    private init() {
+        // 如果是首次启动，初始化示例数据
+        if loadAllPosts().isEmpty {
+            initializeSamplePosts()
+        }
+    }
 
     // MARK: - Public Methods
 
     func loadAllPosts() -> [Post] {
-        return allPosts
+        guard let data = UserDefaults.standard.data(forKey: postsKey),
+              let posts = try? JSONDecoder().decode([Post].self, from: data) else {
+            return []
+        }
+        return posts
+    }
+    
+    func savePosts(_ posts: [Post]) {
+        if let data = try? JSONEncoder().encode(posts) {
+            UserDefaults.standard.set(data, forKey: postsKey)
+        }
     }
 
     func loadCollectedPosts() -> [Post] {
@@ -84,16 +100,32 @@ class PostDataService: PostDataServiceProtocol {
 
     func loadCollectedPosts(by postIds: [String]) -> [Post] {
         // 根据帖子ID列表从全部帖子中筛选出收藏的帖子
+        let allPosts = loadAllPosts()
         return allPosts.filter { postIds.contains($0.id) }
     }
 
     func getPostById(_ postId: String) -> Post? {
+        let allPosts = loadAllPosts()
         return allPosts.first(where: { $0.id == postId })
     }
 
     func updatePost(_ post: Post) {
-        // 注意：由于 allPosts 是 let 常量，这里无法直接修改
-        // 在实际应用中，应该使用可变的数据源或持久化存储
-        // 这里保持接口一致性，实际更新需要在持久化层处理
+        var posts = loadAllPosts()
+        if let index = posts.firstIndex(where: { $0.id == post.id }) {
+            posts[index] = post
+            savePosts(posts)
+        }
+    }
+    
+    func addPost(_ post: Post) {
+        var posts = loadAllPosts()
+        posts.insert(post, at: 0) // 新帖子添加到最前面
+        savePosts(posts)
+    }
+    
+    // MARK: - Private Methods
+    
+    private func initializeSamplePosts() {
+        savePosts(samplePosts)
     }
 }
