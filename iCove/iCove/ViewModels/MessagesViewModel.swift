@@ -56,7 +56,7 @@ class MessagesViewModel: ObservableObject {
     errorMessage = nil
 
     // 模拟网络请求延迟
-    try? await Task.sleep(nanoseconds: 500_000_000)
+    try? await Task.sleep(nanoseconds: 300_000_000)
 
     // 从持久化存储加载会话数据
     conversations = conversationService.loadAllConversations()
@@ -67,7 +67,7 @@ class MessagesViewModel: ObservableObject {
 
   func refresh() async {
     // 模拟刷新延迟
-    try? await Task.sleep(nanoseconds: 500_000_000)
+    try? await Task.sleep(nanoseconds: 300_000_000)
 
     // 从持久化存储重新加载会话数据
     conversations = conversationService.loadAllConversations()

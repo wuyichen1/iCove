@@ -38,13 +38,31 @@ struct DynamicImage: View {
     .onAppear {
       loadLocalImage()
     }
+    .onChange(of: imageName) { _, _ in
+      // 当 imageName 改变时，清除旧的图片并重新加载
+      uiImage = nil
+      loadLocalImage()
+    }
   }
 
   /// 尝试从本地文件系统加载图片
   private func loadLocalImage() {
-    // 如果已经是 asset 图片，不需要加载
+    // 首先检查是否是 asset 图片
     if UIImage(named: imageName) != nil {
+      // 如果是 asset 图片，清除 uiImage，让 body 中的 else if 分支处理
+      uiImage = nil
       return
+    }
+
+    // 检查是否是完整路径（兼容旧数据）
+    if imageName.hasPrefix("/") || imageName.hasPrefix("file://") {
+      let filePath = imageName.replacingOccurrences(of: "file://", with: "")
+      if FileManager.default.fileExists(atPath: filePath),
+        let image = UIImage(contentsOfFile: filePath)
+      {
+        uiImage = image
+        return
+      }
     }
 
     // 尝试从用户上传的图片目录加载
@@ -71,6 +89,9 @@ struct DynamicImage: View {
         return
       }
     }
+    
+    // 如果所有尝试都失败，清除 uiImage，显示占位图
+    uiImage = nil
   }
 }
 
@@ -80,6 +101,16 @@ class DynamicImageLoader {
     // 首先尝试从 asset 加载
     if let assetImage = UIImage(named: imageName) {
       return assetImage
+    }
+
+    // 检查是否是完整路径（兼容旧数据）
+    if imageName.hasPrefix("/") || imageName.hasPrefix("file://") {
+      let filePath = imageName.replacingOccurrences(of: "file://", with: "")
+      if FileManager.default.fileExists(atPath: filePath),
+        let image = UIImage(contentsOfFile: filePath)
+      {
+        return image
+      }
     }
 
     // 尝试从本地文件加载

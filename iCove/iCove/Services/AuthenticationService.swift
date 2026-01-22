@@ -17,6 +17,7 @@ protocol AuthenticationServiceProtocol {
   func deleteUserAccount(userId: String) async throws
   func resetPassword(email: String, newPassword: String) async throws
   func getUserById(_ userId: String) -> User?
+  func updateUser(_ user: User) -> Void
 }
 
 class AuthenticationService: AuthenticationServiceProtocol {
@@ -82,8 +83,96 @@ class AuthenticationService: AuthenticationServiceProtocol {
   private var passwords: [String: String] = [
     "test@gmail.com": "123456"
   ]
+  
+  // UserDefaults keys
+  private let usersKey = "persisted_users"
+  private let emailToUserIdKey = "persisted_email_to_user_id"
+  private let passwordsKey = "persisted_passwords"
 
-  private init() {}
+  private init() {
+    loadPersistedData()
+  }
+  
+  // MARK: - Persistence
+  /// 加载持久化的用户数据
+  private func loadPersistedData() {
+    // 加载用户列表
+    if let usersData = UserDefaults.standard.data(forKey: usersKey),
+       let serializableUsers = try? JSONSerialization.jsonObject(with: usersData) as? [String: String] {
+      var loadedUsers: [String: User] = [:]
+      for (key, base64String) in serializableUsers {
+        if let userData = Data(base64Encoded: base64String),
+           let user = try? JSONDecoder().decode(User.self, from: userData) {
+          loadedUsers[key] = user
+        }
+      }
+      if !loadedUsers.isEmpty {
+        users = loadedUsers
+      } else {
+        saveUsers()
+      }
+    } else {
+      // 如果没有持久化的数据，保存默认的示例用户数据
+      saveUsers()
+    }
+    
+    // 加载邮箱到用户ID的映射
+    if let emailToUserIdData = UserDefaults.standard.data(forKey: emailToUserIdKey),
+       let loadedEmailToUserId = try? JSONSerialization.jsonObject(with: emailToUserIdData) as? [String: String] {
+      if !loadedEmailToUserId.isEmpty {
+        emailToUserId = loadedEmailToUserId
+      } else {
+        saveEmailToUserId()
+      }
+    } else {
+      // 如果没有持久化的数据，保存默认的映射
+      saveEmailToUserId()
+    }
+    
+    // 加载密码（注意：实际应用中不应该持久化密码，这里只是为了演示）
+    if let passwordsData = UserDefaults.standard.data(forKey: passwordsKey),
+       let loadedPasswords = try? JSONSerialization.jsonObject(with: passwordsData) as? [String: String] {
+      if !loadedPasswords.isEmpty {
+        passwords = loadedPasswords
+      } else {
+        savePasswords()
+      }
+    } else {
+      // 如果没有持久化的数据，保存默认的密码
+      savePasswords()
+    }
+  }
+  
+  /// 保存用户列表到持久化存储
+  private func saveUsers() {
+    // 将字典转换为数组进行编码
+    var serializableUsers: [String: String] = [:]
+    for (key, user) in users {
+      if let userData = try? JSONEncoder().encode(user) {
+        serializableUsers[key] = userData.base64EncodedString()
+      }
+    }
+    
+    if let usersData = try? JSONSerialization.data(withJSONObject: serializableUsers) {
+      UserDefaults.standard.set(usersData, forKey: usersKey)
+    }
+  }
+  
+  /// 保存邮箱到用户ID的映射到持久化存储
+  private func saveEmailToUserId() {
+    // [String: String] 可以直接使用 JSONSerialization
+    if let emailToUserIdData = try? JSONSerialization.data(withJSONObject: emailToUserId) {
+      UserDefaults.standard.set(emailToUserIdData, forKey: emailToUserIdKey)
+    }
+  }
+  
+  /// 保存密码到持久化存储（注意：实际应用中不应该持久化密码）
+  private func savePasswords() {
+    // [String: String] 可以直接使用 JSONSerialization
+    if let passwordsData = try? JSONSerialization.data(withJSONObject: passwords) {
+      UserDefaults.standard.set(passwordsData, forKey: passwordsKey)
+    }
+  }
 
   // MARK: - Login
   func login(email: String, password: String) async throws -> AuthResponse {
@@ -170,6 +259,11 @@ class AuthenticationService: AuthenticationServiceProtocol {
     users[userId] = newUser
     emailToUserId[emailKey] = userId
     passwords[emailKey] = password
+    
+    // 持久化数据
+    saveUsers()
+    saveEmailToUserId()
+    savePasswords()
 
     // 生成 token
     let token = generateToken(for: userId)
@@ -221,6 +315,11 @@ class AuthenticationService: AuthenticationServiceProtocol {
       users[userId] = newUser
       emailToUserId[email] = userId
       passwords[email] = password
+      
+      // 持久化数据
+      saveUsers()
+      saveEmailToUserId()
+      savePasswords()
       saveQuickLoginUser(newUser)
 
       // 生成 token
@@ -247,6 +346,11 @@ class AuthenticationService: AuthenticationServiceProtocol {
         emailToUserId.removeValue(forKey: quickLoginUser.email)
         passwords.removeValue(forKey: quickLoginUser.email)
       }
+      
+      // 持久化数据
+      saveUsers()
+      saveEmailToUserId()
+      savePasswords()
       clearQuickLoginUser()
     }
   }
@@ -279,6 +383,11 @@ class AuthenticationService: AuthenticationServiceProtocol {
         emailToUserId.removeValue(forKey: user.email)
         passwords.removeValue(forKey: user.email)
       }
+      
+      // 持久化数据
+      saveUsers()
+      saveEmailToUserId()
+      savePasswords()
     }
 
     // 如果是快速登录用户，也移除本地缓存
@@ -334,6 +443,7 @@ class AuthenticationService: AuthenticationServiceProtocol {
 
     // 更新密码
     passwords[emailKey] = newPassword
+    savePasswords() // 持久化密码
 
     // 如果这是快速登录用户，也需要更新
     if let quickLoginUser = getQuickLoginUser(),
@@ -346,6 +456,20 @@ class AuthenticationService: AuthenticationServiceProtocol {
   // MARK: - Get User By ID
   func getUserById(_ userId: String) -> User? {
     return users[userId]
+  }
+  
+  // MARK: - Update User
+  /// 更新用户信息（同步更新用户列表）
+  func updateUser(_ user: User) {
+    users[user.id] = user
+    saveUsers() // 持久化用户列表
+    
+    // 如果是快速登录用户，也需要更新本地缓存
+    if let quickLoginUser = getQuickLoginUser(),
+       quickLoginUser.id == user.id
+    {
+      saveQuickLoginUser(user)
+    }
   }
 
   // MARK: - Private Helpers

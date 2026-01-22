@@ -117,8 +117,7 @@ struct ProfileView: View {
   private func headerBackground(profile: UserProfile) -> some View {
     let bgImageName = profile.avatar ?? "icove_logo"
     return ZStack {
-      Image(bgImageName)
-        .resizable()
+      DynamicImage(imageName: bgImageName)
         .scaledToFill()
         .blur(radius: 3)
         .clipped()
@@ -175,9 +174,7 @@ struct ProfileView: View {
 
   private func avatarView(profile: UserProfile) -> some View {
     let avatarName = profile.avatar ?? "7X1p2a4Cu1Xn8nXt"
-    return Image(avatarName)
-      .resizable()
-      .scaledToFill()
+    return DynamicImage(imageName: avatarName)
       .frame(width: 116, height: 180)
       .clipShape(RoundedRectangle(cornerRadius: 98, style: .continuous))
       .overlay(

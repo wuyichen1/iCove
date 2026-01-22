@@ -203,6 +203,9 @@ struct HomeView: View {
           }
           .padding(.top, 12)
         }
+        .animation(
+          .spring(response: 0.5, dampingFraction: 0.65, blendDuration: 0.4), value: viewModel.videos
+        )
         .refreshable {
           await viewModel.refresh()
         }

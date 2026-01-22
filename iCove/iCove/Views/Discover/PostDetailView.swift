@@ -46,97 +46,108 @@ struct PostDetailView: View {
         .frame(height: 54)
 
         if let post = viewModel.post {
-          HStack(alignment: .top, spacing: 12) {
-            // 左侧：固定宽度区域（小图列表 + 收藏按钮）
-            VStack(spacing: 0) {
-              // 左侧：小图列表（缩略图栏）
-              leftThumbnailBar(post: post)
+          GeometryReader { geometry in
+            let totalWidth = geometry.size.width
+            let totalHeight = geometry.size.height
+            let leftWidth: CGFloat = 64  // 左侧固定宽度
+            let spacing: CGFloat = 16
+            let rightWidth = totalWidth - leftWidth - spacing
 
-              Spacer()
-
-              // 左下角收藏按钮
-              Button(action: {
-                viewModel.toggleCollect()
-              }) {
-                ZStack {
-                  Circle()
-                    .fill(Color("buttonPurple"))
-                    .frame(width: 54, height: 54)
-
-                  Image(systemName: "star.fill")
-                    .font(.system(size: 24))
-                    .foregroundColor(viewModel.post?.isCollected == true ? .yellow : .white)
-                }
-              }
-              .padding(.bottom, 20)
-            }
-            .padding(.trailing, 8)
-
-            // 右侧：大图显示区域 - 撑满剩余空间
-            GeometryReader { geometry in
+            HStack(alignment: .top, spacing: spacing) {
+              // 左侧：小图列表 + 收藏按钮
               VStack(spacing: 0) {
-                // 大图显示 - 撑满剩余空间，支持加载用户上传的图片
+                // 缩略图列表
+                ScrollView(.vertical, showsIndicators: false) {
+                  VStack(spacing: 16) {
+                    ForEach(Array(post.imageNames.enumerated()), id: \.offset) { index, imageName in
+                      thumbnailItem(imageName: imageName, index: index)
+                    }
+                  }
+                  .padding(.top, 12)
+                }
+
+                Spacer(minLength: 20)
+
+                // 收藏按钮
+                Button(action: {
+                  viewModel.toggleCollect()
+                }) {
+                  ZStack {
+                    Circle()
+                      .fill(Color("buttonPurple"))
+                      .frame(width: 54, height: 54)
+
+                    Image(systemName: "star.fill")
+                      .font(.system(size: 24))
+                      .foregroundColor(viewModel.post?.isCollected == true ? .yellow : .white)
+                  }
+                }
+                .padding(.bottom, 20)
+              }
+              .frame(width: leftWidth)
+              .zIndex(1)  // 确保左侧在上层
+
+              // 右侧：大图 + 文字描述
+              VStack(spacing: 0) {
+                // 大图
                 if selectedImageIndex < post.imageNames.count {
                   DynamicImage(imageName: post.imageNames[selectedImageIndex])
-                    .frame(width: geometry.size.width, height: geometry.size.height - 160)
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .id(selectedImageIndex)  // 将index作为id，每次id变化，就强制在 index 变化时重新创建视图
+                    .frame(width: rightWidth, height: max(0, totalHeight - 160))
                     .clipped()
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .contentShape(RoundedRectangle(cornerRadius: 20))  // 限制点击区域
                 }
 
                 // 底部文字描述
-                VStack(alignment: .leading, spacing: 0) {
-                  Text(post.content)
-                    .font(.system(size: 14))
-                    .foregroundColor(.white)
-                    .lineLimit(nil)
-                    .fixedSize(horizontal: false, vertical: true)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.vertical, 16)
+                Text(post.content)
+                  .font(.system(size: 14))
+                  .foregroundColor(.white)
+                  .lineLimit(nil)
+                  .fixedSize(horizontal: false, vertical: true)
+                  .frame(maxWidth: .infinity, alignment: .leading)
+                  .padding(.vertical, 16)
               }
+              .frame(width: rightWidth)
+              .padding(.top, 12)
             }
-            .frame(maxWidth: .infinity)
-            .padding(.top, 12)
           }
           .padding(.horizontal, 20)
         } else {
           ProgressView("Loading...")
             .foregroundColor(.white)
         }
-
       }
-
     }
     .navigationBarHidden(true)
     .toolbar(.hidden, for: .tabBar)
     .enableInjection()
   }
 
-  // MARK: - Left Thumbnail Bar
-  private func leftThumbnailBar(post: Post) -> some View {
-    ScrollView {
-      VStack(spacing: 15) {
-        ForEach(Array(post.imageNames.enumerated()), id: \.offset) { index, imageName in
-          Button(action: {
-            selectedImageIndex = index
-          }) {
-            DynamicImage(imageName: imageName)
-              .frame(width: 62, height: 88)
-              .clipShape(RoundedRectangle(cornerRadius: 12))
-              .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                  .stroke(
-                    selectedImageIndex == index ? Color.green : Color.clear,
-                    lineWidth: selectedImageIndex == index ? 3 : 0
-                  )
-              )
-          }
-        }
-      }
-      .padding(.vertical, 12)
-      .padding(.horizontal, 12)
+  // MARK: - Thumbnail Item
+  private func thumbnailItem(imageName: String, index: Int) -> some View {
+    ZStack {
+      DynamicImage(imageName: imageName)
+        .frame(width: 62, height: 88)
+        .clipped()
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .allowsHitTesting(false)  // 禁止图片拦截点击
+
+      // 选中边框
+      RoundedRectangle(cornerRadius: 12)
+        .stroke(
+          selectedImageIndex == index ? Color("yinguanglv") : Color.clear,
+          lineWidth: 2
+        )
+        .frame(width: 62, height: 88)
+        .allowsHitTesting(false)
     }
-    .frame(width: 62)
+    .frame(width: 64, height: 88)
+    .contentShape(Rectangle())  // 明确定义整个区域可点击
+    .onTapGesture {
+      selectedImageIndex = index
+      print("selectedImageIndex: \(selectedImageIndex)")
+    }
   }
 }
 

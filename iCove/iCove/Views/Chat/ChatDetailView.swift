@@ -84,11 +84,20 @@ struct ChatDetailView: View {
       HStack(spacing: 12) {
         // 对方用户头像和名称
         if let otherUser = viewModel.otherUser {
-          Image(otherUser.avatar!)
-            .resizable()
-            .scaledToFit()
-            .frame(width: 40, height: 40)
-            .clipShape(Circle())
+          if let avatarName = otherUser.avatar {
+            DynamicImage(imageName: avatarName)
+              .frame(width: 40, height: 40)
+              .clipShape(Circle())
+          } else {
+            Circle()
+              .fill(Color.gray.opacity(0.3))
+              .frame(width: 40, height: 40)
+              .overlay {
+                Text(String(otherUser.username.prefix(1)))
+                  .font(.headline)
+                  .foregroundColor(.gray)
+              }
+          }
 
           Text(otherUser.username)
             .font(.custom("FredokaOne-Regular", size: 18))
@@ -246,14 +255,17 @@ struct ChatDetailView: View {
       }
 
       // 第二个选项：图片
-      Button(action: {
-        viewModel.selectAttachmentOption(.image)
-        // 打开图片选择器（这里可以集成实际的图片选择功能）
-        if let currentUserId = authManager.currentUser?.id {
-          // 示例：发送一张图片
-          viewModel.sendImage(imageName: "qC2VdAxOOOikJD6i11", currentUserId: currentUserId)
+      ZStack {
+        ImagePickerButton { selectedImage in
+          // 图片选择后，保存并发送
+          if let currentUserId = authManager.currentUser?.id,
+            let imageName = ImageService.shared.saveImageToLocal(
+              selectedImage, prefix: "chat", userId: currentUserId)
+          {
+            viewModel.sendImage(imageName: imageName, currentUserId: currentUserId)
+          }
         }
-      }) {
+
         VStack(spacing: 8) {
           Image("SjdYiWxMSH85ZiZW")
             .resizable()
@@ -263,6 +275,7 @@ struct ChatDetailView: View {
         .frame(width: 46, height: 46)
         .background(Color("yinguanglv"))
         .clipShape(Circle())
+        .allowsHitTesting(false)  // 让点击事件穿透到下面的按钮
       }
 
       // 第三个选项：视频通话
@@ -330,12 +343,22 @@ struct MessageBubble: View {
     HStack(alignment: .top, spacing: 8) {
       if !isFromCurrentUser {
         // 对方消息：显示头像
-        Image(otherUser?.avatar ?? "")
-          .resizable()
-          .scaledToFit()
-          .frame(width: 38, height: 38)
-          .clipShape(Circle())
-          .padding(.trailing, 3)
+        if let avatarName = otherUser?.avatar {
+          DynamicImage(imageName: avatarName)
+            .frame(width: 38, height: 38)
+            .clipShape(Circle())
+            .padding(.trailing, 3)
+        } else {
+          Circle()
+            .fill(Color.gray.opacity(0.3))
+            .frame(width: 38, height: 38)
+            .overlay {
+              Text(String(otherUser?.username.prefix(1) ?? "?"))
+                .font(.system(size: 16, weight: .bold))
+                .foregroundColor(.gray)
+            }
+            .padding(.trailing, 3)
+        }
       }
 
       VStack(alignment: isFromCurrentUser ? .trailing : .leading, spacing: 6) {
@@ -353,8 +376,9 @@ struct MessageBubble: View {
               ? [.topLeft, .bottomLeft, .bottomRight]
               : [.topRight, .bottomLeft, .bottomRight]
 
-            Image(message.content)
-              .resizable()
+            DynamicImage(imageName: message.content)
+              // Image(message.content)
+              // .resizable()
               .aspectRatio(contentMode: .fill)
               .frame(width: 150, height: 150)
               .clipShape(

@@ -186,6 +186,10 @@ struct DiscoverView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 130)  // 为底部导航栏留出空间
             .padding(.top, 10)
+            .animation(
+              .spring(response: 0.5, dampingFraction: 0.65, blendDuration: 0.4),
+              value: viewModel.allPosts
+            )
           }
         }
       }
@@ -259,23 +263,10 @@ struct PostCard: View {
               router.push(.profile(userId: author.id))
             }
           }) {
-            Image(avatar)
-              .resizable()
-              .aspectRatio(contentMode: .fill)
+            DynamicImage(imageName: avatar)
               .frame(width: 46, height: 46)
               .clipShape(Circle())
           }
-          // .overlay(
-          //   Circle()
-          //     .stroke(
-          //       LinearGradient(
-          //         gradient: Gradient(colors: [Color.pink, Color.purple]),
-          //         startPoint: .topLeading,
-          //         endPoint: .bottomTrailing
-          //       ),
-          //       lineWidth: 2.5
-          //     )
-          // )
         } else {
           Circle()
             .fill(
@@ -397,6 +388,25 @@ class PostCardViewModel: ObservableObject {
     self.authorId = authorId
     self.authManager = authManager
     loadAuthor(authorId: authorId)
+
+    // 监听当前用户信息更新通知
+    NotificationCenter.default.addObserver(
+      forName: NSNotification.Name("CurrentUserUpdated"),
+      object: nil,
+      queue: .main
+    ) { [weak self] notification in
+      Task { @MainActor in
+        guard let self = self,
+          let updatedUser = notification.userInfo?["user"] as? User,
+          updatedUser.id == self.authorId
+        else { return }
+        self.author = updatedUser
+      }
+    }
+  }
+
+  deinit {
+    NotificationCenter.default.removeObserver(self)
   }
 
   func setAuthManager(_ authManager: AuthenticationManager) {
@@ -404,6 +414,9 @@ class PostCardViewModel: ObservableObject {
     // 如果之前没有找到作者信息，重新尝试加载
     if author == nil {
       loadAuthor(authorId: authorId)
+    } else if let currentUser = authManager.currentUser, currentUser.id == authorId {
+      // 如果作者是当前用户，直接使用最新的用户信息
+      author = currentUser
     }
   }
 

@@ -158,9 +158,7 @@ struct CommentRow: View {
       // 头像
       if let author = viewModel.author {
         if let avatarName = author.avatar {
-          Image(avatarName)
-            .resizable()
-            .aspectRatio(contentMode: .fill)
+          DynamicImage(imageName: avatarName)
             .frame(width: 50, height: 50)
             .clipShape(Circle())
             .overlay(
@@ -231,6 +229,24 @@ class CommentRowViewModel: ObservableObject {
     self.authorId = authorId
     self.authManager = authManager
     loadAuthor(authorId: authorId)
+    
+    // 监听当前用户信息更新通知
+    NotificationCenter.default.addObserver(
+      forName: NSNotification.Name("CurrentUserUpdated"),
+      object: nil,
+      queue: .main
+    ) { [weak self] notification in
+      Task { @MainActor in
+        guard let self = self,
+              let updatedUser = notification.userInfo?["user"] as? User,
+              updatedUser.id == self.authorId else { return }
+        self.author = updatedUser
+      }
+    }
+  }
+  
+  deinit {
+    NotificationCenter.default.removeObserver(self)
   }
 
   func setAuthManager(_ authManager: AuthenticationManager) {
@@ -238,6 +254,9 @@ class CommentRowViewModel: ObservableObject {
     // 如果之前没有找到作者信息，重新尝试加载
     if author == nil {
       loadAuthor(authorId: authorId)
+    } else if let currentUser = authManager.currentUser, currentUser.id == authorId {
+      // 如果作者是当前用户，直接使用最新的用户信息
+      author = currentUser
     }
   }
 

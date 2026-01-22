@@ -105,6 +105,70 @@ class AuthenticationManager: ObservableObject {
         )
         currentUser = user
         saveAuthState(token: authToken ?? "", user: user, loginType: isQuickLogin ? "quick" : "normal")
+        
+        // 同步更新用户列表中的用户信息
+        authService.updateUser(user)
+        
+        // 发送用户信息更新通知，让所有相关 ViewModel 更新作者信息
+        NotificationCenter.default.post(
+            name: NSNotification.Name("CurrentUserUpdated"),
+            object: nil,
+            userInfo: ["user": user]
+        )
+    }
+    
+    /// 更新当前用户头像并持久化
+    func updateAvatar(_ image: UIImage) {
+        guard var user = currentUser else { return }
+        
+        // 将图片保存到本地并获取文件名
+        let avatarFileName = saveAvatarToLocal(image, userId: user.id)
+        
+        user = User(
+            id: user.id,
+            email: user.email,
+            username: user.username,
+            avatar: avatarFileName,
+            balance: user.balance,
+            collectedPostIds: user.collectedPostIds,
+            blockedUserIds: user.blockedUserIds
+        )
+        currentUser = user
+        saveAuthState(token: authToken ?? "", user: user, loginType: isQuickLogin ? "quick" : "normal")
+        
+        // 同步更新用户列表中的用户信息
+        authService.updateUser(user)
+        
+        // 发送用户信息更新通知，让所有相关 ViewModel 更新作者信息
+        NotificationCenter.default.post(
+            name: NSNotification.Name("CurrentUserUpdated"),
+            object: nil,
+            userInfo: ["user": user]
+        )
+    }
+    
+    /// 将头像图片保存到本地文档目录的 UserImages 子目录
+    /// 返回文件名（不包含路径），这样可以被 DynamicImageLoader 识别
+    private func saveAvatarToLocal(_ image: UIImage, userId: String) -> String {
+        let fileName = "avatar_\(userId)_\(Int(Date().timeIntervalSince1970)).jpg"
+        
+        if let data = image.jpegData(compressionQuality: 0.8) {
+            let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let userImagesDirectory = documentsDirectory.appendingPathComponent("UserImages")
+            
+            // 确保 UserImages 目录存在
+            try? FileManager.default.createDirectory(at: userImagesDirectory, withIntermediateDirectories: true, attributes: nil)
+            
+            // 保存到 UserImages 子目录
+            let fileURL = userImagesDirectory.appendingPathComponent(fileName)
+            
+            try? data.write(to: fileURL)
+            
+            // 返回文件名（不包含路径），这样可以被 DynamicImageLoader 识别为 asset 资源类型
+            return fileName
+        }
+        
+        return ""
     }
     
     /// 增加用户余额（购买胡萝卜）

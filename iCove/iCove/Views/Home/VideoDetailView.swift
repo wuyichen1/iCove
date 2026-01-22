@@ -15,6 +15,7 @@ import SwiftUI
 struct VideoDetailView: View {
   let video: VideoItem
   @EnvironmentObject var router: Router
+  @EnvironmentObject var authManager: AuthenticationManager
   @StateObject private var viewModel: VideoDetailViewModel
   @State private var isPlaying = false
   @State private var showingComments = false
@@ -95,9 +96,7 @@ struct VideoDetailView: View {
               if let author = viewModel.author {
                 HStack(spacing: 12) {
                   if let avatarName = author.avatar {
-                    Image(avatarName)
-                      .resizable()
-                      .aspectRatio(contentMode: .fill)
+                    DynamicImage(imageName: avatarName)
                       .frame(width: 45, height: 45)
                       .clipShape(Circle())
                       .overlay(
@@ -118,6 +117,11 @@ struct VideoDetailView: View {
                           .stroke(Color.green, lineWidth: 2)
                       )
                   }
+
+                  // username
+                  Text(author.username)
+                    .font(.custom("FredokaOne-Regular", size: 18))
+                    .foregroundColor(.white)
                 }
 
                 // 视频描述
@@ -147,6 +151,9 @@ struct VideoDetailView: View {
     }
     .navigationBarHidden(true)
     // .toolbar(.hidden, for: .navigationBar)
+    .onAppear {
+      viewModel.setAuthManager(authManager)
+    }
     .sheet(isPresented: $showingComments) {
       CommentSheet(videoId: video.id)
         .presentationDetents([.fraction(0.5)])  // 固定为屏幕高度的 50% （iOS 16+）
@@ -167,17 +174,20 @@ class VideoDetailViewModel: ObservableObject {
   private let videoService: VideoDataServiceProtocol
   private let commentService: CommentDataServiceProtocol
   private let authService: AuthenticationServiceProtocol
+  private weak var authManager: AuthenticationManager?
 
   init(
     video: VideoItem,
     videoService: VideoDataServiceProtocol = VideoDataService.shared,
     commentService: CommentDataServiceProtocol = CommentDataService.shared,
-    authService: AuthenticationServiceProtocol = AuthenticationService.shared
+    authService: AuthenticationServiceProtocol = AuthenticationService.shared,
+    authManager: AuthenticationManager? = nil
   ) {
     self.video = video
     self.videoService = videoService
     self.commentService = commentService
     self.authService = authService
+    self.authManager = authManager
 
     loadAuthor()
     loadCommentCount()
@@ -192,10 +202,32 @@ class VideoDetailViewModel: ObservableObject {
         self?.loadCommentCount()
       }
     }
+    
+    // 监听当前用户信息更新通知
+    NotificationCenter.default.addObserver(
+      forName: NSNotification.Name("CurrentUserUpdated"),
+      object: nil,
+      queue: .main
+    ) { [weak self] notification in
+      Task { @MainActor [weak self] in
+        guard let self = self,
+              let updatedUser = notification.userInfo?["user"] as? User,
+              updatedUser.id == self.video.authorId else { return }
+        self.author = updatedUser
+      }
+    }
   }
 
   deinit {
     NotificationCenter.default.removeObserver(self)
+  }
+  
+  func setAuthManager(_ authManager: AuthenticationManager) {
+    self.authManager = authManager
+    // 如果作者是当前用户，使用最新的用户信息
+    if let currentUser = authManager.currentUser, currentUser.id == video.authorId {
+      author = currentUser
+    }
   }
 
   func toggleLike() {
@@ -209,7 +241,13 @@ class VideoDetailViewModel: ObservableObject {
   }
 
   private func loadAuthor() {
+    // 首先尝试从 AuthenticationService 获取用户信息
     author = authService.getUserById(video.authorId)
+    
+    // 如果找不到，检查是否是当前登录用户
+    if author == nil, let currentUser = authManager?.currentUser, currentUser.id == video.authorId {
+      author = currentUser
+    }
   }
 
   private func loadCommentCount() {

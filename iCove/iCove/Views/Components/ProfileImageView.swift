@@ -14,6 +14,7 @@ import SwiftUI
 /// 带渐变边框的头像视图组件
 struct ProfileImageView: View {
   let avatar: String?
+  let avatarImage: UIImage?
   let username: String
   let size: CGFloat
   let subSize: CGFloat?
@@ -23,7 +24,7 @@ struct ProfileImageView: View {
     @ObserveInjection var redraw
   #endif
 
-  /// 初始化头像视图
+  /// 初始化头像视图（使用图片名称）
   /// - Parameters:
   ///   - avatar: 头像图片名称（可选）
   ///   - username: 用户名（用于显示首字母占位符）
@@ -37,6 +38,28 @@ struct ProfileImageView: View {
     borderImageName: String? = "7X1p2a4Cu1Xn8nXt"
   ) {
     self.avatar = avatar
+    self.avatarImage = nil
+    self.username = username
+    self.size = size
+    self.subSize = subSize
+    self.borderImageName = borderImageName
+  }
+
+  /// 初始化头像视图（使用 UIImage）
+  /// - Parameters:
+  ///   - avatar: UIImage 类型的头像图片
+  ///   - username: 用户名（用于显示首字母占位符）
+  ///   - size: 头像尺寸
+  ///   - borderImageName: 边框图片名称（可选）
+  init(
+    avatar: UIImage?,
+    username: String,
+    size: CGFloat,
+    subSize: CGFloat? = 16,
+    borderImageName: String? = "7X1p2a4Cu1Xn8nXt"
+  ) {
+    self.avatar = nil
+    self.avatarImage = avatar
     self.username = username
     self.size = size
     self.subSize = subSize
@@ -73,8 +96,9 @@ struct ProfileImageView: View {
       }
 
       // 头像内容
-      if let avatar = avatar {
-        Image(avatar)
+      if let avatarImage = avatarImage {
+        // 直接使用 UIImage
+        Image(uiImage: avatarImage)
           .resizable()
           .aspectRatio(contentMode: .fill)
           .frame(
@@ -82,6 +106,52 @@ struct ProfileImageView: View {
             height: size - (subSize ?? 16)
           )
           .clipShape(Circle())
+      } else if let avatar = avatar {
+        // 使用 DynamicImageLoader 加载图片（支持 asset 和本地文件）
+        if let loadedImage = DynamicImageLoader.loadImage(named: avatar) {
+          Image(uiImage: loadedImage)
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(
+              width: size - (subSize ?? 16),
+              height: size - (subSize ?? 16)
+            )
+            .clipShape(Circle())
+        } else {
+          // 检查是否是本地文件路径（完整路径）
+          if avatar.hasPrefix("/") || avatar.hasPrefix("file://"),
+            let uiImage = UIImage(
+              contentsOfFile: avatar.replacingOccurrences(of: "file://", with: ""))
+          {
+            Image(uiImage: uiImage)
+              .resizable()
+              .aspectRatio(contentMode: .fill)
+              .frame(
+                width: size - (subSize ?? 16),
+                height: size - (subSize ?? 16)
+              )
+              .clipShape(Circle())
+          } else {
+            // 显示用户名首字母占位符
+            Circle()
+              .fill(
+                LinearGradient(
+                  gradient: Gradient(colors: [
+                    Color.pink.opacity(0.3),
+                    Color.purple.opacity(0.3),
+                  ]),
+                  startPoint: .topLeading,
+                  endPoint: .bottomTrailing
+                )
+              )
+              .frame(width: size - (subSize ?? 16), height: size - (subSize ?? 16))
+              .overlay {
+                Text(String(username.prefix(1)))
+                  .font(.system(size: (size - (subSize ?? 16)) * 0.4, weight: .bold))
+                  .foregroundColor(.pink)
+              }
+          }
+        }
       } else {
         Circle()
           .fill(
