@@ -5,6 +5,7 @@
 //  Created by yangyang on 2026/1/16.
 //
 
+import AVFoundation
 import SwiftUI
 
 #if DEBUG
@@ -54,10 +55,14 @@ struct ChatDetailView: View {
         // 底部输入栏
         inputBar
       }
+
+      // 录音错误提示 Toast
+      recordingErrorToast
     }
     .navigationBarHidden(true)
     .toolbar(.hidden, for: .tabBar)
     .enableInjection()
+    .animation(.easeInOut(duration: 0.2), value: viewModel.recordingErrorMessage != nil)
   }
 
   // MARK: - Top Navigation Bar
@@ -236,6 +241,26 @@ struct ChatDetailView: View {
     .background(Color(red: 30 / 255, green: 5 / 255, blue: 57 / 255))
   }
 
+  // MARK: - Recording Error Toast
+  private var recordingErrorToast: some View {
+    VStack {
+      Spacer()
+      if let errorMessage = viewModel.recordingErrorMessage {
+        Text(errorMessage)
+          .font(.system(size: 14))
+          .foregroundColor(.white)
+          .padding(.horizontal, 16)
+          .padding(.vertical, 10)
+          .background(Color.red.opacity(0.9))
+          .cornerRadius(8)
+          .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+          .transition(.move(edge: .bottom).combined(with: .opacity))
+          .padding(.bottom, 100)  // 在输入栏上方显示
+      }
+    }
+    .frame(maxWidth: .infinity)
+  }
+
   // MARK: - Attachment Menu
   private var attachmentMenu: some View {
     HStack(spacing: 12) {
@@ -306,22 +331,52 @@ struct ChatDetailView: View {
       Spacer()
     }
     .frame(height: 46)
-    // .padding(.vertical, 14)
     .background(Color("yinguanglv"))
     .cornerRadius(12)
     .gesture(
-      DragGesture(minimumDistance: 0)
-        .onChanged { _ in
-          if !viewModel.isRecording {
-            viewModel.startRecording()
+      LongPressGesture(minimumDuration: 0)
+        .sequenced(before: DragGesture(minimumDistance: 0))
+        .updating($recordingGestureState) { value, state, _ in
+          switch value {
+          case .first(true):
+            // 长按开始
+            state = .pressing
+          case .second(true, _):
+            // 拖动中
+            state = .pressing
+          default:
+            break
           }
         }
-        .onEnded { _ in
+        .onEnded { value in
+          // 松开时停止录音并发送
           if viewModel.isRecording {
-            viewModel.stopRecording()
+            if let currentUserId = authManager.currentUser?.id {
+              viewModel.stopRecording(currentUserId: currentUserId)
+            }
           }
         }
     )
+    .onChange(of: recordingGestureState) { oldValue, newValue in
+      if newValue == .pressing && !viewModel.isRecording {
+        // 开始录音
+        viewModel.startRecording()
+      }
+    }
+  }
+
+  @GestureState private var recordingGestureState: RecordingGestureState = .inactive
+
+  private enum RecordingGestureState {
+    case inactive
+    case pressing
+  }
+
+  /// 格式化录音时长
+  private func formatDuration(_ duration: TimeInterval) -> String {
+    let minutes = Int(duration) / 60
+    let seconds = Int(duration) % 60
+    return String(format: "%d:%02d", minutes, seconds)
   }
 }
 
@@ -331,6 +386,8 @@ struct MessageBubble: View {
   let isFromCurrentUser: Bool
   let otherUser: User?
   let currentUser: User?
+
+  @StateObject private var audioService = AudioService.shared
 
   private var timeFormatter: DateFormatter {
     let formatter = DateFormatter()
@@ -396,6 +453,12 @@ struct MessageBubble: View {
                   lineWidth: 2
                 )
               )
+          case .audio:
+            AudioBubbleView(
+              audioFileName: message.content,
+              isFromCurrentUser: isFromCurrentUser,
+              audioService: audioService
+            )
           }
         }
         .padding(12)
@@ -430,6 +493,93 @@ struct MessageBubble: View {
       // }
     }
     .frame(maxWidth: .infinity, alignment: isFromCurrentUser ? .trailing : .leading)
+  }
+}
+
+// MARK: - Audio Bubble View
+struct AudioBubbleView: View {
+  let audioFileName: String
+  let isFromCurrentUser: Bool
+  @ObservedObject var audioService: AudioService
+
+  @State private var audioDuration: TimeInterval = 0
+  @State private var isPlaying: Bool = false
+
+  private var audioURL: URL? {
+    let fileManager = FileManager.default
+    let documentsPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    let audioDir = documentsPath.appendingPathComponent("audio")
+    let audioFileURL = audioDir.appendingPathComponent(audioFileName)
+
+    if fileManager.fileExists(atPath: audioFileURL.path) {
+      return audioFileURL
+    }
+    return nil
+  }
+
+  var body: some View {
+    HStack(spacing: 12) {
+      // 播放按钮
+      Button(action: {
+        togglePlayback()
+      }) {
+        Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
+          .font(.system(size: 24))
+          .foregroundColor(isFromCurrentUser ? .black : .white)
+      }
+
+      // 音频波形或时长显示
+      Text(formatDuration(audioDuration))
+        .font(.system(size: 14, weight: .medium))
+        .foregroundColor(isFromCurrentUser ? .black : .white)
+
+    }
+    .onAppear {
+      loadAudioDuration()
+    }
+    .onChange(of: audioService.isPlaying) { _, newValue in
+      isPlaying = newValue && audioService.currentPlayingURL == audioURL
+    }
+    .onChange(of: audioService.currentPlayingURL) { _, newURL in
+      isPlaying = newURL == audioURL && audioService.isPlaying
+    }
+  }
+
+  private func togglePlayback() {
+    guard let url = audioURL else { return }
+
+    if isPlaying {
+      // 如果正在播放当前音频，停止播放
+      if audioService.currentPlayingURL == url {
+        audioService.stopPlaying()
+      }
+    } else {
+      // 开始播放
+      do {
+        try audioService.playAudio(from: url)
+      } catch {
+        print("Failed to play audio: \(error)")
+      }
+    }
+  }
+
+  private func loadAudioDuration() {
+    guard let url = audioURL else { return }
+
+    Task {
+      do {
+        let player = try AVAudioPlayer(contentsOf: url)
+        audioDuration = player.duration
+      } catch {
+        print("Failed to load audio duration: \(error)")
+      }
+    }
+  }
+
+  private func formatDuration(_ duration: TimeInterval) -> String {
+    let minutes = Int(duration) / 60
+    let seconds = Int(duration) % 60
+    return String(format: "%d:%02d", minutes, seconds)
   }
 }
 

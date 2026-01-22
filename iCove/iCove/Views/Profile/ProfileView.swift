@@ -34,6 +34,22 @@ struct ProfileView: View {
       }
       .navigationBarHidden(true)
       // .toolbar(.hidden, for: .tabBar)
+      .onChange(of: authManager.currentUser?.avatar) { _, _ in
+        // 当用户头像更新时，如果是当前用户的资料页，刷新资料
+        if viewModel.isCurrentUser {
+          Task {
+            await viewModel.refresh()
+          }
+        }
+      }
+      .onChange(of: authManager.currentUser?.username) { _, _ in
+        // 当用户名更新时，如果是当前用户的资料页，刷新资料
+        if viewModel.isCurrentUser {
+          Task {
+            await viewModel.refresh()
+          }
+        }
+      }
       .enableInjection()
   }
 

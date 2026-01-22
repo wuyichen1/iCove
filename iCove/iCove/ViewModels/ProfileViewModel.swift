@@ -21,6 +21,7 @@ class ProfileViewModel: ObservableObject {
     private let authManager: AuthenticationManager
     private let targetUserId: String?
     private let authService: AuthenticationServiceProtocol
+    private var userUpdateObserver: NSObjectProtocol?
     
     // MARK: - Computed Properties
     /// 是否是当前用户的资料页
@@ -46,6 +47,26 @@ class ProfileViewModel: ObservableObject {
             if isCurrentUser {
                 loadSettings()
             }
+        }
+        
+        // 监听用户信息更新通知
+        userUpdateObserver = NotificationCenter.default.addObserver(
+            forName: NSNotification.Name("CurrentUserUpdated"),
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            // 如果是当前用户的资料页，重新加载用户资料
+            if self?.isCurrentUser == true {
+                Task { @MainActor [weak self] in
+                    await self?.loadUserProfile()
+                }
+            }
+        }
+    }
+    
+    deinit {
+        if let observer = userUpdateObserver {
+            NotificationCenter.default.removeObserver(observer)
         }
     }
     

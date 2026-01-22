@@ -34,4 +34,5 @@ struct Message: Identifiable, Codable {
 enum MessageType: String, Codable {
     case text  // 文本消息
     case image  // 图片消息
+    case audio  // 音频消息
 }

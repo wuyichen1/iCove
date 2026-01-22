@@ -88,7 +88,7 @@ struct MessagesView: View {
 
           // 用户名
           Text(currentUser.username)
-            .font(.system(size: 18, weight: .bold))
+            .font(.custom("FredokaOne-Regular", size: 18))
             .foregroundColor(.white)
         }
         .padding(.bottom, 24)

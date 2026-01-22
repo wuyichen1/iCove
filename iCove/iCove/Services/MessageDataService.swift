@@ -49,7 +49,15 @@ class MessageDataService: MessageDataServiceProtocol {
       saveMessages(messages, for: message.conversationId)
       
       // 更新会话的最后一条消息
-      let lastMessageText = message.messageType == .image ? "[Image]" : message.content
+      let lastMessageText: String
+      switch message.messageType {
+      case .image:
+        lastMessageText = "[Image]"
+      case .audio:
+        lastMessageText = "[Audio]"
+      case .text:
+        lastMessageText = message.content
+      }
       conversationService.updateConversationLastMessage(
         conversationId: message.conversationId,
         lastMessage: lastMessageText,

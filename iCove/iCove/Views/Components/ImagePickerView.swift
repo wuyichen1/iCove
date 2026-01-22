@@ -2,9 +2,11 @@
 //  ImagePickerView.swift
 //  iCove
 //
-//  Created by yangyang on 2026/1/19.
+//  Created by yangyang on 2026/1/22.
 //
 
+import AVFoundation
+import Photos
 import PhotosUI
 import SwiftUI
 import UIKit
@@ -18,6 +20,8 @@ struct ImagePickerView: ViewModifier {
   @State private var showPhotoPicker: Bool = false
   @State private var showCameraPicker: Bool = false
   @State private var showCameraErrorAlert: Bool = false
+  @State private var showPhotoPermissionAlert: Bool = false
+  @State private var showCameraPermissionAlert: Bool = false
 
   func body(content: Content) -> some View {
     content
@@ -25,7 +29,7 @@ struct ImagePickerView: ViewModifier {
         "Select Photo Source", isPresented: $showImageSourcePicker, titleVisibility: .visible
       ) {
         Button("Gallery") {
-          showPhotoPicker = true
+          checkAndOpenPhotoLibrary()
         }
         Button("Camera") {
           checkAndOpenCamera()
@@ -49,20 +53,93 @@ struct ImagePickerView: ViewModifier {
       } message: {
         Text("Camera is not available on this device or camera access is not permitted.")
       }
+      .alert("Photo Library Permission Required", isPresented: $showPhotoPermissionAlert) {
+        Button("Settings") {
+          if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(settingsURL)
+          }
+        }
+        Button("Cancel", role: .cancel) {}
+      } message: {
+        Text("Please grant photo library access in Settings to select photos.")
+      }
+      .alert("Camera Permission Required", isPresented: $showCameraPermissionAlert) {
+        Button("Settings") {
+          if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(settingsURL)
+          }
+        }
+        Button("Cancel", role: .cancel) {}
+      } message: {
+        Text("Please grant camera access in Settings to take photos.")
+      }
   }
 
-  // 检查摄像头是否可用
-  private func checkAndOpenCamera() {
-    if UIImagePickerController.isSourceTypeAvailable(.camera) {
-      // 检查是否有可用的摄像头设备
-      let cameraMediaTypes = UIImagePickerController.availableMediaTypes(for: .camera) ?? []
-      if !cameraMediaTypes.isEmpty {
-        showCameraPicker = true
-      } else {
-        showCameraErrorAlert = true
+  // 检查并打开相册
+  private func checkAndOpenPhotoLibrary() {
+    let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
+
+    switch status {
+    case .authorized, .limited:
+      // 已有权限，打开相册
+      showPhotoPicker = true
+    case .notDetermined:
+      // 未确定，请求权限
+      PHPhotoLibrary.requestAuthorization(for: .readWrite) { newStatus in
+        DispatchQueue.main.async {
+          if newStatus == .authorized || newStatus == .limited {
+            showPhotoPicker = true
+          } else {
+            showPhotoPermissionAlert = true
+          }
+        }
       }
-    } else {
+    case .denied, .restricted:
+      // 被拒绝或受限，显示提示
+      showPhotoPermissionAlert = true
+    @unknown default:
+      showPhotoPermissionAlert = true
+    }
+  }
+
+  // 检查摄像头是否可用并请求权限
+  private func checkAndOpenCamera() {
+    // 先检查设备是否支持相机
+    guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
       showCameraErrorAlert = true
+      return
+    }
+
+    // 检查是否有可用的摄像头设备
+    let cameraMediaTypes = UIImagePickerController.availableMediaTypes(for: .camera) ?? []
+    guard !cameraMediaTypes.isEmpty else {
+      showCameraErrorAlert = true
+      return
+    }
+
+    // 检查相机权限
+    let status = AVCaptureDevice.authorizationStatus(for: .video)
+
+    switch status {
+    case .authorized:
+      // 已有权限，打开相机
+      showCameraPicker = true
+    case .notDetermined:
+      // 未确定，请求权限
+      AVCaptureDevice.requestAccess(for: .video) { granted in
+        DispatchQueue.main.async {
+          if granted {
+            showCameraPicker = true
+          } else {
+            showCameraPermissionAlert = true
+          }
+        }
+      }
+    case .denied, .restricted:
+      // 被拒绝或受限，显示提示
+      showCameraPermissionAlert = true
+    @unknown default:
+      showCameraPermissionAlert = true
     }
   }
 
@@ -144,23 +221,78 @@ class ImagePickerViewModel: ObservableObject {
   @Published var showPhotoPicker: Bool = false
   @Published var showCameraPicker: Bool = false
   @Published var showCameraErrorAlert: Bool = false
+  @Published var showPhotoPermissionAlert: Bool = false
+  @Published var showCameraPermissionAlert: Bool = false
 
   func showImagePicker() {
     showImageSourcePicker = true
   }
 
-  // 检查摄像头是否可用
-  func checkAndOpenCamera() {
-    if UIImagePickerController.isSourceTypeAvailable(.camera) {
-      // 检查是否有可用的摄像头设备
-      let cameraMediaTypes = UIImagePickerController.availableMediaTypes(for: .camera) ?? []
-      if !cameraMediaTypes.isEmpty {
-        showCameraPicker = true
-      } else {
-        showCameraErrorAlert = true
+  // 检查并打开相册
+  func checkAndOpenPhotoLibrary() {
+    let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
+
+    switch status {
+    case .authorized, .limited:
+      // 已有权限，打开相册
+      showPhotoPicker = true
+    case .notDetermined:
+      // 未确定，请求权限
+      PHPhotoLibrary.requestAuthorization(for: .readWrite) { [weak self] newStatus in
+        DispatchQueue.main.async {
+          if newStatus == .authorized || newStatus == .limited {
+            self?.showPhotoPicker = true
+          } else {
+            self?.showPhotoPermissionAlert = true
+          }
+        }
       }
-    } else {
+    case .denied, .restricted:
+      // 被拒绝或受限，显示提示
+      showPhotoPermissionAlert = true
+    @unknown default:
+      showPhotoPermissionAlert = true
+    }
+  }
+
+  // 检查摄像头是否可用并请求权限
+  func checkAndOpenCamera() {
+    // 先检查设备是否支持相机
+    guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
       showCameraErrorAlert = true
+      return
+    }
+
+    // 检查是否有可用的摄像头设备
+    let cameraMediaTypes = UIImagePickerController.availableMediaTypes(for: .camera) ?? []
+    guard !cameraMediaTypes.isEmpty else {
+      showCameraErrorAlert = true
+      return
+    }
+
+    // 检查相机权限
+    let status = AVCaptureDevice.authorizationStatus(for: .video)
+
+    switch status {
+    case .authorized:
+      // 已有权限，打开相机
+      showCameraPicker = true
+    case .notDetermined:
+      // 未确定，请求权限
+      AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
+        DispatchQueue.main.async {
+          if granted {
+            self?.showCameraPicker = true
+          } else {
+            self?.showCameraPermissionAlert = true
+          }
+        }
+      }
+    case .denied, .restricted:
+      // 被拒绝或受限，显示提示
+      showCameraPermissionAlert = true
+    @unknown default:
+      showCameraPermissionAlert = true
     }
   }
 
@@ -194,7 +326,7 @@ struct ImagePickerButton: View {
       titleVisibility: .visible
     ) {
       Button("Gallery") {
-        pickerViewModel.showPhotoPicker = true
+        pickerViewModel.checkAndOpenPhotoLibrary()
       }
       Button("Camera") {
         pickerViewModel.checkAndOpenCamera()
@@ -223,6 +355,28 @@ struct ImagePickerButton: View {
       Button("OK", role: .cancel) {}
     } message: {
       Text("Camera is not available on this device or camera access is not permitted.")
+    }
+    .alert(
+      "Photo Library Permission Required", isPresented: $pickerViewModel.showPhotoPermissionAlert
+    ) {
+      Button("Settings") {
+        if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+          UIApplication.shared.open(settingsURL)
+        }
+      }
+      Button("Cancel", role: .cancel) {}
+    } message: {
+      Text("Please grant photo library access in Settings to select photos.")
+    }
+    .alert("Camera Permission Required", isPresented: $pickerViewModel.showCameraPermissionAlert) {
+      Button("Settings") {
+        if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+          UIApplication.shared.open(settingsURL)
+        }
+      }
+      Button("Cancel", role: .cancel) {}
+    } message: {
+      Text("Please grant camera access in Settings to take photos.")
     }
   }
 }
