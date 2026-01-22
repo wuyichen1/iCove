@@ -18,6 +18,9 @@ struct ChatDetailView: View {
   @EnvironmentObject var router: Router
   @EnvironmentObject var authManager: AuthenticationManager
   @StateObject private var viewModel: ChatDetailViewModel
+  @State private var showingReportBlockSheet = false
+  @State private var showingBlockDialog = false
+  @State private var blockUserId: String? = nil
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -61,6 +64,22 @@ struct ChatDetailView: View {
     }
     .navigationBarHidden(true)
     .toolbar(.hidden, for: .tabBar)
+    .sheet(isPresented: $showingReportBlockSheet) {
+      ReportBlockBottomSheet(
+        userId: otherUserId,
+        isPresented: $showingReportBlockSheet,
+        onBlock: {
+          blockUserId = otherUserId
+          showingBlockDialog = true
+        }
+      )
+      .environmentObject(authManager)
+      .environmentObject(router)
+      .presentationDetents([.height(240)])
+      .presentationBackground(.clear)
+      .presentationDragIndicator(.hidden)
+    }
+    .blockUserDialog(isPresented: $showingBlockDialog, userId: blockUserId)
     .enableInjection()
     .animation(.easeInOut(duration: 0.2), value: viewModel.recordingErrorMessage != nil)
   }
@@ -116,7 +135,7 @@ struct ChatDetailView: View {
           router.pop()
         },
         onMore: {
-          // 更多选项
+          showingReportBlockSheet = true
         }
       )
     }

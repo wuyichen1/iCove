@@ -19,6 +19,9 @@ struct VideoDetailView: View {
   @StateObject private var viewModel: VideoDetailViewModel
   @State private var isPlaying = false
   @State private var showingComments = false
+  @State private var showingReportBlockSheet = false
+  @State private var showingBlockDialog = false
+  @State private var blockUserId: String? = nil
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -145,7 +148,7 @@ struct VideoDetailView: View {
           router.pop()
         },
         onMore: {
-          // 更多选项
+          showingReportBlockSheet = true
         },
       )
     }
@@ -160,6 +163,22 @@ struct VideoDetailView: View {
         .presentationBackground(.clear)  // 去掉默认背景色，使用透明背景
       // .presentationDragIndicator(.visible) // 显示拖拽指示器
     }
+    .sheet(isPresented: $showingReportBlockSheet) {
+      ReportBlockBottomSheet(
+        userId: video.authorId,
+        isPresented: $showingReportBlockSheet,
+        onBlock: {
+          blockUserId = video.authorId
+          showingBlockDialog = true
+        }
+      )
+      .environmentObject(authManager)
+      .environmentObject(router)
+      .presentationDetents([.height(240)])
+      .presentationBackground(.clear)
+      .presentationDragIndicator(.hidden)
+    }
+    .blockUserDialog(isPresented: $showingBlockDialog, userId: blockUserId)
     .enableInjection()
   }
 }
@@ -202,7 +221,29 @@ class VideoDetailViewModel: ObservableObject {
         self?.loadCommentCount()
       }
     }
-    
+
+    // 监听用户拉黑通知，刷新评论数
+    NotificationCenter.default.addObserver(
+      forName: NSNotification.Name("UserBlocked"),
+      object: nil,
+      queue: .main
+    ) { [weak self] _ in
+      Task { @MainActor in
+        self?.loadCommentCount()
+      }
+    }
+
+    // 监听用户取消拉黑通知，刷新评论数
+    NotificationCenter.default.addObserver(
+      forName: NSNotification.Name("UserUnblocked"),
+      object: nil,
+      queue: .main
+    ) { [weak self] _ in
+      Task { @MainActor in
+        self?.loadCommentCount()
+      }
+    }
+
     // 监听当前用户信息更新通知
     NotificationCenter.default.addObserver(
       forName: NSNotification.Name("CurrentUserUpdated"),
@@ -211,8 +252,9 @@ class VideoDetailViewModel: ObservableObject {
     ) { [weak self] notification in
       Task { @MainActor [weak self] in
         guard let self = self,
-              let updatedUser = notification.userInfo?["user"] as? User,
-              updatedUser.id == self.video.authorId else { return }
+          let updatedUser = notification.userInfo?["user"] as? User,
+          updatedUser.id == self.video.authorId
+        else { return }
         self.author = updatedUser
       }
     }
@@ -221,13 +263,15 @@ class VideoDetailViewModel: ObservableObject {
   deinit {
     NotificationCenter.default.removeObserver(self)
   }
-  
+
   func setAuthManager(_ authManager: AuthenticationManager) {
     self.authManager = authManager
     // 如果作者是当前用户，使用最新的用户信息
     if let currentUser = authManager.currentUser, currentUser.id == video.authorId {
       author = currentUser
     }
+    // 重新加载评论数，以应用拉黑过滤
+    loadCommentCount()
   }
 
   func toggleLike() {
@@ -243,7 +287,7 @@ class VideoDetailViewModel: ObservableObject {
   private func loadAuthor() {
     // 首先尝试从 AuthenticationService 获取用户信息
     author = authService.getUserById(video.authorId)
-    
+
     // 如果找不到，检查是否是当前登录用户
     if author == nil, let currentUser = authManager?.currentUser, currentUser.id == video.authorId {
       author = currentUser
@@ -251,8 +295,19 @@ class VideoDetailViewModel: ObservableObject {
   }
 
   private func loadCommentCount() {
-    let comments = commentService.loadComments(for: video.id)
-    commentCount = comments.count
+    let allComments = commentService.loadComments(for: video.id)
+    // 过滤被拉黑用户的评论
+    let filteredComments = filterBlockedUsersComments(allComments)
+    commentCount = filteredComments.count
+  }
+
+  /// 过滤被拉黑用户的评论
+  private func filterBlockedUsersComments(_ comments: [Comment]) -> [Comment] {
+    guard let blockedUserIds = authManager?.currentUser?.blockedUserIds, !blockedUserIds.isEmpty
+    else {
+      return comments
+    }
+    return comments.filter { !blockedUserIds.contains($0.authorId) }
   }
 }
 

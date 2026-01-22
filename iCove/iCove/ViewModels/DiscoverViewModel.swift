@@ -46,6 +46,28 @@ class DiscoverViewModel: ObservableObject {
         self?.refreshPosts()
       }
     }
+    
+    // 监听用户拉黑通知，刷新帖子列表
+    NotificationCenter.default.addObserver(
+      forName: NSNotification.Name("UserBlocked"),
+      object: nil,
+      queue: .main
+    ) { [weak self] _ in
+      Task { @MainActor in
+        self?.refreshPosts()
+      }
+    }
+    
+    // 监听用户取消拉黑通知，刷新帖子列表
+    NotificationCenter.default.addObserver(
+      forName: NSNotification.Name("UserUnblocked"),
+      object: nil,
+      queue: .main
+    ) { [weak self] _ in
+      Task { @MainActor in
+        self?.refreshPosts()
+      }
+    }
   }
 
   deinit {
@@ -157,14 +179,26 @@ class DiscoverViewModel: ObservableObject {
   private func generateMockCollectedPosts() -> [Post] {
     // 根据当前用户的收藏列表来获取收藏的帖子
     if let currentUser = authManager?.currentUser, !currentUser.collectedPostIds.isEmpty {
-      return postService.loadCollectedPosts(by: currentUser.collectedPostIds)
+      let posts = postService.loadCollectedPosts(by: currentUser.collectedPostIds)
+      // 过滤被拉黑用户的帖子
+      return filterBlockedUsersPosts(posts)
     }
     // 如果没有登录用户或没有收藏，返回空列表
     return []
   }
 
   private func generateMockAllPosts() -> [Post] {
-    return postService.loadAllPosts()
+    let posts = postService.loadAllPosts()
+    // 过滤被拉黑用户的帖子
+    return filterBlockedUsersPosts(posts)
+  }
+  
+  /// 过滤被拉黑用户的帖子
+  private func filterBlockedUsersPosts(_ posts: [Post]) -> [Post] {
+    guard let blockedUserIds = authManager?.currentUser?.blockedUserIds, !blockedUserIds.isEmpty else {
+      return posts
+    }
+    return posts.filter { !blockedUserIds.contains($0.authorId) }
   }
 
   /// 刷新收藏列表（当用户收藏状态改变时调用）

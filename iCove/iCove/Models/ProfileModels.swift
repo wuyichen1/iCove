@@ -9,19 +9,6 @@ import Foundation
 
 // MARK: - Profile Models
 
-/// 用户资料模型
-struct UserProfile {
-    let id: String
-    var username: String
-    var bio: String
-    let avatar: String?
-    var followerCount: Int
-    var followingCount: Int
-    var postCount: Int
-    var isFollowing: Bool
-    let joinDate: Date
-}
-
 /// 设置项模型
 struct SettingItem: Identifiable {
     let id = UUID()

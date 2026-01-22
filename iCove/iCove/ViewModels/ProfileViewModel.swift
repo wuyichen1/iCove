@@ -11,7 +11,8 @@ import SwiftUI
 @MainActor
 class ProfileViewModel: ObservableObject {
     // MARK: - Published Properties
-    @Published var userProfile: UserProfile?
+    @Published var user: User?
+    @Published var isFollowing: Bool = false  // 是否关注该用户（仅用于查看他人资料时）
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     @Published var settings: [SettingItem] = []
@@ -55,10 +56,10 @@ class ProfileViewModel: ObservableObject {
             object: nil,
             queue: .main
         ) { [weak self] _ in
-            // 如果是当前用户的资料页，重新加载用户资料
+            // 如果是当前用户的资料页，更新用户信息
             if self?.isCurrentUser == true {
                 Task { @MainActor [weak self] in
-                    await self?.loadUserProfile()
+                    self?.user = self?.authManager.currentUser
                 }
             }
         }
@@ -77,9 +78,6 @@ class ProfileViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
         
-        // 模拟网络请求延迟
-        // try? await Task.sleep(nanoseconds: 500_000_000)
-        
         // 如果是当前用户，使用当前用户信息；否则加载指定用户信息
         let userIdToLoad = targetUserId ?? authManager.currentUser?.id
         
@@ -88,47 +86,28 @@ class ProfileViewModel: ObservableObject {
             loadUserVideos(userId: userId)
             
             if isCurrentUser {
-                // 当前用户资料
-                if let currentUser = authManager.currentUser {
-                    userProfile = UserProfile(
-                        id: currentUser.id,
-                        username: currentUser.username,
-                        bio: "这是我的个人简介，分享生活点滴",
-                        avatar: currentUser.avatar,
-                        followerCount: 1234,
-                        followingCount: 567,
-                        postCount: userVideos.count,
-                        isFollowing: false,
-                        joinDate: Date().addingTimeInterval(-365 * 24 * 3600)
-                    )
-                }
+                // 当前用户资料：直接使用当前用户信息
+                user = authManager.currentUser
+                isFollowing = false  // 自己不能关注自己
             } else {
                 // 他人资料：优先从认证服务中读取真实用户信息
                 if let otherUser = authService.getUserById(userId) {
-                    userProfile = UserProfile(
-                        id: otherUser.id,
-                        username: otherUser.username,
-                        bio: "这是其他用户的个人简介",
-                        avatar: otherUser.avatar,
-                        followerCount: 218,
-                        followingCount: 100,
-                        postCount: userVideos.count,
-                        isFollowing: false,
-                        joinDate: Date().addingTimeInterval(-200 * 24 * 3600)
-                    )
+                    user = otherUser
+                    // 检查当前用户是否关注了该用户
+                    if let currentUserId = authManager.currentUser?.id {
+                        isFollowing = otherUser.followerUserIds.contains(currentUserId)
+                    }
                 } else {
                     // 回退：根据 userId 构造一个占位用户
-                    userProfile = UserProfile(
+                    user = User(
                         id: userId,
+                        email: "",
                         username: "用户\(userId.suffix(4))",
-                        bio: "这是其他用户的个人简介",
                         avatar: nil,
-                        followerCount: 218,
-                        followingCount: 100,
-                        postCount: userVideos.count,
-                        isFollowing: false,
-                        joinDate: Date().addingTimeInterval(-200 * 24 * 3600)
+                        balance: 0,
+                        bio: nil
                     )
+                    isFollowing = false
                 }
             }
         }
@@ -148,14 +127,34 @@ class ProfileViewModel: ObservableObject {
     }
     
     func toggleFollow() {
-        guard var profile = userProfile, !isCurrentUser else { return }
-        profile.isFollowing.toggle()
-        if profile.isFollowing {
-            profile.followerCount += 1
+        guard var targetUser = user, !isCurrentUser,
+              let currentUserId = authManager.currentUser?.id else { return }
+        
+        isFollowing.toggle()
+        
+        // 更新关注关系
+        if isFollowing {
+            // 添加关注：当前用户关注目标用户
+            if !targetUser.followerUserIds.contains(currentUserId) {
+                targetUser.followerUserIds.append(currentUserId)
+            }
+            // 更新当前用户的关注列表
+            if var currentUser = authManager.currentUser,
+               !currentUser.followingUserIds.contains(targetUser.id) {
+                currentUser.followingUserIds.append(targetUser.id)
+                authManager.currentUser = currentUser
+            }
         } else {
-            profile.followerCount = max(0, profile.followerCount - 1)
+            // 取消关注
+            targetUser.followerUserIds.removeAll { $0 == currentUserId }
+            // 更新当前用户的关注列表
+            if var currentUser = authManager.currentUser {
+                currentUser.followingUserIds.removeAll { $0 == targetUser.id }
+                authManager.currentUser = currentUser
+            }
         }
-        userProfile = profile
+        
+        user = targetUser
     }
     
     func sendMessage(router: Router) {
@@ -206,9 +205,10 @@ class ProfileViewModel: ObservableObject {
     }
     
     func updateBio(_ newBio: String) {
-        guard var profile = userProfile else { return }
-        profile.bio = newBio
-        userProfile = profile
+        guard var currentUser = authManager.currentUser, isCurrentUser else { return }
+        currentUser.bio = newBio.isEmpty ? nil : newBio
+        authManager.currentUser = currentUser
+        user = currentUser
     }
     
     func handleSettingAction(_ setting: SettingItem) {

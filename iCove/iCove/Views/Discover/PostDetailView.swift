@@ -14,8 +14,12 @@ import SwiftUI
 struct PostDetailView: View {
   let postId: String
   @EnvironmentObject var router: Router
+  @EnvironmentObject var authManager: AuthenticationManager
   @StateObject private var viewModel: PostDetailViewModel
   @State private var selectedImageIndex: Int = 0
+  @State private var showingReportBlockSheet = false
+  @State private var showingBlockDialog = false
+  @State private var blockUserId: String? = nil
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -39,7 +43,9 @@ struct PostDetailView: View {
             router.pop()
           },
           onMore: {
-            // 更多选项
+            if let post = viewModel.post {
+              showingReportBlockSheet = true
+            }
           },
           style: .whiteWithPurpleBorder
         )
@@ -121,6 +127,26 @@ struct PostDetailView: View {
     }
     .navigationBarHidden(true)
     .toolbar(.hidden, for: .tabBar)
+    .sheet(isPresented: $showingReportBlockSheet) {
+      if let post = viewModel.post {
+        ReportBlockBottomSheet(
+          userId: post.authorId,
+          isPresented: $showingReportBlockSheet,
+          onBlock: {
+            if let post = viewModel.post {
+              blockUserId = post.authorId
+              showingBlockDialog = true
+            }
+          }
+        )
+        .environmentObject(authManager)
+        .environmentObject(router)
+        .presentationDetents([.height(240)])
+        .presentationBackground(.clear)
+        .presentationDragIndicator(.hidden)
+      }
+    }
+    .blockUserDialog(isPresented: $showingBlockDialog, userId: blockUserId)
     .enableInjection()
   }
 

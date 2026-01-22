@@ -62,19 +62,6 @@ struct SettingsView: View {
               // 打开删除账号弹窗
               showingDeleteDialog = true
             }
-            // .sheet(isPresented: $showingDeleteDialog) {
-            //   UnlockConfirmDialog(
-            //     hasEnoughBalance: (authManager.currentUser?.balance ?? 0) >= 200,
-            //     onCancel: {
-            //       showingDeleteDialog = false
-            //     },
-            //     onConfirm: {
-            //       showingDeleteDialog = false
-            //     },
-            //     title: "Are you sure you want to delete your account?",
-            //     btnText: "Delete",
-            //   )
-            // }
 
             settingButton(title: "Log Out", isPrimary: true) {
               Task {

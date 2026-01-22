@@ -27,6 +27,7 @@ class ChatDetailViewModel: ObservableObject {
   private let messageService: MessageDataServiceProtocol
   private let audioService: AudioServiceProtocol
   private var recordingTimer: Timer?
+  private var authManager: AuthenticationManager?
 
   init(
     conversationId: String,
@@ -42,6 +43,38 @@ class ChatDetailViewModel: ObservableObject {
     self.audioService = audioService
     loadOtherUser()
     loadMessages()
+    
+    // 监听用户拉黑通知，刷新消息列表
+    NotificationCenter.default.addObserver(
+      forName: NSNotification.Name("UserBlocked"),
+      object: nil,
+      queue: .main
+    ) { [weak self] _ in
+      Task { @MainActor [weak self] in
+        self?.loadMessages()
+      }
+    }
+    
+    // 监听用户取消拉黑通知，刷新消息列表
+    NotificationCenter.default.addObserver(
+      forName: NSNotification.Name("UserUnblocked"),
+      object: nil,
+      queue: .main
+    ) { [weak self] _ in
+      Task { @MainActor [weak self] in
+        self?.loadMessages()
+      }
+    }
+  }
+  
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+  
+  /// 更新authManager引用（用于在View的onAppear中设置）
+  func updateAuthManager(_ authManager: AuthenticationManager) {
+    self.authManager = authManager
+    loadMessages()
   }
 
   func loadOtherUser() {
@@ -52,9 +85,19 @@ class ChatDetailViewModel: ObservableObject {
     isLoading = true
     Task {
       // 从持久化存储加载消息
-      messages = messageService.loadMessages(by: conversationId)
+      let allMessages = messageService.loadMessages(by: conversationId)
+      // 过滤被拉黑用户发送的消息
+      messages = filterBlockedUsersMessages(allMessages)
       isLoading = false
     }
+  }
+  
+  /// 过滤被拉黑用户发送的消息
+  private func filterBlockedUsersMessages(_ messages: [Message]) -> [Message] {
+    guard let blockedUserIds = authManager?.currentUser?.blockedUserIds, !blockedUserIds.isEmpty else {
+      return messages
+    }
+    return messages.filter { !blockedUserIds.contains($0.senderId) }
   }
 
   func sendMessage(currentUserId: String) {

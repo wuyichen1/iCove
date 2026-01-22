@@ -91,6 +91,10 @@ struct AppNavigationView<Content: View>: View {
             PublishView(publishType: type)
                 .environmentObject(authManager)
                 .toolbar(.hidden, for: .tabBar)
+        case .report(let userId):
+            ReportView(userId: userId)
+                .environmentObject(router)
+                .toolbar(.hidden, for: .tabBar)
         }
     }
 

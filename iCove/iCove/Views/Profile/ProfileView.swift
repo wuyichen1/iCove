@@ -18,7 +18,9 @@ struct ProfileView: View {
   @Environment(\.dismiss) var dismiss
   @State private var showingEditBio = false
   @State private var editedBio = ""
-  @State private var showingMoreOptions = false
+  @State private var showingReportBlockSheet = false
+  @State private var showingBlockDialog = false
+  @State private var blockUserId: String? = nil
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -26,12 +28,24 @@ struct ProfileView: View {
 
   var body: some View {
     contentView
-      .sheet(isPresented: $showingMoreOptions) {
-        if let userId = viewModel.userProfile?.id {
-          MoreOptionsSheet(userId: userId)
-            .environmentObject(authManager)
+      .sheet(isPresented: $showingReportBlockSheet) {
+        if let userId = viewModel.user?.id {
+          ReportBlockBottomSheet(
+            userId: userId,
+            isPresented: $showingReportBlockSheet,
+          onBlock: {
+            blockUserId = viewModel.user?.id
+            showingBlockDialog = true
+          }
+          )
+          .environmentObject(authManager)
+          .environmentObject(router)
+          .presentationDetents([.height(240)])
+          .presentationBackground(.clear)
+          .presentationDragIndicator(.hidden)
         }
       }
+      .blockUserDialog(isPresented: $showingBlockDialog, userId: blockUserId)
       .navigationBarHidden(true)
       // .toolbar(.hidden, for: .tabBar)
       .onChange(of: authManager.currentUser?.avatar) { _, _ in
@@ -55,10 +69,10 @@ struct ProfileView: View {
 
   @ViewBuilder
   private var contentView: some View {
-    if viewModel.isLoading && viewModel.userProfile == nil {
+    if viewModel.isLoading && viewModel.user == nil {
       ProgressView("Loading...")
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-    } else if let profile = viewModel.userProfile {
+    } else if let user = viewModel.user {
       ZStack {
         // 背景色
         Image("gY80sW7YXCRIPed2")
@@ -71,11 +85,11 @@ struct ProfileView: View {
         ScrollView {
           VStack(spacing: 0) {
             // 头部区域（背景图、头像、用户名、关注/粉丝）
-            headerSection(profile: profile)
+            headerSection(user: user)
               .padding(.bottom, 26)
 
             // Works部分
-            worksSection(profile: profile)
+            worksSection(user: user)
               .padding(.horizontal, 20)
               .padding(.bottom, 100)  // 为底部导航栏留出空间
           }
@@ -88,10 +102,10 @@ struct ProfileView: View {
   }
 
   // MARK: - Header Section
-  private func headerSection(profile: UserProfile) -> some View {
+  private func headerSection(user: User) -> some View {
     ZStack {
       // 背景图（模糊的用户头像）
-      headerBackground(profile: profile)
+      headerBackground(user: user)
 
       VStack(alignment: .leading, spacing: 12) {
         // 顶部操作栏
@@ -100,26 +114,26 @@ struct ProfileView: View {
         HStack(alignment: .bottom, spacing: 16) {
           // 左侧：用户名和统计数据
           VStack(alignment: .leading, spacing: 20) {
-            Text(profile.username)
+            Text(user.username)
               .font(.custom("FredokaOne-Regular", size: 22))
               .foregroundColor(.white)
 
-            statsInline(profile: profile)
+            statsInline(user: user)
 
             // 操作按钮
-            actionButtonsSection(profile: profile)
+            actionButtonsSection(user: user)
               .padding(.top, 5)
           }
 
           Spacer()
 
           // 右侧：头像（带绿色边框）
-          avatarView(profile: profile)
+          avatarView(user: user)
         }
         .padding(.horizontal, 20)
 
         // 简介
-        // bioSection(profile: profile)
+        // bioSection(user: user)
 
       }
     }
@@ -130,8 +144,8 @@ struct ProfileView: View {
     }
   }
 
-  private func headerBackground(profile: UserProfile) -> some View {
-    let bgImageName = profile.avatar ?? "icove_logo"
+  private func headerBackground(user: User) -> some View {
+    let bgImageName = user.avatar ?? "icove_logo"
     return ZStack {
       DynamicImage(imageName: bgImageName)
         .scaledToFill()
@@ -156,7 +170,7 @@ struct ProfileView: View {
             dismiss()
           },
           onMore: {
-            showingMoreOptions = true
+            showingReportBlockSheet = true
           }
         )
         .padding(.top, 46)
@@ -169,7 +183,7 @@ struct ProfileView: View {
             if viewModel.isCurrentUser {
               router.push(.settings)
             } else {
-              showingMoreOptions = true
+              showingReportBlockSheet = true
             }
           } label: {
             Circle()
@@ -188,8 +202,8 @@ struct ProfileView: View {
 
   }
 
-  private func avatarView(profile: UserProfile) -> some View {
-    let avatarName = profile.avatar ?? "7X1p2a4Cu1Xn8nXt"
+  private func avatarView(user: User) -> some View {
+    let avatarName = user.avatar ?? "7X1p2a4Cu1Xn8nXt"
     return DynamicImage(imageName: avatarName)
       .frame(width: 116, height: 180)
       .clipShape(RoundedRectangle(cornerRadius: 98, style: .continuous))
@@ -200,10 +214,10 @@ struct ProfileView: View {
       .shadow(radius: 10)
   }
 
-  private func statsInline(profile: UserProfile) -> some View {
+  private func statsInline(user: User) -> some View {
     HStack(spacing: 32) {
       VStack(alignment: .leading, spacing: 4) {
-        Text("\(profile.followingCount)")
+        Text("\(user.followingCount)")
           .font(.custom("FredokaOne-Regular", size: 20))
           // .font(.title3)
           .bold()
@@ -214,7 +228,7 @@ struct ProfileView: View {
       }
 
       VStack(alignment: .leading, spacing: 4) {
-        Text("\(profile.followerCount)")
+        Text("\(user.followerCount)")
           .font(.custom("FredokaOne-Regular", size: 20))
           .bold()
           .foregroundColor(.white)
@@ -225,16 +239,16 @@ struct ProfileView: View {
     }
   }
 
-  private func bioSection(profile: UserProfile) -> some View {
+  private func bioSection(user: User) -> some View {
     HStack(spacing: 8) {
-      Text(profile.bio)
+      Text(user.bio ?? "")
         .foregroundColor(.white.opacity(0.9))
         .font(.subheadline)
         .lineLimit(2)
 
       if viewModel.isCurrentUser {
         Button {
-          editedBio = profile.bio
+          editedBio = user.bio ?? ""
           showingEditBio = true
         } label: {
           Image(systemName: "pencil")
@@ -247,7 +261,7 @@ struct ProfileView: View {
   }
 
   // MARK: - Works Section
-  private func worksSection(profile: UserProfile) -> some View {
+  private func worksSection(user: User) -> some View {
     VStack(alignment: .leading, spacing: 20) {
       // Works标题按钮
       ZStack(alignment: .center) {
@@ -349,7 +363,7 @@ struct ProfileView: View {
 
   // MARK: - Action Buttons Section
   @ViewBuilder
-  private func actionButtonsSection(profile: UserProfile) -> some View {
+  private func actionButtonsSection(user: User) -> some View {
     if viewModel.isCurrentUser {
       // 我的页面：余额按钮
       Button(action: {
@@ -372,13 +386,13 @@ struct ProfileView: View {
         Button(action: {
           viewModel.toggleFollow()
         }) {
-          Text(profile.isFollowing ? "Following" : "Follow")
+          Text(viewModel.isFollowing ? "Following" : "Follow")
             .font(.headline)
             .foregroundColor(.white)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
-            .background(profile.isFollowing ? Color.purple : Color("btnpink"))
+            .background(viewModel.isFollowing ? Color.purple : Color("btnpink"))
             .cornerRadius(10)
         }
 
@@ -487,52 +501,6 @@ struct EditBioSheet: View {
         ToolbarItem(placement: .confirmationAction) {
           Button("保存") {
             onSave()
-            dismiss()
-          }
-        }
-      }
-    }
-  }
-}
-
-// MARK: - More Options Sheet
-struct MoreOptionsSheet: View {
-  @Environment(\.dismiss) var dismiss
-  @EnvironmentObject var authManager: AuthenticationManager
-  let userId: String
-
-  var body: some View {
-    NavigationStack {
-      List {
-        Button(action: {
-          // 举报用户
-          print("举报用户")
-          dismiss()
-        }) {
-          HStack {
-            Image(systemName: "exclamationmark.triangle")
-            Text("举报用户")
-          }
-          .foregroundColor(.red)
-        }
-
-        Button(action: {
-          // 屏蔽用户
-          authManager.addBlockedUserId(userId)
-          dismiss()
-        }) {
-          HStack {
-            Image(systemName: "eye.slash")
-            Text("屏蔽用户")
-          }
-          .foregroundColor(.red)
-        }
-      }
-      .navigationTitle("更多选项")
-      .navigationBarTitleDisplayMode(.inline)
-      .toolbar {
-        ToolbarItem(placement: .cancellationAction) {
-          Button("取消") {
             dismiss()
           }
         }

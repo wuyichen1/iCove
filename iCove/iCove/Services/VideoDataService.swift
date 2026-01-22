@@ -86,7 +86,7 @@ class VideoDataService: VideoDataServiceProtocol {
         imageName: "RClW0Qk7ObNtk86q1",
         videoName: "YLXVqZ8wbqT0SSgp1",
         title: "Today's outfit, wear the tenderness of spring on your body...",
-        authorId: "user_001",
+        authorId: "user_002",
         timestamp: Date().addingTimeInterval(-86400 * 2),
         likeCount: 346,
         isLiked: false
@@ -96,7 +96,7 @@ class VideoDataService: VideoDataServiceProtocol {
         imageName: "RClW0Qk7ObNtk86q2",
         videoName: "YLXVqZ8wbqT0SSgp2",
         title: "Spring collection, fresh and elegant style",
-        authorId: "user_002",
+        authorId: "user_003",
         timestamp: Date().addingTimeInterval(-86400 * 3),
         likeCount: 289,
         isLiked: false
@@ -106,7 +106,7 @@ class VideoDataService: VideoDataServiceProtocol {
         imageName: "RClW0Qk7ObNtk86q3",
         videoName: "YLXVqZ8wbqT0SSgp3",
         title: "Casual chic, perfect for everyday wear",
-        authorId: "user_003",
+        authorId: "user_004",
         timestamp: Date().addingTimeInterval(-86400 * 4),
         likeCount: 512,
         isLiked: false
@@ -116,7 +116,7 @@ class VideoDataService: VideoDataServiceProtocol {
         imageName: "RClW0Qk7ObNtk86q4",
         videoName: "YLXVqZ8wbqT0SSgp4",
         title: "Weekend vibes, comfortable and stylish",
-        authorId: "user_004",
+        authorId: "user_005",
         timestamp: Date().addingTimeInterval(-86400 * 5),
         likeCount: 423,
         isLiked: false
@@ -126,7 +126,7 @@ class VideoDataService: VideoDataServiceProtocol {
         imageName: "RClW0Qk7ObNtk86q5",
         videoName: "YLXVqZ8wbqT0SSgp5",
         title: "Evening elegance, dress to impress",
-        authorId: "user_005",
+        authorId: "user_006",
         timestamp: Date().addingTimeInterval(-86400 * 6),
         likeCount: 678,
         isLiked: false
@@ -136,7 +136,7 @@ class VideoDataService: VideoDataServiceProtocol {
         imageName: "RClW0Qk7ObNtk86q6",
         videoName: "YLXVqZ8wbqT0SSgp6",
         title: "Street style inspiration for your wardrobe",
-        authorId: "user_006",
+        authorId: "user_001",
         timestamp: Date().addingTimeInterval(-86400 * 7),
         likeCount: 891,
         isLiked: false

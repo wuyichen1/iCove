@@ -14,6 +14,8 @@ import SwiftUI
 struct HomeView: View {
   @StateObject private var viewModel = HomeViewModel()
   @State private var showingUnlockDialog = false
+  @State private var showingBlockDialog = false
+  @State private var blockUserId: String? = nil
   @EnvironmentObject var router: Router
   @EnvironmentObject var authManager: AuthenticationManager
 
@@ -28,9 +30,6 @@ struct HomeView: View {
         .resizable()
         .scaledToFill()
         .ignoresSafeArea()
-      // // 背景色
-      // Color("buttonPurple")
-      //     .ignoresSafeArea()
 
       VStack(spacing: 0) {
         // 顶部：App名称和AI形象区域（固定不滚动）
@@ -64,8 +63,13 @@ struct HomeView: View {
           },
         )
       }
+
     }
+    .blockUserDialog(isPresented: $showingBlockDialog, userId: blockUserId)
     .navigationBarHidden(true)
+    .onAppear {
+      viewModel.updateAuthManager(authManager)
+    }
     .enableInjection()
   }
 
@@ -203,9 +207,7 @@ struct HomeView: View {
           }
           .padding(.top, 12)
         }
-        .animation(
-          .spring(response: 0.5, dampingFraction: 0.65, blendDuration: 0.4), value: viewModel.videos
-        )
+        // .animation(.easeInOut(duration: 0.35), value: viewModel.videos)
         .refreshable {
           await viewModel.refresh()
         }
@@ -226,11 +228,20 @@ struct HomeView: View {
       ], spacing: 16
     ) {
       ForEach(viewModel.videos) { video in
-        VideoCard(cardWidth: cardWidth, video: video) {
-          viewModel.toggleLike(for: video)
-        } onTap: {
-          router.push(.detail(id: video.id))
-        }
+        VideoCard(
+          cardWidth: cardWidth,
+          video: video,
+          onLikeTapped: {
+            viewModel.toggleLike(for: video)
+          },
+          onTap: {
+            router.push(.detail(id: video.id))
+          },
+          onBlock: {
+            blockUserId = video.authorId
+            showingBlockDialog = true
+          }
+        )
         .frame(width: cardWidth)
       }
     }
@@ -245,6 +256,10 @@ struct VideoCard: View {
   let video: VideoItem
   let onLikeTapped: () -> Void
   var onTap: (() -> Void)? = nil
+  var onBlock: (() -> Void)? = nil
+  @EnvironmentObject var authManager: AuthenticationManager
+  @EnvironmentObject var router: Router
+  @State private var showingReportBlockSheet = false
 
   var body: some View {
     ZStack(alignment: .topLeading) {
@@ -286,6 +301,7 @@ struct VideoCard: View {
           Spacer()
           Button(action: {
             // 更多选项
+            showingReportBlockSheet = true
           }) {
             Image(systemName: "ellipsis")
               .foregroundColor(.white)
@@ -324,6 +340,21 @@ struct VideoCard: View {
     .contentShape(Rectangle())
     .onTapGesture {
       onTap?()
+    }
+    .sheet(isPresented: $showingReportBlockSheet) {
+      ReportBlockBottomSheet(
+        userId: video.authorId,
+        isPresented: $showingReportBlockSheet,
+        onBlock: {
+          onBlock?()
+        }
+      )
+      .environmentObject(authManager)
+      .environmentObject(router)
+      .presentationDetents([.height(240)])
+      .presentationBackground(.clear)
+      .presentationCornerRadius(0)
+      .presentationDragIndicator(.hidden)
     }
   }
 }

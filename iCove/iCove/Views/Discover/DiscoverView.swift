@@ -15,6 +15,8 @@ struct DiscoverView: View {
   @EnvironmentObject var authManager: AuthenticationManager
   @StateObject private var viewModel: DiscoverViewModel
   @State private var selectedCollectionIndex: Int = 0
+  @State private var showingBlockDialog = false
+  @State private var blockUserId: String? = nil
   @EnvironmentObject var router: Router
 
   #if DEBUG
@@ -53,6 +55,7 @@ struct DiscoverView: View {
       }
     }
     // .navigationBarHidden(true)
+    .blockUserDialog(isPresented: $showingBlockDialog, userId: blockUserId)
     .enableInjection()
     .onAppear {
       // 更新ViewModel的authManager引用
@@ -176,11 +179,17 @@ struct DiscoverView: View {
           ScrollView {
             LazyVStack(spacing: 16) {
               ForEach(viewModel.allPosts) { post in
-                PostCard(post: post)
-                  .onTapGesture {
-                    // 跳转到详情页
-                    router.push(.postDetail(postId: post.id))
+                PostCard(
+                  post: post,
+                  onBlock: {
+                    blockUserId = post.authorId
+                    showingBlockDialog = true
                   }
+                )
+                .onTapGesture {
+                  // 跳转到详情页
+                  router.push(.postDetail(postId: post.id))
+                }
               }
             }
             .padding(.horizontal, 20)
@@ -243,12 +252,15 @@ struct DiscoverView: View {
 // MARK: - Post Card
 struct PostCard: View {
   let post: Post
+  var onBlock: (() -> Void)? = nil
   @StateObject private var viewModel: PostCardViewModel
   @EnvironmentObject var router: Router
   @EnvironmentObject var authManager: AuthenticationManager
+  @State private var showingReportBlockSheet = false
 
-  init(post: Post) {
+  init(post: Post, onBlock: (() -> Void)? = nil) {
     self.post = post
+    self.onBlock = onBlock
     _viewModel = StateObject(wrappedValue: PostCardViewModel(authorId: post.authorId))
   }
 
@@ -299,7 +311,7 @@ struct PostCard: View {
 
             // 更多选项
             Button(action: {
-              // 更多选项
+              showingReportBlockSheet = true
             }) {
               Image(systemName: "ellipsis")
                 .font(.system(size: 18))
@@ -367,6 +379,26 @@ struct PostCard: View {
     .cornerRadius(20)
     .onAppear {
       viewModel.setAuthManager(authManager)
+    }
+    .sheet(isPresented: $showingReportBlockSheet) {
+      if let authorId = viewModel.author?.id {
+        ReportBlockBottomSheet(
+          userId: authorId,
+          isPresented: $showingReportBlockSheet,
+          onBlock: {
+            onBlock?()
+          }
+        )
+        .environmentObject(authManager)
+        .environmentObject(router)
+        // 让打开的弹窗高度撑满全屏
+        // .presentationDetents([.large])
+        // .presentationDetents([.height(UIScreen.main.bounds.height)])
+        .presentationDetents([.height(240)])
+        .presentationBackground(.clear)
+        .presentationCornerRadius(0)
+        .presentationDragIndicator(.hidden)
+      }
     }
   }
 }

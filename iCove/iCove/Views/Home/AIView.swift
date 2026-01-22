@@ -29,6 +29,10 @@ struct AIView: View {
   @State private var showResult: Bool = false
   @State private var resultTitle: String = ""
   @State private var resultContent: String = ""
+  @State private var errorMessage: String?
+  
+  // AI 服务
+  private let aiService: AIServiceProtocol = AIService.shared
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -150,7 +154,7 @@ struct AIView: View {
           inputSection(
             label: "Additional requirements:",
             placeholder: "Enter...",
-            text: $season
+            text: $additionalRequirements
           )
 
           // VStack(alignment: .leading, spacing: 8) {
@@ -224,11 +228,15 @@ struct AIView: View {
           }
           .disabled(!canStart || isGenerating)
 
-          // if !canStart {
-          //   Text("Please fill in Scene, Style and Season first.")
-          //     .font(.system(size: 13))
-          //     .foregroundColor(.white.opacity(0.6))
-          // }
+          // 显示错误消息
+          if let errorMessage = errorMessage {
+            Text(errorMessage)
+              .font(.system(size: 13))
+              .foregroundColor(.red.opacity(0.9))
+              .multilineTextAlignment(.center)
+              .padding(.horizontal, 24)
+              .padding(.top, 8)
+          }
         }
         .padding(.top, 12)
         .padding(.bottom, 40)
@@ -316,46 +324,39 @@ struct AIView: View {
     }
   }
 
-  // MARK: - 生成推荐文案（模拟 AI 调用）
+  // MARK: - 生成推荐文案（调用真实 AI 接口）
   private func generateRecommendation() async {
     guard !isGenerating else { return }
     isGenerating = true
-
-    // 模拟网络延迟，后续可在此处集成真实 AI 接口
-    try? await Task.sleep(nanoseconds: 900_000_000)
+    errorMessage = nil
 
     let trimmedScene = scene.trimmingCharacters(in: .whitespacesAndNewlines)
     let trimmedStyle = style.trimmingCharacters(in: .whitespacesAndNewlines)
     let trimmedSeason = season.trimmingCharacters(in: .whitespacesAndNewlines)
-    let extra = additionalRequirements.trimmingCharacters(in: .whitespacesAndNewlines)
+    let trimmedAdditional = additionalRequirements.trimmingCharacters(in: .whitespacesAndNewlines)
 
-    // 标题
-    resultTitle =
-      "\(trimmedStyle.isEmpty ? "Stylish" : trimmedStyle) outfits for \(trimmedScene.isEmpty ? "your day" : trimmedScene.lowercased())"
+    // 调用 AI 服务
+    let result = await aiService.fetchAIResponse(
+      scene: trimmedScene,
+      style: trimmedStyle,
+      season: trimmedSeason,
+      additionalRequirements: trimmedAdditional
+    )
 
-    // 简单占位文案（可替换为后端返回的内容）
-    var content = """
-      Top: Choose a \(trimmedStyle.lowercased().isEmpty ? "clean and well-fitted" : trimmedStyle.lowercased()) top that matches the vibe of \(trimmedScene.lowercased().isEmpty ? "the occasion" : trimmedScene.lowercased()). Prefer breathable fabrics suitable for \(trimmedSeason.lowercased().isEmpty ? "the current season" : trimmedSeason.lowercased()), so that you can stay comfortable while looking polished.
-
-      Bottom wear: Go for a silhouette that elongates the leg line and keeps the overall look balanced. High‑waisted straight‑leg trousers, midi skirts, or well‑cut jeans all work well depending on how formal \(trimmedScene.lowercased().isEmpty ? "the scene is" : trimmedScene.lowercased()) needs to be.
-
-      Coat / Outerwear: Add a layer that refines the proportions of your shoulders and waist. A short jacket or blazer that hits around the waist can subtly enhance the body ratio and make the outfit look more intentional.
-
-      Footwear: Pick shoes that are comfortable enough for the activities of the scene while still echoing the \(trimmedStyle.lowercased().isEmpty ? "overall style" : trimmedStyle.lowercased() + " style"). Slight heels, clean sneakers, or simple boots can all be good options as long as the color does not overpower the outfit.
-
-      Accessories: Use 1‑2 highlight pieces, such as a delicate necklace, earrings, or a structured bag, to complete the look. Avoid too many competing focal points so that the overall outfit remains coherent and flattering.
-      """
-
-    if !extra.isEmpty {
-      content += """
-
-        Special notes based on your additional requirements: \(extra)
-        The outfit suggestions above can be subtly adjusted in fabric, color, and accessories to better respond to these personal preferences.
-        """
+    await MainActor.run {
+      switch result {
+      case .success(let content):
+        // 设置标题
+        resultTitle =
+          "\(trimmedStyle.isEmpty ? "Stylish" : trimmedStyle) outfits for \(trimmedScene.isEmpty ? "your day" : trimmedScene.lowercased())"
+        resultContent = content
+        showResult = true
+        errorMessage = nil
+      case .failure(let error):
+        errorMessage = error
+        showResult = false
+      }
+      isGenerating = false
     }
-
-    resultContent = content
-    showResult = true
-    isGenerating = false
   }
 }

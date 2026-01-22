@@ -212,6 +212,8 @@ class AuthenticationManager: ObservableObject {
             user.blockedUserIds.append(userId)
             currentUser = user
             saveAuthState(token: authToken ?? "", user: user, loginType: isQuickLogin ? "quick" : "normal")
+            // 发送通知，通知所有 ViewModel 刷新数据
+            NotificationCenter.default.post(name: NSNotification.Name("UserBlocked"), object: nil, userInfo: ["blockedUserId": userId])
         }
     }
     
@@ -221,6 +223,8 @@ class AuthenticationManager: ObservableObject {
         user.blockedUserIds.removeAll { $0 == userId }
         currentUser = user
         saveAuthState(token: authToken ?? "", user: user, loginType: isQuickLogin ? "quick" : "normal")
+        // 发送通知，通知所有 ViewModel 刷新数据
+        NotificationCenter.default.post(name: NSNotification.Name("UserUnblocked"), object: nil, userInfo: ["unblockedUserId": userId])
     }
     
     /// 检查用户是否被拉黑

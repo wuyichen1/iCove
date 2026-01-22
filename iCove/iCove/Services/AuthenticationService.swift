@@ -34,7 +34,9 @@ class AuthenticationService: AuthenticationServiceProtocol {
       avatar: "eitJTglOzkSfZvNi1",
       balance: 1000,
       collectedPostIds: ["post_001", "post_002", "post_003"],
-      blockedUserIds: ["user_002"]  // 示例拉黑的用户ID列表
+      blockedUserIds: [],
+      followingUserIds: ["user_002", "user_003"],
+      followerUserIds: ["user_002"]
     ),
     // 示例用户数据（不需要邮箱和密码）
     "user_002": User(
@@ -42,14 +44,17 @@ class AuthenticationService: AuthenticationServiceProtocol {
       email: "",
       username: "Maddison",
       avatar: "eitJTglOzkSfZvNi2",
-      balance: 0
+      balance: 0,
+      followingUserIds: ["user_001"],
+      followerUserIds: ["user_001"]
     ),
     "user_003": User(
       id: "user_003",
       email: "",
       username: "StyleGuide",
       avatar: "eitJTglOzkSfZvNi3",
-      balance: 0
+      balance: 0,
+      followerUserIds: ["user_001"]
     ),
     "user_004": User(
       id: "user_004",

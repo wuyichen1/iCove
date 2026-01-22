@@ -48,6 +48,7 @@ struct MessagesView: View {
       Task {
         await viewModel.loadConversations()
       }
+      viewModel.updateAuthManager(authManager)
     }
     .onChange(of: authManager.currentUser?.id) { _, newUserId in
       viewModel.currentUserId = newUserId

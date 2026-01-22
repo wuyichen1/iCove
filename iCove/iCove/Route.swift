@@ -27,4 +27,5 @@ enum Route: Hashable {
     case wallet
     case ai
     case publish(type: PublishType)
+    case report(userId: String)
 }

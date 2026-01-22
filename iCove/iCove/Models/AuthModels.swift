@@ -22,8 +22,11 @@ struct User: Codable, Identifiable {
     let username: String
     let avatar: String?
     let balance: Int
+    var bio: String?  // 个人简介
     var collectedPostIds: [String]  // 收藏的帖子ID列表
     var blockedUserIds: [String]  // 拉黑的用户ID列表
+    var followingUserIds: [String]  // 关注的用户ID列表
+    var followerUserIds: [String]  // 粉丝用户ID列表
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -31,18 +34,35 @@ struct User: Codable, Identifiable {
         case username
         case avatar
         case balance
+        case bio
         case collectedPostIds
         case blockedUserIds
+        case followingUserIds
+        case followerUserIds
     }
     
-    init(id: String, email: String, username: String, avatar: String? = nil, balance: Int = 0, collectedPostIds: [String] = [], blockedUserIds: [String] = []) {
+    // MARK: - Computed Properties
+    /// 粉丝数量
+    var followerCount: Int {
+        followerUserIds.count
+    }
+    
+    /// 关注数量
+    var followingCount: Int {
+        followingUserIds.count
+    }
+    
+    init(id: String, email: String, username: String, avatar: String? = nil, balance: Int = 0, bio: String? = nil, collectedPostIds: [String] = [], blockedUserIds: [String] = [], followingUserIds: [String] = [], followerUserIds: [String] = []) {
         self.id = id
         self.email = email
         self.username = username
         self.avatar = avatar
         self.balance = balance
+        self.bio = bio
         self.collectedPostIds = collectedPostIds
         self.blockedUserIds = blockedUserIds
+        self.followingUserIds = followingUserIds
+        self.followerUserIds = followerUserIds
     }
     
     init(from decoder: Decoder) throws {
@@ -52,8 +72,11 @@ struct User: Codable, Identifiable {
         username = try container.decode(String.self, forKey: .username)
         avatar = try container.decodeIfPresent(String.self, forKey: .avatar)
         balance = try container.decodeIfPresent(Int.self, forKey: .balance) ?? 0
+        bio = try container.decodeIfPresent(String.self, forKey: .bio)
         collectedPostIds = try container.decodeIfPresent([String].self, forKey: .collectedPostIds) ?? []
         blockedUserIds = try container.decodeIfPresent([String].self, forKey: .blockedUserIds) ?? []
+        followingUserIds = try container.decodeIfPresent([String].self, forKey: .followingUserIds) ?? []
+        followerUserIds = try container.decodeIfPresent([String].self, forKey: .followerUserIds) ?? []
     }
     
     func encode(to encoder: Encoder) throws {
@@ -63,8 +86,11 @@ struct User: Codable, Identifiable {
         try container.encode(username, forKey: .username)
         try container.encodeIfPresent(avatar, forKey: .avatar)
         try container.encode(balance, forKey: .balance)
+        try container.encodeIfPresent(bio, forKey: .bio)
         try container.encode(collectedPostIds, forKey: .collectedPostIds)
         try container.encode(blockedUserIds, forKey: .blockedUserIds)
+        try container.encode(followingUserIds, forKey: .followingUserIds)
+        try container.encode(followerUserIds, forKey: .followerUserIds)
     }
 }
 

@@ -115,6 +115,9 @@ struct CommentSheet: View {
         // .background(Color("buttonPurple").opacity(0.9))
       }
     }
+    .onAppear {
+      viewModel.updateAuthManager(authManager)
+    }
     .enableInjection()
     // .frame(height: UIScreen.main.bounds.height * 0.5)  // 固定为屏幕高度的 50%
   }
@@ -229,7 +232,7 @@ class CommentRowViewModel: ObservableObject {
     self.authorId = authorId
     self.authManager = authManager
     loadAuthor(authorId: authorId)
-    
+
     // 监听当前用户信息更新通知
     NotificationCenter.default.addObserver(
       forName: NSNotification.Name("CurrentUserUpdated"),
@@ -238,13 +241,14 @@ class CommentRowViewModel: ObservableObject {
     ) { [weak self] notification in
       Task { @MainActor in
         guard let self = self,
-              let updatedUser = notification.userInfo?["user"] as? User,
-              updatedUser.id == self.authorId else { return }
+          let updatedUser = notification.userInfo?["user"] as? User,
+          updatedUser.id == self.authorId
+        else { return }
         self.author = updatedUser
       }
     }
   }
-  
+
   deinit {
     NotificationCenter.default.removeObserver(self)
   }
@@ -278,6 +282,7 @@ class CommentSheetViewModel: ObservableObject {
 
   private let commentService: CommentDataServiceProtocol
   private let videoId: String
+  private var authManager: AuthenticationManager?
 
   init(
     videoId: String,
@@ -297,10 +302,38 @@ class CommentSheetViewModel: ObservableObject {
       }
     }
 
+    // 监听用户拉黑通知，刷新评论列表
+    NotificationCenter.default.addObserver(
+      forName: NSNotification.Name("UserBlocked"),
+      object: nil,
+      queue: .main
+    ) { [weak self] _ in
+      Task { @MainActor [weak self] in
+        self?.loadComments()
+      }
+    }
+
+    // 监听用户取消拉黑通知，刷新评论列表
+    NotificationCenter.default.addObserver(
+      forName: NSNotification.Name("UserUnblocked"),
+      object: nil,
+      queue: .main
+    ) { [weak self] _ in
+      Task { @MainActor [weak self] in
+        self?.loadComments()
+      }
+    }
+
     // 延迟加载，确保在主线程
     Task { @MainActor [weak self] in
       self?.loadComments()
     }
+  }
+
+  /// 更新authManager引用（用于在View的onAppear中设置）
+  func updateAuthManager(_ authManager: AuthenticationManager) {
+    self.authManager = authManager
+    loadComments()
   }
 
   deinit {
@@ -313,7 +346,18 @@ class CommentSheetViewModel: ObservableObject {
   }
 
   private func loadComments() {
-    comments = commentService.loadComments(for: videoId)
+    let allComments = commentService.loadComments(for: videoId)
+    // 过滤被拉黑用户的评论
+    comments = filterBlockedUsersComments(allComments)
+  }
+
+  /// 过滤被拉黑用户的评论
+  private func filterBlockedUsersComments(_ comments: [Comment]) -> [Comment] {
+    guard let blockedUserIds = authManager?.currentUser?.blockedUserIds, !blockedUserIds.isEmpty
+    else {
+      return comments
+    }
+    return comments.filter { !blockedUserIds.contains($0.authorId) }
   }
 }
 
