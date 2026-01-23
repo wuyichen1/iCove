@@ -13,6 +13,7 @@ import SwiftUI
 
 struct MainTabView: View {
   @EnvironmentObject var authManager: AuthenticationManager
+  @EnvironmentObject var paymentViewModel: PaymentViewModel
   @StateObject private var router = Router()
   @State private var selectedTab: TabItem = .home
 
@@ -31,24 +32,28 @@ struct MainTabView: View {
           }
           .environmentObject(router)
           .environmentObject(authManager)
+          .environmentObject(paymentViewModel)
         case .discover:
           AppNavigationView {
             DiscoverView()
           }
           .environmentObject(router)
           .environmentObject(authManager)
+          .environmentObject(paymentViewModel)
         case .messages:
           AppNavigationView {
             MessagesView()
           }
           .environmentObject(authManager)
           .environmentObject(router)
+          .environmentObject(paymentViewModel)
         case .profile:
           AppNavigationView {
             ProfileViewWrapper()
           }
           .environmentObject(router)
           .environmentObject(authManager)
+          .environmentObject(paymentViewModel)
         }
       }
       .frame(maxWidth: .infinity, maxHeight: .infinity)

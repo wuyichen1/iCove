@@ -129,17 +129,17 @@ enum PaymentError: LocalizedError {
   var errorDescription: String? {
     switch self {
     case .serviceUnavailable:
-      return "支付服务不可用，请检查网络连接或 App Store 登录状态"
+      return "Payment services unavailable"
     case .productNotFound(let productId):
-      return "产品未找到：\(productId)"
+      return "Product not found: \(productId)"
     case .productQueryFailed(let message):
-      return "产品查询失败：\(message)"
+      return message
     case .purchaseFailed(let message):
-      return "购买失败：\(message)"
+      return message
     case .transactionVerificationFailed:
-      return "交易验证失败"
+      return "Transaction verification failed"
     case .unknown(let message):
-      return "未知错误：\(message)"
+      return message
     }
   }
 }
@@ -157,19 +157,7 @@ struct PurchaseOption: Identifiable {
   let price: Double
 
   /// 产品 ID（App Store Connect 中的产品 ID，用于支付）
-  /// 如果为 nil，则使用模拟支付（仅用于测试）
   let productId: String
-
-  /// 初始化方法
-  /// - Parameters:
-  ///   - carrots: 胡萝卜数量
-  ///   - price: 价格
-  ///   - productId: 产品 ID（可选，如果为 nil 则使用模拟支付）
-  init(carrots: Int, price: Double, productId: String) {
-    self.carrots = carrots
-    self.price = price
-    self.productId = productId
-  }
 }
 
 /// 钻石包配置列表

@@ -15,6 +15,7 @@ import SwiftUI
 struct AppNavigationView<Content: View>: View {
     @EnvironmentObject var router: Router
     @EnvironmentObject var authManager: AuthenticationManager
+    @EnvironmentObject var paymentViewModel: PaymentViewModel
     let content: () -> Content
 
     #if DEBUG
@@ -62,6 +63,7 @@ struct AppNavigationView<Content: View>: View {
             ProfileViewWrapper(userId: userId)
                 .environmentObject(router)
                 .environmentObject(authManager)
+                .environmentObject(paymentViewModel)
                 .toolbar(.hidden, for: .tabBar)
         case .settings:
             SettingsView()
@@ -82,6 +84,7 @@ struct AppNavigationView<Content: View>: View {
             WalletView()
                 .environmentObject(router)
                 .environmentObject(authManager)
+                .environmentObject(paymentViewModel)
                 .toolbar(.hidden, for: .tabBar)
         case .ai:
             AIView()
