@@ -36,8 +36,7 @@ class PostDataService: PostDataServiceProtocol {
       authorId: "user_002",
       content:
         "A must-read for office workers! My colleagues thought I had changed five wardrobes every week without repeating my commute! Go on an autumn date! Caramel-colored outfit + beret, walking among the fallen leaves feels like a movie scene, gentle to the core",
-      timestamp: Date().addingTimeInterval(-3600),
-      isCollected: false
+      timestamp: Date().addingTimeInterval(-3600)
     ),
     Post(
       id: "post_002",
@@ -50,8 +49,7 @@ class PostDataService: PostDataServiceProtocol {
       authorId: "user_003",
       content:
         "Spring collection is here! Fresh and elegant style for your daily commute. Perfect combination of comfort and fashion.",
-      timestamp: Date().addingTimeInterval(-7200),
-      isCollected: false
+      timestamp: Date().addingTimeInterval(-7200)
     ),
     Post(
       id: "post_003",
@@ -65,8 +63,7 @@ class PostDataService: PostDataServiceProtocol {
       authorId: "user_004",
       content:
         "Weekend vibes! Casual chic outfit perfect for a day out. Comfortable yet stylish, this is how I spend my weekends.",
-      timestamp: Date().addingTimeInterval(-14400),
-      isCollected: false
+      timestamp: Date().addingTimeInterval(-14400)
     ),
   ]
 

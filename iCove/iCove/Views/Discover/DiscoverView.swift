@@ -14,7 +14,6 @@ import SwiftUI
 struct DiscoverView: View {
   @EnvironmentObject var authManager: AuthenticationManager
   @StateObject private var viewModel: DiscoverViewModel
-  @State private var selectedCollectionIndex: Int = 0
   @State private var showingBlockDialog = false
   @State private var blockUserId: String? = nil
   @EnvironmentObject var router: Router
@@ -61,7 +60,7 @@ struct DiscoverView: View {
       // 更新ViewModel的authManager引用
       viewModel.updateAuthManager(authManager)
     }
-    .onChange(of: authManager.currentUser?.collectedPostIds) { _ in
+    .onChange(of: authManager.currentUser?.collectedPostIds) { oldValue, newValue in
       // 当用户的收藏列表改变时，刷新收藏的帖子
       viewModel.refreshCollectedPosts()
     }
@@ -102,7 +101,7 @@ struct DiscoverView: View {
 
   // MARK: - Content View
   private var contentView: some View {
-    VStack(alignment: .leading, spacing: 26) {
+    VStack(alignment: .leading, spacing: 0) {
 
       // 收藏图片轮播
       if !viewModel.collectedPosts.isEmpty {
@@ -118,9 +117,10 @@ struct DiscoverView: View {
             Spacer()
           }
           .padding(.horizontal, 20)
-          .padding(.bottom, 16)
+          .padding(.bottom, 0)
 
           collectionCarousel
+            .padding(.bottom, 16)
         }
 
       }
@@ -208,44 +208,148 @@ struct DiscoverView: View {
 
   // MARK: - Collection Carousel
   private var collectionCarousel: some View {
-    TabView(selection: $selectedCollectionIndex) {
-      ForEach(Array(viewModel.collectedPosts.enumerated()), id: \.element.id) { index, post in
-        if let firstImage = post.imageNames.first {
-          DynamicImage(imageName: firstImage)
-            .frame(height: 200)
-            .clipShape(RoundedRectangle(cornerRadius: 16))
-            .overlay(
-              // 星星图标覆盖层（底部）
-              VStack {
-                Spacer()
-                HStack {
-                  Button(action: {
-                    // 收藏操作
-                  }) {
-                    Image(systemName: post.isCollected ? "star.fill" : "star")
-                      .font(.system(size: 18))
-                      .foregroundColor(.white)
-                      .padding(8)
-                      .background(Color.purple.opacity(0.7))
-                      .clipShape(Circle())
-                      .overlay(
-                        Circle()
-                          .stroke(Color.white, lineWidth: 1.5)
-                      )
-                  }
-                  .padding(.leading, 12)
-                  .padding(.bottom, 12)
-                  Spacer()
-                }
+    GeometryReader { geometry in
+      // 一屏显示三项：中间项完整，左右各显示一部分
+      let screenWidth = geometry.size.width
+      let itemWidth = screenWidth * 2 / 3  // 每项宽度（约2/3屏幕宽度）
+      let cardSpacing: CGFloat = 18  // 卡片之间的间距
+      let containerHeight: CGFloat = 220  // 外层滚动空间高度
+      let cardHeight: CGFloat = 180  // 卡片高度
+      let spacerHeight: CGFloat = 20  // 空白占位高度
+      // 左右各留出的宽度，让左右两侧各显示一部分
+      let sidePadding = (screenWidth - itemWidth) / 2
+
+      ScrollViewReader { proxy in
+        ScrollView(.horizontal, showsIndicators: false) {
+          HStack(spacing: cardSpacing) {
+            ForEach(Array(viewModel.collectedPosts.enumerated()), id: \.element.id) { index, post in
+              if let firstImage = post.imageNames.first {
+                CollectionCardView(
+                  imageName: firstImage,
+                  post: post,
+                  itemWidth: itemWidth,
+                  cardHeight: cardHeight,
+                  spacerHeight: spacerHeight,
+                  containerHeight: containerHeight,
+                  scrollWidth: screenWidth
+                )
+                .id(index)
               }
-            )
-            .padding(.horizontal, 20)
-            .tag(index)
+            }
+          }
+          .padding(.horizontal, sidePadding)  // 左右各留出空间，让首尾项也能居中
+          .scrollTargetLayout()
+        }
+        .coordinateSpace(name: "scroll")
+        .scrollTargetBehavior(.viewAligned)
+        .scrollBounceBehavior(.basedOnSize)  // 根据内容大小调整弹性效果
+        .scrollDismissesKeyboard(.never)  // 防止键盘干扰滚动
+        .frame(width: screenWidth)  // 限制宽度，确保超出部分被裁剪
+        .onAppear {
+          // 初始时滚动到第一项
+          if !viewModel.collectedPosts.isEmpty {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+              proxy.scrollTo(0, anchor: .center)
+            }
+          }
         }
       }
+      .frame(width: screenWidth, height: containerHeight)
     }
-    .tabViewStyle(.page(indexDisplayMode: .never))
-    .frame(height: 200)
+    .frame(height: 220)
+  }
+}
+
+// MARK: - Collection Card View
+struct CollectionCardView: View {
+  let imageName: String
+  let post: Post
+  let itemWidth: CGFloat
+  let cardHeight: CGFloat
+  let spacerHeight: CGFloat
+  let containerHeight: CGFloat
+  let scrollWidth: CGFloat
+  @EnvironmentObject var authManager: AuthenticationManager
+  @EnvironmentObject var router: Router
+
+  var body: some View {
+    GeometryReader { cardGeometry in
+      // 计算卡片相对于滚动视图中心的位置
+      let cardCenterX = cardGeometry.frame(in: .named("scroll")).midX
+      let scrollCenterX = scrollWidth / 2
+      let distanceFromCenter = abs(cardCenterX - scrollCenterX)
+      // 最大距离是屏幕宽度的一半
+      let maxDistance = scrollWidth / 2
+
+      // 计算进度值（0.0 在中心，1.0 在边缘）
+      let progress = min(1.0, distanceFromCenter / maxDistance)
+
+      // 使用平滑的插值来控制卡片位置
+      // progress = 0 时，卡片在上方（中间项）
+      // progress = 1 时，卡片在下方（非中间项）
+      let topSpacerHeight = spacerHeight * progress  // 上方空白高度，随progress增加
+      let bottomSpacerHeight = spacerHeight * (1.0 - progress)  // 下方空白高度，随progress减少
+
+      // 使用垂直布局：通过动态调整空白高度实现平滑过渡
+      VStack(spacing: 0) {
+        // 上方空白，高度随progress变化
+        Spacer()
+          .frame(height: topSpacerHeight)
+
+        // 卡片视图
+        cardView
+
+        // 下方空白，高度随progress变化
+        Spacer()
+          .frame(height: bottomSpacerHeight)
+      }
+      .frame(width: itemWidth, height: containerHeight)
+      .animation(
+        .spring(response: 0.35, dampingFraction: 0.75, blendDuration: 0.15),
+        value: progress
+      )
+    }
+    .frame(width: itemWidth, height: containerHeight)
+  }
+
+  private var cardView: some View {
+    DynamicImage(imageName: imageName, contentMode: .fill)
+      .frame(width: itemWidth, height: cardHeight)
+      .clipShape(RoundedRectangle(cornerRadius: 16))
+      .overlay(
+        // 星星图标覆盖层（右下角）
+        VStack {
+          Spacer()
+          HStack {
+            Spacer()
+            Button(action: {
+              // 收藏操作
+              authManager.toggleCollectPost(postId: post.id)
+            }) {
+              Image(systemName: "star.fill")
+                .font(.system(size: 18))
+                .foregroundColor(
+                  authManager.isPostCollected(postId: post.id) ? .yellow : .white
+                )
+                .padding(8)
+                .background(Color("buttonPurple"))
+                .clipShape(Circle())
+            }
+            .padding(.trailing, 12)
+            .padding(.bottom, 12)
+          }
+        }
+      )
+      // 添加一个白色边框
+      .overlay(
+        RoundedRectangle(cornerRadius: 16)
+          .stroke(Color.white, lineWidth: 2)
+      )
+      .contentShape(RoundedRectangle(cornerRadius: 16))
+      .onTapGesture {
+        // 跳转到详情页
+        router.push(.postDetail(postId: post.id))
+      }
   }
 }
 

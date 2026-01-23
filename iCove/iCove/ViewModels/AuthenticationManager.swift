@@ -147,6 +147,57 @@ class AuthenticationManager: ObservableObject {
         )
     }
     
+    /// 切换帖子收藏状态
+    func toggleCollectPost(postId: String) {
+        guard var user = currentUser else { return }
+        
+        var collectedPostIds = user.collectedPostIds
+        if collectedPostIds.contains(postId) {
+            // 取消收藏
+            collectedPostIds.removeAll { $0 == postId }
+        } else {
+            // 添加收藏
+            collectedPostIds.append(postId)
+        }
+        
+        user = User(
+            id: user.id,
+            email: user.email,
+            username: user.username,
+            avatar: user.avatar,
+            balance: user.balance,
+            bio: user.bio,
+            collectedPostIds: collectedPostIds,
+            blockedUserIds: user.blockedUserIds,
+            followingUserIds: user.followingUserIds,
+            followerUserIds: user.followerUserIds
+        )
+        currentUser = user
+        saveAuthState(token: authToken ?? "", user: user, loginType: isQuickLogin ? "quick" : "normal")
+        
+        // 同步更新用户列表中的用户信息
+        authService.updateUser(user)
+        
+        // 发送用户信息更新通知
+        NotificationCenter.default.post(
+            name: NSNotification.Name("CurrentUserUpdated"),
+            object: nil,
+            userInfo: ["user": user]
+        )
+        
+        // 发送收藏状态更新通知
+        NotificationCenter.default.post(
+            name: NSNotification.Name("PostCollectionUpdated"),
+            object: nil,
+            userInfo: ["postId": postId, "isCollected": !collectedPostIds.contains(postId)]
+        )
+    }
+    
+    /// 检查帖子是否被收藏
+    func isPostCollected(postId: String) -> Bool {
+        return currentUser?.collectedPostIds.contains(postId) ?? false
+    }
+    
     /// 将头像图片保存到本地文档目录的 UserImages 子目录
     /// 返回文件名（不包含路径），这样可以被 DynamicImageLoader 识别
     private func saveAvatarToLocal(_ image: UIImage, userId: String) -> String {

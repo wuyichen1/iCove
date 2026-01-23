@@ -43,7 +43,7 @@ struct PostDetailView: View {
             router.pop()
           },
           onMore: {
-            if let post = viewModel.post {
+            if viewModel.post != nil {
               showingReportBlockSheet = true
             }
           },
@@ -76,7 +76,9 @@ struct PostDetailView: View {
 
                 // 收藏按钮
                 Button(action: {
-                  viewModel.toggleCollect()
+                  if let post = viewModel.post {
+                    authManager.toggleCollectPost(postId: post.id)
+                  }
                 }) {
                   ZStack {
                     Circle()
@@ -85,7 +87,11 @@ struct PostDetailView: View {
 
                     Image(systemName: "star.fill")
                       .font(.system(size: 24))
-                      .foregroundColor(viewModel.post?.isCollected == true ? .yellow : .white)
+                      .foregroundColor(
+                        viewModel.post != nil && authManager.isPostCollected(postId: viewModel.post!.id)
+                          ? .yellow
+                          : .white
+                      )
                   }
                 }
                 .padding(.bottom, 20)
@@ -148,6 +154,9 @@ struct PostDetailView: View {
     }
     .blockUserDialog(isPresented: $showingBlockDialog, userId: blockUserId)
     .enableInjection()
+    .onChange(of: authManager.currentUser?.collectedPostIds) { _, _ in
+      // 当收藏列表更新时，视图会自动刷新
+    }
   }
 
   // MARK: - Thumbnail Item
@@ -196,13 +205,6 @@ class PostDetailViewModel: ObservableObject {
 
   private func loadPost() {
     post = postService.getPostById(postId)
-  }
-
-  func toggleCollect() {
-    guard var post = post else { return }
-    post.isCollected.toggle()
-    self.post = post
-    postService.updatePost(post)
   }
 }
 

@@ -621,8 +621,7 @@ struct PublishView: View {
         imageNames: savedImageNames,
         authorId: userId,
         content: ideaText.trimmingCharacters(in: .whitespacesAndNewlines),
-        timestamp: Date(),
-        isCollected: false
+        timestamp: Date()
       )
 
       viewModel.publishPost(post)

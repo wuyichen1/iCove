@@ -57,7 +57,6 @@ struct Post: Identifiable, Codable, Hashable {
     let authorId: String  // 作者ID，通过此ID查找用户信息
     let content: String
     let timestamp: Date
-    var isCollected: Bool  // 是否收藏
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -65,21 +64,18 @@ struct Post: Identifiable, Codable, Hashable {
         case authorId
         case content
         case timestamp
-        case isCollected
     }
     
     init(id: String = UUID().uuidString,
          imageNames: [String],
          authorId: String,
          content: String,
-         timestamp: Date = Date(),
-         isCollected: Bool = false) {
+         timestamp: Date = Date()) {
         self.id = id
         self.imageNames = imageNames
         self.authorId = authorId
         self.content = content
         self.timestamp = timestamp
-        self.isCollected = isCollected
     }
     
     init(from decoder: Decoder) throws {
@@ -90,7 +86,6 @@ struct Post: Identifiable, Codable, Hashable {
         content = try container.decode(String.self, forKey: .content)
         let timestampInterval = try container.decode(TimeInterval.self, forKey: .timestamp)
         timestamp = Date(timeIntervalSince1970: timestampInterval)
-        isCollected = try container.decode(Bool.self, forKey: .isCollected)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -100,7 +95,6 @@ struct Post: Identifiable, Codable, Hashable {
         try container.encode(authorId, forKey: .authorId)
         try container.encode(content, forKey: .content)
         try container.encode(timestamp.timeIntervalSince1970, forKey: .timestamp)
-        try container.encode(isCollected, forKey: .isCollected)
     }
     
     // MARK: - Hashable
