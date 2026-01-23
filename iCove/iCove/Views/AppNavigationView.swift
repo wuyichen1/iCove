@@ -95,6 +95,10 @@ struct AppNavigationView<Content: View>: View {
             ReportView(userId: userId)
                 .environmentObject(router)
                 .toolbar(.hidden, for: .tabBar)
+        case .agreement(let url, let title):
+            AgreementView(urlString: url, title: title)
+                .environmentObject(router)
+                .toolbar(.hidden, for: .tabBar)
         }
     }
 

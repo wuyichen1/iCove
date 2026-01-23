@@ -10,6 +10,7 @@ import SwiftUI
 /// 欢迎页/登录选择页
 struct WelcomeView: View {
   @EnvironmentObject var authManager: AuthenticationManager
+  @EnvironmentObject var router: Router
   @State private var showingEmailLogin = false
   @State private var showingSignUp = false
   @State private var agreedToTerms = true
@@ -62,10 +63,10 @@ struct WelcomeView: View {
       AuthenticationView(initialMode: .signUp)
         .environmentObject(authManager)
     }
-    .alert("请同意协议", isPresented: $showingAgreementAlert) {
-      Button("确定", role: .cancel) {}
+    .alert("Protocol Warning", isPresented: $showingAgreementAlert) {
+      Button("OK", role: .cancel) {}
     } message: {
-      Text("请先同意用户协议和隐私政策后再继续")
+      Text("Please agree to the user agreement and privacy policy before continuing")
     }
     .enableInjection()  // 这行关键：强制 SwiftUI 重建 body，实现热重载
   }
@@ -166,7 +167,8 @@ struct WelcomeView: View {
             .font(.system(size: 12))
 
           Button(action: {
-            // TODO: 打开用户协议
+            router.push(
+              .agreement(url: "https://app.li65pe2f.link/users", title: "User Agreement"))
           }) {
             Text("User Agreement")
               .foregroundColor(.white)
@@ -179,7 +181,8 @@ struct WelcomeView: View {
             .font(.system(size: 12))
 
           Button(action: {
-            // TODO: 打开隐私政策
+            router.push(
+              .agreement(url: "https://app.li65pe2f.link/privacy", title: "Privacy Policy"))
           }) {
             Text("Privacy Policy")
               .foregroundColor(.white)

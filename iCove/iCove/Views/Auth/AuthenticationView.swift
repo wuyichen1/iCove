@@ -380,13 +380,13 @@ struct AuthenticationView: View {
   @discardableResult
   private func validateEmail() -> Bool {
     if email.isEmpty {
-      emailError = "请输入邮箱"
+      emailError = "Please enter your email address."
       return false
     }
     let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
     let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
     if !emailPredicate.evaluate(with: email) {
-      emailError = "请输入有效的邮箱地址"
+      emailError = "Incorrect email format."
       return false
     }
     emailError = nil
@@ -396,11 +396,11 @@ struct AuthenticationView: View {
   @discardableResult
   private func validatePassword() -> Bool {
     if password.isEmpty {
-      passwordError = "请输入密码"
+      passwordError = "Please enter your password."
       return false
     }
     if password.count < 6 {
-      passwordError = "密码至少6位"
+      passwordError = "The password must be at least 6 characters long."
       return false
     }
     passwordError = nil
@@ -410,11 +410,11 @@ struct AuthenticationView: View {
   @discardableResult
   private func validateConfirmPassword() -> Bool {
     if confirmPassword.isEmpty {
-      confirmPasswordError = "请再次输入密码"
+      confirmPasswordError = "Please enter the password again."
       return false
     }
     if confirmPassword != password {
-      confirmPasswordError = "两次密码不一致"
+      confirmPasswordError = "The passwords do not match."
       return false
     }
     confirmPasswordError = nil

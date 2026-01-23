@@ -29,8 +29,8 @@ class AuthenticationService: AuthenticationServiceProtocol {
     // 可登录用户
     "user_001": User(
       id: "user_001",
-      email: "test@gmail.com",
-      username: "User1",
+      email: "icove@gmail.com",
+      username: "Garrett",
       avatar: "eitJTglOzkSfZvNi1",
       balance: 1000,
       collectedPostIds: ["post_001", "post_002", "post_003"],
@@ -42,7 +42,7 @@ class AuthenticationService: AuthenticationServiceProtocol {
     "user_002": User(
       id: "user_002",
       email: "",
-      username: "Maddison",
+      username: "Nolan",
       avatar: "eitJTglOzkSfZvNi2",
       balance: 0,
       followingUserIds: ["user_001"],
@@ -51,7 +51,7 @@ class AuthenticationService: AuthenticationServiceProtocol {
     "user_003": User(
       id: "user_003",
       email: "",
-      username: "StyleGuide",
+      username: "Bishop",
       avatar: "eitJTglOzkSfZvNi3",
       balance: 0,
       followerUserIds: ["user_001"]
@@ -59,21 +59,21 @@ class AuthenticationService: AuthenticationServiceProtocol {
     "user_004": User(
       id: "user_004",
       email: "",
-      username: "DailyWear",
+      username: "Ruth",
       avatar: "eitJTglOzkSfZvNi4",
       balance: 0
     ),
     "user_005": User(
       id: "user_005",
       email: "",
-      username: "WeekendStyle",
+      username: "Silvia",
       avatar: "eitJTglOzkSfZvNi5",
       balance: 0
     ),
     "user_006": User(
       id: "user_006",
       email: "",
-      username: "StreetFashion",
+      username: "Glinda",
       avatar: "eitJTglOzkSfZvNi6",
       balance: 0
     ),
@@ -81,12 +81,12 @@ class AuthenticationService: AuthenticationServiceProtocol {
 
   // 邮箱到用户 ID 的映射（仅用于可登录用户）
   private var emailToUserId: [String: String] = [
-    "test@gmail.com": "user_001"
+    "icove@gmail.com": "user_001"
   ]
 
   // 密码存储：email -> password（仅用于可登录用户）
   private var passwords: [String: String] = [
-    "test@gmail.com": "123456"
+    "icove@gmail.com": "123456"
   ]
   
   // UserDefaults keys

@@ -23,6 +23,8 @@ enum TopActionBarStyle {
 struct TopActionBar: View {
   /// 返回按钮操作
   let onBack: () -> Void
+  /// 更多操作按钮是否可见
+  var isMoreVisible: Bool = true
   /// 更多操作按钮操作（可选）
   var onMore: (() -> Void)? = nil
   /// 样式配置
@@ -45,8 +47,8 @@ struct TopActionBar: View {
         Spacer()
 
         // 更多操作按钮（如果提供了回调）
-        if let onMore = onMore {
-          moreButton(onMore: onMore)
+        if isMoreVisible && onMore != nil {
+          moreButton(onMore: onMore!)
         }
       }
       .padding(.horizontal, horizontalPadding)

@@ -33,10 +33,10 @@ struct ProfileView: View {
           ReportBlockBottomSheet(
             userId: userId,
             isPresented: $showingReportBlockSheet,
-          onBlock: {
-            blockUserId = viewModel.user?.id
-            showingBlockDialog = true
-          }
+            onBlock: {
+              blockUserId = viewModel.user?.id
+              showingBlockDialog = true
+            }
           )
           .environmentObject(authManager)
           .environmentObject(router)
@@ -187,10 +187,10 @@ struct ProfileView: View {
             }
           } label: {
             Circle()
-              .fill(Color.white.opacity(0.9))
+              .fill(Color.white)
               .frame(width: 40, height: 40)
               .overlay(
-                Image(systemName: viewModel.isCurrentUser ? "gearshape.fill" : "ellipsis")
+                Image(systemName: viewModel.isCurrentUser ? "gearshape" : "ellipsis")
                   .foregroundColor(Color("buttonPurple"))
               )
           }

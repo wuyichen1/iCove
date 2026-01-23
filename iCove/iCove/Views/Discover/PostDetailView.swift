@@ -42,6 +42,7 @@ struct PostDetailView: View {
           onBack: {
             router.pop()
           },
+          isMoreVisible: authManager.currentUser?.id != viewModel.post?.authorId,
           onMore: {
             if viewModel.post != nil {
               showingReportBlockSheet = true
@@ -88,7 +89,8 @@ struct PostDetailView: View {
                     Image(systemName: "star.fill")
                       .font(.system(size: 24))
                       .foregroundColor(
-                        viewModel.post != nil && authManager.isPostCollected(postId: viewModel.post!.id)
+                        viewModel.post != nil
+                          && authManager.isPostCollected(postId: viewModel.post!.id)
                           ? .yellow
                           : .white
                       )

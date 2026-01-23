@@ -13,6 +13,8 @@ import SwiftUI
 
 struct CommentSheet: View {
   let videoId: String
+  let blockUserId: String
+  var onReportBlockUser: ((String) -> Void)? = nil
   @Environment(\.dismiss) var dismiss
   @EnvironmentObject var authManager: AuthenticationManager
   @StateObject private var viewModel: CommentSheetViewModel
@@ -23,9 +25,12 @@ struct CommentSheet: View {
     @ObserveInjection var redraw
   #endif
 
-  init(videoId: String) {
+  init(videoId: String, blockUserId: String, onReportBlockUser: ((String) -> Void)? = nil) {
     self.videoId = videoId
+    self.blockUserId = blockUserId
+    self.onReportBlockUser = onReportBlockUser
     _viewModel = StateObject(wrappedValue: CommentSheetViewModel(videoId: videoId))
+
   }
 
   var body: some View {
@@ -68,7 +73,11 @@ struct CommentSheet: View {
         ScrollView {
           LazyVStack(spacing: 20) {
             ForEach(viewModel.comments) { comment in
-              CommentRow(comment: comment)
+              CommentRow(
+                comment: comment, onReportBlockUser: onReportBlockUser,
+                onDismiss: {
+                  dismiss()
+                })
             }
           }
           .padding(.horizontal, 20)
@@ -148,11 +157,17 @@ struct CommentSheet: View {
 // MARK: - Comment Row
 struct CommentRow: View {
   let comment: Comment
+  var onReportBlockUser: ((String) -> Void)? = nil
+  var onDismiss: (() -> Void)? = nil
   @StateObject private var viewModel: CommentRowViewModel
   @EnvironmentObject var authManager: AuthenticationManager
 
-  init(comment: Comment) {
+  init(
+    comment: Comment, onReportBlockUser: ((String) -> Void)? = nil, onDismiss: (() -> Void)? = nil
+  ) {
     self.comment = comment
+    self.onReportBlockUser = onReportBlockUser
+    self.onDismiss = onDismiss
     _viewModel = StateObject(wrappedValue: CommentRowViewModel(authorId: comment.authorId))
   }
 
@@ -201,12 +216,15 @@ struct CommentRow: View {
       Spacer()
 
       // 更多选项
-      Button(action: {
-        // 更多选项
-      }) {
-        Image(systemName: "ellipsis")
-          .font(.system(size: 16))
-          .foregroundColor(.black.opacity(0.7))
+      if authManager.currentUser?.id != comment.authorId {
+        Button(action: {
+          onDismiss?()
+          onReportBlockUser?(comment.authorId)
+        }) {
+          Image(systemName: "ellipsis")
+            .font(.system(size: 16))
+            .foregroundColor(.black.opacity(0.7))
+        }
       }
     }
     .onAppear {

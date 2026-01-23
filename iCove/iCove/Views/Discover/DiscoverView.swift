@@ -16,6 +16,9 @@ struct DiscoverView: View {
   @StateObject private var viewModel: DiscoverViewModel
   @State private var showingBlockDialog = false
   @State private var blockUserId: String? = nil
+  @State private var showingReportBlockSheet = false
+  @State private var reportBlockUserId: String? = nil
+  @State private var pendingReportBlockUserId: String? = nil
   @EnvironmentObject var router: Router
 
   #if DEBUG
@@ -55,6 +58,48 @@ struct DiscoverView: View {
     }
     // .navigationBarHidden(true)
     .blockUserDialog(isPresented: $showingBlockDialog, userId: blockUserId)
+    .sheet(
+      isPresented: Binding(
+        get: { showingReportBlockSheet },
+        set: { newValue in
+          showingReportBlockSheet = newValue
+          if !newValue {
+            // 弹窗关闭时清空 userId
+            reportBlockUserId = nil
+          }
+        }
+      )
+    ) {
+      Group {
+        if let userId = reportBlockUserId {
+          ReportBlockBottomSheet(
+            userId: userId,
+            isPresented: Binding(
+              get: { showingReportBlockSheet },
+              set: { newValue in
+                showingReportBlockSheet = newValue
+                if !newValue {
+                  reportBlockUserId = nil
+                }
+              }
+            ),
+            onBlock: {
+              blockUserId = userId
+              showingBlockDialog = true
+            }
+          )
+          .environmentObject(authManager)
+          .environmentObject(router)
+          .presentationDetents([.height(240)])
+          .presentationBackground(.clear)
+          .presentationDragIndicator(.hidden)
+        } else {
+          // 占位视图，防止白屏
+          Color.clear
+            .frame(width: 0, height: 0)
+        }
+      }
+    }
     .enableInjection()
     .onAppear {
       // 更新ViewModel的authManager引用
@@ -63,6 +108,24 @@ struct DiscoverView: View {
     .onChange(of: authManager.currentUser?.collectedPostIds) { oldValue, newValue in
       // 当用户的收藏列表改变时，刷新收藏的帖子
       viewModel.refreshCollectedPosts()
+    }
+    .onChange(of: reportBlockUserId) { oldValue, newValue in
+      // 当 reportBlockUserId 被设置时，打开弹窗
+      if let userId = newValue, !showingReportBlockSheet {
+        // 确保值已设置，然后打开弹窗
+        DispatchQueue.main.async {
+          // 再次确认值已设置
+          if reportBlockUserId == userId {
+            showingReportBlockSheet = true
+          } else {
+            // 如果值丢失，重新设置
+            reportBlockUserId = userId
+            DispatchQueue.main.async {
+              showingReportBlockSheet = true
+            }
+          }
+        }
+      }
     }
   }
 
@@ -184,6 +247,10 @@ struct DiscoverView: View {
                   onBlock: {
                     blockUserId = post.authorId
                     showingBlockDialog = true
+                  },
+                  onReportBlockUser: { userId in
+                    // 设置 userId，onChange 会自动打开弹窗
+                    reportBlockUserId = userId
                   }
                 )
                 .onTapGesture {
@@ -231,7 +298,11 @@ struct DiscoverView: View {
                   cardHeight: cardHeight,
                   spacerHeight: spacerHeight,
                   containerHeight: containerHeight,
-                  scrollWidth: screenWidth
+                  scrollWidth: screenWidth,
+                  onReportBlockUser: { userId in
+                    // 设置 userId，onChange 会自动打开弹窗
+                    reportBlockUserId = userId
+                  }
                 )
                 .id(index)
               }
@@ -269,6 +340,7 @@ struct CollectionCardView: View {
   let spacerHeight: CGFloat
   let containerHeight: CGFloat
   let scrollWidth: CGFloat
+  var onReportBlockUser: ((String) -> Void)? = nil
   @EnvironmentObject var authManager: AuthenticationManager
   @EnvironmentObject var router: Router
 
@@ -319,6 +391,23 @@ struct CollectionCardView: View {
       .overlay(
         // 星星图标覆盖层（右下角）
         VStack {
+          if authManager.currentUser?.id != post.authorId {
+            HStack {
+              Spacer()
+
+              // 更多按钮图标
+              Button(action: {
+                onReportBlockUser?(post.authorId)
+              }) {
+                Image(systemName: "ellipsis")
+                  .font(.system(size: 24))
+                  .foregroundColor(.white)
+              }
+            }
+            .padding(.trailing, 16)
+            .padding(.top, 16)
+
+          }
           Spacer()
           HStack {
             Spacer()
@@ -357,14 +446,15 @@ struct CollectionCardView: View {
 struct PostCard: View {
   let post: Post
   var onBlock: (() -> Void)? = nil
+  var onReportBlockUser: ((String) -> Void)? = nil
   @StateObject private var viewModel: PostCardViewModel
   @EnvironmentObject var router: Router
   @EnvironmentObject var authManager: AuthenticationManager
-  @State private var showingReportBlockSheet = false
 
-  init(post: Post, onBlock: (() -> Void)? = nil) {
+  init(post: Post, onBlock: (() -> Void)? = nil, onReportBlockUser: ((String) -> Void)? = nil) {
     self.post = post
     self.onBlock = onBlock
+    self.onReportBlockUser = onReportBlockUser
     _viewModel = StateObject(wrappedValue: PostCardViewModel(authorId: post.authorId))
   }
 
@@ -414,12 +504,16 @@ struct PostCard: View {
             Spacer()
 
             // 更多选项
-            Button(action: {
-              showingReportBlockSheet = true
-            }) {
-              Image(systemName: "ellipsis")
-                .font(.system(size: 18))
-                .foregroundColor(.white)
+            if authManager.currentUser?.id != post.authorId {
+              Button(action: {
+                if let authorId = viewModel.author?.id {
+                  onReportBlockUser?(authorId)
+                }
+              }) {
+                Image(systemName: "ellipsis")
+                  .font(.system(size: 18))
+                  .foregroundColor(.white)
+              }
             }
           }
 
@@ -483,26 +577,6 @@ struct PostCard: View {
     .cornerRadius(20)
     .onAppear {
       viewModel.setAuthManager(authManager)
-    }
-    .sheet(isPresented: $showingReportBlockSheet) {
-      if let authorId = viewModel.author?.id {
-        ReportBlockBottomSheet(
-          userId: authorId,
-          isPresented: $showingReportBlockSheet,
-          onBlock: {
-            onBlock?()
-          }
-        )
-        .environmentObject(authManager)
-        .environmentObject(router)
-        // 让打开的弹窗高度撑满全屏
-        // .presentationDetents([.large])
-        // .presentationDetents([.height(UIScreen.main.bounds.height)])
-        .presentationDetents([.height(240)])
-        .presentationBackground(.clear)
-        .presentationCornerRadius(0)
-        .presentationDragIndicator(.hidden)
-      }
     }
   }
 }

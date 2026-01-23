@@ -49,13 +49,15 @@ struct SettingsView: View {
             }
 
             settingButton(title: "Privacy Policy", isPrimary: true) {
-              // TODO: 打开隐私政策
-              print("Open privacy policy")
+              // 打开隐私政策页面，需要传入实际的 URL
+              router.push(
+                .agreement(url: "https://app.li65pe2f.link/privacy", title: "Privacy Policy"))
             }
 
             settingButton(title: "User Agreement", isPrimary: true) {
-              // TODO: 打开用户协议
-              print("Open user agreement")
+              // 打开用户协议页面，需要传入实际的 URL
+              router.push(
+                .agreement(url: "https://app.li65pe2f.link/users", title: "User Agreement"))
             }
 
             settingButton(title: "Delete Account", isPrimary: true) {

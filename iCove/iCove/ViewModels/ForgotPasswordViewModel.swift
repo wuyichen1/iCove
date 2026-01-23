@@ -44,12 +44,12 @@ class ForgotPasswordViewModel: ObservableObject {
         emailError = nil
         
         if email.isEmpty {
-            emailError = "请输入邮箱"
+            emailError = "Please enter your email address."
             return false
         }
         
         if !isValidEmail(email) {
-            emailError = "邮箱格式不正确"
+            emailError = "Incorrect email format."
             return false
         }
         
@@ -60,12 +60,12 @@ class ForgotPasswordViewModel: ObservableObject {
         passwordError = nil
         
         if password.isEmpty {
-            passwordError = "请输入密码"
+            passwordError = "Please enter your password."
             return false
         }
         
         if password.count < 6 {
-            passwordError = "密码长度至少为 6 位"
+            passwordError = "The password must be at least 6 characters long."
             return false
         }
         

@@ -296,23 +296,25 @@ struct VideoCard: View {
       .padding(8)
 
       // 更多选项（右上角）
-      VStack {
-        HStack {
-          Spacer()
-          Button(action: {
-            // 更多选项
-            showingReportBlockSheet = true
-          }) {
-            Image(systemName: "ellipsis")
-              .foregroundColor(.white)
-              .font(.system(size: 20, weight: .bold))
-              .padding(8)
-              .cornerRadius(8)
+      if authManager.currentUser?.id != video.authorId {
+        VStack {
+          HStack {
+            Spacer()
+            Button(action: {
+              // 更多选项
+              showingReportBlockSheet = true
+            }) {
+              Image(systemName: "ellipsis")
+                .foregroundColor(.white)
+                .font(.system(size: 20, weight: .bold))
+                .padding(8)
+                .cornerRadius(8)
+            }
+            .buttonStyle(PlainButtonStyle())
+            .padding(6)
           }
-          .buttonStyle(PlainButtonStyle())
-          .padding(6)
+          Spacer()
         }
-        Spacer()
       }
 
       // 视频描述（底部）

@@ -52,6 +52,7 @@ struct BlacklistView: View {
                 blacklistItem(user: user)
               }
             }
+            .frame(width: .infinity, height: .infinity)
             .padding(.horizontal, 20)
             .padding(.bottom, 100)
             .padding(.top, 16)
@@ -102,7 +103,8 @@ struct BlacklistView: View {
         Image("todrcOCVKxRfLanQ")
           .resizable()
           .scaledToFill()
-          .frame(width: .infinity, height: 80)
+          .clipped()
+          .frame(width: .infinity, height: 78)
 
         VStack(alignment: .leading, spacing: 12) {
           // 用户名和时间戳
@@ -137,8 +139,8 @@ struct BlacklistView: View {
         }
         .padding(.leading, 106)
         .padding(.trailing, 14)
-        .padding(.vertical, 12)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        // .padding(.vertical, 12)
+        // .frame(maxWidth: .infinity, alignment: .leading)
       }
       .padding(.top, 12)
 
@@ -149,7 +151,7 @@ struct BlacklistView: View {
         size: 62,
         subSize: 16,
       )
-      .padding(.leading, 14)
+      .padding(.leading, 12)
 
     }
   }

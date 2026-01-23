@@ -22,6 +22,7 @@ struct VideoDetailView: View {
   @State private var showingReportBlockSheet = false
   @State private var showingBlockDialog = false
   @State private var blockUserId: String? = nil
+  @State private var reportBlockUserId: String? = nil
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -99,13 +100,21 @@ struct VideoDetailView: View {
               if let author = viewModel.author {
                 HStack(spacing: 12) {
                   if let avatarName = author.avatar {
-                    DynamicImage(imageName: avatarName)
-                      .frame(width: 45, height: 45)
-                      .clipShape(Circle())
-                      .overlay(
-                        Circle()
-                          .stroke(Color("yinguanglv"), lineWidth: 1)
-                      )
+                    Button(action: {
+                      // 点击头像跳转到用户页
+                      if let author = viewModel.author {
+                        router.push(.profile(userId: author.id))
+                      }
+                    }) {
+                      DynamicImage(imageName: avatarName)
+                        .frame(width: 45, height: 45)
+                        .clipShape(Circle())
+                        .overlay(
+                          Circle()
+                            .stroke(Color("yinguanglv"), lineWidth: 1)
+                        )
+                    }
+
                   } else {
                     Circle()
                       .fill(Color.green.opacity(0.3))
@@ -147,7 +156,9 @@ struct VideoDetailView: View {
         onBack: {
           router.pop()
         },
+        isMoreVisible: authManager.currentUser?.id != video.authorId,
         onMore: {
+          reportBlockUserId = video.authorId
           showingReportBlockSheet = true
         },
       )
@@ -158,17 +169,29 @@ struct VideoDetailView: View {
       viewModel.setAuthManager(authManager)
     }
     .sheet(isPresented: $showingComments) {
-      CommentSheet(videoId: video.id)
-        .presentationDetents([.fraction(0.5)])  // 固定为屏幕高度的 50% （iOS 16+）
-        .presentationBackground(.clear)  // 去掉默认背景色，使用透明背景
+      CommentSheet(
+        videoId: video.id,
+        blockUserId: video.authorId,
+        onReportBlockUser: { userId in
+          showingComments = false
+          reportBlockUserId = userId
+          // 延迟一点打开举报拉黑弹窗，确保评论弹窗先关闭
+          DispatchQueue.main.asyncAfter(deadline: .now()) {
+            showingReportBlockSheet = true
+          }
+        }
+      )
+      .environmentObject(router)
+      .presentationDetents([.fraction(0.5)])  // 固定为屏幕高度的 50% （iOS 16+）
+      .presentationBackground(.clear)  // 去掉默认背景色，使用透明背景
       // .presentationDragIndicator(.visible) // 显示拖拽指示器
     }
     .sheet(isPresented: $showingReportBlockSheet) {
       ReportBlockBottomSheet(
-        userId: video.authorId,
+        userId: reportBlockUserId ?? video.authorId,
         isPresented: $showingReportBlockSheet,
         onBlock: {
-          blockUserId = video.authorId
+          blockUserId = reportBlockUserId ?? video.authorId
           showingBlockDialog = true
         }
       )

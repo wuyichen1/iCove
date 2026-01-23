@@ -28,4 +28,5 @@ enum Route: Hashable {
     case ai
     case publish(type: PublishType)
     case report(userId: String)
+    case agreement(url: String, title: String)
 }

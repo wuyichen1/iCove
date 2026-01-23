@@ -51,6 +51,7 @@ struct iCoveApp: App {
 /// 根视图 - 根据登录状态切换显示内容
 struct RootView: View {
     @EnvironmentObject var authManager: AuthenticationManager
+    @StateObject private var router = Router()
 
     #if DEBUG
         @ObserveInjection var redraw
@@ -62,8 +63,11 @@ struct RootView: View {
                 MainTabView()
                     .environmentObject(authManager)
             } else {
-                WelcomeView()
-                    .environmentObject(authManager)
+                AppNavigationView {
+                    WelcomeView()
+                }
+                .environmentObject(authManager)
+                .environmentObject(router)
             }
         }
         .animation(.easeInOut(duration: 0.3), value: authManager.isAuthenticated)
