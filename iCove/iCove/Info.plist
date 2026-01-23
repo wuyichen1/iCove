@@ -6,13 +6,5 @@
 	<array>
 		<string>FredokaOne-Regular.ttf</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>This app requires access to your camera permission for taking photos, so that you can capture and upload photos and videos. All the captured data will be securely stored on your personal device. The uploading or sharing operations will only be carried out with your explicit consent.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>This app requires access to your microphone permission to record audio so that you can have normal voice chats. We will only use or access the recorded content after obtaining your explicit authorization.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app requires access to your album to let you select and upload photos and videos. Selected files are only used for your authorized purposes, stored securely on your device, and shared only when you choose to upload them.</string>
-  <key>NSLocationWhenInUseUsageDescription</key>
-  <string>This app requires the permission to access your location information in order to provide you with more personalized services. Your location data will be strictly confidential and will only be used upon your active authorization, for the purpose of enhancing your overall usage experience.</string>
 </dict>
 </plist>
