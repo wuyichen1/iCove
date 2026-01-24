@@ -83,7 +83,6 @@ struct PublishView: View {
                 .frame(width: 40, height: 40)
               Image(systemName: "arrow.uturn.left")
                 .foregroundColor(Color("buttonPurple"))
-                .font(.system(size: 18, weight: .semibold))
             }
           }
           // .padding(.top, 46)

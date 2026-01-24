@@ -85,13 +85,15 @@ struct ProfileViewWrapper: View {
   @EnvironmentObject var authManager: AuthenticationManager
   @EnvironmentObject var router: Router
   let userId: String?
+  let showBackicon: Bool
 
-  init(userId: String? = nil) {
+  init(userId: String? = nil, showBackicon: Bool = false) {
     self.userId = userId
+    self.showBackicon = showBackicon
   }
 
   var body: some View {
-    ProfileViewContainer(authManager: authManager, userId: userId)
+    ProfileViewContainer(authManager: authManager, userId: userId, showBackicon: showBackicon)
       .environmentObject(router)
   }
 }
@@ -100,17 +102,19 @@ struct ProfileViewWrapper: View {
 private struct ProfileViewContainer: View {
   let authManager: AuthenticationManager
   let userId: String?
+  let showBackicon: Bool
   @StateObject private var viewModel: ProfileViewModel
 
-  init(authManager: AuthenticationManager, userId: String?) {
+  init(authManager: AuthenticationManager, userId: String?, showBackicon: Bool = false) {
     self.authManager = authManager
     self.userId = userId
+    self.showBackicon = showBackicon
     _viewModel = StateObject(
       wrappedValue: ProfileViewModel(authManager: authManager, userId: userId))
   }
 
   var body: some View {
-    ProfileView(viewModel: viewModel)
+    ProfileView(viewModel: viewModel, showBackicon: showBackicon)
       .environmentObject(authManager)
   }
 }

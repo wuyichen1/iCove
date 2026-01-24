@@ -16,6 +16,7 @@ struct ProfileView: View {
   @EnvironmentObject var authManager: AuthenticationManager
   @EnvironmentObject var router: Router
   @Environment(\.dismiss) var dismiss
+  var showBackicon: Bool = true
   @State private var showingEditBio = false
   @State private var editedBio = ""
   @State private var showingReportBlockSheet = false
@@ -81,8 +82,6 @@ struct ProfileView: View {
           .resizable()
           .scaledToFill()
           .ignoresSafeArea()
-        // Color(red: 30 / 255, green: 5 / 255, blue: 57 / 255)
-        // .ignoresSafeArea()
 
         ScrollView {
           VStack(spacing: 0) {
@@ -170,6 +169,19 @@ struct ProfileView: View {
         .padding(.top, 46)
       } else {
         HStack {
+          if showBackicon {
+            Button {
+              dismiss()
+            } label: {
+              Circle()
+                .fill(Color.white)
+                .frame(width: 40, height: 40)
+                .overlay(
+                  Image(systemName: "arrow.uturn.left")
+                    .foregroundColor(Color("buttonPurple"))
+                )
+            }
+          }
           Spacer()
 
           // 设置或更多按钮
@@ -468,7 +480,6 @@ struct SettingRow: View {
     .buttonStyle(.plain)
   }
 }
-
 
 // #Preview {
 //     ProfileView(viewModel: ProfileViewModel(authManager: AuthenticationManager()))

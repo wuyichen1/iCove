@@ -475,7 +475,7 @@ struct PostCard: View {
           Button(action: {
             // 点击头像跳转到用户页
             if let author = viewModel.author {
-              router.push(.profile(userId: author.id))
+              router.push(.profile(userId: author.id, showBackicon: true))
             }
           }) {
             DynamicImage(imageName: avatar)

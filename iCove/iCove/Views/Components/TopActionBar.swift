@@ -68,7 +68,6 @@ struct TopActionBar: View {
         switch style {
         case .whiteWithPurpleBorder:
           Image(systemName: "arrow.uturn.left")
-            .font(.system(size: 18, weight: .semibold))
             .foregroundColor(Color("buttonPurple"))
             .frame(width: 40, height: 40)
             .background(Color.white)

@@ -147,8 +147,7 @@ struct AuthenticationView: View {
           .frame(width: 40, height: 40)
 
         Image(systemName: "arrow.uturn.left")
-          .foregroundColor(Color(red: 0.5, green: 0.3, blue: 0.7))
-          .font(.system(size: 20, weight: .medium))
+          .foregroundColor(Color("buttonPurple"))
       }
     }
   }

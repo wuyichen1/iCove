@@ -20,7 +20,7 @@ enum Route: Hashable {
     case postDetail(postId: String)
     case chatDetail(conversationId: String, otherUserId: String)
     case videoCall(conversationId: String, otherUserId: String)
-    case profile(userId: String)
+    case profile(userId: String, showBackicon: Bool)
     case settings
     case editProfile
     case blacklist

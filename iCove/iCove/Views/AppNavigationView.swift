@@ -61,8 +61,8 @@ struct AppNavigationView<Content: View>: View {
       VideoCallView(conversationId: conversationId, otherUserId: otherUserId)
         .environmentObject(router)
         .toolbar(.hidden, for: .tabBar)
-    case .profile(let userId):
-      ProfileViewWrapper(userId: userId)
+    case .profile(let userId, let showBackicon):
+      ProfileViewWrapper(userId: userId, showBackicon: showBackicon)
         .environmentObject(router)
         .environmentObject(authManager)
         .environmentObject(paymentViewModel)
