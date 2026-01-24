@@ -6,5 +6,10 @@
 	<array>
 		<string>FredokaOne-Regular.ttf</string>
 	</array>
+    <key>UILaunchScreen</key>
+    <dict>
+        <key>UIImageName</key>
+        <string>LaunchImage</string>  <!-- Image Set 名 -->
+    </dict>
 </dict>
 </plist>

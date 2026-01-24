@@ -79,7 +79,7 @@ struct SettingsView: View {
 
       if showingDeleteDialog {
         UnlockConfirmDialog(
-          hasEnoughBalance: (authManager.currentUser?.balance ?? 0) >= 200,
+          hasEnoughBalance: nil,
           onCancel: {
             showingDeleteDialog = false
           },
@@ -95,7 +95,9 @@ struct SettingsView: View {
       }
     }
     .navigationBarHidden(true)
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 
   // MARK: - Header

@@ -32,7 +32,7 @@ class AuthenticationService: AuthenticationServiceProtocol {
       email: "icove@gmail.com",
       username: "Garrett",
       avatar: "eitJTglOzkSfZvNi1",
-      balance: 1000,
+      balance: 0,
       collectedPostIds: ["post_001", "post_002", "post_003"],
       blockedUserIds: [],
       followingUserIds: ["user_002", "user_003"],
@@ -313,7 +313,7 @@ class AuthenticationService: AuthenticationServiceProtocol {
         email: email,
         username: username,
         avatar: "icove_logo",
-        balance: 500
+        balance: 0
       )
 
       // 保存快速登录用户

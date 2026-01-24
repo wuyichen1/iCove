@@ -64,7 +64,9 @@ struct ProfileView: View {
           }
         }
       }
-      .enableInjection()
+      #if DEBUG
+        .enableInjection()
+      #endif
   }
 
   @ViewBuilder
@@ -132,14 +134,6 @@ struct ProfileView: View {
         }
         .padding(.horizontal, 20)
 
-        // 简介
-        // bioSection(user: user)
-
-      }
-    }
-    .sheet(isPresented: $showingEditBio) {
-      EditBioSheet(bio: $editedBio) {
-        viewModel.updateBio(editedBio)
       }
     }
   }
@@ -281,16 +275,9 @@ struct ProfileView: View {
       // 视频网格
       if viewModel.userVideos.isEmpty {
         // 空状态
-        VStack(spacing: 16) {
-          Image(systemName: "video.slash")
-            .font(.system(size: 48))
-            .foregroundColor(.white.opacity(0.5))
-          Text("还没有发布作品")
-            .font(.subheadline)
-            .foregroundColor(.white.opacity(0.7))
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 40)
+        EmptyPlaceholderView()
+          .frame(maxWidth: .infinity)
+          .padding(.vertical, 40)
       } else {
         videoGrid
       }
@@ -371,14 +358,17 @@ struct ProfileView: View {
       }) {
         HStack {
           Text("Balance: \(authManager.currentUser?.balance ?? 0)")
-            .font(.headline)
+            .font(.custom("FredokaOne-Regular", size: 18))
+            // .font(.headline)
             .foregroundColor(.white)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)
         .padding(.horizontal, 16)
-        .background(Color("btnpink"))
-        .cornerRadius(10)
+        .background(
+          Image("RDxEu2AHYnJdZ8zm")
+            .resizable()
+        )
       }
     } else {
       // 他人页面：关注和聊天按钮
@@ -392,8 +382,11 @@ struct ProfileView: View {
             .frame(maxWidth: .infinity)
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
-            .background(viewModel.isFollowing ? Color.purple : Color("btnpink"))
-            .cornerRadius(10)
+            // .background(viewModel.isFollowing ? Color.purple : Color("btnpink"))
+            .background(
+              Image("RDxEu2AHYnJdZ8zm")
+                .resizable()
+            )
         }
 
         Button(action: {
@@ -405,8 +398,10 @@ struct ProfileView: View {
             .frame(maxWidth: .infinity)
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
-            .background(Color.purple)
-            .cornerRadius(10)
+            .background(
+              Image("yKWcYXzqIaPg4DDM")
+                .resizable()
+            )
         }
       }
     }
@@ -474,40 +469,6 @@ struct SettingRow: View {
   }
 }
 
-// MARK: - Edit Bio Sheet
-struct EditBioSheet: View {
-  @Binding var bio: String
-  let onSave: () -> Void
-  @Environment(\.dismiss) var dismiss
-
-  var body: some View {
-    NavigationStack {
-      Form {
-        Section {
-          TextField("个人简介", text: $bio, axis: .vertical)
-            .lineLimit(3...6)
-        } header: {
-          Text("编辑简介")
-        }
-      }
-      .navigationTitle("编辑简介")
-      .navigationBarTitleDisplayMode(.inline)
-      .toolbar {
-        ToolbarItem(placement: .cancellationAction) {
-          Button("取消") {
-            dismiss()
-          }
-        }
-        ToolbarItem(placement: .confirmationAction) {
-          Button("保存") {
-            onSave()
-            dismiss()
-          }
-        }
-      }
-    }
-  }
-}
 
 // #Preview {
 //     ProfileView(viewModel: ProfileViewModel(authManager: AuthenticationManager()))

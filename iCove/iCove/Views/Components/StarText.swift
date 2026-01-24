@@ -41,7 +41,9 @@ struct StarText: View {
       }
       .offset(x: 8, y: -6)  // 向上偏移，使星星位于文本右上角
     }
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 }
 

@@ -172,7 +172,9 @@ struct ProfileImageView: View {
           }
       }
     }
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 }
 

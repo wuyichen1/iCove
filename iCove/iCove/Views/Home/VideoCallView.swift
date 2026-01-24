@@ -82,7 +82,9 @@ struct VideoCallView: View {
     }
     .navigationBarHidden(true)
     .toolbar(.hidden, for: .tabBar)
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 }
 

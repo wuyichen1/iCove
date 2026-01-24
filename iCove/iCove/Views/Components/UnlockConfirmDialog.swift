@@ -13,14 +13,14 @@ import SwiftUI
 
 /// 解锁确认弹窗 - 根据余额显示不同内容
 struct UnlockConfirmDialog: View {
-  let hasEnoughBalance: Bool
+  let hasEnoughBalance: Bool?
   let onCancel: () -> Void
   let onConfirm: () -> Void  // 确认按钮回调（Sure 或 Recharge）
   let title: String?
   let btnText: String?
 
   init(
-    hasEnoughBalance: Bool,
+    hasEnoughBalance: Bool? = true,
     onCancel: @escaping () -> Void,
     onConfirm: @escaping () -> Void,
     title: String? = nil,
@@ -53,7 +53,7 @@ struct UnlockConfirmDialog: View {
           // 提示文字
           Text(
             title
-              ?? (hasEnoughBalance
+              ?? (hasEnoughBalance ?? true
                 ? "Are you sure you want to spend 200 coins to unlock the AI clothing recommendation feature?"
                 : "Unfortunately, the current account balance is insufficient to cover this order, please recharge.")
           )
@@ -61,8 +61,8 @@ struct UnlockConfirmDialog: View {
           .italic()
           .foregroundColor(.white)
           .multilineTextAlignment(.center)
-          .padding(.horizontal, 20)
-          .padding(.top, 32)
+          .padding(.horizontal, 30)
+          .padding(.top, 52)
 
           // 按钮区域
           HStack(spacing: 16) {
@@ -85,7 +85,7 @@ struct UnlockConfirmDialog: View {
 
             // 确认按钮（Sure 或 Recharge）
             Button(action: onConfirm) {
-              Text(btnText ?? (hasEnoughBalance ? "Sure" : "Recharge"))
+              Text(btnText ?? (hasEnoughBalance ?? true ? "Sure" : "Recharge"))
                 .font(.custom("FredokaOne-Regular", size: 17))
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
@@ -101,15 +101,15 @@ struct UnlockConfirmDialog: View {
             }
           }
           .padding(.horizontal, 20)
-          .padding(.bottom, 16)
+          .padding(.bottom, 30)
         }
         .background(
           ZStack {
-            Image(hasEnoughBalance ? "f6KDmB5rYAx2Ke6S" : "CXGyBeCKoF4QQ3vX")
+            Image(hasEnoughBalance ?? true ? "f6KDmB5rYAx2Ke6S" : "CXGyBeCKoF4QQ3vX")
               .resizable()
-              .scaledToFill()
+              // .scaledToFill()
+              .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 320)
             // .clipped()
-            // .frame(maxWidth: .infinity, maxHeight: 300)
             // 渐变背景
             // LinearGradient(
             //   colors: [
@@ -125,6 +125,8 @@ struct UnlockConfirmDialog: View {
       }
       .padding(.horizontal, 45)
     }
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 }

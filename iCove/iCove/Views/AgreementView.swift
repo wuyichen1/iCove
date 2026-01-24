@@ -63,7 +63,9 @@ struct AgreementView: View {
       }
     }
     .navigationBarHidden(true)
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 
   // MARK: - Header

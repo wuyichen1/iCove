@@ -80,7 +80,9 @@ struct ChatDetailView: View {
       .presentationDragIndicator(.hidden)
     }
     .blockUserDialog(isPresented: $showingBlockDialog, userId: blockUserId)
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
     .animation(.easeInOut(duration: 0.2), value: viewModel.recordingErrorMessage != nil)
   }
 
@@ -235,12 +237,15 @@ struct ChatDetailView: View {
                 .foregroundColor(.white)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 15)
+                .submitLabel(.done)
             }
 
             // 发送按钮
             Button(action: {
               if let currentUserId = authManager.currentUser?.id {
                 viewModel.sendMessage(currentUserId: currentUserId)
+                UIApplication.shared.sendAction(
+                  #selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
               }
             }) {
               Image(systemName: "paperplane.fill")

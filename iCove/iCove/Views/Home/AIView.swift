@@ -30,7 +30,17 @@ struct AIView: View {
   @State private var resultTitle: String = ""
   @State private var resultContent: String = ""
   @State private var errorMessage: String?
-  
+
+  // 焦点状态
+  @FocusState private var focusedField: Field?
+
+  enum Field: Hashable {
+    case scene
+    case style
+    case season
+    case additionalRequirements
+  }
+
   // AI 服务
   private let aiService: AIServiceProtocol = AIService.shared
 
@@ -68,6 +78,7 @@ struct AIView: View {
         if showResult {
           VStack {
             resultView
+              .padding(.top, 18)
               .padding(.bottom, 12)
             // One more time 按钮
             VStack(spacing: 0) {
@@ -102,6 +113,7 @@ struct AIView: View {
 
         } else {
           inputFormView
+            .padding(.top, 20)
         }
 
       }
@@ -124,125 +136,105 @@ struct AIView: View {
         }
       }
     }
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 
   // MARK: - 输入表单视图
   private var inputFormView: some View {
-    ScrollView {
-      VStack(alignment: .center, spacing: 24) {
-        // 表单字段
-        Group {
-          inputSection(
-            label: "Scene:",
-            placeholder: "Input the target scene",
-            text: $scene
-          )
+    ScrollViewReader { proxy in
+      ScrollView {
+        VStack(alignment: .center, spacing: 24) {
+          // 表单字段
+          Group {
+            inputSection(
+              label: "Scene:",
+              placeholder: "Input the target scene",
+              text: $scene,
+              field: .scene
+            )
 
-          inputSection(
-            label: "Style:",
-            placeholder: "Input style",
-            text: $style
-          )
+            inputSection(
+              label: "Style:",
+              placeholder: "Input style",
+              text: $style,
+              field: .style
+            )
 
-          inputSection(
-            label: "Season:",
-            placeholder: "Input the season",
-            text: $season
-          )
+            inputSection(
+              label: "Season:",
+              placeholder: "Input the season",
+              text: $season,
+              field: .season
+            )
 
-          inputSection(
-            label: "Additional requirements:",
-            placeholder: "Enter...",
-            text: $additionalRequirements
-          )
+            inputSection(
+              label: "Additional requirements:",
+              placeholder: "Enter...",
+              text: $additionalRequirements,
+              field: .additionalRequirements
+            )
+          }
 
-          // VStack(alignment: .leading, spacing: 8) {
-          //   Text("Additional requirements:")
-          //     .font(.custom("FredokaOne-Regular", size: 20))
-          //     .foregroundColor(.white)
+          // Start 按钮
+          VStack(spacing: 16) {
+            Button(action: {
+              Task {
+                await generateRecommendation()
+              }
+            }) {
+              ZStack {
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                  .fill(
+                    Color("buttonPurple")
+                  )
+                  .frame(width: 240, height: 50)
+                  .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                      .stroke(Color.white, lineWidth: 2)
+                  )
 
-          //   ZStack(alignment: .topLeading) {
-          //     RoundedRectangle(cornerRadius: 18, style: .continuous)
-          //       .fill(Color.white.opacity(0.06))
-          //       .overlay(
-          //         RoundedRectangle(cornerRadius: 18, style: .continuous)
-          //           .stroke(Color.white.opacity(0.12), lineWidth: 1)
-          //       )
-
-          //     TextEditor(text: $additionalRequirements)
-          //       .scrollContentBackground(.hidden)
-          //       .padding(.horizontal, 16)
-          //       .padding(.vertical, 10)
-          //       .foregroundColor(.white)
-          //       .font(.system(size: 15))
-
-          //     if additionalRequirements.isEmpty {
-          //       Text("Enter...")
-          //         .foregroundColor(.white.opacity(0.35))
-          //         .font(.system(size: 15))
-          //         .padding(.horizontal, 20)
-          //         .padding(.vertical, 14)
-          //     }
-          //   }
-          //   .frame(height: 120)
-          // }
-        }
-
-        // Start 按钮
-        VStack(spacing: 16) {
-          Button(action: {
-            Task {
-              await generateRecommendation()
-            }
-          }) {
-            ZStack {
-              RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(
-                  Color("buttonPurple")
-                  // LinearGradient(
-                  //   colors: [
-                  //     Color("buttonPurple"),
-                  //     Color("btnpink"),
-                  //   ],
-                  //   startPoint: .leading,
-                  //   endPoint: .trailing
-                  // )
-                )
-                .frame(width: 240, height: 50)
-                .overlay(
-                  RoundedRectangle(cornerRadius: 16)
-                    .stroke(Color.white, lineWidth: 2)
-                )
-              // .opacity(canStart ? 1.0 : 0.4)
-
-              if isGenerating {
-                ProgressView()
-                  .progressViewStyle(CircularProgressViewStyle(tint: .white))
-              } else {
-                Text("Start")
-                  .font(.custom("FredokaOne-Regular", size: 22))
-                  .foregroundColor(.white)
+                if isGenerating {
+                  ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                } else {
+                  Text("Start")
+                    .font(.custom("FredokaOne-Regular", size: 22))
+                    .foregroundColor(.white)
+                }
               }
             }
-          }
-          .disabled(!canStart || isGenerating)
+            .disabled(!canStart || isGenerating)
 
-          // 显示错误消息
-          if let errorMessage = errorMessage {
-            Text(errorMessage)
-              .font(.system(size: 13))
-              .foregroundColor(.red.opacity(0.9))
-              .multilineTextAlignment(.center)
-              .padding(.horizontal, 24)
-              .padding(.top, 8)
+            // 显示错误消息
+            if let errorMessage = errorMessage {
+              Text(errorMessage)
+                .font(.system(size: 13))
+                .foregroundColor(.red.opacity(0.9))
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 24)
+                .padding(.top, 8)
+            }
+          }
+          .padding(.top, 12)
+          .padding(.bottom, 40)
+          .id("bottom")
+        }
+        .padding(.horizontal, 24)
+        .padding(.bottom, 100)
+      }
+      .scrollDismissesKeyboard(.interactively)
+      .onChange(of: focusedField) {
+        // 当输入框聚焦时，延迟滚动到底部，确保键盘已经弹出
+        if focusedField != nil {
+          DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            withAnimation(.easeInOut(duration: 0.3)) {
+              proxy.scrollTo("bottom", anchor: .bottom)
+            }
           }
         }
-        .padding(.top, 12)
-        .padding(.bottom, 40)
       }
-      .padding(.horizontal, 24)
-      .padding(.bottom, 30)
     }
   }
 
@@ -291,7 +283,8 @@ struct AIView: View {
   private func inputSection(
     label: String,
     placeholder: String,
-    text: Binding<String>
+    text: Binding<String>,
+    field: Field
   ) -> some View {
     VStack(alignment: .leading, spacing: 8) {
       Text(label)
@@ -302,16 +295,14 @@ struct AIView: View {
       ZStack(alignment: .leading) {
         RoundedRectangle(cornerRadius: 16, style: .continuous)
           .fill(Color.white.opacity(0.1))
-        // .overlay(
-        //   RoundedRectangle(cornerRadius: 16, style: .continuous)
-        //     .stroke(Color.white.opacity(0.12), lineWidth: 1)
-        // )
 
         TextField("", text: text)
           .padding(.horizontal, 16)
           .padding(.vertical, 10)
           .foregroundColor(.white)
           .font(.system(size: 15))
+          .submitLabel(.done)
+          .focused($focusedField, equals: field)
 
         if text.wrappedValue.isEmpty {
           Text(placeholder)

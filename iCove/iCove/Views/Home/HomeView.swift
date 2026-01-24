@@ -70,7 +70,9 @@ struct HomeView: View {
     .onAppear {
       viewModel.updateAuthManager(authManager)
     }
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 
   // MARK: - Top Section (App Name & AI Avatar)
@@ -106,7 +108,7 @@ struct HomeView: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: 20, height: 20)
-                    .clipped()
+                    // .clipped()
 
                   Text("-200")
                     .font(.custom("FredokaOne-Regular", size: 14))
@@ -196,11 +198,12 @@ struct HomeView: View {
                 .padding(.vertical, 40)
                 .padding(.horizontal, 20)
             } else if viewModel.videos.isEmpty {
-              Text("No video available.")
-                .foregroundColor(.white.opacity(0.7))
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 40)
-                .padding(.horizontal, 20)
+              EmptyPlaceholderView()
+              // Text("No video available.")
+              //   .foregroundColor(.white.opacity(0.7))
+              //   .frame(maxWidth: .infinity)
+              //   .padding(.vertical, 40)
+              //   .padding(.horizontal, 20)
             } else {
               videoGridView
             }

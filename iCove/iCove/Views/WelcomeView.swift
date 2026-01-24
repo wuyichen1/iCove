@@ -68,7 +68,10 @@ struct WelcomeView: View {
     } message: {
       Text("Please agree to the user agreement and privacy policy before continuing")
     }
-    .enableInjection()  // 这行关键：强制 SwiftUI 重建 body，实现热重载
+    // .enableInjection()  // 这行关键：强制 SwiftUI 重建 body，实现热重载
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 
   // MARK: - Background Image

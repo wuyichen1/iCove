@@ -64,7 +64,9 @@ struct MainTabView: View {
       }
     }
     .ignoresSafeArea(edges: .bottom)
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 
   /// 是否显示底部导航栏

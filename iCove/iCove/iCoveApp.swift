@@ -86,6 +86,8 @@ struct RootView: View {
       // 更新 PaymentViewModel 中的 authManager
       paymentViewModel.updateAuthManager(authManager)
     }
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 }

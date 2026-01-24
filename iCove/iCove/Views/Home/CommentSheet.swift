@@ -93,18 +93,19 @@ struct CommentSheet: View {
                 .padding(.horizontal, 16)
                 .padding(.vertical, 15)
             }
-            TextField("", text: $commentText, axis: .vertical)
+            TextField("", text: $commentText)
               .textFieldStyle(.plain)
               .foregroundColor(.white)
               .padding(.horizontal, 16)
               .padding(.vertical, 15)
               .cornerRadius(15)
-              .lineLimit(1...4)
               .focused($isInputFocused)
-              .foregroundColor(.primary)
+              .submitLabel(.done)
           }
 
           Button(action: {
+            UIApplication.shared.sendAction(
+              #selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             sendComment()
           }) {
             Image(systemName: "paperplane.fill")
@@ -127,7 +128,9 @@ struct CommentSheet: View {
     .onAppear {
       viewModel.updateAuthManager(authManager)
     }
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
     // .frame(height: UIScreen.main.bounds.height * 0.5)  // 固定为屏幕高度的 50%
   }
 

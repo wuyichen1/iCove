@@ -42,7 +42,9 @@ struct MessagesView: View {
       }
     }
     .navigationBarHidden(true)
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
     .onAppear {
       viewModel.currentUserId = authManager.currentUser?.id
       Task {
@@ -149,23 +151,9 @@ struct MessagesView: View {
 
   // MARK: - Empty State View
   private var emptyStateView: some View {
-    VStack(spacing: 16) {
-      Spacer()
-      Image(systemName: "message.fill")
-        .font(.system(size: 64))
-        .foregroundColor(.white.opacity(0.5))
-
-      Text("暂无消息")
-        .font(.headline)
-        .foregroundColor(.white.opacity(0.8))
-
-      Text("开始与朋友聊天吧")
-        .font(.subheadline)
-        .foregroundColor(.white.opacity(0.6))
-      Spacer()
-    }
-    .padding(.bottom, 100)
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    EmptyPlaceholderView()
+      .padding(.bottom, 120)
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
   }
 }
 
@@ -195,7 +183,7 @@ struct ConversationRow: View {
       ZStack {
         Image("todrcOCVKxRfLanQ")
           .resizable()
-          .scaledToFill()
+          // .scaledToFill()
           .frame(width: .infinity, height: 80)
 
         VStack(alignment: .leading, spacing: 12) {
@@ -222,10 +210,6 @@ struct ConversationRow: View {
         .padding(.trailing, 14)
         .padding(.vertical, 12)
         .frame(maxWidth: .infinity, alignment: .leading)
-        // .background(
-        //   RoundedRectangle(cornerRadius: 16)
-        //     .fill(Color(red: 60 / 255, green: 20 / 255, blue: 90 / 255))
-        // )
       }
       .padding(.top, 12)
 
@@ -238,7 +222,8 @@ struct ConversationRow: View {
       )
       .padding(.leading, 14)
     }
-    .padding(.horizontal, 20)
+    .frame(maxWidth: .infinity)
+    // .background(.green)
     .onAppear {
       viewModel.loadOtherUser(currentUserId: authManager.currentUser?.id)
     }

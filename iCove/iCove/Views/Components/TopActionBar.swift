@@ -56,7 +56,9 @@ struct TopActionBar: View {
 
       Spacer()
     }
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 
   // MARK: - Back Button

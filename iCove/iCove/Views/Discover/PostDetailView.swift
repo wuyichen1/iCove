@@ -155,7 +155,9 @@ struct PostDetailView: View {
       }
     }
     .blockUserDialog(isPresented: $showingBlockDialog, userId: blockUserId)
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
     .onChange(of: authManager.currentUser?.collectedPostIds) { _, _ in
       // 当收藏列表更新时，视图会自动刷新
     }

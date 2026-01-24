@@ -27,7 +27,7 @@ struct BlockUserDialogModifier: ViewModifier {
       .overlay {
         if isPresented, let userId = userId {
           UnlockConfirmDialog(
-            hasEnoughBalance: (authManager.currentUser?.balance ?? 0) >= 200,
+            hasEnoughBalance: nil,
             onCancel: {
               isPresented = false
             },
@@ -44,7 +44,9 @@ struct BlockUserDialogModifier: ViewModifier {
           )
         }
       }
-      .enableInjection()
+      #if DEBUG
+        .enableInjection()
+      #endif
   }
 }
 

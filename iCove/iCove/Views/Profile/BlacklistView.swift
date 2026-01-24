@@ -36,15 +36,8 @@ struct BlacklistView: View {
         // 拉黑用户列表
         if viewModel.blockedUsers.isEmpty {
           // 空状态
-          VStack(spacing: 16) {
-            Image(systemName: "person.slash")
-              .font(.system(size: 48))
-              .foregroundColor(.white.opacity(0.5))
-            Text("还没有拉黑的用户")
-              .font(.subheadline)
-              .foregroundColor(.white.opacity(0.7))
-          }
-          .frame(maxWidth: .infinity, maxHeight: .infinity)
+          EmptyPlaceholderView()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else {
           ScrollView {
             VStack(spacing: 16) {
@@ -67,7 +60,9 @@ struct BlacklistView: View {
         authService: AuthenticationService.shared
       )
     }
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 
   // MARK: - Header

@@ -62,7 +62,9 @@ struct EditProfileView: View {
         username = authManager.currentUser?.username ?? ""
       }
     }
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 
   // MARK: - Top Bar
@@ -159,6 +161,7 @@ struct EditProfileView: View {
               RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .fill(Color.white)
             )
+            .submitLabel(.done)
         }
         .padding(.horizontal, 16)
 

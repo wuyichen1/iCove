@@ -115,7 +115,9 @@ struct ReportView: View {
       }
     }
     .navigationBarHidden(true)
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 
   // MARK: - Report Option Button

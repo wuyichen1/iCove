@@ -100,7 +100,9 @@ struct DiscoverView: View {
         }
       }
     }
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
     .onAppear {
       // 更新ViewModel的authManager引用
       viewModel.updateAuthManager(authManager)
@@ -238,34 +240,41 @@ struct DiscoverView: View {
           .padding(.bottom, 6)
           .padding(.leading, 16)
 
-          // 帖子列表
-          ScrollView {
-            LazyVStack(spacing: 16) {
-              ForEach(viewModel.allPosts) { post in
-                PostCard(
-                  post: post,
-                  onBlock: {
-                    blockUserId = post.authorId
-                    showingBlockDialog = true
-                  },
-                  onReportBlockUser: { userId in
-                    // 设置 userId，onChange 会自动打开弹窗
-                    reportBlockUserId = userId
+          if viewModel.allPosts.isEmpty {
+            EmptyPlaceholderView()
+              .padding(.bottom, 120)
+              .frame(maxWidth: .infinity, maxHeight: .infinity)
+          } else {
+            // 帖子列表
+            ScrollView {
+              LazyVStack(spacing: 16) {
+                ForEach(viewModel.allPosts) { post in
+                  PostCard(
+                    post: post,
+                    onBlock: {
+                      blockUserId = post.authorId
+                      showingBlockDialog = true
+                    },
+                    onReportBlockUser: { userId in
+                      // 设置 userId，onChange 会自动打开弹窗
+                      reportBlockUserId = userId
+                    }
+                  )
+                  .onTapGesture {
+                    // 跳转到详情页
+                    router.push(.postDetail(postId: post.id))
                   }
-                )
-                .onTapGesture {
-                  // 跳转到详情页
-                  router.push(.postDetail(postId: post.id))
                 }
               }
+              .padding(.horizontal, 20)
+              .padding(.bottom, 130)  // 为底部导航栏留出空间
+              .padding(.top, 10)
+              .animation(
+                .spring(response: 0.5, dampingFraction: 0.65, blendDuration: 0.4),
+                value: viewModel.allPosts
+              )
+
             }
-            .padding(.horizontal, 20)
-            .padding(.bottom, 130)  // 为底部导航栏留出空间
-            .padding(.top, 10)
-            .animation(
-              .spring(response: 0.5, dampingFraction: 0.65, blendDuration: 0.4),
-              value: viewModel.allPosts
-            )
           }
         }
       }

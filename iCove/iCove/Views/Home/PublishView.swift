@@ -81,8 +81,8 @@ struct PublishView: View {
               Circle()
                 .fill(Color.white)
                 .frame(width: 40, height: 40)
-              Image(systemName: "chevron.left")
-                .foregroundColor(Color(red: 30 / 255, green: 5 / 255, blue: 57 / 255))
+              Image(systemName: "arrow.uturn.left")
+                .foregroundColor(Color("buttonPurple"))
                 .font(.system(size: 18, weight: .semibold))
             }
           }
@@ -110,7 +110,9 @@ struct PublishView: View {
       }
     }
     .navigationBarHidden(true)
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 
   // MARK: - Main Content Card
@@ -154,12 +156,9 @@ struct PublishView: View {
           .fill(Color.white)
           .frame(height: 180)
 
-        TextEditor(text: $ideaText)
-          .scrollContentBackground(.hidden)
-          .padding(.horizontal, 12)
-          .padding(.vertical, 8)
-          .foregroundColor(.black)
-          .font(.system(size: 15))
+        CustomTextEditor(text: $ideaText)
+          .padding(.horizontal, 16)
+          .padding(.vertical, 15)
 
         if ideaText.isEmpty {
           Text("Enter")
@@ -319,12 +318,9 @@ struct PublishView: View {
           .fill(Color.white)
           .frame(height: 180)
 
-        TextEditor(text: $contentText)
-          .scrollContentBackground(.hidden)
-          .padding(.horizontal, 12)
-          .padding(.vertical, 8)
-          .foregroundColor(.black)
-          .font(.system(size: 15))
+        CustomTextEditor(text: $contentText)
+          .padding(.horizontal, 16)
+          .padding(.vertical, 15)
 
         if contentText.isEmpty {
           Text("Enter")
@@ -1031,6 +1027,56 @@ struct CameraRecorderViewController: UIViewControllerRepresentable {
 
       semaphore.wait()
       return resultImage
+    }
+  }
+}
+
+// MARK: - Custom Text Editor (支持 Done 按钮关闭键盘)
+struct CustomTextEditor: UIViewRepresentable {
+  @Binding var text: String
+
+  func makeUIView(context: Context) -> UITextView {
+    let textView = UITextView()
+    textView.delegate = context.coordinator
+    textView.font = .systemFont(ofSize: 15)
+    textView.textColor = .black
+    textView.backgroundColor = .clear
+    textView.returnKeyType = .done
+    textView.textContainerInset = .zero
+    textView.textContainer.lineFragmentPadding = 0
+    return textView
+  }
+
+  func updateUIView(_ uiView: UITextView, context: Context) {
+    if uiView.text != text {
+      uiView.text = text
+    }
+  }
+
+  func makeCoordinator() -> Coordinator {
+    Coordinator(self)
+  }
+
+  class Coordinator: NSObject, UITextViewDelegate {
+    let parent: CustomTextEditor
+
+    init(_ parent: CustomTextEditor) {
+      self.parent = parent
+    }
+
+    func textViewDidChange(_ textView: UITextView) {
+      parent.text = textView.text
+    }
+
+    func textView(
+      _ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String
+    ) -> Bool {
+      // 当用户点击 Done 按钮时（输入换行符），关闭键盘
+      if text == "\n" && textView.returnKeyType == .done {
+        textView.resignFirstResponder()
+        return false
+      }
+      return true
     }
   }
 }

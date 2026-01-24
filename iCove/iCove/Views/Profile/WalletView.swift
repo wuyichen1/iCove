@@ -21,6 +21,8 @@ struct WalletView: View {
   @State private var showPaymentAlert = false
   @State private var paymentAlertMessage = ""
   @State private var isProcessingPayment = false
+  // 当前选中的卡片索引
+  @State private var selectedCardIndex: Int? = nil
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -72,7 +74,9 @@ struct WalletView: View {
       }
     }
     .navigationBarHidden(true)
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
     .onAppear {
       paymentViewModel.updateAuthManager(authManager)
 
@@ -147,45 +151,62 @@ struct WalletView: View {
 
   // MARK: - Purchase Card
   private func purchaseCard(option: PurchaseOption, index: Int) -> some View {
-    Button {
+    let isSelected = selectedCardIndex == index
+
+    return Button {
+      // 更新选中状态
+      selectedCardIndex = index
       Task {
         await handlePurchase(option: option, index: index)
       }
     } label: {
-      VStack(spacing: 0) {
-        Image("jXFWhEc2SdV2UuW7")
+      ZStack {
+        // 背景图片 - 拉伸填充整个卡片，不保持宽高比，不裁剪
+        Image("hHBulkOHmM1uZi")
           .resizable()
-          .scaledToFit()
-          .frame(width: 30, height: 30)
-
-        Text("\(option.carrots)")
-          .font(.custom("FredokaOne-Regular", size: 22))
-          .foregroundColor(.black)
-          .lineLimit(1)
-          .minimumScaleFactor(0.8)
-          .padding(.top, 5)
-
-        Text("$\(String(format: "%.2f", option.price))")
-          .font(.system(size: 14, weight: .semibold))
-          .foregroundColor(.black)
-          .frame(maxWidth: .infinity)
-          .padding(.vertical, 8)
-          .background(
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
-              .fill(Color.white)
+          .overlay(
+            Group {
+              if isSelected {
+                RoundedRectangle(cornerRadius: 12)
+                  .stroke(Color.white, lineWidth: 2)
+              }
+            }
           )
-          .padding(.top, 10)
+          .padding(2)
+          .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 126)
+
+        // 内容层
+        VStack(spacing: 0) {
+          Image("jXFWhEc2SdV2UuW7")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 30, height: 30)
+            .padding(.top, 5)
+
+          Text("\(option.carrots)")
+            .font(.custom("FredokaOne-Regular", size: 20))
+            .foregroundColor(.black)
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
+            .padding(.top, 5)
+
+          Text("$\(String(format: "%.2f", option.price))")
+            .font(.system(size: 14, weight: .semibold))
+            .foregroundColor(.black)
+            .frame(minWidth: 0, maxWidth: .infinity)
+            .padding(.vertical, 8)
+            .background(
+              RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .fill(Color.white)
+            )
+            .padding(.top, 15)
+        }
+        .padding(.vertical, 16)
+        .padding(.horizontal, 12)
       }
-      .frame(maxWidth: .infinity)
-      .padding(.vertical, 16)
-      .padding(.horizontal, 12)
-      .background(
-        Image("DleSdqSGPchgXsQc")
-          .resizable()
-          .scaledToFill()
-          .frame(maxHeight: 120)
-          .clipped()
-      )
+      // .frame(minWidth: 0, maxWidth: .infinity)
+      .clipped()
+
     }
     .buttonStyle(.plain)
     .disabled(isProcessingPayment)

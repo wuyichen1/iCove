@@ -202,7 +202,9 @@ struct VideoDetailView: View {
       .presentationDragIndicator(.hidden)
     }
     .blockUserDialog(isPresented: $showingBlockDialog, userId: blockUserId)
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 }
 

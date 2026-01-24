@@ -142,7 +142,9 @@ struct ReportBlockBottomSheet: View {
     .onAppear {
       loadUser()
     }
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 
   private func loadUser() {

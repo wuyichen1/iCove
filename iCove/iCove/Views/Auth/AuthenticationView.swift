@@ -123,7 +123,9 @@ struct AuthenticationView: View {
 
     }
     .animation(.easeInOut(duration: 0.3), value: currentMode)
-    .enableInjection()
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 
   // MARK: - Back Button
@@ -512,6 +514,7 @@ struct AuthInputField: View {
             .keyboardType(keyboardType)
             .autocapitalization(.none)
             .autocorrectionDisabled()
+            .submitLabel(.next)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 15)
@@ -564,10 +567,14 @@ struct AuthPasswordField: View {
           Group {
             if isPasswordVisible {
               TextField(
-                "", text: $text, prompt: Text(placeholder).foregroundColor(.white.opacity(0.5)))
+                "", text: $text, prompt: Text(placeholder).foregroundColor(.white.opacity(0.5))
+              )
+              .submitLabel(.next)
             } else {
               SecureField(
-                "", text: $text, prompt: Text(placeholder).foregroundColor(.white.opacity(0.5)))
+                "", text: $text, prompt: Text(placeholder).foregroundColor(.white.opacity(0.5))
+              )
+              .submitLabel(.next)
             }
           }
           .foregroundColor(.white)
