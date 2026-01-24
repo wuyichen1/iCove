@@ -109,10 +109,18 @@ struct ReportView: View {
 
       }
     }
-    .overlay {
-      if showSuccessMessage {
-        successMessageView
-      }
+    // .overlay {
+    //   if showSuccessMessage {
+    //     successMessageView
+
+    //   }
+    // }
+    .alert(isPresented: $showSuccessMessage) {
+      Alert(
+        title: Text("Report submitted successfully"),
+        message: nil,
+        dismissButton: nil
+      )
     }
     .navigationBarHidden(true)
     #if DEBUG

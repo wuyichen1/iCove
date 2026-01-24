@@ -53,7 +53,7 @@ struct PrimaryButton: View {
       }
     }
     .disabled(!isEnabled || isLoading)
-    .opacity(isEnabled && !isLoading ? 1.0 : 0.6)
+    // .opacity(isEnabled && !isLoading ? 1.0 : 0.6)
     #if DEBUG
       .enableInjection()
     #endif

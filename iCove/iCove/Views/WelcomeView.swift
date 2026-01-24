@@ -15,6 +15,7 @@ struct WelcomeView: View {
   @State private var showingSignUp = false
   @State private var agreedToTerms = true
   @State private var showingAgreementAlert = false
+  @State private var isQuickLoginLoading = false
 
   /*
       @ObserveInjection var redraw：名字随意（redraw / inject / forceUpdate 都行），它会监听 InjectionIII 的注入通知。
@@ -128,6 +129,7 @@ struct WelcomeView: View {
         action: {
           handleNewButtonTap()
         },
+        isLoading: isQuickLoginLoading,
         width: 260,
         backgroundColor: Color("btnpink"),
       )
@@ -217,7 +219,9 @@ struct WelcomeView: View {
   private func handleNewButtonTap() {
     if agreedToTerms {
       Task {
+        isQuickLoginLoading = true
         await handleQuickLogin()
+        isQuickLoginLoading = false
       }
     } else {
       showingAgreementAlert = true
