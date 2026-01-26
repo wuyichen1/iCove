@@ -355,7 +355,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = M7A59P87QQ;
+				DEVELOPMENT_TEAM = 6NUFR97X3A;
 				EMIT_FRONTEND_COMMAND_LINES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -420,7 +420,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = M7A59P87QQ;
+				DEVELOPMENT_TEAM = 6NUFR97X3A;
 				EMIT_FRONTEND_COMMAND_LINES = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -450,11 +450,15 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = M7A59P87QQ;
+				DEVELOPMENT_TEAM = 6NUFR97X3A;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iCove/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires access to your camera permission for taking photos, so that you can capture and upload photos and videos. All the captured data will be securely stored on your personal device. The uploading or sharing operations will only be carried out with your explicit consent.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app requires the permission to access your location information in order to provide you with more personalized services. Your location data will be strictly confidential and will only be used upon your active authorization, for the purpose of enhancing your overall usage experience.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app requires access to your microphone permission to record audio so that you can have normal voice chats. We will only use or access the recorded content after obtaining your explicit authorization.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires access to your album to let you select and upload photos and videos. Selected files are only used for your authorized purposes, stored securely on your device, and shared only when you choose to upload them.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -469,7 +473,7 @@
 					"-Xlinker",
 					"-interposable",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jswqsgwlhywr.icove.iCove;
+				PRODUCT_BUNDLE_IDENTIFIER = app.myfy.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -484,11 +488,15 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = M7A59P87QQ;
+				DEVELOPMENT_TEAM = 6NUFR97X3A;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iCove/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires access to your camera permission for taking photos, so that you can capture and upload photos and videos. All the captured data will be securely stored on your personal device. The uploading or sharing operations will only be carried out with your explicit consent.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app requires the permission to access your location information in order to provide you with more personalized services. Your location data will be strictly confidential and will only be used upon your active authorization, for the purpose of enhancing your overall usage experience.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app requires access to your microphone permission to record audio so that you can have normal voice chats. We will only use or access the recorded content after obtaining your explicit authorization.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires access to your album to let you select and upload photos and videos. Selected files are only used for your authorized purposes, stored securely on your device, and shared only when you choose to upload them.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -499,7 +507,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jswqsgwlhywr.icove.iCove;
+				PRODUCT_BUNDLE_IDENTIFIER = app.myfy.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -513,7 +521,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = M7A59P87QQ;
+				DEVELOPMENT_TEAM = 6NUFR97X3A;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MARKETING_VERSION = 1.0;
@@ -532,7 +540,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = M7A59P87QQ;
+				DEVELOPMENT_TEAM = 6NUFR97X3A;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MARKETING_VERSION = 1.0;
@@ -550,7 +558,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = M7A59P87QQ;
+				DEVELOPMENT_TEAM = 6NUFR97X3A;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jswqsgwlhywr.icove.iCoveUITests;
@@ -567,7 +575,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = M7A59P87QQ;
+				DEVELOPMENT_TEAM = 6NUFR97X3A;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jswqsgwlhywr.icove.iCoveUITests;

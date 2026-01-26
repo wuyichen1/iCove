@@ -190,9 +190,3 @@ com.jswqsgwlhywr.icove.iCove
 4. **应用的 Bundle ID**：在 Xcode 中查看的 Bundle Identifier
 5. **测试环境**：真机型号、iOS 版本
 6. **错误信息**：完整的错误提示
-
-## 📚 相关文档
-
-- [App Store Connect 帮助](https://help.apple.com/app-store-connect/)
-- [StoreKit 2.0 文档](https://developer.apple.com/documentation/storekit)
-- [内购测试指南](https://developer.apple.com/app-store-connect/in-app-purchases-and-subscriptions/)
