@@ -8,48 +8,40 @@
 import SwiftUI
 
 #if DEBUG
-  import HotSwiftUI  // 导入库
+  import HotSwiftUI
 #endif
 
-/// 认证页面模式
 enum AuthMode {
   case signIn
   case signUp
   case forgotPassword
 }
 
-/// 认证容器视图 - 包含登录、注册和忘记密码页面
 struct AuthenticationView: View {
-  @EnvironmentObject var authManager: AuthenticationManager
+  @EnvironmentObject var auma3KvMQWRVzrTCZGp: AuthenticationManager
   @Environment(\.dismiss) var dismiss
-  @State private var currentMode: AuthMode
+  @State private var mode3SKlR1H07hi4ZBl: AuthMode
 
-  /// 初始化方法
-  /// - Parameter initialMode: 初始显示的模式，默认为登录模式
   init(initialMode: AuthMode = .signIn) {
-    _currentMode = State(initialValue: initialMode)
+    _mode3SKlR1H07hi4ZBl = State(initialValue: initialMode)
   }
 
-  // 表单字段
-  @State private var email: String = ""
-  @State private var password: String = ""
-  @State private var confirmPassword: String = ""
-  @State private var isPasswordVisible: Bool = false
-  @State private var isConfirmPasswordVisible: Bool = false
+  @State private var email5JGG0viqiPJadRO: String = ""
+  @State private var pwdx92WFu5sk3xxEyV: String = ""
+  @State private var confirmiOZaPPK51vdlEGm: String = ""
+  @State private var isvis0uVIZh3fJeFrDJD: Bool = false
+  @State private var isvisconisvisconCVTfoN1J9YOqKoc: Bool = false
 
-  // 错误信息
-  @State private var emailError: String?
-  @State private var passwordError: String?
+  @State private var emailErrNRj6AtIUU0KX5oj: String?
+  @State private var pwderrrpoDbCQVh8fy6As: String?
   @State private var confirmPasswordError: String?
-  @State private var errorMessage: String?
+  @State private var errmsgi9duPT2fqcbcvfo: String?
 
-  // 加载状态
-  @State private var isLoading: Bool = false
+  @State private var S4UbytlZEPCRhxZing: Bool = false
 
-  // 认证服务（用于重置密码）
-  private let authService: AuthenticationServiceProtocol = AuthenticationService.shared
+  private let aserv1UesNFlnX1FWfJc: AuthenticationServiceProtocol = AuthenticationService.shared
 
-  @FocusState private var focusedField: AuthField?
+  @FocusState private var focusF8V7w9DiIGa3tTN: AuthField?
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -63,7 +55,6 @@ struct AuthenticationView: View {
 
   var body: some View {
     ZStack {
-      // 背景
       Image("gY80sW7YXCRIPed2")
         .resizable()
         .scaledToFill()
@@ -72,49 +63,43 @@ struct AuthenticationView: View {
       ScrollView(showsIndicators: false) {
         VStack(spacing: 0) {
           Spacer().frame(height: 100)
-          // Logo 和 App 名称
-          logoSection
+
+          logo13ZXjEEX0x1hlEF
             .padding(.top, 30)
             .padding(.bottom, 50)
 
-          // 标题区域
-          titleSection
+          tithFfG9Ak5SztiQAC
             .padding(.horizontal, 20)
             .padding(.bottom, 40)
 
-          // 表单区域
-          formSection
+          formkz4vDSML4ytGk
             .padding(.horizontal, 20)
 
-          // 错误提示
-          if let error = errorMessage {
-            errorBanner(message: error)
+          if let error = errmsgi9duPT2fqcbcvfo {
+            errOxLHD7e0ndNTp(message: error)
               .padding(.horizontal, 24)
               .padding(.top, 16)
           }
 
-          // 忘记密码链接（仅登录模式）
-          if currentMode == .signIn {
-            forgotPasswordLink
+          if mode3SKlR1H07hi4ZBl == .signIn {
+            fotgotRN5jQEDPhRdQ1
               .padding(.top, 12)
               .padding(.horizontal, 20)
           }
 
-          // 主按钮
-          actionButton
+          btncBchUpNCl4X43
             .padding(.horizontal, 60)
-            .padding(.top, currentMode == .signIn ? 60 : 80)
+            .padding(.top, mode3SKlR1H07hi4ZBl == .signIn ? 60 : 80)
 
           Spacer(minLength: 50)
         }
       }
       .onTapGesture {
-        focusedField = nil
+        focusF8V7w9DiIGa3tTN = nil
       }
 
-      // 返回按钮
       VStack {
-        backButton
+        bkL5cecExmlgPWHux
           .padding(.top, 46)
           .padding(.leading, 20)
           .frame(maxWidth: .infinity, alignment: .leading)
@@ -122,20 +107,19 @@ struct AuthenticationView: View {
       }
 
     }
-    .animation(.easeInOut(duration: 0.3), value: currentMode)
+    .animation(.easeInOut(duration: 0.3), value: mode3SKlR1H07hi4ZBl)
     #if DEBUG
       .enableInjection()
     #endif
   }
 
   // MARK: - Back Button
-  private var backButton: some View {
+  private var bkL5cecExmlgPWHux: some View {
     Button(action: {
-      if currentMode == .forgotPassword {
-        // 从忘记密码返回登录
+      if mode3SKlR1H07hi4ZBl == .forgotPassword {
         withAnimation {
-          currentMode = .signIn
-          clearForm()
+          mode3SKlR1H07hi4ZBl = .signIn
+          clearhkfAVTsIibARi()
         }
       } else {
         dismiss()
@@ -153,16 +137,14 @@ struct AuthenticationView: View {
   }
 
   // MARK: - Logo Section
-  private var logoSection: some View {
+  private var logo13ZXjEEX0x1hlEF: some View {
     VStack(spacing: 12) {
-      // Logo 图片
       Image("icove_logo")
         .resizable()
         .aspectRatio(contentMode: .fit)
         .frame(width: 75, height: 75)
         .clipShape(RoundedRectangle(cornerRadius: 20))
 
-      // App 名称
       Text("iCove")
         .font(.custom("FredokaOne-Regular", size: 24))
         .foregroundColor(.white)
@@ -170,26 +152,17 @@ struct AuthenticationView: View {
   }
 
   // MARK: - Title Section
-  private var titleSection: some View {
+  private var tithFfG9Ak5SztiQAC: some View {
     HStack {
       Group {
-        if currentMode == .forgotPassword {
-          // 忘记密码标题
+        if mode3SKlR1H07hi4ZBl == .forgotPassword {
           StarText(
             text: "Forgot password",
             textSize: 22,
           )
-          // HStack(spacing: 6) {
-          //   Text("Forgot password")
-          //     .font(.custom("FredokaOne-Regular", size: 22))
-          //     .foregroundColor(.white)
-
-          //   sparkleIcon(isWhite: true)
-          // }
           .frame(maxWidth: .infinity, alignment: .leading)
         } else {
-          // 登录/注册切换标签
-          modeSwitcher
+          modeSwitcherJ5cgedl9eW
         }
       }
 
@@ -199,110 +172,94 @@ struct AuthenticationView: View {
   }
 
   // MARK: - Mode Switcher
-  private var modeSwitcher: some View {
+  private var modeSwitcherJ5cgedl9eW: some View {
     HStack(spacing: 50) {
-      // Sign in 标签
       Button(action: {
         withAnimation {
-          currentMode = .signIn
-          clearErrors()
+          mode3SKlR1H07hi4ZBl = .signIn
+          cerrcZ5BelI16SwWL()
         }
       }) {
         StarText(
           text: "Sign in",
-          textColor: currentMode == .signIn ? .white : .white.opacity(0.5)
+          textColor: mode3SKlR1H07hi4ZBl == .signIn ? .white : .white.opacity(0.5)
         )
       }
 
-      // Sign up 标签
       Button(action: {
         withAnimation {
-          currentMode = .signUp
-          clearErrors()
+          mode3SKlR1H07hi4ZBl = .signUp
+          cerrcZ5BelI16SwWL()
         }
       }) {
         StarText(
           text: "Sign up",
-          textColor: currentMode == .signUp ? .white : .white.opacity(0.5)
+          textColor: mode3SKlR1H07hi4ZBl == .signUp ? .white : .white.opacity(0.5)
         )
       }
     }
-  }
-
-  // MARK: - Sparkle Icon
-  private func sparkleIcon(isWhite: Bool) -> some View {
-    HStack(spacing: 2) {
-      Image(systemName: "sparkle")
-        .font(.system(size: 10))
-      Image(systemName: "sparkle")
-        .font(.system(size: 6))
-    }
-    .foregroundColor(isWhite ? .white : .white.opacity(0.5))
   }
 
   // MARK: - Form Section
-  private var formSection: some View {
+  private var formkz4vDSML4ytGk: some View {
     VStack(spacing: 24) {
-      // 邮箱输入
-      AuthInputField(
-        icon: "3BeYvZQWUF3j9VQh",
-        placeholder: "Email",
-        text: $email,
-        error: emailError,
-        keyboardType: .emailAddress
+      Iptem1Avn34LiVdrFR(
+        EHXKujwG9gCDlicon: "3BeYvZQWUF3j9VQh",
+        hintBZaEEP3rGcZQT: "Email",
+        txtqpbnWOie20qZy: $email5JGG0viqiPJadRO,
+        errHVK1WDDniuBnd: emailErrNRj6AtIUU0KX5oj,
+        keytypeERbkLzGUNUl8p: .emailAddress
       )
-      .focused($focusedField, equals: .email)
-      .onChange(of: email) { _, _ in
-        if emailError != nil {
-          validateEmail()
+      .focused($focusF8V7w9DiIGa3tTN, equals: .email)
+      .onChange(of: email5JGG0viqiPJadRO) { _, _ in
+        if emailErrNRj6AtIUU0KX5oj != nil {
+          valiemailFIGi8YWzd()
         }
       }
       .onSubmit {
-        focusedField = .password
+        focusF8V7w9DiIGa3tTN = .password
       }
 
-      // 密码输入
       AuthPasswordField(
-        icon: "jASWmFLKpFnsoplY",
-        placeholder: "Password",
-        text: $password,
-        isPasswordVisible: $isPasswordVisible,
-        error: passwordError
+        j9MDDPu2hh7QZicon: "jASWmFLKpFnsoplY",
+        hintBAmFW1kxABjuu: "Password",
+        LT8oTB7FHhFu5txt: $pwdx92WFu5sk3xxEyV,
+        isPasswordVisible: $isvis0uVIZh3fJeFrDJD,
+        errQ1v12f7CgcJFY: pwderrrpoDbCQVh8fy6As
       )
-      .focused($focusedField, equals: .password)
-      .onChange(of: password) { _, _ in
-        if passwordError != nil {
-          validatePassword()
+      .focused($focusF8V7w9DiIGa3tTN, equals: .password)
+      .onChange(of: pwdx92WFu5sk3xxEyV) { _, _ in
+        if pwderrrpoDbCQVh8fy6As != nil {
+          vapwdS2kxyN6VQML87()
         }
       }
       .onSubmit {
-        if currentMode == .signIn {
+        if mode3SKlR1H07hi4ZBl == .signIn {
           Task {
-            await handleSubmit()
+            await submBSw3CzMS9Tsk0()
           }
         } else {
-          focusedField = .confirmPassword
+          focusF8V7w9DiIGa3tTN = .confirmPassword
         }
       }
 
-      // 确认密码输入（注册和忘记密码模式）
-      if currentMode == .signUp || currentMode == .forgotPassword {
+      if mode3SKlR1H07hi4ZBl == .signUp || mode3SKlR1H07hi4ZBl == .forgotPassword {
         AuthPasswordField(
-          icon: "jASWmFLKpFnsoplY",
-          placeholder: "Enter the password again",
-          text: $confirmPassword,
-          isPasswordVisible: $isConfirmPasswordVisible,
-          error: confirmPasswordError
+          j9MDDPu2hh7QZicon: "jASWmFLKpFnsoplY",
+          hintBAmFW1kxABjuu: "Enter the password again",
+          LT8oTB7FHhFu5txt: $confirmiOZaPPK51vdlEGm,
+          isPasswordVisible: $isvisconisvisconCVTfoN1J9YOqKoc,
+          errQ1v12f7CgcJFY: confirmPasswordError
         )
-        .focused($focusedField, equals: .confirmPassword)
-        .onChange(of: confirmPassword) { _, _ in
+        .focused($focusF8V7w9DiIGa3tTN, equals: .confirmPassword)
+        .onChange(of: confirmiOZaPPK51vdlEGm) { _, _ in
           if confirmPasswordError != nil {
-            validateConfirmPassword()
+            vaconfccrhC43nDwUEq()
           }
         }
         .onSubmit {
           Task {
-            await handleSubmit()
+            await submBSw3CzMS9Tsk0()
           }
         }
         .transition(.opacity.combined(with: .move(edge: .top)))
@@ -311,13 +268,13 @@ struct AuthenticationView: View {
   }
 
   // MARK: - Forgot Password Link
-  private var forgotPasswordLink: some View {
+  private var fotgotRN5jQEDPhRdQ1: some View {
     HStack {
       Spacer()
       Button(action: {
         withAnimation {
-          currentMode = .forgotPassword
-          clearForm()
+          mode3SKlR1H07hi4ZBl = .forgotPassword
+          clearhkfAVTsIibARi()
         }
       }) {
         Text("Forgot ?")
@@ -328,22 +285,22 @@ struct AuthenticationView: View {
   }
 
   // MARK: - Action Button
-  private var actionButton: some View {
+  private var btncBchUpNCl4X43: some View {
     PrimaryButton(
-      title: buttonTitle,
+      title: btext9b6vEmwn9TNJy,
       action: {
         Task {
-          await handleSubmit()
+          await submBSw3CzMS9Tsk0()
         }
       },
-      isLoading: isLoading,
-      isEnabled: isFormValid,
+      isLoading: S4UbytlZEPCRhxZing,
+      isEnabled: validzDJF20YfnBW8u,
       width: 200
     )
   }
 
-  private var buttonTitle: String {
-    switch currentMode {
+  private var btext9b6vEmwn9TNJy: String {
+    switch mode3SKlR1H07hi4ZBl {
     case .signIn:
       return "SIGN IN"
     case .signUp:
@@ -354,7 +311,7 @@ struct AuthenticationView: View {
   }
 
   // MARK: - Error Banner
-  private func errorBanner(message: String) -> some View {
+  private func errOxLHD7e0ndNTp(message: String) -> some View {
     HStack {
       Image(systemName: "exclamationmark.triangle.fill")
         .foregroundColor(.red)
@@ -369,52 +326,53 @@ struct AuthenticationView: View {
   }
 
   // MARK: - Validation
-  private var isFormValid: Bool {
-    switch currentMode {
+  private var validzDJF20YfnBW8u: Bool {
+    switch mode3SKlR1H07hi4ZBl {
     case .signIn:
-      return !email.isEmpty && !password.isEmpty
+      return !email5JGG0viqiPJadRO.isEmpty && !pwdx92WFu5sk3xxEyV.isEmpty
     case .signUp, .forgotPassword:
-      return !email.isEmpty && !password.isEmpty && !confirmPassword.isEmpty
+      return !email5JGG0viqiPJadRO.isEmpty && !pwdx92WFu5sk3xxEyV.isEmpty
+        && !confirmiOZaPPK51vdlEGm.isEmpty
     }
   }
 
   @discardableResult
-  private func validateEmail() -> Bool {
-    if email.isEmpty {
-      emailError = "Please enter your email address."
+  private func valiemailFIGi8YWzd() -> Bool {
+    if email5JGG0viqiPJadRO.isEmpty {
+      emailErrNRj6AtIUU0KX5oj = "Please enter your email address."
       return false
     }
-    let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-    let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-    if !emailPredicate.evaluate(with: email) {
-      emailError = "Incorrect email format."
+    let sKl9VpUNqVbxF = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+    let CRWa0YOKzue5n = NSPredicate(format: "SELF MATCHES %@", sKl9VpUNqVbxF)
+    if !CRWa0YOKzue5n.evaluate(with: email5JGG0viqiPJadRO) {
+      emailErrNRj6AtIUU0KX5oj = "Incorrect email format."
       return false
     }
-    emailError = nil
+    emailErrNRj6AtIUU0KX5oj = nil
     return true
   }
 
   @discardableResult
-  private func validatePassword() -> Bool {
-    if password.isEmpty {
-      passwordError = "Please enter your password."
+  private func vapwdS2kxyN6VQML87() -> Bool {
+    if pwdx92WFu5sk3xxEyV.isEmpty {
+      pwderrrpoDbCQVh8fy6As = "Please enter your password."
       return false
     }
-    if password.count < 6 {
-      passwordError = "The password must be at least 6 characters long."
+    if pwdx92WFu5sk3xxEyV.count < 6 {
+      pwderrrpoDbCQVh8fy6As = "The password must be at least 6 characters long."
       return false
     }
-    passwordError = nil
+    pwderrrpoDbCQVh8fy6As = nil
     return true
   }
 
   @discardableResult
-  private func validateConfirmPassword() -> Bool {
-    if confirmPassword.isEmpty {
+  private func vaconfccrhC43nDwUEq() -> Bool {
+    if confirmiOZaPPK51vdlEGm.isEmpty {
       confirmPasswordError = "Please enter the password again."
       return false
     }
-    if confirmPassword != password {
+    if confirmiOZaPPK51vdlEGm != pwdx92WFu5sk3xxEyV {
       confirmPasswordError = "The passwords do not match."
       return false
     }
@@ -422,98 +380,96 @@ struct AuthenticationView: View {
     return true
   }
 
-  private func validateForm() -> Bool {
-    let isEmailValid = validateEmail()
-    let isPasswordValid = validatePassword()
+  private func valiform0N4muHKaouwMS() -> Bool {
+    let ULrnmxYeO2ogk = valiemailFIGi8YWzd()
+    let SDNKMdpjfqvPe = vapwdS2kxyN6VQML87()
 
-    if currentMode == .signUp || currentMode == .forgotPassword {
-      let isConfirmValid = validateConfirmPassword()
-      return isEmailValid && isPasswordValid && isConfirmValid
+    if mode3SKlR1H07hi4ZBl == .signUp || mode3SKlR1H07hi4ZBl == .forgotPassword {
+      let isConfirmValid = vaconfccrhC43nDwUEq()
+      return ULrnmxYeO2ogk && SDNKMdpjfqvPe && isConfirmValid
     }
 
-    return isEmailValid && isPasswordValid
+    return ULrnmxYeO2ogk && SDNKMdpjfqvPe
   }
 
   // MARK: - Actions
-  private func handleSubmit() async {
-    focusedField = nil
-    errorMessage = nil
+  private func submBSw3CzMS9Tsk0() async {
+    focusF8V7w9DiIGa3tTN = nil
+    errmsgi9duPT2fqcbcvfo = nil
 
-    guard validateForm() else { return }
+    guard valiform0N4muHKaouwMS() else { return }
 
-    isLoading = true
+    S4UbytlZEPCRhxZing = true
 
     do {
-      switch currentMode {
+      switch mode3SKlR1H07hi4ZBl {
       case .signIn:
-        try await authManager.login(email: email, password: password)
+        try await auma3KvMQWRVzrTCZGp.login(
+          email: email5JGG0viqiPJadRO, password: pwdx92WFu5sk3xxEyV)
       case .signUp:
-        // 注册时使用邮箱前缀作为默认用户名
-        let defaultUsername = email.components(separatedBy: "@").first ?? "User"
-        try await authManager.register(email: email, password: password, username: defaultUsername)
+        let oHLiBEbYkYiUm = email5JGG0viqiPJadRO.components(separatedBy: "@").first ?? "User"
+        try await auma3KvMQWRVzrTCZGp.register(
+          email: email5JGG0viqiPJadRO, password: pwdx92WFu5sk3xxEyV, username: oHLiBEbYkYiUm)
       case .forgotPassword:
-        try await authService.resetPassword(email: email, newPassword: password)
-        // 重置成功后返回登录页面
+        try await aserv1UesNFlnX1FWfJc.resetPassword(
+          email: email5JGG0viqiPJadRO, newPassword: pwdx92WFu5sk3xxEyV)
         withAnimation {
-          currentMode = .signIn
-          clearForm()
+          mode3SKlR1H07hi4ZBl = .signIn
+          clearhkfAVTsIibARi()
         }
       }
     } catch {
-      errorMessage = error.localizedDescription
+      errmsgi9duPT2fqcbcvfo = error.localizedDescription
     }
 
-    isLoading = false
+    S4UbytlZEPCRhxZing = false
   }
 
-  private func clearForm() {
-    email = ""
-    password = ""
-    confirmPassword = ""
-    isPasswordVisible = false
-    isConfirmPasswordVisible = false
-    clearErrors()
+  private func clearhkfAVTsIibARi() {
+    email5JGG0viqiPJadRO = ""
+    pwdx92WFu5sk3xxEyV = ""
+    confirmiOZaPPK51vdlEGm = ""
+    isvis0uVIZh3fJeFrDJD = false
+    isvisconisvisconCVTfoN1J9YOqKoc = false
+    cerrcZ5BelI16SwWL()
   }
 
-  private func clearErrors() {
-    emailError = nil
-    passwordError = nil
+  private func cerrcZ5BelI16SwWL() {
+    emailErrNRj6AtIUU0KX5oj = nil
+    pwderrrpoDbCQVh8fy6As = nil
     confirmPasswordError = nil
-    errorMessage = nil
+    errmsgi9duPT2fqcbcvfo = nil
   }
 }
 
 // MARK: - Auth Input Field Component
-struct AuthInputField: View {
-  let icon: String
-  let placeholder: String
-  @Binding var text: String
-  var error: String?
-  var keyboardType: UIKeyboardType = .default
+struct Iptem1Avn34LiVdrFR: View {
+  let EHXKujwG9gCDlicon: String
+  let hintBZaEEP3rGcZQT: String
+  @Binding var txtqpbnWOie20qZy: String
+  var errHVK1WDDniuBnd: String?
+  var keytypeERbkLzGUNUl8p: UIKeyboardType = .default
 
   var body: some View {
     HStack(spacing: 16) {
-      // 图标
       ZStack {
-        // RoundedRectangle(cornerRadius: 8)
-        //   .fill(Color.white)
-        //   .frame(width: 36, height: 36)
-
-        Image(icon)
+        Image(EHXKujwG9gCDlicon)
           .resizable()
           .scaledToFit()
           .frame(width: 22, height: 22)
       }
       VStack(alignment: .leading, spacing: 8) {
         HStack(spacing: 16) {
-          // 输入框
-          TextField("", text: $text, prompt: Text(placeholder).foregroundColor(.white.opacity(0.5)))
-            .foregroundColor(.white)
-            .font(.system(size: 16))
-            .keyboardType(keyboardType)
-            .autocapitalization(.none)
-            .autocorrectionDisabled()
-            .submitLabel(.next)
+          TextField(
+            "", text: $txtqpbnWOie20qZy,
+            prompt: Text(hintBZaEEP3rGcZQT).foregroundColor(.white.opacity(0.5))
+          )
+          .foregroundColor(.white)
+          .font(.system(size: 16))
+          .keyboardType(keytypeERbkLzGUNUl8p)
+          .autocapitalization(.none)
+          .autocorrectionDisabled()
+          .submitLabel(.next)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 15)
@@ -526,7 +482,7 @@ struct AuthInputField: View {
             .stroke(Color.white.opacity(0.3), lineWidth: 1)
         }
 
-        if let error = error {
+        if let error = errHVK1WDDniuBnd {
           Text(error)
             .font(.caption)
             .foregroundColor(.red)
@@ -540,21 +496,16 @@ struct AuthInputField: View {
 
 // MARK: - Auth Password Field Component
 struct AuthPasswordField: View {
-  let icon: String
-  let placeholder: String
-  @Binding var text: String
+  let j9MDDPu2hh7QZicon: String
+  let hintBAmFW1kxABjuu: String
+  @Binding var LT8oTB7FHhFu5txt: String
   @Binding var isPasswordVisible: Bool
-  var error: String?
+  var errQ1v12f7CgcJFY: String?
 
   var body: some View {
     HStack(spacing: 16) {
-      // 图标
       ZStack {
-        // RoundedRectangle(cornerRadius: 8)
-        //   .fill(Color.white)
-        //   .frame(width: 36, height: 36)
-
-        Image(icon)
+        Image(j9MDDPu2hh7QZicon)
           .resizable()
           .scaledToFit()
           .frame(width: 22, height: 22)
@@ -562,16 +513,17 @@ struct AuthPasswordField: View {
       VStack(alignment: .leading, spacing: 8) {
         HStack(spacing: 16) {
 
-          // 密码输入框
           Group {
             if isPasswordVisible {
               TextField(
-                "", text: $text, prompt: Text(placeholder).foregroundColor(.white.opacity(0.5))
+                "", text: $LT8oTB7FHhFu5txt,
+                prompt: Text(hintBAmFW1kxABjuu).foregroundColor(.white.opacity(0.5))
               )
               .submitLabel(.next)
             } else {
               SecureField(
-                "", text: $text, prompt: Text(placeholder).foregroundColor(.white.opacity(0.5))
+                "", text: $LT8oTB7FHhFu5txt,
+                prompt: Text(hintBAmFW1kxABjuu).foregroundColor(.white.opacity(0.5))
               )
               .submitLabel(.next)
             }
@@ -581,7 +533,6 @@ struct AuthPasswordField: View {
           .autocapitalization(.none)
           .autocorrectionDisabled()
 
-          // 显示/隐藏密码按钮
           Button(action: {
             isPasswordVisible.toggle()
           }) {
@@ -603,7 +554,7 @@ struct AuthPasswordField: View {
             .stroke(Color.white.opacity(0.3), lineWidth: 1)
         }
 
-        if let error = error {
+        if let error = errQ1v12f7CgcJFY {
           Text(error)
             .font(.caption)
             .foregroundColor(.red)

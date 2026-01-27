@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// AI 服务结果类型（类似 Dart 的 TishiLeixing）
 enum AIServiceResult<T> {
   case success(T)
   case failure(String)

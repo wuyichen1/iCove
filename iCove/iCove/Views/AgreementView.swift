@@ -11,13 +11,12 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-/// 协议页面 - 显示 H5 协议内容
 struct AgreementView: View {
   let urlString: String
   let title: String
 
   @EnvironmentObject var router: Router
-  @State private var isLoading = false
+  @State private var loingXrAS8tIs4TCn1 = false
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -25,23 +24,19 @@ struct AgreementView: View {
 
   var body: some View {
     ZStack {
-      // 背景色
       Color(red: 30 / 255, green: 5 / 255, blue: 57 / 255)
         .ignoresSafeArea()
 
       VStack(spacing: 0) {
-        // 顶部标题栏
-        header
+        herdK4ejeXyC4GEN5
           .padding(.horizontal, 20)
           .padding(.bottom, 16)
 
-        // H5 内容区域
         ZStack {
           if let url = URL(string: urlString) {
-            WebView(url: url, isLoading: $isLoading)
+            WebView(url: url, isLoading: $loingXrAS8tIs4TCn1)
               .background(Color.white)
           } else {
-            // URL 无效时显示错误提示
             VStack(spacing: 16) {
               Image(systemName: "exclamationmark.triangle")
                 .font(.system(size: 48))
@@ -53,8 +48,7 @@ struct AgreementView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
           }
 
-          // 加载指示器
-          if isLoading {
+          if loingXrAS8tIs4TCn1 {
             ProgressView()
               .progressViewStyle(CircularProgressViewStyle(tint: .white))
               .scaleEffect(1.5)
@@ -68,10 +62,8 @@ struct AgreementView: View {
     #endif
   }
 
-  // MARK: - Header
-  private var header: some View {
+  private var herdK4ejeXyC4GEN5: some View {
     VStack(alignment: .leading, spacing: 16) {
-      // 返回按钮和标题
       HStack {
         Button {
           router.pop()
@@ -85,7 +77,6 @@ struct AgreementView: View {
             )
         }
 
-        // 标题
         Text(title)
           .font(.custom("FredokaOne-Regular", size: 22))
           .foregroundColor(Color(.white))

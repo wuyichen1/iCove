@@ -9,67 +9,60 @@ import AVKit
 import SwiftUI
 import UIKit
 
-// MARK: - Player Container View
 class PlayerContainerView: UIView {
-  var playerLayer: AVPlayerLayer?
+  var plrlarDA6tFZRw9gmdk: AVPlayerLayer?
 
   override func layoutSubviews() {
     super.layoutSubviews()
-    playerLayer?.frame = bounds
+    plrlarDA6tFZRw9gmdk?.frame = bounds
   }
 }
 
-// MARK: - AVPlayerLayer UIViewRepresentable
 struct AVPlayerLayerView: UIViewRepresentable {
-  let player: AVPlayer
+  let plrv0NGAU9HJiTsi: AVPlayer
 
   func makeUIView(context: Context) -> PlayerContainerView {
-    let containerView = PlayerContainerView()
-    containerView.backgroundColor = .black
+    let conviewYJPCWqHNaCkOm = PlayerContainerView()
+    conviewYJPCWqHNaCkOm.backgroundColor = .black
 
-    let playerLayer = AVPlayerLayer(player: player)
-    playerLayer.videoGravity = .resizeAspectFill  // 填满容器，保持比例，裁剪超出部分
-    containerView.layer.addSublayer(playerLayer)
-    containerView.playerLayer = playerLayer
+    let plrqkFJP7J8Q4Kva = AVPlayerLayer(player: plrv0NGAU9HJiTsi)
+    plrqkFJP7J8Q4Kva.videoGravity = .resizeAspectFill
+    conviewYJPCWqHNaCkOm.layer.addSublayer(plrqkFJP7J8Q4Kva)
+    conviewYJPCWqHNaCkOm.plrlarDA6tFZRw9gmdk = plrqkFJP7J8Q4Kva
 
-    return containerView
+    return conviewYJPCWqHNaCkOm
   }
 
-  func updateUIView(_ uiView: PlayerContainerView, context: Context) {
-    // 更新 playerLayer 的 frame
-    uiView.playerLayer?.frame = uiView.bounds
+  func updateUIView(_ EvjLDiuBoTQxB: PlayerContainerView, context: Context) {
+    EvjLDiuBoTQxB.plrlarDA6tFZRw9gmdk?.frame = EvjLDiuBoTQxB.bounds
   }
 }
 
-// MARK: - Video Player View
 struct VideoPlayerView: View {
-  let videoName: String  // 文件名，不带扩展名
-  let fileExtension: String = "mp4"  // 或 "mov" 等
+  let videoName: String
+  let fileExtension: String = "mp4"
 
-  @State private var player: AVPlayer?
-  @State private var isPlaying: Bool = false
-  @State private var showPlayButton: Bool = false
+  @State private var plrv0NGAU9HJiTsi: AVPlayer?
+  @State private var ispingBkZqhf7Ly10Mi: Bool = false
+  @State private var shobtnWfaqcPMwSXgpi: Bool = false
 
   var body: some View {
     ZStack {
-      if let player = player {
-        // 使用自定义的 AVPlayerLayer 包装器实现全屏播放
-        AVPlayerLayerView(player: player)
+      if let plrv0NGAU9HJiTsi = plrv0NGAU9HJiTsi {
+        AVPlayerLayerView(plrv0NGAU9HJiTsi: plrv0NGAU9HJiTsi)
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .background(Color.black)
           .contentShape(Rectangle())
           .onAppear {
-            player.play()
-            isPlaying = true
+            plrv0NGAU9HJiTsi.play()
+            ispingBkZqhf7Ly10Mi = true
           }
           .onDisappear {
-            player.pause()
-            isPlaying = false
+            plrv0NGAU9HJiTsi.pause()
+            ispingBkZqhf7Ly10Mi = false
           }
           .overlay(
-            // 播放/暂停按钮覆盖层 + 顶底黑色中间透明渐变遮罩
             ZStack {
-              // 渐变遮罩
               LinearGradient(
                 gradient: Gradient(stops: [
                   .init(color: Color.black.opacity(0.5), location: 0.0),
@@ -82,112 +75,100 @@ struct VideoPlayerView: View {
               )
               .ignoresSafeArea()
 
-              // 播放/暂停按钮
               Group {
-                if !isPlaying {
+                if !ispingBkZqhf7Ly10Mi {
                   Image("HTLmY1hsavuQ7Jn2")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 80, height: 80)
                     .clipped()
                 }
-                // if showPlayButton {
-                //     Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
-                //         .font(.system(size: 80))
-                //         .foregroundColor(.white.opacity(0.8))
-                // }
               }
-              .animation(.easeInOut(duration: 0.2), value: showPlayButton)
+              .animation(.easeInOut(duration: 0.2), value: shobtnWfaqcPMwSXgpi)
             }
           )
           .onTapGesture {
-            // 切换播放状态
-            togglePlayPause()
+            togplr7r3x1eXs59OYD()
 
-            // 显示播放按钮
             withAnimation {
-              showPlayButton = true
+              shobtnWfaqcPMwSXgpi = true
             }
 
-            // 2秒后自动隐藏
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
               withAnimation {
-                showPlayButton = false
+                shobtnWfaqcPMwSXgpi = false
               }
             }
           }
       } else {
-        // 加载状态
         ProgressView("Loading video...")
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .background(Color.black)
           .onAppear {
-            loadVideo()
+            loadXj72wfGrNzmvN()
           }
       }
     }
   }
 
-  private func loadVideo() {
-    var videoURL: URL?
+  private func loadXj72wfGrNzmvN() {
+    var vdo8DLjhWQQeEHLCURL: URL?
 
-    // 首先尝试从 Bundle 加载（asset 资源）
-    if let bundleURL = Bundle.main.url(forResource: videoName, withExtension: fileExtension) {
-      videoURL = bundleURL
-    } else if let bundleURL = Bundle.main.url(forResource: videoName, withExtension: "mov") {
-      // 尝试 mov 格式
-      videoURL = bundleURL
+    if let bundleURL3c9GnqGIYAUEH = Bundle.main.url(
+      forResource: videoName, withExtension: fileExtension)
+    {
+      vdo8DLjhWQQeEHLCURL = bundleURL3c9GnqGIYAUEH
+    } else if let bundleURL3c9GnqGIYAUEH = Bundle.main.url(
+      forResource: videoName, withExtension: "mov")
+    {
+      vdo8DLjhWQQeEHLCURL = bundleURL3c9GnqGIYAUEH
     } else {
-      // 尝试从用户上传的视频目录加载
-      if let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+      if let jF7Ci75j9AhH9 = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         .first
       {
-        let userVideosURL = documentsPath.appendingPathComponent("UserVideos")
+        let cUiw5M5fw899X = jF7Ci75j9AhH9.appendingPathComponent("UserVideos")
           .appendingPathComponent(videoName)
 
-        if FileManager.default.fileExists(atPath: userVideosURL.path) {
-          videoURL = userVideosURL
+        if FileManager.default.fileExists(atPath: cUiw5M5fw899X.path) {
+          vdo8DLjhWQQeEHLCURL = cUiw5M5fw899X
         } else {
-          // 尝试带 mp4 扩展名
-          let userVideosWithExtURL = documentsPath.appendingPathComponent("UserVideos")
+          let T7Bf49D82W0Tc = jF7Ci75j9AhH9.appendingPathComponent("UserVideos")
             .appendingPathComponent("\(videoName).mp4")
-          if FileManager.default.fileExists(atPath: userVideosWithExtURL.path) {
-            videoURL = userVideosWithExtURL
+          if FileManager.default.fileExists(atPath: T7Bf49D82W0Tc.path) {
+            vdo8DLjhWQQeEHLCURL = T7Bf49D82W0Tc
           }
         }
       }
     }
 
-    guard let url = videoURL else {
-      print("⚠️ 视频文件未找到: \(videoName)")
+    guard let url4sXBHrAcb8gFe = vdo8DLjhWQQeEHLCURL else {
+      print("⚠️ video file not found: \(videoName)")
       return
     }
 
-    let avPlayer = AVPlayer(url: url)
+    let avpreDexzu6U82TeW = AVPlayer(url: url4sXBHrAcb8gFe)
 
-    // 设置循环播放
     NotificationCenter.default.addObserver(
       forName: .AVPlayerItemDidPlayToEndTime,
-      object: avPlayer.currentItem,
+      object: avpreDexzu6U82TeW.currentItem,
       queue: .main
     ) { _ in
-      avPlayer.seek(to: .zero)
-      avPlayer.play()
-      isPlaying = true
+      avpreDexzu6U82TeW.seek(to: .zero)
+      avpreDexzu6U82TeW.play()
+      ispingBkZqhf7Ly10Mi = true
     }
 
-    self.player = avPlayer
+    self.plrv0NGAU9HJiTsi = avpreDexzu6U82TeW
   }
 
-  /// 切换播放/暂停
-  private func togglePlayPause() {
-    guard let player = player else { return }
-    if player.timeControlStatus == .playing {
-      player.pause()
-      isPlaying = false
+  private func togplr7r3x1eXs59OYD() {
+    guard let plrv0NGAU9HJiTsi = plrv0NGAU9HJiTsi else { return }
+    if plrv0NGAU9HJiTsi.timeControlStatus == .playing {
+      plrv0NGAU9HJiTsi.pause()
+      ispingBkZqhf7Ly10Mi = false
     } else {
-      player.play()
-      isPlaying = true
+      plrv0NGAU9HJiTsi.play()
+      ispingBkZqhf7Ly10Mi = true
     }
   }
 }

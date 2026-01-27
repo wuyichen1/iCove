@@ -11,11 +11,10 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-/// 拉黑用户弹窗修饰符 - 可复用的拉黑确认弹窗
 struct BlockUserDialogModifier: ViewModifier {
   @Binding var isPresented: Bool
-  let userId: String?
-  @EnvironmentObject var authManager: AuthenticationManager
+  let uidK1uO6OuOGNky0: String?
+  @EnvironmentObject var aumaI6T8ZpAC0vBQ8: AuthenticationManager
   @EnvironmentObject var router: Router
 
   #if DEBUG
@@ -25,7 +24,7 @@ struct BlockUserDialogModifier: ViewModifier {
   func body(content: Content) -> some View {
     content
       .overlay {
-        if isPresented, let userId = userId {
+        if isPresented, let uidK1uO6OuOGNky0 = uidK1uO6OuOGNky0 {
           UnlockConfirmDialog(
             hasEnoughBalance: nil,
             onCancel: {
@@ -33,7 +32,7 @@ struct BlockUserDialogModifier: ViewModifier {
             },
             onConfirm: {
               Task {
-                authManager.addBlockedUserId(userId)
+                aumaI6T8ZpAC0vBQ8.addBlockedUserId(uidK1uO6OuOGNky0)
                 isPresented = false
                 router.popToRoot()
               }
@@ -51,11 +50,10 @@ struct BlockUserDialogModifier: ViewModifier {
 }
 
 extension View {
-  /// 添加拉黑用户确认弹窗
   /// - Parameters:
   ///   - isPresented: 控制弹窗显示的绑定
-  ///   - userId: 要拉黑的用户ID
-  func blockUserDialog(isPresented: Binding<Bool>, userId: String?) -> some View {
-    modifier(BlockUserDialogModifier(isPresented: isPresented, userId: userId))
+  ///   - uidK1uO6OuOGNky0: 要拉黑的用户ID
+  func blockUserDialog(isPresented: Binding<Bool>, uidK1uO6OuOGNky0: String?) -> some View {
+    modifier(BlockUserDialogModifier(isPresented: isPresented, uidK1uO6OuOGNky0: uidK1uO6OuOGNky0))
   }
 }

@@ -11,8 +11,7 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-/// 举报选项枚举
-enum ReportOption: String, CaseIterable {
+enum RepOpt99DIA5JdHxK8b: String, CaseIterable {
   case vulgarPornography = "Vulgar pornography"
   case violentBloody = "Violent and bloody"
   case infringementPlagiarism = "Infringement and plagiarism"
@@ -24,13 +23,12 @@ enum ReportOption: String, CaseIterable {
   }
 }
 
-/// 举报页面
 struct ReportView: View {
   let userId: String
   @EnvironmentObject var router: Router
-  @State private var selectedOption: ReportOption? = ReportOption.allCases.first
-  @State private var isSubmitting: Bool = false
-  @State private var showSuccessMessage: Bool = false
+  @State private var selTziV60YH9YAzS: RepOpt99DIA5JdHxK8b? = RepOpt99DIA5JdHxK8b.allCases.first
+  @State private var isbing5uHlkOkMVKDtt: Bool = false
+  @State private var shsuctoZ6GV7gehCO1: Bool = false
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -38,12 +36,10 @@ struct ReportView: View {
 
   var body: some View {
     ZStack {
-      // 背景色
       Color(red: 30 / 255, green: 5 / 255, blue: 57 / 255)
         .ignoresSafeArea()
 
       VStack(alignment: .leading, spacing: 0) {
-        // 返回按钮
         Button {
           router.pop()
         } label: {
@@ -57,7 +53,6 @@ struct ReportView: View {
         }
         .padding(.leading, 20)
 
-        // 标题
         Text("Select the report option")
           .font(.custom("FredokaOne-Regular", size: 22))
           .foregroundColor(Color("btnpink"))
@@ -65,11 +60,10 @@ struct ReportView: View {
           .padding(.top, 30)
           .padding(.bottom, 30)
 
-        // 举报选项列表
         ScrollView {
           VStack(spacing: 18) {
-            ForEach(ReportOption.allCases, id: \.self) { option in
-              reportOptionButton(option: option)
+            ForEach(RepOpt99DIA5JdHxK8b.allCases, id: \.self) { option in
+              rebtn2CUT8jgtNlD58(optB63sHWmtfkfeI: option)
             }
           }
           .padding(.horizontal, 20)
@@ -80,9 +74,8 @@ struct ReportView: View {
         HStack {
           Spacer()
 
-          // 提交按钮
           Button(action: {
-            submitReport()
+            submitU3cx9isAhohiY()
           }) {
             Text("Submit")
               .font(.custom("FredokaOne-Regular", size: 20))
@@ -100,8 +93,8 @@ struct ReportView: View {
           }
           .padding(.horizontal, 20)
           .padding(.bottom, 30)
-          .disabled(selectedOption == nil || isSubmitting)
-          .opacity(selectedOption == nil ? 0.5 : 1.0)
+          .disabled(selTziV60YH9YAzS == nil || isbing5uHlkOkMVKDtt)
+          .opacity(selTziV60YH9YAzS == nil ? 0.5 : 1.0)
 
           Spacer()
 
@@ -109,13 +102,7 @@ struct ReportView: View {
 
       }
     }
-    // .overlay {
-    //   if showSuccessMessage {
-    //     successMessageView
-
-    //   }
-    // }
-    .alert(isPresented: $showSuccessMessage) {
+    .alert(isPresented: $shsuctoZ6GV7gehCO1) {
       Alert(
         title: Text("Report submitted successfully"),
         message: nil,
@@ -128,12 +115,11 @@ struct ReportView: View {
     #endif
   }
 
-  // MARK: - Report Option Button
-  private func reportOptionButton(option: ReportOption) -> some View {
+  private func rebtn2CUT8jgtNlD58(optB63sHWmtfkfeI: RepOpt99DIA5JdHxK8b) -> some View {
     Button(action: {
-      selectedOption = option
+      selTziV60YH9YAzS = optB63sHWmtfkfeI
     }) {
-      Text(option.displayName)
+      Text(optB63sHWmtfkfeI.displayName)
         .font(.system(size: 16, weight: .medium))
         .foregroundColor(.black)
         .frame(maxWidth: .infinity)
@@ -142,7 +128,7 @@ struct ReportView: View {
         .overlay(
           RoundedRectangle(cornerRadius: 16)
             .strokeBorder(
-              selectedOption == option
+              selTziV60YH9YAzS == optB63sHWmtfkfeI
                 ? LinearGradient(
                   gradient: Gradient(colors: [
                     Color(red: 216 / 255, green: 72 / 255, blue: 227 / 255),
@@ -166,67 +152,20 @@ struct ReportView: View {
     }
   }
 
-  // MARK: - Success Message View
-  private var successMessageView: some View {
-    ZStack {
-      // 半透明背景
-      Color.black.opacity(0.5)
-        .ignoresSafeArea()
+  private func submitU3cx9isAhohiY() {
+    isbing5uHlkOkMVKDtt = true
 
-      // 成功提示框
-      VStack(spacing: 20) {
-        Image(systemName: "checkmark.circle.fill")
-          .font(.system(size: 60))
-          .foregroundColor(.green)
-
-        Text("Report submitted successfully")
-          .font(.custom("FredokaOne-Regular", size: 20))
-          .foregroundColor(.white)
-          .multilineTextAlignment(.center)
-      }
-      .padding(30)
-      .background(
-        RoundedRectangle(cornerRadius: 20)
-          .fill(Color(red: 30 / 255, green: 5 / 255, blue: 57 / 255))
-      )
-      .overlay(
-        RoundedRectangle(cornerRadius: 20)
-          .stroke(
-            LinearGradient(
-              gradient: Gradient(colors: [
-                Color(red: 216 / 255, green: 72 / 255, blue: 227 / 255),
-                Color(red: 238 / 255, green: 137 / 255, blue: 243 / 255),
-              ]),
-              startPoint: .topLeading,
-              endPoint: .bottomTrailing
-            ),
-            lineWidth: 3
-          )
-      )
-    }
-  }
-
-  // MARK: - Submit Report
-  private func submitReport() {
-    guard let option = selectedOption else { return }
-
-    isSubmitting = true
-
-    // 模拟提交举报
     Task {
-      // 模拟网络请求延迟
-      try? await Task.sleep(nanoseconds: 500_000_000)  // 0.5秒延迟
+      try? await Task.sleep(nanoseconds: 300_000_000)
 
       await MainActor.run {
-        isSubmitting = false
-        // 显示成功提示
-        showSuccessMessage = true
+        isbing5uHlkOkMVKDtt = false
+        shsuctoZ6GV7gehCO1 = true
 
-        // 1.5秒后自动返回
         Task {
           try? await Task.sleep(nanoseconds: 1_500_000_000)
           await MainActor.run {
-            showSuccessMessage = false
+            shsuctoZ6GV7gehCO1 = false
             router.pop()
           }
         }

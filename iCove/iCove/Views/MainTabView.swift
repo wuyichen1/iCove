@@ -8,11 +8,11 @@
 import SwiftUI
 
 #if DEBUG
-  import HotSwiftUI  // 导入库
+  import HotSwiftUI
 #endif
 
 struct MainTabView: View {
-  @EnvironmentObject var authManager: AuthenticationManager
+  @EnvironmentObject var aumaxK8ji8QR9Bmeq: AuthenticationManager
   @EnvironmentObject var paymentViewModel: PaymentViewModel
   @StateObject private var router = Router()
   @State private var selectedTab: TabItem = .home
@@ -23,7 +23,6 @@ struct MainTabView: View {
 
   var body: some View {
     ZStack(alignment: .bottom) {
-      // 页面内容
       Group {
         switch selectedTab {
         case .home:
@@ -31,20 +30,20 @@ struct MainTabView: View {
             HomeView()
           }
           .environmentObject(router)
-          .environmentObject(authManager)
+          .environmentObject(aumaxK8ji8QR9Bmeq)
           .environmentObject(paymentViewModel)
         case .discover:
           AppNavigationView {
             DiscoverView()
           }
           .environmentObject(router)
-          .environmentObject(authManager)
+          .environmentObject(aumaxK8ji8QR9Bmeq)
           .environmentObject(paymentViewModel)
         case .messages:
           AppNavigationView {
             MessagesView()
           }
-          .environmentObject(authManager)
+          .environmentObject(aumaxK8ji8QR9Bmeq)
           .environmentObject(router)
           .environmentObject(paymentViewModel)
         case .profile:
@@ -52,13 +51,12 @@ struct MainTabView: View {
             ProfileViewWrapper()
           }
           .environmentObject(router)
-          .environmentObject(authManager)
+          .environmentObject(aumaxK8ji8QR9Bmeq)
           .environmentObject(paymentViewModel)
         }
       }
       .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-      // 悬浮底部导航栏 - 只在主页面显示
       if shouldShowTabBar {
         FloatingTabBar(selectedTab: $selectedTab)
       }
@@ -69,13 +67,10 @@ struct MainTabView: View {
     #endif
   }
 
-  /// 是否显示底部导航栏
   private var shouldShowTabBar: Bool {
-    // 如果有二级页面（不在根页面），隐藏底部导航栏
     if !router.isAtRoot {
       return false
     }
-    // 在根页面时，始终显示底部导航栏
     return true
   }
 }
@@ -114,7 +109,7 @@ private struct ProfileViewContainer: View {
   }
 
   var body: some View {
-    ProfileView(viewModel: viewModel, showBackicon: showBackicon)
+    ProfileView(proVm92qjXCvXAr8i6: viewModel, sbacSTmLA8PZKM2AW: showBackicon)
       .environmentObject(authManager)
   }
 }

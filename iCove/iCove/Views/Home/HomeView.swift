@@ -8,16 +8,16 @@
 import SwiftUI
 
 #if DEBUG
-  import HotSwiftUI  // 导入库
+  import HotSwiftUI
 #endif
 
 struct HomeView: View {
-  @StateObject private var viewModel = HomeViewModel()
-  @State private var showingUnlockDialog = false
-  @State private var showingBlockDialog = false
-  @State private var blockUserId: String? = nil
+  @StateObject private var homeVmjdlzoNirJwfU3 = HomeViewModel()
+  @State private var unlocktNhKCw8OwGS0t = false
+  @State private var bloHwHbzDrKcFZIB = false
+  @State private var blouidlt760IOhzkW9F: String? = nil
   @EnvironmentObject var router: Router
-  @EnvironmentObject var authManager: AuthenticationManager
+  @EnvironmentObject var aumaCUWZltQs5HPyQ: AuthenticationManager
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -25,39 +25,33 @@ struct HomeView: View {
 
   var body: some View {
     ZStack {
-      // 背景图片
       Image("Qc4hYFPT1LVSkXq5")
         .resizable()
         .scaledToFill()
         .ignoresSafeArea()
 
       VStack(spacing: 0) {
-        // 顶部：App名称和AI形象区域（固定不滚动）
-        topSection
+        toplMOQuxo9IeDo4
           .padding(.top, 50)
           .padding(.horizontal, 20)
 
-        // 热门视频列表（可滚动）
-        popularVideosSection
+        popvdoloZf5BoonHb19
           .padding(.top, 20)
       }
 
-      // 解锁确认弹窗
-      if showingUnlockDialog {
+      if unlocktNhKCw8OwGS0t {
         UnlockConfirmDialog(
-          hasEnoughBalance: (authManager.currentUser?.balance ?? 0) >= 200,
+          hasEnoughBalance: (aumaCUWZltQs5HPyQ.currentUser?.balance ?? 0) >= 200,
           onCancel: {
-            showingUnlockDialog = false
+            unlocktNhKCw8OwGS0t = false
           },
           onConfirm: {
-            showingUnlockDialog = false
-            let hasEnoughBalance = (authManager.currentUser?.balance ?? 0) >= 200
-            if hasEnoughBalance {
-              // 余额充足，扣除 200 余额并跳转到 AI 页
-              authManager.deductBalance(200)
+            unlocktNhKCw8OwGS0t = false
+            let fGVDGutNgJkr8 = (aumaCUWZltQs5HPyQ.currentUser?.balance ?? 0) >= 200
+            if fGVDGutNgJkr8 {
+              aumaCUWZltQs5HPyQ.deductBalance(200)
               router.push(.ai)
             } else {
-              // 余额不足，跳转到钱包页
               router.push(.wallet)
             }
           },
@@ -65,28 +59,24 @@ struct HomeView: View {
       }
 
     }
-    .blockUserDialog(isPresented: $showingBlockDialog, userId: blockUserId)
+    .blockUserDialog(isPresented: $bloHwHbzDrKcFZIB, uidK1uO6OuOGNky0: blouidlt760IOhzkW9F)
     .navigationBarHidden(true)
     .onAppear {
-      viewModel.updateAuthManager(authManager)
+      homeVmjdlzoNirJwfU3.updateAuthManager(aumaCUWZltQs5HPyQ)
     }
     #if DEBUG
       .enableInjection()
     #endif
   }
 
-  // MARK: - Top Section (App Name & AI Avatar)
-  private var topSection: some View {
+  private var toplMOQuxo9IeDo4: some View {
     VStack(alignment: .leading, spacing: 0) {
-      // App名称
       Text("ICove")
         .font(.custom("FredokaOne-Regular", size: 32))
         .foregroundColor(.white)
 
-      // AI内容区域
       VStack(spacing: 0) {
         Spacer().frame(height: 60)
-        // 对话气泡
         VStack(alignment: .center, spacing: 16) {
           Text(
             "Hi ~ I'm your personal outfit partner! You can tell me your requirements and I'll tailor them to your needs."
@@ -94,9 +84,8 @@ struct HomeView: View {
           .font(.system(size: 13, weight: .regular, design: .default)).italic()
           .foregroundColor(.white)
 
-          // Unlock按钮
           Button(action: {
-            showingUnlockDialog = true
+            unlocktNhKCw8OwGS0t = true
           }) {
             ZStack(alignment: .topTrailing) {
               VStack {
@@ -108,7 +97,6 @@ struct HomeView: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: 20, height: 20)
-                    // .clipped()
 
                   Text("-200")
                     .font(.custom("FredokaOne-Regular", size: 14))
@@ -139,15 +127,13 @@ struct HomeView: View {
   }
 
   // MARK: - Popular Videos Section
-  private var popularVideosSection: some View {
+  private var popvdoloZf5BoonHb19: some View {
     ZStack {
-      // 透明填充，只有上边框是绿色的盒子
       RoundedRectangle(cornerRadius: 12)
         .fill(Color.clear)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(
-          // 只绘制上边框
-          TopBorderShape(cornerRadius: 33)
+          TopborpathQocmohrb0utCT(conradxrUXU0WJQ4cZU: 33)
             .stroke(Color.green, lineWidth: 2)
         )
         .cornerRadius(12, corners: [.topLeft, .topRight])
@@ -155,7 +141,6 @@ struct HomeView: View {
         .padding(.bottom, 100)
 
       VStack(alignment: .leading, spacing: 16) {
-        // 标题和添加按钮
         HStack {
           HStack(spacing: 8) {
             ZStack {
@@ -175,7 +160,6 @@ struct HomeView: View {
           }
           .padding(.trailing, 20)
 
-          // 添加按钮
           Button(action: {
             router.push(.publish(type: .video))
           }) {
@@ -189,86 +173,78 @@ struct HomeView: View {
         .padding(.horizontal, 30)
         .padding(.top, 20)
 
-        // 视频网格（可滚动区域）
         ScrollView {
           Group {
-            if viewModel.isLoading && viewModel.videos.isEmpty {
+            if homeVmjdlzoNirJwfU3.isLoading && homeVmjdlzoNirJwfU3.videos.isEmpty {
               ProgressView("Loading...")
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 40)
                 .padding(.horizontal, 20)
-            } else if viewModel.videos.isEmpty {
+            } else if homeVmjdlzoNirJwfU3.videos.isEmpty {
               EmptyPlaceholderView()
-              // Text("No video available.")
-              //   .foregroundColor(.white.opacity(0.7))
-              //   .frame(maxWidth: .infinity)
-              //   .padding(.vertical, 40)
-              //   .padding(.horizontal, 20)
             } else {
-              videoGridView
+              vdoGridCzet9yZf7eXm4
             }
           }
           .padding(.top, 12)
         }
-        // .animation(.easeInOut(duration: 0.35), value: viewModel.videos)
         .refreshable {
-          await viewModel.refresh()
+          await homeVmjdlzoNirJwfU3.refresh()
         }
       }
     }
   }
 
   // MARK: - Video Grid View
-  private var videoGridView: some View {
+  private var vdoGridCzet9yZf7eXm4: some View {
     let screenWidth = UIScreen.main.bounds.width
-    let availableWidth = screenWidth - 40  // 减去左右 padding (20 * 2)
-    let cardWidth = (availableWidth - 20) / 2  // 减去中间 spacing
+    let avawidE2XtbQrINuXRi = screenWidth - 40
+    let cawdPvXk0Kj0Izw8a = (avawidE2XtbQrINuXRi - 20) / 2
 
     return LazyVGrid(
       columns: [
-        GridItem(.fixed(cardWidth), spacing: 20),
-        GridItem(.fixed(cardWidth), spacing: 20),
+        GridItem(.fixed(cawdPvXk0Kj0Izw8a), spacing: 20),
+        GridItem(.fixed(cawdPvXk0Kj0Izw8a), spacing: 20),
       ], spacing: 16
     ) {
-      ForEach(viewModel.videos) { video in
-        VideoCard(
-          cardWidth: cardWidth,
-          video: video,
-          onLikeTapped: {
-            viewModel.toggleLike(for: video)
+      ForEach(homeVmjdlzoNirJwfU3.videos) { video in
+        Vdocard7h6FK0PGkN3cd(
+          cdwdrOSeXsSp0Ug3k: cawdPvXk0Kj0Izw8a,
+          vdoVuG66awy9cJsL: video,
+          onlikejlPDEZySX6stm: {
+            homeVmjdlzoNirJwfU3.toggleLike(for: video)
           },
-          onTap: {
+          onp5mmhUnSEipCn: {
             router.push(.detail(id: video.id))
           },
-          onBlock: {
-            blockUserId = video.authorId
-            showingBlockDialog = true
+          onBloIsLioTo3Y3fNs: {
+            blouidlt760IOhzkW9F = video.authorId
+            bloHwHbzDrKcFZIB = true
           }
         )
-        .frame(width: cardWidth)
+        .frame(width: cawdPvXk0Kj0Izw8a)
       }
     }
     .padding(.horizontal, 20)
-    .padding(.bottom, 130)  // 为底部导航栏留出空间
+    .padding(.bottom, 130)
   }
 }
 
 // MARK: - Video Card
-struct VideoCard: View {
-  let cardWidth: CGFloat
-  let video: VideoItem
-  let onLikeTapped: () -> Void
-  var onTap: (() -> Void)? = nil
-  var onBlock: (() -> Void)? = nil
-  @EnvironmentObject var authManager: AuthenticationManager
+struct Vdocard7h6FK0PGkN3cd: View {
+  let cdwdrOSeXsSp0Ug3k: CGFloat
+  let vdoVuG66awy9cJsL: VideoItem
+  let onlikejlPDEZySX6stm: () -> Void
+  var onp5mmhUnSEipCn: (() -> Void)? = nil
+  var onBloIsLioTo3Y3fNs: (() -> Void)? = nil
+  @EnvironmentObject var aumaCUWZltQs5HPyQ: AuthenticationManager
   @EnvironmentObject var router: Router
   @State private var showingReportBlockSheet = false
 
   var body: some View {
     ZStack(alignment: .topLeading) {
-      // 视频封面 - 支持加载用户上传的图片
-      DynamicImage(imageName: video.imageName)
-        .frame(width: cardWidth, height: 220)
+      DynamicImage(imageName: vdoVuG66awy9cJsL.imageName)
+        .frame(width: cdwdrOSeXsSp0Ug3k, height: 220)
         .clipped()
         .cornerRadius(14)
         .overlay(
@@ -276,15 +252,14 @@ struct VideoCard: View {
             .stroke(Color("btnpink"), lineWidth: 4)
         )
 
-      // 点赞数（左上角）
       HStack(spacing: 4) {
-        Button(action: onLikeTapped) {
-          Image(systemName: video.isLiked ? "heart.fill" : "heart")
+        Button(action: onlikejlPDEZySX6stm) {
+          Image(systemName: vdoVuG66awy9cJsL.isLiked ? "heart.fill" : "heart")
             .font(.system(size: 14))
             .foregroundColor(.white)
         }
         .buttonStyle(PlainButtonStyle())
-        Text("\(video.likeCount)")
+        Text("\(vdoVuG66awy9cJsL.likeCount)")
           .font(.system(size: 12, weight: .medium))
           .foregroundColor(.white)
       }
@@ -298,13 +273,11 @@ struct VideoCard: View {
       .cornerRadius(8)
       .padding(8)
 
-      // 更多选项（右上角）
-      if authManager.currentUser?.id != video.authorId {
+      if aumaCUWZltQs5HPyQ.currentUser?.id != vdoVuG66awy9cJsL.authorId {
         VStack {
           HStack {
             Spacer()
             Button(action: {
-              // 更多选项
               showingReportBlockSheet = true
             }) {
               Image(systemName: "ellipsis")
@@ -320,11 +293,10 @@ struct VideoCard: View {
         }
       }
 
-      // 视频描述（底部）
       VStack {
         Spacer()
         VStack(alignment: .leading, spacing: 0) {
-          Text(video.title)
+          Text(vdoVuG66awy9cJsL.title)
             .font(.system(size: 12))
             .foregroundColor(.white)
             .lineLimit(2)
@@ -344,17 +316,17 @@ struct VideoCard: View {
     }
     .contentShape(Rectangle())
     .onTapGesture {
-      onTap?()
+      onp5mmhUnSEipCn?()
     }
     .sheet(isPresented: $showingReportBlockSheet) {
       ReportBlockBottomSheet(
-        userId: video.authorId,
+        userId: vdoVuG66awy9cJsL.authorId,
         isPresented: $showingReportBlockSheet,
         onBlock: {
-          onBlock?()
+          onBloIsLioTo3Y3fNs?()
         }
       )
-      .environmentObject(authManager)
+      .environmentObject(aumaCUWZltQs5HPyQ)
       .environmentObject(router)
       .presentationDetents([.height(240)])
       .presentationBackground(.clear)
@@ -386,37 +358,33 @@ struct RoundedCorner: Shape {
 }
 
 // MARK: - Top Border Shape
-struct TopBorderShape: Shape {
-  var cornerRadius: CGFloat
+struct TopborpathQocmohrb0utCT: Shape {
+  var conradxrUXU0WJQ4cZU: CGFloat
 
   func path(in rect: CGRect) -> Path {
-    var path = Path()
+    var path9jM6m0KJy6kRl = Path()
 
-    // 从左上角圆角开始
-    path.move(to: CGPoint(x: 0, y: cornerRadius))
+    path9jM6m0KJy6kRl.move(to: CGPoint(x: 0, y: conradxrUXU0WJQ4cZU))
 
-    // 绘制左上角圆角
-    path.addArc(
-      center: CGPoint(x: cornerRadius, y: cornerRadius),
-      radius: cornerRadius,
+    path9jM6m0KJy6kRl.addArc(
+      center: CGPoint(x: conradxrUXU0WJQ4cZU, y: conradxrUXU0WJQ4cZU),
+      radius: conradxrUXU0WJQ4cZU,
       startAngle: Angle(degrees: 180),
       endAngle: Angle(degrees: 270),
       clockwise: false
     )
 
-    // 绘制上边框直线
-    path.addLine(to: CGPoint(x: rect.width - cornerRadius, y: 0))
+    path9jM6m0KJy6kRl.addLine(to: CGPoint(x: rect.width - conradxrUXU0WJQ4cZU, y: 0))
 
-    // 绘制右上角圆角
-    path.addArc(
-      center: CGPoint(x: rect.width - cornerRadius, y: cornerRadius),
-      radius: cornerRadius,
+    path9jM6m0KJy6kRl.addArc(
+      center: CGPoint(x: rect.width - conradxrUXU0WJQ4cZU, y: conradxrUXU0WJQ4cZU),
+      radius: conradxrUXU0WJQ4cZU,
       startAngle: Angle(degrees: 270),
       endAngle: Angle(degrees: 360),
       clockwise: false
     )
 
-    return path
+    return path9jM6m0KJy6kRl
   }
 }
 

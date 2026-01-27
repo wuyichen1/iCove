@@ -15,14 +15,13 @@ import SwiftUI
 struct VideoDetailView: View {
   let video: VideoItem
   @EnvironmentObject var router: Router
-  @EnvironmentObject var authManager: AuthenticationManager
-  @StateObject private var viewModel: VideoDetailViewModel
-  @State private var isPlaying = false
-  @State private var showingComments = false
-  @State private var showingReportBlockSheet = false
-  @State private var showingBlockDialog = false
-  @State private var blockUserId: String? = nil
-  @State private var reportBlockUserId: String? = nil
+  @EnvironmentObject var fggp6oQ8ajgQJ: AuthenticationManager
+  @StateObject private var vdVmM7Y8nCqxkUdxr: VdoModRfABf7Hmv5B3L
+  @State private var shocomxEwZWd9vW0DWQ = false
+  @State private var shorepLN0qrzU93ezm5 = false
+  @State private var bloYMGgfDIp3wRLn = false
+  @State private var buidrzaotDzVu2tOT: String? = nil
+  @State private var reuid1Hjpq9xSCefWC: String? = nil
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -30,52 +29,46 @@ struct VideoDetailView: View {
 
   init(video: VideoItem) {
     self.video = video
-    _viewModel = StateObject(wrappedValue: VideoDetailViewModel(video: video))
+    _vdVmM7Y8nCqxkUdxr = StateObject(wrappedValue: VdoModRfABf7Hmv5B3L(video: video))
   }
 
   var body: some View {
     ZStack {
-      // 视频背景
       Color.black
         .ignoresSafeArea()
 
-      // 背景可以用视频（可选）
-      VideoPlayerView(videoName: video.videoName)  // 后台循环播放示例
+      VideoPlayerView(videoName: video.videoName)
         .ignoresSafeArea()
-      // .overlay(Color.black.opacity(0.4))  // 半透明遮罩让内容清晰
 
-      // 底部信息栏
       VStack(alignment: .leading) {
         Spacer()
 
         VStack(spacing: 16) {
-          // 右侧：点赞和评论按钮整体居右
           HStack {
             Spacer()
             VStack(spacing: 24) {
-              // 点赞按钮
               Button(action: {
-                viewModel.toggleLike()
+                vdVmM7Y8nCqxkUdxr.toglikesm6Xk6NVAHwlN()
               }) {
                 VStack(spacing: 8) {
                   Image(
-                    viewModel.video.isLiked ? "zibeSwAfFlutEuhNml" : "beSwAfFlutEuhNml"
+                    vdVmM7Y8nCqxkUdxr.vdowndXDeVKvaItC.isLiked
+                      ? "zibeSwAfFlutEuhNml" : "beSwAfFlutEuhNml"
                   )
                   .resizable()
                   .aspectRatio(contentMode: .fill)
                   .frame(width: 45, height: 45)
                   .clipped()
 
-                  Text("\(viewModel.video.likeCount)")
+                  Text("\(vdVmM7Y8nCqxkUdxr.vdowndXDeVKvaItC.likeCount)")
                     .font(.system(size: 12, weight: .medium))
                     .foregroundColor(.white)
                 }
                 .frame(width: 50)
               }
 
-              // 评论按钮
               Button(action: {
-                showingComments = true
+                shocomxEwZWd9vW0DWQ = true
               }) {
                 VStack(spacing: 8) {
                   Image("Qplz4ZYdXi5S8nP4")
@@ -84,7 +77,7 @@ struct VideoDetailView: View {
                     .frame(width: 45, height: 45)
                     .clipped()
 
-                  Text("\(viewModel.commentCount)")
+                  Text("\(vdVmM7Y8nCqxkUdxr.comcnt1yKL9CDOTbUPL)")
                     .font(.system(size: 12, weight: .medium))
                     .foregroundColor(.white)
                 }
@@ -93,23 +86,20 @@ struct VideoDetailView: View {
             }
           }
 
-          // 底部：用户信息和描述
           HStack {
             VStack(alignment: .leading, spacing: 12) {
-              // 用户头像
-              if let author = viewModel.author {
+              if let auBNPseU9JjfhAD = vdVmM7Y8nCqxkUdxr.aue7tBYETD3uMWE {
                 HStack(spacing: 12) {
-                  if let avatarName = author.avatar {
+                  if let avaD72PJPNFEnAPk = auBNPseU9JjfhAD.avatar {
                     Button(action: {
-                      // 点击头像跳转到用户页
-                      if let author = viewModel.author {
+                      if let auBNPseU9JjfhAD = vdVmM7Y8nCqxkUdxr.aue7tBYETD3uMWE {
                         router.push(
                           .profile(
-                            userId: author.id,
+                            userId: auBNPseU9JjfhAD.id,
                             showBackicon: true))
                       }
                     }) {
-                      DynamicImage(imageName: avatarName)
+                      DynamicImage(imageName: avaD72PJPNFEnAPk)
                         .frame(width: 45, height: 45)
                         .clipShape(Circle())
                         .overlay(
@@ -123,7 +113,7 @@ struct VideoDetailView: View {
                       .fill(Color.green.opacity(0.3))
                       .frame(width: 45, height: 45)
                       .overlay {
-                        Text(String(author.username.prefix(1)))
+                        Text(String(auBNPseU9JjfhAD.username.prefix(1)))
                           .font(.headline)
                           .foregroundColor(.green)
                       }
@@ -133,13 +123,11 @@ struct VideoDetailView: View {
                       )
                   }
 
-                  // username
-                  Text(author.username)
+                  Text(auBNPseU9JjfhAD.username)
                     .font(.custom("FredokaOne-Regular", size: 18))
                     .foregroundColor(.white)
                 }
 
-                // 视频描述
                 Text(video.title)
                   .font(.system(size: 14))
                   .foregroundColor(.white)
@@ -154,57 +142,53 @@ struct VideoDetailView: View {
         .padding(.bottom, 0)
       }
 
-      // 顶部操作栏（放在视频内容之上）
       TopActionBar(
         onBack: {
           router.pop()
         },
-        isMoreVisible: authManager.currentUser?.id != video.authorId,
+        isMoreVisible: fggp6oQ8ajgQJ.currentUser?.id != video.authorId,
         onMore: {
-          reportBlockUserId = video.authorId
-          showingReportBlockSheet = true
+          reuid1Hjpq9xSCefWC = video.authorId
+          shorepLN0qrzU93ezm5 = true
         },
       )
     }
     .navigationBarHidden(true)
-    // .toolbar(.hidden, for: .navigationBar)
     .onAppear {
-      viewModel.setAuthManager(authManager)
+      vdVmM7Y8nCqxkUdxr.setau9acW6L3twRIdS(fggp6oQ8ajgQJ)
     }
-    .sheet(isPresented: $showingComments) {
+    .sheet(isPresented: $shocomxEwZWd9vW0DWQ) {
       CommentSheet(
-        videoId: video.id,
-        blockUserId: video.authorId,
-        onReportBlockUser: { userId in
-          showingComments = false
-          reportBlockUserId = userId
-          // 延迟一点打开举报拉黑弹窗，确保评论弹窗先关闭
+        vdoidD9HGYfeBdbb8g: video.id,
+        blouidl77j5c0KC5XIJ: video.authorId,
+        onrepec8s8iLFaxS8w: { userId in
+          shocomxEwZWd9vW0DWQ = false
+          reuid1Hjpq9xSCefWC = userId
           DispatchQueue.main.asyncAfter(deadline: .now()) {
-            showingReportBlockSheet = true
+            shorepLN0qrzU93ezm5 = true
           }
         }
       )
       .environmentObject(router)
-      .presentationDetents([.fraction(0.5)])  // 固定为屏幕高度的 50% （iOS 16+）
-      .presentationBackground(.clear)  // 去掉默认背景色，使用透明背景
-      // .presentationDragIndicator(.visible) // 显示拖拽指示器
+      .presentationDetents([.fraction(0.5)])
+      .presentationBackground(.clear)
     }
-    .sheet(isPresented: $showingReportBlockSheet) {
+    .sheet(isPresented: $shorepLN0qrzU93ezm5) {
       ReportBlockBottomSheet(
-        userId: reportBlockUserId ?? video.authorId,
-        isPresented: $showingReportBlockSheet,
+        userId: reuid1Hjpq9xSCefWC ?? video.authorId,
+        isPresented: $shorepLN0qrzU93ezm5,
         onBlock: {
-          blockUserId = reportBlockUserId ?? video.authorId
-          showingBlockDialog = true
+          buidrzaotDzVu2tOT = reuid1Hjpq9xSCefWC ?? video.authorId
+          bloYMGgfDIp3wRLn = true
         }
       )
-      .environmentObject(authManager)
+      .environmentObject(fggp6oQ8ajgQJ)
       .environmentObject(router)
       .presentationDetents([.height(240)])
       .presentationBackground(.clear)
       .presentationDragIndicator(.hidden)
     }
-    .blockUserDialog(isPresented: $showingBlockDialog, userId: blockUserId)
+    .blockUserDialog(isPresented: $bloYMGgfDIp3wRLn, uidK1uO6OuOGNky0: buidrzaotDzVu2tOT)
     #if DEBUG
       .enableInjection()
     #endif
@@ -213,66 +197,62 @@ struct VideoDetailView: View {
 
 // MARK: - Video Detail ViewModel
 @MainActor
-class VideoDetailViewModel: ObservableObject {
-  @Published var video: VideoItem
-  @Published var author: User?
-  @Published var commentCount: Int = 0
+class VdoModRfABf7Hmv5B3L: ObservableObject {
+  @Published var vdowndXDeVKvaItC: VideoItem
+  @Published var aue7tBYETD3uMWE: User?
+  @Published var comcnt1yKL9CDOTbUPL: Int = 0
 
-  private let videoService: VideoDataServiceProtocol
-  private let commentService: CommentDataServiceProtocol
-  private let authService: AuthenticationServiceProtocol
-  private weak var authManager: AuthenticationManager?
+  private let vdoserdoTQkhB26w63l: VideoDataServiceProtocol
+  private let comserPgOQJOSzvXa7g: CommentDataServiceProtocol
+  private let auser6aU9JT6MzLuR5: AuthenticationServiceProtocol
+  private weak var fggp6oQ8ajgQJ: AuthenticationManager?
 
   init(
     video: VideoItem,
-    videoService: VideoDataServiceProtocol = VideoDataService.shared,
-    commentService: CommentDataServiceProtocol = CommentDataService.shared,
-    authService: AuthenticationServiceProtocol = AuthenticationService.shared,
-    authManager: AuthenticationManager? = nil
+    vdoserdoTQkhB26w63l: VideoDataServiceProtocol = VideoDataService.shared,
+    comserPgOQJOSzvXa7g: CommentDataServiceProtocol = CommentDataService.shared,
+    auser6aU9JT6MzLuR5: AuthenticationServiceProtocol = AuthenticationService.shared,
+    fggp6oQ8ajgQJ: AuthenticationManager? = nil
   ) {
-    self.video = video
-    self.videoService = videoService
-    self.commentService = commentService
-    self.authService = authService
-    self.authManager = authManager
+    self.vdowndXDeVKvaItC = video
+    self.vdoserdoTQkhB26w63l = vdoserdoTQkhB26w63l
+    self.comserPgOQJOSzvXa7g = comserPgOQJOSzvXa7g
+    self.auser6aU9JT6MzLuR5 = auser6aU9JT6MzLuR5
+    self.fggp6oQ8ajgQJ = fggp6oQ8ajgQJ
 
-    loadAuthor()
-    loadCommentCount()
+    loadauWIW09n9WMBwMK()
+    loadcnttc3bFoIhvq1o2()
 
-    // 监听评论更新通知
     NotificationCenter.default.addObserver(
       forName: NSNotification.Name("CommentAdded"),
       object: nil,
       queue: .main
     ) { [weak self] _ in
       Task { @MainActor in
-        self?.loadCommentCount()
+        self?.loadcnttc3bFoIhvq1o2()
       }
     }
 
-    // 监听用户拉黑通知，刷新评论数
     NotificationCenter.default.addObserver(
       forName: NSNotification.Name("UserBlocked"),
       object: nil,
       queue: .main
     ) { [weak self] _ in
       Task { @MainActor in
-        self?.loadCommentCount()
+        self?.loadcnttc3bFoIhvq1o2()
       }
     }
 
-    // 监听用户取消拉黑通知，刷新评论数
     NotificationCenter.default.addObserver(
       forName: NSNotification.Name("UserUnblocked"),
       object: nil,
       queue: .main
     ) { [weak self] _ in
       Task { @MainActor in
-        self?.loadCommentCount()
+        self?.loadcnttc3bFoIhvq1o2()
       }
     }
 
-    // 监听当前用户信息更新通知
     NotificationCenter.default.addObserver(
       forName: NSNotification.Name("CurrentUserUpdated"),
       object: nil,
@@ -281,9 +261,9 @@ class VideoDetailViewModel: ObservableObject {
       Task { @MainActor [weak self] in
         guard let self = self,
           let updatedUser = notification.userInfo?["user"] as? User,
-          updatedUser.id == self.video.authorId
+          updatedUser.id == self.vdowndXDeVKvaItC.authorId
         else { return }
-        self.author = updatedUser
+        self.aue7tBYETD3uMWE = updatedUser
       }
     }
   }
@@ -292,50 +272,47 @@ class VideoDetailViewModel: ObservableObject {
     NotificationCenter.default.removeObserver(self)
   }
 
-  func setAuthManager(_ authManager: AuthenticationManager) {
-    self.authManager = authManager
-    // 如果作者是当前用户，使用最新的用户信息
-    if let currentUser = authManager.currentUser, currentUser.id == video.authorId {
-      author = currentUser
+  func setau9acW6L3twRIdS(_ fggp6oQ8ajgQJ: AuthenticationManager) {
+    self.fggp6oQ8ajgQJ = fggp6oQ8ajgQJ
+    if let currentUser = fggp6oQ8ajgQJ.currentUser, currentUser.id == vdowndXDeVKvaItC.authorId {
+      aue7tBYETD3uMWE = currentUser
     }
-    // 重新加载评论数，以应用拉黑过滤
-    loadCommentCount()
+    loadcnttc3bFoIhvq1o2()
   }
 
-  func toggleLike() {
-    video.isLiked.toggle()
-    if video.isLiked {
-      video.likeCount += 1
+  func toglikesm6Xk6NVAHwlN() {
+    vdowndXDeVKvaItC.isLiked.toggle()
+    if vdowndXDeVKvaItC.isLiked {
+      vdowndXDeVKvaItC.likeCount += 1
     } else {
-      video.likeCount = max(0, video.likeCount - 1)
+      vdowndXDeVKvaItC.likeCount = max(0, vdowndXDeVKvaItC.likeCount - 1)
     }
-    videoService.updateVideo(video)
+    vdoserdoTQkhB26w63l.updateVideo(vdowndXDeVKvaItC)
   }
 
-  private func loadAuthor() {
-    // 首先尝试从 AuthenticationService 获取用户信息
-    author = authService.getUserById(video.authorId)
+  private func loadauWIW09n9WMBwMK() {
+    aue7tBYETD3uMWE = auser6aU9JT6MzLuR5.getUserById(vdowndXDeVKvaItC.authorId)
 
-    // 如果找不到，检查是否是当前登录用户
-    if author == nil, let currentUser = authManager?.currentUser, currentUser.id == video.authorId {
-      author = currentUser
+    if aue7tBYETD3uMWE == nil, let curL5QaQqVhnOWsu = fggp6oQ8ajgQJ?.currentUser,
+      curL5QaQqVhnOWsu.id == vdowndXDeVKvaItC.authorId
+    {
+      aue7tBYETD3uMWE = curL5QaQqVhnOWsu
     }
   }
 
-  private func loadCommentCount() {
-    let allComments = commentService.loadComments(for: video.id)
-    // 过滤被拉黑用户的评论
-    let filteredComments = filterBlockedUsersComments(allComments)
-    commentCount = filteredComments.count
+  private func loadcnttc3bFoIhvq1o2() {
+    let n6dXuVrxrkgzd = comserPgOQJOSzvXa7g.loadComments(for: vdowndXDeVKvaItC.id)
+    let HuOH8bJg0TF4q = flitb2TFkKz4FGj7N(n6dXuVrxrkgzd)
+    comcnt1yKL9CDOTbUPL = HuOH8bJg0TF4q.count
   }
 
-  /// 过滤被拉黑用户的评论
-  private func filterBlockedUsersComments(_ comments: [Comment]) -> [Comment] {
-    guard let blockedUserIds = authManager?.currentUser?.blockedUserIds, !blockedUserIds.isEmpty
+  private func flitb2TFkKz4FGj7N(_ cmtsEkOTgC4a9jVcO: [Comment]) -> [Comment] {
+    guard let blouidMRw5H0CE3upXU = fggp6oQ8ajgQJ?.currentUser?.blockedUserIds,
+      !blouidMRw5H0CE3upXU.isEmpty
     else {
-      return comments
+      return cmtsEkOTgC4a9jVcO
     }
-    return comments.filter { !blockedUserIds.contains($0.authorId) }
+    return cmtsEkOTgC4a9jVcO.filter { !blouidMRw5H0CE3upXU.contains($0.authorId) }
   }
 }
 

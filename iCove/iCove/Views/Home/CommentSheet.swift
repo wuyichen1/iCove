@@ -12,38 +12,39 @@ import SwiftUI
 #endif
 
 struct CommentSheet: View {
-  let videoId: String
-  let blockUserId: String
-  var onReportBlockUser: ((String) -> Void)? = nil
+  let vdoidD9HGYfeBdbb8g: String
+  let blouidl77j5c0KC5XIJ: String
+  var onrepec8s8iLFaxS8w: ((String) -> Void)? = nil
   @Environment(\.dismiss) var dismiss
-  @EnvironmentObject var authManager: AuthenticationManager
-  @StateObject private var viewModel: CommentSheetViewModel
-  @State private var commentText: String = ""
-  @FocusState private var isInputFocused: Bool
+  @EnvironmentObject var aumaEJ7EvQZ9Ow9Qt: AuthenticationManager
+  @StateObject private var commVmq0MjQlJrqM7lc: Comshet6Zv0ZcOxmY14fVmod
+  @State private var comtxtFNpc30NkkZAmp: String = ""
+  @FocusState private var isfocusTN3GRBtL8yBZe: Bool
 
   #if DEBUG
     @ObserveInjection var redraw
   #endif
 
-  init(videoId: String, blockUserId: String, onReportBlockUser: ((String) -> Void)? = nil) {
-    self.videoId = videoId
-    self.blockUserId = blockUserId
-    self.onReportBlockUser = onReportBlockUser
-    _viewModel = StateObject(wrappedValue: CommentSheetViewModel(videoId: videoId))
+  init(
+    vdoidD9HGYfeBdbb8g: String, blouidl77j5c0KC5XIJ: String,
+    onrepec8s8iLFaxS8w: ((String) -> Void)? = nil
+  ) {
+    self.vdoidD9HGYfeBdbb8g = vdoidD9HGYfeBdbb8g
+    self.blouidl77j5c0KC5XIJ = blouidl77j5c0KC5XIJ
+    self.onrepec8s8iLFaxS8w = onrepec8s8iLFaxS8w
+    _commVmq0MjQlJrqM7lc = StateObject(
+      wrappedValue: Comshet6Zv0ZcOxmY14fVmod(vdoidD9HGYfeBdbb8g: vdoidD9HGYfeBdbb8g))
 
   }
 
   var body: some View {
     ZStack {
-      // //自定义一个图片做背景
       Image("f2YTqp3rK3ZgautI")
         .resizable()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
-      // .scaledToFill() // cover
 
       VStack(spacing: 0) {
-        // 头部
         HStack {
           Text("Comments")
             .font(.custom("FredokaOne-Regular", size: 18))
@@ -69,12 +70,11 @@ struct CommentSheet: View {
         .padding(.top, 26)
         .padding(.bottom, 10)
 
-        // 评论列表
         ScrollView {
           LazyVStack(spacing: 20) {
-            ForEach(viewModel.comments) { comment in
-              CommentRow(
-                comment: comment, onReportBlockUser: onReportBlockUser,
+            ForEach(commVmq0MjQlJrqM7lc.comts4oMmysR5908NJ) { comdecXqgnTjBZf3 in
+              ComRowtbQX2Vx6D7P1X(
+                commXyUfkhL61UsfP: comdecXqgnTjBZf3, onrepec8s8iLFaxS8w: onrepec8s8iLFaxS8w,
                 onDismiss: {
                   dismiss()
                 })
@@ -84,29 +84,28 @@ struct CommentSheet: View {
           .padding(.top, 12)
         }
 
-        // 输入框
         HStack(spacing: 12) {
           ZStack(alignment: .leading) {
-            if commentText.isEmpty {
+            if comtxtFNpc30NkkZAmp.isEmpty {
               Text("Say something...")
                 .foregroundColor(.white.opacity(0.4))
                 .padding(.horizontal, 16)
                 .padding(.vertical, 15)
             }
-            TextField("", text: $commentText)
+            TextField("", text: $comtxtFNpc30NkkZAmp)
               .textFieldStyle(.plain)
               .foregroundColor(.white)
               .padding(.horizontal, 16)
               .padding(.vertical, 15)
               .cornerRadius(15)
-              .focused($isInputFocused)
+              .focused($isfocusTN3GRBtL8yBZe)
               .submitLabel(.done)
           }
 
           Button(action: {
             UIApplication.shared.sendAction(
               #selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-            sendComment()
+            sendWPnm5SxHY3TXN()
           }) {
             Image(systemName: "paperplane.fill")
               .font(.system(size: 20))
@@ -115,70 +114,66 @@ struct CommentSheet: View {
               .clipShape(Circle())
               .padding(.trailing, 3)
           }
-          .disabled(commentText.isEmpty)
-          // .opacity(commentText.isEmpty ? 0.5 : 1.0)
+          .disabled(comtxtFNpc30NkkZAmp.isEmpty)
         }
         .background(Color(red: 25 / 255, green: 33 / 255, blue: 38 / 255))
         .cornerRadius(16)
         .padding(.horizontal, 20)
         .padding(.vertical, 12)
-        // .background(Color("buttonPurple").opacity(0.9))
       }
     }
     .onAppear {
-      viewModel.updateAuthManager(authManager)
+      commVmq0MjQlJrqM7lc.updElJ8PgaCm1Wv1(aumaEJ7EvQZ9Ow9Qt)
     }
     #if DEBUG
       .enableInjection()
     #endif
-    // .frame(height: UIScreen.main.bounds.height * 0.5)  // 固定为屏幕高度的 50%
   }
 
-  private func sendComment() {
-    guard !commentText.isEmpty else { return }
-    guard let userId = authManager.currentUser?.id else {
-      // 未登录用户使用默认ID
+  private func sendWPnm5SxHY3TXN() {
+    guard !comtxtFNpc30NkkZAmp.isEmpty else { return }
+    guard let uidzNUsLgwNBhkPV = aumaEJ7EvQZ9Ow9Qt.currentUser?.id else {
       return
     }
 
-    let comment = Comment(
-      videoId: videoId,
-      authorId: userId,
-      content: commentText,
+    let commui4flLwFoDkRY = Comment(
+      videoId: vdoidD9HGYfeBdbb8g,
+      authorId: uidzNUsLgwNBhkPV,
+      content: comtxtFNpc30NkkZAmp,
       timestamp: Date()
     )
 
-    viewModel.addComment(comment)
-    commentText = ""
-    isInputFocused = false
+    commVmq0MjQlJrqM7lc.addr9jkmimqGYIjL(commui4flLwFoDkRY)
+    comtxtFNpc30NkkZAmp = ""
+    isfocusTN3GRBtL8yBZe = false
 
-    // 发送通知，通知视频详情页更新评论数
     NotificationCenter.default.post(name: NSNotification.Name("CommentAdded"), object: nil)
   }
 }
 
 // MARK: - Comment Row
-struct CommentRow: View {
-  let comment: Comment
-  var onReportBlockUser: ((String) -> Void)? = nil
+struct ComRowtbQX2Vx6D7P1X: View {
+  let commXyUfkhL61UsfP: Comment
+  var onrepec8s8iLFaxS8w: ((String) -> Void)? = nil
   var onDismiss: (() -> Void)? = nil
-  @StateObject private var viewModel: CommentRowViewModel
-  @EnvironmentObject var authManager: AuthenticationManager
+  @StateObject private var commVmq0MjQlJrqM7lc: CommentRowViewModel
+  @EnvironmentObject var aumaEJ7EvQZ9Ow9Qt: AuthenticationManager
 
   init(
-    comment: Comment, onReportBlockUser: ((String) -> Void)? = nil, onDismiss: (() -> Void)? = nil
+    commXyUfkhL61UsfP: Comment, onrepec8s8iLFaxS8w: ((String) -> Void)? = nil,
+    onDismiss: (() -> Void)? = nil
   ) {
-    self.comment = comment
-    self.onReportBlockUser = onReportBlockUser
+    self.commXyUfkhL61UsfP = commXyUfkhL61UsfP
+    self.onrepec8s8iLFaxS8w = onrepec8s8iLFaxS8w
     self.onDismiss = onDismiss
-    _viewModel = StateObject(wrappedValue: CommentRowViewModel(authorId: comment.authorId))
+    _commVmq0MjQlJrqM7lc = StateObject(
+      wrappedValue: CommentRowViewModel(auidvPFJA8KR5FrlQ: commXyUfkhL61UsfP.authorId))
   }
 
   var body: some View {
     HStack(alignment: .top, spacing: 12) {
-      // 头像
-      if let author = viewModel.author {
-        if let avatarName = author.avatar {
+      if let auVVhVZlC8YeUdr = commVmq0MjQlJrqM7lc.autG49bxkSZNTSoj {
+        if let avatarName = auVVhVZlC8YeUdr.avatar {
           DynamicImage(imageName: avatarName)
             .frame(width: 50, height: 50)
             .clipShape(Circle())
@@ -191,7 +186,7 @@ struct CommentRow: View {
             .fill(Color.pink.opacity(0.3))
             .frame(width: 50, height: 50)
             .overlay {
-              Text(String(author.username.prefix(1)))
+              Text(String(auVVhVZlC8YeUdr.username.prefix(1)))
                 .font(.headline)
                 .foregroundColor(.pink)
             }
@@ -202,15 +197,14 @@ struct CommentRow: View {
           .frame(width: 40, height: 40)
       }
 
-      // 评论内容
       VStack(alignment: .leading, spacing: 4) {
-        if let author = viewModel.author {
-          Text(author.username)
+        if let auVVhVZlC8YeUdr = commVmq0MjQlJrqM7lc.autG49bxkSZNTSoj {
+          Text(auVVhVZlC8YeUdr.username)
             .font(.system(size: 14, weight: .bold))
             .foregroundColor(.black)
         }
 
-        Text(comment.content)
+        Text(commXyUfkhL61UsfP.content)
           .font(.system(size: 14))
           .foregroundColor(.black.opacity(0.8))
           .fixedSize(horizontal: false, vertical: true)
@@ -218,11 +212,10 @@ struct CommentRow: View {
 
       Spacer()
 
-      // 更多选项
-      if authManager.currentUser?.id != comment.authorId {
+      if aumaEJ7EvQZ9Ow9Qt.currentUser?.id != commXyUfkhL61UsfP.authorId {
         Button(action: {
           onDismiss?()
-          onReportBlockUser?(comment.authorId)
+          onrepec8s8iLFaxS8w?(commXyUfkhL61UsfP.authorId)
         }) {
           Image(systemName: "ellipsis")
             .font(.system(size: 16))
@@ -231,7 +224,7 @@ struct CommentRow: View {
       }
     }
     .onAppear {
-      viewModel.setAuthManager(authManager)
+      commVmq0MjQlJrqM7lc.setauthGPLlm37lQUk83(aumaEJ7EvQZ9Ow9Qt)
     }
   }
 }
@@ -239,22 +232,21 @@ struct CommentRow: View {
 // MARK: - Comment Row ViewModel
 @MainActor
 class CommentRowViewModel: ObservableObject {
-  @Published var author: User?
-  private let authService: AuthenticationServiceProtocol
-  private let authorId: String
-  private weak var authManager: AuthenticationManager?
+  @Published var autG49bxkSZNTSoj: User?
+  private let auserR3pj18n5NpYAk: AuthenticationServiceProtocol
+  private let auidvPFJA8KR5FrlQ: String
+  private weak var aumaEJ7EvQZ9Ow9Qt: AuthenticationManager?
 
   init(
-    authorId: String,
-    authService: AuthenticationServiceProtocol = AuthenticationService.shared,
-    authManager: AuthenticationManager? = nil
+    auidvPFJA8KR5FrlQ: String,
+    auserR3pj18n5NpYAk: AuthenticationServiceProtocol = AuthenticationService.shared,
+    aumaEJ7EvQZ9Ow9Qt: AuthenticationManager? = nil
   ) {
-    self.authService = authService
-    self.authorId = authorId
-    self.authManager = authManager
-    loadAuthor(authorId: authorId)
+    self.auserR3pj18n5NpYAk = auserR3pj18n5NpYAk
+    self.auidvPFJA8KR5FrlQ = auidvPFJA8KR5FrlQ
+    self.aumaEJ7EvQZ9Ow9Qt = aumaEJ7EvQZ9Ow9Qt
+    loadPh9fIYKN4H1VK(auidMZ4GBtu2JcrNb: auidvPFJA8KR5FrlQ)
 
-    // 监听当前用户信息更新通知
     NotificationCenter.default.addObserver(
       forName: NSNotification.Name("CurrentUserUpdated"),
       object: nil,
@@ -262,10 +254,10 @@ class CommentRowViewModel: ObservableObject {
     ) { [weak self] notification in
       Task { @MainActor in
         guard let self = self,
-          let updatedUser = notification.userInfo?["user"] as? User,
-          updatedUser.id == self.authorId
+          let updzUpvW7h0uhBrz = notification.userInfo?["user"] as? User,
+          updzUpvW7h0uhBrz.id == self.auidvPFJA8KR5FrlQ
         else { return }
-        self.author = updatedUser
+        self.autG49bxkSZNTSoj = updzUpvW7h0uhBrz
       }
     }
   }
@@ -274,111 +266,105 @@ class CommentRowViewModel: ObservableObject {
     NotificationCenter.default.removeObserver(self)
   }
 
-  func setAuthManager(_ authManager: AuthenticationManager) {
-    self.authManager = authManager
-    // 如果之前没有找到作者信息，重新尝试加载
-    if author == nil {
-      loadAuthor(authorId: authorId)
-    } else if let currentUser = authManager.currentUser, currentUser.id == authorId {
-      // 如果作者是当前用户，直接使用最新的用户信息
-      author = currentUser
+  func setauthGPLlm37lQUk83(_ aumaEJ7EvQZ9Ow9Qt: AuthenticationManager) {
+    self.aumaEJ7EvQZ9Ow9Qt = aumaEJ7EvQZ9Ow9Qt
+    if autG49bxkSZNTSoj == nil {
+      loadPh9fIYKN4H1VK(auidMZ4GBtu2JcrNb: auidvPFJA8KR5FrlQ)
+    } else if let cur2PDO5bTwrgcV1 = aumaEJ7EvQZ9Ow9Qt.currentUser,
+      cur2PDO5bTwrgcV1.id == auidvPFJA8KR5FrlQ
+    {
+      autG49bxkSZNTSoj = cur2PDO5bTwrgcV1
     }
   }
 
-  private func loadAuthor(authorId: String) {
-    // 首先尝试从 AuthenticationService 获取用户信息
-    author = authService.getUserById(authorId)
+  private func loadPh9fIYKN4H1VK(auidMZ4GBtu2JcrNb: String) {
+    autG49bxkSZNTSoj = auserR3pj18n5NpYAk.getUserById(auidMZ4GBtu2JcrNb)
 
-    // 如果找不到，检查是否是当前登录用户
-    if author == nil, let currentUser = authManager?.currentUser, currentUser.id == authorId {
-      author = currentUser
+    if autG49bxkSZNTSoj == nil, let cur2PDO5bTwrgcV1 = aumaEJ7EvQZ9Ow9Qt?.currentUser,
+      cur2PDO5bTwrgcV1.id == auidMZ4GBtu2JcrNb
+    {
+      autG49bxkSZNTSoj = cur2PDO5bTwrgcV1
     }
   }
 }
 
 // MARK: - Comment Sheet ViewModel
 @MainActor
-class CommentSheetViewModel: ObservableObject {
-  @Published var comments: [Comment] = []
+class Comshet6Zv0ZcOxmY14fVmod: ObservableObject {
+  @Published var comts4oMmysR5908NJ: [Comment] = []
 
-  private let commentService: CommentDataServiceProtocol
-  private let videoId: String
-  private var authManager: AuthenticationManager?
+  private let comserWiCuAnR5hJMER: CommentDataServiceProtocol
+  private let vdoidD9HGYfeBdbb8g: String
+  private var aumaEJ7EvQZ9Ow9Qt: AuthenticationManager?
 
   init(
-    videoId: String,
-    commentService: CommentDataServiceProtocol = CommentDataService.shared
+    vdoidD9HGYfeBdbb8g: String,
+    comserWiCuAnR5hJMER: CommentDataServiceProtocol = CommentDataService.shared
   ) {
-    self.videoId = videoId
-    self.commentService = commentService
+    self.vdoidD9HGYfeBdbb8g = vdoidD9HGYfeBdbb8g
+    self.comserWiCuAnR5hJMER = comserWiCuAnR5hJMER
 
-    // 监听新评论通知
     NotificationCenter.default.addObserver(
       forName: NSNotification.Name("CommentAdded"),
       object: nil,
       queue: .main
     ) { [weak self] _ in
       Task { @MainActor [weak self] in
-        self?.loadComments()
+        self?.loadZcvv3thwYzKoq()
       }
     }
 
-    // 监听用户拉黑通知，刷新评论列表
     NotificationCenter.default.addObserver(
       forName: NSNotification.Name("UserBlocked"),
       object: nil,
       queue: .main
     ) { [weak self] _ in
       Task { @MainActor [weak self] in
-        self?.loadComments()
+        self?.loadZcvv3thwYzKoq()
       }
     }
 
-    // 监听用户取消拉黑通知，刷新评论列表
     NotificationCenter.default.addObserver(
       forName: NSNotification.Name("UserUnblocked"),
       object: nil,
       queue: .main
     ) { [weak self] _ in
       Task { @MainActor [weak self] in
-        self?.loadComments()
+        self?.loadZcvv3thwYzKoq()
       }
     }
 
-    // 延迟加载，确保在主线程
     Task { @MainActor [weak self] in
-      self?.loadComments()
+      self?.loadZcvv3thwYzKoq()
     }
   }
 
-  /// 更新authManager引用（用于在View的onAppear中设置）
-  func updateAuthManager(_ authManager: AuthenticationManager) {
-    self.authManager = authManager
-    loadComments()
+  func updElJ8PgaCm1Wv1(_ aumaEJ7EvQZ9Ow9Qt: AuthenticationManager) {
+    self.aumaEJ7EvQZ9Ow9Qt = aumaEJ7EvQZ9Ow9Qt
+    loadZcvv3thwYzKoq()
   }
 
   deinit {
     NotificationCenter.default.removeObserver(self)
   }
 
-  func addComment(_ comment: Comment) {
-    commentService.addComment(comment)
-    loadComments()
+  func addr9jkmimqGYIjL(_ FVhF7Yo8gJ64W: Comment) {
+    comserWiCuAnR5hJMER.addComment(FVhF7Yo8gJ64W)
+    loadZcvv3thwYzKoq()
   }
 
-  private func loadComments() {
-    let allComments = commentService.loadComments(for: videoId)
-    // 过滤被拉黑用户的评论
-    comments = filterBlockedUsersComments(allComments)
+  private func loadZcvv3thwYzKoq() {
+    let allyA1PHKFj6lXhZ = comserWiCuAnR5hJMER.loadComments(for: vdoidD9HGYfeBdbb8g)
+    comts4oMmysR5908NJ = flitercomjSELAiSQQVTWq(allyA1PHKFj6lXhZ)
   }
 
-  /// 过滤被拉黑用户的评论
-  private func filterBlockedUsersComments(_ comments: [Comment]) -> [Comment] {
-    guard let blockedUserIds = authManager?.currentUser?.blockedUserIds, !blockedUserIds.isEmpty
+  private func flitercomjSELAiSQQVTWq(_ comts4oMmysR5908NJ: [Comment]) -> [Comment] {
+    guard let bloUidsvYpWGX4L3qBuy = aumaEJ7EvQZ9Ow9Qt?.currentUser?.blockedUserIds,
+      !bloUidsvYpWGX4L3qBuy.isEmpty
     else {
-      return comments
+      return comts4oMmysR5908NJ
     }
-    return comments.filter { !blockedUserIds.contains($0.authorId) }
+    return comts4oMmysR5908NJ.filter { !bloUidsvYpWGX4L3qBuy.contains($0.authorId) }
   }
 }
 

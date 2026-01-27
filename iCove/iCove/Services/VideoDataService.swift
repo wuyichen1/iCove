@@ -7,30 +7,24 @@
 
 import Foundation
 
-/// 视频数据服务协议
 protocol VideoDataServiceProtocol {
   func loadVideos() -> [VideoItem]
   func saveVideos(_ videos: [VideoItem])
   func addVideo(_ video: VideoItem)
   func updateVideo(_ video: VideoItem)
   func deleteVideo(id: String)
-  func resetToSampleData()
 }
 
-/// 视频数据服务 - 负责视频数据的持久化存储
 class VideoDataService: VideoDataServiceProtocol {
   static let shared = VideoDataService()
 
   private let videosKey = "saved_videos"
 
   private init() {
-    // 如果是首次启动，初始化示例数据
     if loadVideos().isEmpty {
       initializeSampleVideos()
     }
 
-    // 开发调试：需要更新示例数据时，取消下面的注释
-    // resetToSampleData()
   }
 
   // MARK: - Public Methods
@@ -52,7 +46,7 @@ class VideoDataService: VideoDataServiceProtocol {
 
   func addVideo(_ video: VideoItem) {
     var videos = loadVideos()
-    videos.insert(video, at: 0)  // 新视频添加到最前面
+    videos.insert(video, at: 0)
     saveVideos(videos)
   }
 
@@ -70,16 +64,9 @@ class VideoDataService: VideoDataServiceProtocol {
     saveVideos(videos)
   }
 
-  /// 重置为示例数据（用于开发调试）
-  func resetToSampleData() {
-    UserDefaults.standard.removeObject(forKey: videosKey)
-    initializeSampleVideos()
-  }
-
   // MARK: - Private Methods
 
   private func initializeSampleVideos() {
-    // 使用本地图片资源作为示例数据
     let sampleVideos: [VideoItem] = [
       VideoItem(
         id: "video_001",
@@ -95,7 +82,8 @@ class VideoDataService: VideoDataServiceProtocol {
         id: "video_002",
         imageName: "RClW0Qk7ObNtk86q2",
         videoName: "YLXVqZ8wbqT0SSgp2",
-        title: "Today's outfit suggestion: You can refer to this one for your daily wear. It's very comfortable.",
+        title:
+          "Today's outfit suggestion: You can refer to this one for your daily wear. It's very comfortable.",
         authorId: "user_003",
         timestamp: Date().addingTimeInterval(-86400 * 3),
         likeCount: 289,
@@ -115,7 +103,8 @@ class VideoDataService: VideoDataServiceProtocol {
         id: "video_004",
         imageName: "RClW0Qk7ObNtk86q4",
         videoName: "YLXVqZ8wbqT0SSgp4",
-        title: "my outfit of the day，literally wearing the same version of an outfit everyday because it’s so cold and I grab the first thing I see",
+        title:
+          "my outfit of the day，literally wearing the same version of an outfit everyday because it’s so cold and I grab the first thing I see",
         authorId: "user_005",
         timestamp: Date().addingTimeInterval(-86400 * 5),
         likeCount: 423,

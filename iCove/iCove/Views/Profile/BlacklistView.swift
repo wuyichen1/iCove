@@ -11,11 +11,10 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-/// 拉黑名单页面
 struct BlacklistView: View {
-  @EnvironmentObject var authManager: AuthenticationManager
+  @EnvironmentObject var au8PAPgSVGmoAhD: AuthenticationManager
   @EnvironmentObject var router: Router
-  @StateObject private var viewModel = BlacklistViewModel()
+  @StateObject private var blcAzRj9NhSBUoqvVmod = BlcAZzdkCZPB1o2aVmdl()
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -23,26 +22,22 @@ struct BlacklistView: View {
 
   var body: some View {
     ZStack {
-      // 背景色
       Color(red: 30 / 255, green: 5 / 255, blue: 57 / 255)
         .ignoresSafeArea()
 
       VStack(spacing: 0) {
-        // 顶部返回 + 标题
         header
           .padding(.horizontal, 20)
           .padding(.bottom, 10)
 
-        // 拉黑用户列表
-        if viewModel.blockedUsers.isEmpty {
-          // 空状态
+        if blcAzRj9NhSBUoqvVmod.blouserctQXbGMX3kUgr.isEmpty {
           EmptyPlaceholderView()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else {
           ScrollView {
             VStack(spacing: 16) {
-              ForEach(viewModel.blockedUsers, id: \.id) { user in
-                blacklistItem(user: user)
+              ForEach(blcAzRj9NhSBUoqvVmod.blouserctQXbGMX3kUgr, id: \.id) { user in
+                blaitemM2hwr7BxOebb3(userNtm79g6kOJtqr: user)
               }
             }
             .frame(width: .infinity, height: .infinity)
@@ -55,9 +50,9 @@ struct BlacklistView: View {
     }
     .navigationBarHidden(true)
     .onAppear {
-      viewModel.loadBlockedUsers(
-        blockedUserIds: authManager.currentUser?.blockedUserIds ?? [],
-        authService: AuthenticationService.shared
+      blcAzRj9NhSBUoqvVmod.loadBlockedUsers(
+        blouidFKnKiKBUzjZq0: au8PAPgSVGmoAhD.currentUser?.blockedUserIds ?? [],
+        ausernBbJzsGRqu4eF: AuthenticationService.shared
       )
     }
     #if DEBUG
@@ -65,10 +60,8 @@ struct BlacklistView: View {
     #endif
   }
 
-  // MARK: - Header
   private var header: some View {
     HStack {
-      // 返回按钮
       Button {
         router.pop()
       } label: {
@@ -83,17 +76,14 @@ struct BlacklistView: View {
 
       Spacer()
 
-      // 标题
       Text("Blacklist")
         .font(.custom("FredokaOne-Regular", size: 24))
         .foregroundColor(.white)
     }
   }
 
-  // MARK: - Blacklist Item
-  private func blacklistItem(user: User) -> some View {
+  private func blaitemM2hwr7BxOebb3(userNtm79g6kOJtqr: User) -> some View {
     ZStack(alignment: .topLeading) {
-      // 右侧：深紫色聊天气泡
       ZStack {
         Image("todrcOCVKxRfLanQ")
           .resizable()
@@ -102,18 +92,16 @@ struct BlacklistView: View {
           .frame(width: .infinity, height: 78)
 
         VStack(alignment: .leading, spacing: 12) {
-          // 用户名和时间戳
           HStack {
-            Text(user.username)
+            Text(userNtm79g6kOJtqr.username)
               .font(.custom("FredokaOne-Regular", size: 16))
               .foregroundColor(.white)
 
             Spacer()
 
-            // 移除按钮
             Button {
-              authManager.removeBlockedUserId(user.id)
-              viewModel.removeUser(userId: user.id)
+              au8PAPgSVGmoAhD.removeBlockedUserId(userNtm79g6kOJtqr.id)
+              blcAzRj9NhSBUoqvVmod.removeUser(uidTb4r3Jbz7orP5: userNtm79g6kOJtqr.id)
             } label: {
               Text("Remove")
                 .font(.system(size: 14, weight: .medium))
@@ -134,15 +122,12 @@ struct BlacklistView: View {
         }
         .padding(.leading, 106)
         .padding(.trailing, 14)
-        // .padding(.vertical, 12)
-        // .frame(maxWidth: .infinity, alignment: .leading)
       }
       .padding(.top, 12)
 
-      // 头像
       ProfileImageView(
-        avatar: user.avatar,
-        username: user.username,
+        avatar: userNtm79g6kOJtqr.avatar,
+        username: userNtm79g6kOJtqr.username,
         size: 62,
         subSize: 16,
       )
@@ -152,18 +137,19 @@ struct BlacklistView: View {
   }
 }
 
-// MARK: - Blacklist ViewModel
 @MainActor
-class BlacklistViewModel: ObservableObject {
-  @Published var blockedUsers: [User] = []
+class BlcAZzdkCZPB1o2aVmdl: ObservableObject {
+  @Published var blouserctQXbGMX3kUgr: [User] = []
 
-  func loadBlockedUsers(blockedUserIds: [String], authService: AuthenticationServiceProtocol) {
-    blockedUsers = blockedUserIds.compactMap { userId in
-      authService.getUserById(userId)
+  func loadBlockedUsers(
+    blouidFKnKiKBUzjZq0: [String], ausernBbJzsGRqu4eF: AuthenticationServiceProtocol
+  ) {
+    blouserctQXbGMX3kUgr = blouidFKnKiKBUzjZq0.compactMap { uidTb4r3Jbz7orP5 in
+      ausernBbJzsGRqu4eF.getUserById(uidTb4r3Jbz7orP5)
     }
   }
 
-  func removeUser(userId: String) {
-    blockedUsers.removeAll { $0.id == userId }
+  func removeUser(uidTb4r3Jbz7orP5: String) {
+    blouserctQXbGMX3kUgr.removeAll { $0.id == uidTb4r3Jbz7orP5 }
   }
 }

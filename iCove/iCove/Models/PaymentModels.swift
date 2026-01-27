@@ -14,11 +14,7 @@ import StoreKit
 struct PaymentProduct: Identifiable, Equatable {
   /// 产品 ID（与 App Store Connect 中配置的产品 ID 一致）
   let id: String
-
-  /// 产品显示名称（从 App Store 获取）
   let displayName: String
-
-  /// 产品描述（从 App Store 获取）
   let description: String
 
   /// 产品价格（本地化格式，例如：¥6.00）

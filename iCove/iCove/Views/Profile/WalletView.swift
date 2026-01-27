@@ -11,18 +11,16 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-/// 钱包页面
 struct WalletView: View {
-  @EnvironmentObject var authManager: AuthenticationManager
+  @EnvironmentObject var a2pv1DU9eRMWzG: AuthenticationManager
   @EnvironmentObject var router: Router
-  @EnvironmentObject var paymentViewModel: PaymentViewModel
+  @EnvironmentObject var payVmdEt8htQp1V38FI: PaymentViewModel
 
-  // 支付状态提示
-  @State private var showPaymentAlert = false
-  @State private var paymentAlertMessage = ""
-  @State private var isProcessingPayment = false
-  // 当前选中的卡片索引
-  @State private var selectedCardIndex: Int? = nil
+  @State private var payAlerto35gd3AGljvjh = false
+  @State private var almsgYevgprGg8OOMT = ""
+  @State private var procs4HE3zkNHwbOT2 = false
+
+  @State private var selidx58gTTlEulUWHL: Int? = nil
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -36,13 +34,11 @@ struct WalletView: View {
         .ignoresSafeArea()
 
       VStack(spacing: 0) {
-        // 顶部返回 + 标题 + 余额
-        header
+        topae5fstR00vn56
           .padding(.top, 46)
           .padding(.horizontal, 20)
           .padding(.bottom, 24)
 
-        // 购买选项网格
         ScrollView {
           LazyVGrid(
             columns: [
@@ -61,8 +57,7 @@ struct WalletView: View {
         }
       }
 
-      // 支付处理中遮罩层
-      if isProcessingPayment {
+      if procs4HE3zkNHwbOT2 {
         Color.black.opacity(0.3)
           .ignoresSafeArea()
           .overlay(
@@ -74,35 +69,33 @@ struct WalletView: View {
       }
     }
     .navigationBarHidden(true)
-    #if DEBUG
-      .enableInjection()
-    #endif
     .onAppear {
-      paymentViewModel.updateAuthManager(authManager)
+      payVmdEt8htQp1V38FI.updateAuthManager(a2pv1DU9eRMWzG)
 
-      // 如果产品列表为空，尝试加载产品
-      if paymentViewModel.products.isEmpty && !paymentViewModel.isLoadingProducts {
+      if payVmdEt8htQp1V38FI.products.isEmpty && !payVmdEt8htQp1V38FI.isLoadingProducts {
         Task {
-          await paymentViewModel.loadProducts()
+          await payVmdEt8htQp1V38FI.loadProducts()
         }
       }
     }
-    .alert("Payment", isPresented: $showPaymentAlert) {
+    .alert("Payment", isPresented: $payAlerto35gd3AGljvjh) {
       Button("OK", role: .cancel) {
-        paymentViewModel.resetPaymentStatus()
+        payVmdEt8htQp1V38FI.resetPaymentStatus()
       }
     } message: {
-      Text(paymentAlertMessage)
+      Text(almsgYevgprGg8OOMT)
     }
-    .onChange(of: paymentViewModel.paymentStatus) { _, newStatus in
-      handlePaymentStatusChange(newStatus)
+    .onChange(of: payVmdEt8htQp1V38FI.paymentStatus) { _, newStatus in
+      hanChangeeo7azSfT38yzY(newStatus)
     }
+    #if DEBUG
+      .enableInjection()
+    #endif
   }
 
   // MARK: - Header
-  private var header: some View {
+  private var topae5fstR00vn56: some View {
     VStack(spacing: 16) {
-      // 返回按钮
       HStack {
         Button {
           router.pop()
@@ -119,7 +112,6 @@ struct WalletView: View {
         Spacer()
       }
 
-      // Wallet 标题 + 余额
       HStack {
         Text("Wallet")
           .font(.custom("FredokaOne-Regular", size: 24))
@@ -128,13 +120,12 @@ struct WalletView: View {
         Spacer()
 
         HStack(spacing: 6) {
-          // 胡萝卜图标（如果有自定义图片可以使用，否则使用系统图标）
           Image("jXFWhEc2SdV2UuW7")
             .resizable()
             .scaledToFit()
             .frame(width: 30, height: 30)
 
-          Text("\(authManager.currentUser?.balance ?? 0)")
+          Text("\(a2pv1DU9eRMWzG.currentUser?.balance ?? 0)")
             .font(.custom("FredokaOne-Regular", size: 20))
             .foregroundColor(.black)
         }
@@ -151,17 +142,15 @@ struct WalletView: View {
 
   // MARK: - Purchase Card
   private func purchaseCard(option: PurchaseOption, index: Int) -> some View {
-    let isSelected = selectedCardIndex == index
+    let isSelected = selidx58gTTlEulUWHL == index
 
     return Button {
-      // 更新选中状态
-      selectedCardIndex = index
+      selidx58gTTlEulUWHL = index
       Task {
-        await handlePurchase(option: option, index: index)
+        await hanPurcR2z380uw1K6WH(w7JuZqW8xTmzuopt: option, index: index)
       }
     } label: {
       ZStack {
-        // 背景图片 - 拉伸填充整个卡片，不保持宽高比，不裁剪
         Image("hHBulkOHmM1uZi")
           .resizable()
           .overlay(
@@ -175,7 +164,6 @@ struct WalletView: View {
           .padding(2)
           .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 126)
 
-        // 内容层
         VStack(spacing: 0) {
           Image("jXFWhEc2SdV2UuW7")
             .resizable()
@@ -204,43 +192,41 @@ struct WalletView: View {
         .padding(.vertical, 16)
         .padding(.horizontal, 12)
       }
-      // .frame(minWidth: 0, maxWidth: .infinity)
       .clipped()
 
     }
     .buttonStyle(.plain)
-    .disabled(isProcessingPayment)
+    .disabled(procs4HE3zkNHwbOT2)
   }
 
-  // MARK: - Payment Handling
-  private func handlePurchase(option: PurchaseOption, index: Int) async {
-    if paymentViewModel.products.isEmpty {
-      await paymentViewModel.loadProducts()
+  private func hanPurcR2z380uw1K6WH(w7JuZqW8xTmzuopt: PurchaseOption, index: Int) async {
+    if payVmdEt8htQp1V38FI.products.isEmpty {
+      await payVmdEt8htQp1V38FI.loadProducts()
     }
-    await paymentViewModel.purchaseProduct(productId: option.productId)
+    await payVmdEt8htQp1V38FI.purchaseProduct(productId: w7JuZqW8xTmzuopt.productId)
   }
 
-  private func handlePaymentStatusChange(_ status: PaymentStatus) {
-    isProcessingPayment = false
+  private func hanChangeeo7azSfT38yzY(_ status: PaymentStatus) {
+    procs4HE3zkNHwbOT2 = false
 
     switch status {
     case .idle, .loadingProducts:
       break
     case .processing:
-      isProcessingPayment = true
+      procs4HE3zkNHwbOT2 = true
     case .success:
-      showPaymentAlert(message: "Payment successful!")
-    case .failed(let message):
-      showPaymentAlert(message: "Payment failed: \(message)")
+      payAlerto35gd3AGljvjh(msgHULVqjMvdvUU4: "Payment successful!")
+    case .failed(let msgHULVqjMvdvUU4):
+      payAlerto35gd3AGljvjh(msgHULVqjMvdvUU4: "Payment failed: \(msgHULVqjMvdvUU4)")
     case .canceled:
-      showPaymentAlert(message: "Payment canceled")
+      payAlerto35gd3AGljvjh(msgHULVqjMvdvUU4: "Payment canceled")
     case .restored:
-      showPaymentAlert(message: "Purchase restored")
+      payAlerto35gd3AGljvjh(msgHULVqjMvdvUU4: "Purchase restored")
     }
   }
 
-  private func showPaymentAlert(message: String) {
-    paymentAlertMessage = message
-    showPaymentAlert = true
+  private func payAlerto35gd3AGljvjh(msgHULVqjMvdvUU4: String) {
+    almsgYevgprGg8OOMT = msgHULVqjMvdvUU4
+    payAlerto35gd3AGljvjh = true
   }
 }

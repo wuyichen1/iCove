@@ -11,19 +11,19 @@ import Foundation
 
 /// 设置项模型
 struct SettingItem: Identifiable {
-    let id = UUID()
-    let title: String
-    let icon: String
-    let type: SettingType
-    var isDestructive: Bool = false
+  let id = UUID()
+  let title: String
+  let icon: String
+  let type: SettingType
+  var isDestructive: Bool = false
 }
 
 /// 设置类型
 enum SettingType {
-    case account
-    case privacy
-    case notification
-    case appearance
-    case about
-    case logout
+  case account
+  case privacy
+  case notification
+  case appearance
+  case about
+  case logout
 }

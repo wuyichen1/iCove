@@ -25,7 +25,6 @@ class HomeViewModel: ObservableObject {
     self.videoService = videoService
     loadVideos()
 
-    // 监听通知，当有新视频发布时刷新
     NotificationCenter.default.addObserver(
       forName: NSNotification.Name("VideoPublished"),
       object: nil,
@@ -34,7 +33,6 @@ class HomeViewModel: ObservableObject {
       self?.loadVideos()
     }
 
-    // 监听用户拉黑通知，刷新视频列表
     NotificationCenter.default.addObserver(
       forName: NSNotification.Name("UserBlocked"),
       object: nil,
@@ -43,7 +41,6 @@ class HomeViewModel: ObservableObject {
       self?.loadVideos()
     }
 
-    // 监听用户取消拉黑通知，刷新视频列表
     NotificationCenter.default.addObserver(
       forName: NSNotification.Name("UserUnblocked"),
       object: nil,
@@ -53,7 +50,6 @@ class HomeViewModel: ObservableObject {
     }
   }
 
-  /// 更新authManager引用（用于在View的onAppear中设置）
   func updateAuthManager(_ authManager: AuthenticationManager) {
     self.authManager = authManager
     loadVideos()
@@ -104,11 +100,9 @@ class HomeViewModel: ObservableObject {
   // MARK: - Private Methods
   private func loadVideos() {
     let allVideos = videoService.loadVideos()
-    // 过滤被拉黑用户的视频
     videos = filterBlockedUsersVideos(allVideos)
   }
 
-  /// 过滤被拉黑用户的视频
   private func filterBlockedUsersVideos(_ videos: [VideoItem]) -> [VideoItem] {
     guard let blockedUserIds = authManager?.currentUser?.blockedUserIds, !blockedUserIds.isEmpty
     else {

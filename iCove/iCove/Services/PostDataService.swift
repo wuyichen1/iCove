@@ -7,25 +7,21 @@
 
 import Foundation
 
-/// 帖子数据服务协议
 protocol PostDataServiceProtocol {
   func loadAllPosts() -> [Post]
-  func loadCollectedPosts() -> [Post]
-  func loadCollectedPosts(by postIds: [String]) -> [Post]  // 根据帖子ID列表获取收藏的帖子
+  func loadCollectedPosts(by postIds: [String]) -> [Post]
   func getPostById(_ postId: String) -> Post?
   func updatePost(_ post: Post)
-  func addPost(_ post: Post)  // 添加新帖子
+  func addPost(_ post: Post)
+  func deletePostsByAuthor(_ authorId: String) -> [String]
 }
 
-/// 帖子数据服务 - 负责帖子数据的存储和管理
 class PostDataService: PostDataServiceProtocol {
   static let shared = PostDataService()
 
   private let postsKey = "saved_posts"
 
-  // MARK: - 示例帖子数据（用于初始化）
   private let samplePosts: [Post] = [
-    // Maddison的帖子（根据UI图）
     Post(
       id: "post_001",
       imageNames: [
@@ -68,7 +64,6 @@ class PostDataService: PostDataServiceProtocol {
   ]
 
   private init() {
-    // 如果是首次启动，初始化示例数据
     if loadAllPosts().isEmpty {
       initializeSamplePosts()
     }
@@ -91,13 +86,7 @@ class PostDataService: PostDataServiceProtocol {
     }
   }
 
-  func loadCollectedPosts() -> [Post] {
-    // 此方法已废弃，收藏的帖子现在根据用户收藏ID列表动态获取
-    return []
-  }
-
   func loadCollectedPosts(by postIds: [String]) -> [Post] {
-    // 根据帖子ID列表从全部帖子中筛选出收藏的帖子
     let allPosts = loadAllPosts()
     return allPosts.filter { postIds.contains($0.id) }
   }
@@ -117,8 +106,17 @@ class PostDataService: PostDataServiceProtocol {
 
   func addPost(_ post: Post) {
     var posts = loadAllPosts()
-    posts.insert(post, at: 0)  // 新帖子添加到最前面
+    posts.insert(post, at: 0) 
     savePosts(posts)
+  }
+
+  func deletePostsByAuthor(_ authorId: String) -> [String] {
+    let posts = loadAllPosts()
+    let toRemove = posts.filter { $0.authorId == authorId }
+    let removedIds = toRemove.map(\.id)
+    let remaining = posts.filter { $0.authorId != authorId }
+    savePosts(remaining)
+    return removedIds
   }
 
   // MARK: - Private Methods

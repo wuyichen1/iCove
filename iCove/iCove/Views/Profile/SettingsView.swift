@@ -11,12 +11,11 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-/// 设置页面
 struct SettingsView: View {
-  @EnvironmentObject var authManager: AuthenticationManager
+  @EnvironmentObject var TZn9Psbmx6nlq: AuthenticationManager
   @EnvironmentObject var router: Router
   @Environment(\.dismiss) var dismiss
-  @State private var showingDeleteDialog = false
+  @State private var sdelI9WcIDcqYmOFT = false
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -24,50 +23,44 @@ struct SettingsView: View {
 
   var body: some View {
     ZStack {
-      // 背景色
       Color(red: 30 / 255, green: 5 / 255, blue: 57 / 255)
         .ignoresSafeArea()
 
       VStack(alignment: .leading, spacing: 24) {
-        // 顶部返回 + 标题
-        header
+        headCe0I3mQWb8Usy
           .padding(.top, 0)
           .padding(.horizontal, 20)
 
-        // 设置列表
         ScrollView {
           VStack(spacing: 16) {
-            settingButton(
-              title: "Edit personal information",
-              isPrimary: true
+            setbtnnGkQ3HgdYpOrc(
+              titlHeVgRclzqrl3v: "Edit personal information",
+              isPrim6Ooi8SHCn75ud: true
             ) {
               router.push(.editProfile)
             }
 
-            settingButton(title: "Blacklist", isPrimary: true) {
+            setbtnnGkQ3HgdYpOrc(titlHeVgRclzqrl3v: "Blacklist", isPrim6Ooi8SHCn75ud: true) {
               router.push(.blacklist)
             }
 
-            settingButton(title: "Privacy Policy", isPrimary: true) {
-              // 打开隐私政策页面，需要传入实际的 URL
+            setbtnnGkQ3HgdYpOrc(titlHeVgRclzqrl3v: "Privacy Policy", isPrim6Ooi8SHCn75ud: true) {
               router.push(
                 .agreement(url: "https://app.li65pe2f.link/privacy", title: "Privacy Policy"))
             }
 
-            settingButton(title: "User Agreement", isPrimary: true) {
-              // 打开用户协议页面，需要传入实际的 URL
+            setbtnnGkQ3HgdYpOrc(titlHeVgRclzqrl3v: "User Agreement", isPrim6Ooi8SHCn75ud: true) {
               router.push(
                 .agreement(url: "https://app.li65pe2f.link/users", title: "User Agreement"))
             }
 
-            settingButton(title: "Delete Account", isPrimary: true) {
-              // 打开删除账号弹窗
-              showingDeleteDialog = true
+            setbtnnGkQ3HgdYpOrc(titlHeVgRclzqrl3v: "Delete Account", isPrim6Ooi8SHCn75ud: true) {
+              sdelI9WcIDcqYmOFT = true
             }
 
-            settingButton(title: "Log Out", isPrimary: true) {
+            setbtnnGkQ3HgdYpOrc(titlHeVgRclzqrl3v: "Log Out", isPrim6Ooi8SHCn75ud: true) {
               Task {
-                await authManager.logout()
+                await TZn9Psbmx6nlq.logout()
                 router.popToRoot()
               }
             }
@@ -77,15 +70,15 @@ struct SettingsView: View {
         }
       }
 
-      if showingDeleteDialog {
+      if sdelI9WcIDcqYmOFT {
         UnlockConfirmDialog(
           hasEnoughBalance: nil,
           onCancel: {
-            showingDeleteDialog = false
+            sdelI9WcIDcqYmOFT = false
           },
           onConfirm: {
             Task {
-              await deleteAccount()
+              await delAnttlypdVYhivb4k5()
             }
           },
           title:
@@ -100,10 +93,8 @@ struct SettingsView: View {
     #endif
   }
 
-  // MARK: - Header
-  private var header: some View {
+  private var headCe0I3mQWb8Usy: some View {
     VStack(alignment: .leading, spacing: 24) {
-      // 返回按钮
       Button {
         router.pop()
       } label: {
@@ -122,14 +113,13 @@ struct SettingsView: View {
     }
   }
 
-  // MARK: - Setting Button
-  private func settingButton(
-    title: String,
-    isPrimary: Bool = false,
-    action: @escaping () -> Void
+  private func setbtnnGkQ3HgdYpOrc(
+    titlHeVgRclzqrl3v: String,
+    isPrim6Ooi8SHCn75ud: Bool = false,
+    actionYy0LnCuhhf3VN: @escaping () -> Void
   ) -> some View {
-    Button(action: action) {
-      Text(title)
+    Button(action: actionYy0LnCuhhf3VN) {
+      Text(titlHeVgRclzqrl3v)
         .font(.system(size: 18, weight: .medium))
         .foregroundColor(.black)
         .frame(maxWidth: .infinity)
@@ -140,7 +130,7 @@ struct SettingsView: View {
             .overlay(
               RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .stroke(
-                  isPrimary ? Color("btnpink") : Color.clear,
+                  isPrim6Ooi8SHCn75ud ? Color("btnpink") : Color.clear,
                   lineWidth: 3
                 )
             )
@@ -148,11 +138,10 @@ struct SettingsView: View {
     }
   }
 
-  // MARK: - Delete Account
-  private func deleteAccount() async {
-    defer { showingDeleteDialog = false }
+  private func delAnttlypdVYhivb4k5() async {
+    defer { sdelI9WcIDcqYmOFT = false }
     do {
-      try await authManager.deleteAccount()
+      try await TZn9Psbmx6nlq.deleteAccount()
       router.popToRoot()
     } catch {
       print("Delete account failed: \(error)")

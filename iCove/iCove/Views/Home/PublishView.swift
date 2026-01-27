@@ -18,61 +18,39 @@ import UniformTypeIdentifiers
 
 struct PublishView: View {
   @Environment(\.dismiss) var dismiss
-  @EnvironmentObject var authManager: AuthenticationManager
-  @StateObject private var viewModel = PublishViewModel()
+  @EnvironmentObject var auiGgZwlS2hzgS9: AuthenticationManager
+  @StateObject private var pubVmUgv9N9Lifjvva = PubVmod3vAA52GUNFoOZ()
 
-  let publishType: PublishType
+  let pubTypeWZOlcaTCZFIeL: PublishType
 
-  @State private var ideaText: String = ""
-  @State private var contentText: String = ""
-  @State private var isUploading: Bool = false
+  @State private var idea12u7sEM4VSkxy: String = ""
+  @State private var contomr5Z3F2pk25G: String = ""
+  @State private var isupdingihcxhWuaWfvpX: Bool = false
 
-  // 多图选择相关状态
-  @State private var selectedImages: [UIImage] = []
-  @State private var selectedPhotoItems: [PhotosPickerItem] = []
-  @State private var showImagePicker: Bool = false
+  @State private var imgsXUiHKeU6kPh5R: [UIImage] = []
+  @State private var seleimgsaSpzTYARwzbTh: [PhotosPickerItem] = []
+  @State private var showpicker76WU8TQPOyDCk: Bool = false
 
-  // 视频选择相关状态
-  @State private var selectedVideoURL: URL?
-  @State private var selectedVideoThumbnail: UIImage?
-  @State private var showVideoSourcePicker: Bool = false
-  @State private var showVideoPicker: Bool = false
-  @State private var showCameraRecorder: Bool = false
+  @State private var sevdoGl9lwyWvjF4dj: URL?
+  @State private var secoverIeISBAgiI58fB: UIImage?
+  @State private var svodpivTJTzCLlD6k7Qg: Bool = false
+  @State private var sh1U5dX7sH03Ppl: Bool = false
+  @State private var shoreczy38cyUCQpGYr: Bool = false
 
-  // 权限相关状态
-  @State private var showPermissionAlert: Bool = false
-  @State private var permissionAlertTitle: String = ""
-  @State private var permissionAlertMessage: String = ""
+  @State private var shperl2h5V8BF1DCoI: Bool = false
+  @State private var pertitdh68UlnTVJt0B: String = ""
+  @State private var permsgBuwfKeufmnd9p: String = ""
 
   #if DEBUG
     @ObserveInjection var redraw
   #endif
 
-  // 可用的图片资源（作为默认占位图）
-  private let availableImages = [
-    "1akQNNqBpWFE3YsJ0J",
-    "2bnmWxXjHOykhJtNRF",
-    "3cdKT1VeSfXcPS1lVn",
-    "4dv94xvRXwbcpHXAn1",
-    "CXGyBeCKoF4QQ3vX",
-    "EjFPYXDNG5OrCp97",
-    "Qc4hYFPT1LVSkXq5",
-    "ZOVugBKGBc2g0HA3",
-    "f6KDmB5rYAx2Ke6S",
-    "gY80sW7YXCRIPed2",
-    "jK792W9HOGn9U1z3",
-    "jXFWhEc2SdV2UuW7",
-    "qTU6kHWx1MR2Ual5",
-  ]
-
   var body: some View {
     ZStack {
-      // 背景色
       Color(red: 30 / 255, green: 5 / 255, blue: 57 / 255)
         .ignoresSafeArea()
 
       VStack(spacing: 0) {
-        // 返回按钮
         HStack {
           Button(action: {
             dismiss()
@@ -85,7 +63,6 @@ struct PublishView: View {
                 .foregroundColor(Color("buttonPurple"))
             }
           }
-          // .padding(.top, 46)
           .padding(.leading, 20)
 
           Spacer()
@@ -94,13 +71,11 @@ struct PublishView: View {
 
         ScrollView {
           VStack(spacing: 24) {
-            // 主要内容卡片
-            mainContentCard
+            contr8zhdyK4dN1MA
               .padding(.horizontal, 20)
               .padding(.top, 20)
 
-            // Upload 按钮
-            uploadButton
+            btnRc9xVKQlruGPp
               .padding(.horizontal, 20)
               .padding(.top, 20)
               .padding(.bottom, 40)
@@ -115,9 +90,8 @@ struct PublishView: View {
   }
 
   // MARK: - Main Content Card
-  private var mainContentCard: some View {
+  private var contr8zhdyK4dN1MA: some View {
     ZStack {
-      // 渐变背景
       LinearGradient(
         colors: [
           Color("btnpink"),
@@ -129,22 +103,19 @@ struct PublishView: View {
       .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
 
       VStack(alignment: .leading, spacing: 20) {
-        if publishType == .imagePost {
-          // 发布图片帖子：Idea 和 Picture
-          ideaSection
-          pictureSection
+        if pubTypeWZOlcaTCZFIeL == .imagePost {
+          idealRcCpFSAOOIC0
+          picZCjxaCu5Z5hnN
         } else {
-          // 发布视频：Content 和 Video works
-          contentSection
-          videoSection
+          contCH3ahwkIlAIqf
+          vdoJa4vXdLKYKrzD
         }
       }
       .padding(20)
     }
   }
 
-  // MARK: - Idea Section (图片帖子)
-  private var ideaSection: some View {
+  private var idealRcCpFSAOOIC0: some View {
     VStack(alignment: .leading, spacing: 12) {
       Text("Idea:")
         .font(.custom("FredokaOne-Regular", size: 18))
@@ -155,11 +126,11 @@ struct PublishView: View {
           .fill(Color.white)
           .frame(height: 180)
 
-        CustomTextEditor(text: $ideaText)
+        TxtdtOlMxaoJnUeEsL(text: $idea12u7sEM4VSkxy)
           .padding(.horizontal, 16)
           .padding(.vertical, 15)
 
-        if ideaText.isEmpty {
+        if idea12u7sEM4VSkxy.isEmpty {
           Text("Enter")
             .foregroundColor(.gray.opacity(0.5))
             .font(.system(size: 15))
@@ -170,8 +141,7 @@ struct PublishView: View {
     }
   }
 
-  // MARK: - Picture Section (图片帖子 - 支持多图)
-  private var pictureSection: some View {
+  private var picZCjxaCu5Z5hnN: some View {
     VStack(alignment: .leading, spacing: 12) {
       HStack {
         Text("Picture:")
@@ -180,8 +150,8 @@ struct PublishView: View {
 
         Spacer()
 
-        if !selectedImages.isEmpty {
-          Text("\(selectedImages.count)/9")
+        if !imgsXUiHKeU6kPh5R.isEmpty {
+          Text("\(imgsXUiHKeU6kPh5R.count)/9")
             .font(.system(size: 14))
             .foregroundColor(.white.opacity(0.8))
         }
@@ -193,12 +163,11 @@ struct PublishView: View {
           .frame(minHeight: 200)
           .shadow(color: Color.black.opacity(0.1), radius: 6, x: 0, y: 4)
 
-        if selectedImages.isEmpty {
-          // 显示添加图片按钮 - 先检查权限
+        if imgsXUiHKeU6kPh5R.isEmpty {
           Button(action: {
-            requestPhotoLibraryPermission { granted in
+            reqper2ozOs519VzW5c { granted in
               if granted {
-                showImagePicker = true
+                showpicker76WU8TQPOyDCk = true
               }
             }
           }) {
@@ -210,7 +179,6 @@ struct PublishView: View {
             }
           }
         } else {
-          // 显示已选择的图片网格
           VStack(spacing: 8) {
             LazyVGrid(
               columns: [
@@ -219,7 +187,7 @@ struct PublishView: View {
                 GridItem(.flexible(), spacing: 8),
               ], spacing: 8
             ) {
-              ForEach(Array(selectedImages.enumerated()), id: \.offset) { index, image in
+              ForEach(Array(imgsXUiHKeU6kPh5R.enumerated()), id: \.offset) { index, image in
                 ZStack(alignment: .topTrailing) {
                   Image(uiImage: image)
                     .resizable()
@@ -228,7 +196,7 @@ struct PublishView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
 
                   Button(action: {
-                    removeImage(at: index)
+                    removegzXX1QBn9l9ZB(at: index)
                   }) {
                     Image(systemName: "xmark.circle.fill")
                       .foregroundColor(.white)
@@ -240,12 +208,11 @@ struct PublishView: View {
                 }
               }
 
-              // 添加更多图片按钮 - 先检查权限
-              if selectedImages.count < 9 {
+              if imgsXUiHKeU6kPh5R.count < 9 {
                 Button(action: {
-                  requestPhotoLibraryPermission { granted in
+                  reqper2ozOs519VzW5c { granted in
                     if granted {
-                      showImagePicker = true
+                      showpicker76WU8TQPOyDCk = true
                     }
                   }
                 }) {
@@ -267,49 +234,45 @@ struct PublishView: View {
       }
     }
     .photosPicker(
-      isPresented: $showImagePicker,
-      selection: $selectedPhotoItems,
-      maxSelectionCount: selectedImages.isEmpty ? 9 : 9 - selectedImages.count,
+      isPresented: $showpicker76WU8TQPOyDCk,
+      selection: $seleimgsaSpzTYARwzbTh,
+      maxSelectionCount: imgsXUiHKeU6kPh5R.isEmpty ? 9 : 9 - imgsXUiHKeU6kPh5R.count,
       matching: .images,
       photoLibrary: .shared()
     )
-    .onChange(of: selectedPhotoItems) {
-      loadSelectedImages()
+    .onChange(of: seleimgsaSpzTYARwzbTh) {
+      loadwWv61ErBiG6dU()
     }
   }
 
-  // 加载选中的图片
-  private func loadSelectedImages() {
+  private func loadwWv61ErBiG6dU() {
     Task {
-      var images: [UIImage] = selectedImages
-      for item in selectedPhotoItems {
-        if let data = try? await item.loadTransferable(type: Data.self),
-          let image = UIImage(data: data)
+      var imgs6BpSDNQsFFO9e: [UIImage] = imgsXUiHKeU6kPh5R
+      for item1Qep16obIo7ma in seleimgsaSpzTYARwzbTh {
+        if let dataqHoFFJEadDCnU = try? await item1Qep16obIo7ma.loadTransferable(type: Data.self),
+          let imgfqxYrmohPIWVc = UIImage(data: dataqHoFFJEadDCnU)
         {
-          if !images.contains(where: { $0.pngData() == image.pngData() }) {
-            images.append(image)
+          if !imgs6BpSDNQsFFO9e.contains(where: { $0.pngData() == imgfqxYrmohPIWVc.pngData() }) {
+            imgs6BpSDNQsFFO9e.append(imgfqxYrmohPIWVc)
           }
         }
       }
       await MainActor.run {
-        selectedImages = Array(images.prefix(9))
-        selectedPhotoItems = []
+        imgsXUiHKeU6kPh5R = Array(imgs6BpSDNQsFFO9e.prefix(9))
+        seleimgsaSpzTYARwzbTh = []
       }
     }
   }
 
-  // 移除指定索引的图片
-  private func removeImage(at index: Int) {
-    guard index < selectedImages.count else { return }
-    selectedImages.remove(at: index)
+  private func removegzXX1QBn9l9ZB(at idxPfFzE8o4o7WyW: Int) {
+    guard idxPfFzE8o4o7WyW < imgsXUiHKeU6kPh5R.count else { return }
+    imgsXUiHKeU6kPh5R.remove(at: idxPfFzE8o4o7WyW)
   }
 
-  // MARK: - Content Section (视频)
-  private var contentSection: some View {
+  private var contCH3ahwkIlAIqf: some View {
     VStack(alignment: .leading, spacing: 12) {
       Text("Content:")
         .font(.custom("FredokaOne-Regular", size: 18))
-        // .foregroundColor(Color(red: 30 / 255, green: 5 / 255, blue: 57 / 255))
         .foregroundColor(.white)
 
       ZStack(alignment: .topLeading) {
@@ -317,11 +280,11 @@ struct PublishView: View {
           .fill(Color.white)
           .frame(height: 180)
 
-        CustomTextEditor(text: $contentText)
+        TxtdtOlMxaoJnUeEsL(text: $contomr5Z3F2pk25G)
           .padding(.horizontal, 16)
           .padding(.vertical, 15)
 
-        if contentText.isEmpty {
+        if contomr5Z3F2pk25G.isEmpty {
           Text("Enter")
             .foregroundColor(.gray.opacity(0.5))
             .font(.system(size: 15))
@@ -332,8 +295,7 @@ struct PublishView: View {
     }
   }
 
-  // MARK: - Video Section (视频 - 支持相册选择和相机录制)
-  private var videoSection: some View {
+  private var vdoJa4vXdLKYKrzD: some View {
     VStack(alignment: .leading, spacing: 12) {
       Text("Video works:")
         .font(.custom("FredokaOne-Regular", size: 18))
@@ -345,24 +307,22 @@ struct PublishView: View {
           .frame(height: 200)
           .shadow(color: Color.black.opacity(0.1), radius: 6, x: 0, y: 4)
 
-        if let thumbnail = selectedVideoThumbnail {
-          // 显示选中的视频缩略图
+        if let fpnLlYpMWnniZimg = secoverIeISBAgiI58fB {
           ZStack(alignment: .topTrailing) {
             ZStack {
-              Image(uiImage: thumbnail)
+              Image(uiImage: fpnLlYpMWnniZimg)
                 .resizable()
                 .scaledToFill()
                 .frame(height: 200)
                 .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
 
-              // 播放图标
               Image(systemName: "play.circle.fill")
                 .font(.system(size: 50))
                 .foregroundColor(.white.opacity(0.8))
             }
 
             Button(action: {
-              clearSelectedVideo()
+              cleare89BAbhUsrv0E()
             }) {
               Image(systemName: "xmark.circle.fill")
                 .foregroundColor(.white)
@@ -373,9 +333,8 @@ struct PublishView: View {
             .padding(12)
           }
         } else {
-          // 显示视频选择按钮
           Button(action: {
-            showVideoSourcePicker = true
+            svodpivTJTzCLlD6k7Qg = true
           }) {
             VStack(spacing: 8) {
               Image("2AQ4HXnboJp7so7u")
@@ -388,117 +347,106 @@ struct PublishView: View {
       }
     }
     .confirmationDialog(
-      "Select Video Source", isPresented: $showVideoSourcePicker, titleVisibility: .visible
+      "Select Video Source", isPresented: $svodpivTJTzCLlD6k7Qg, titleVisibility: .visible
     ) {
       Button("Gallery") {
-        requestPhotoLibraryPermission { granted in
+        reqper2ozOs519VzW5c { granted in
           if granted {
-            showVideoPicker = true
+            sh1U5dX7sH03Ppl = true
           }
         }
       }
       Button("Record") {
-        requestCameraAndMicrophonePermission { granted in
+        reqcammicHp3DPi2qHXIi2 { granted in
           if granted {
-            showCameraRecorder = true
+            shoreczy38cyUCQpGYr = true
           }
         }
       }
       Button("Cancel", role: .cancel) {}
     }
-    .sheet(isPresented: $showVideoPicker) {
-      VideoPickerView(
-        selectedVideoURL: $selectedVideoURL, selectedThumbnail: $selectedVideoThumbnail)
+    .sheet(isPresented: $sh1U5dX7sH03Ppl) {
+      VdoPickir3kyO9OU2zK7(
+        sevdoGl9lwyWvjF4dj: $sevdoGl9lwyWvjF4dj, selethumIQeRFSe6PHrqc: $secoverIeISBAgiI58fB)
     }
-    .fullScreenCover(isPresented: $showCameraRecorder) {
-      CameraRecorderView(
-        selectedVideoURL: $selectedVideoURL, selectedThumbnail: $selectedVideoThumbnail)
+    .fullScreenCover(isPresented: $shoreczy38cyUCQpGYr) {
+      CameReckLUE1X6e3zr67(
+        sevdoGl9lwyWvjF4dj: $sevdoGl9lwyWvjF4dj, selethumIQeRFSe6PHrqc: $secoverIeISBAgiI58fB)
     }
-    .alert(permissionAlertTitle, isPresented: $showPermissionAlert) {
+    .alert(pertitdh68UlnTVJt0B, isPresented: $shperl2h5V8BF1DCoI) {
       Button("Cancel", role: .cancel) {}
-      // Button("Settings") {
-      //   openAppSettings()
-      // }
     } message: {
-      Text(permissionAlertMessage)
+      Text(permsgBuwfKeufmnd9p)
     }
   }
 
   // MARK: - Permission Methods
+  private func reqper2ozOs519VzW5c(completion: @escaping (Bool) -> Void) {
+    let gDMQxSMLMKnGQ = PHPhotoLibrary.authorizationStatus(for: .readWrite)
 
-  // 请求相册权限
-  private func requestPhotoLibraryPermission(completion: @escaping (Bool) -> Void) {
-    let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
-
-    switch status {
+    switch gDMQxSMLMKnGQ {
     case .authorized, .limited:
       completion(true)
     case .notDetermined:
-      PHPhotoLibrary.requestAuthorization(for: .readWrite) { newStatus in
+      PHPhotoLibrary.requestAuthorization(for: .readWrite) { LmyZSO28J1Pgc in
         DispatchQueue.main.async {
-          if newStatus == .authorized || newStatus == .limited {
+          if LmyZSO28J1Pgc == .authorized || LmyZSO28J1Pgc == .limited {
             completion(true)
           } else {
-            showPermissionDeniedAlert(for: "Photo Library")
+            denyYlQB6NDfVJpmg(for: "Photo Library")
             completion(false)
           }
         }
       }
     case .denied, .restricted:
-      showPermissionDeniedAlert(for: "Photo Library")
+      denyYlQB6NDfVJpmg(for: "Photo Library")
       completion(false)
     @unknown default:
       completion(false)
     }
   }
 
-  // 请求相机和麦克风权限
-  private func requestCameraAndMicrophonePermission(completion: @escaping (Bool) -> Void) {
-    // 首先检查设备是否有相机
+  private func reqcammicHp3DPi2qHXIi2(completion: @escaping (Bool) -> Void) {
     guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-      showCameraUnavailableAlert()
+      VXgjxN445gMvz()
       completion(false)
       return
     }
 
-    // 检查相机权限
-    let cameraStatus = AVCaptureDevice.authorizationStatus(for: .video)
+    let vTSinWCEpZT4Wcamstu = AVCaptureDevice.authorizationStatus(for: .video)
 
-    switch cameraStatus {
+    switch vTSinWCEpZT4Wcamstu {
     case .authorized:
-      // 相机已授权，继续检查麦克风
-      requestMicrophonePermission(completion: completion)
+      reqmic6C1BJm67LgQHe(completion: completion)
     case .notDetermined:
       AVCaptureDevice.requestAccess(for: .video) { granted in
         DispatchQueue.main.async {
           if granted {
-            self.requestMicrophonePermission(completion: completion)
+            self.reqmic6C1BJm67LgQHe(completion: completion)
           } else {
-            self.showPermissionDeniedAlert(for: "Camera")
+            self.denyYlQB6NDfVJpmg(for: "Camera")
             completion(false)
           }
         }
       }
     case .denied, .restricted:
-      showPermissionDeniedAlert(for: "Camera")
+      denyYlQB6NDfVJpmg(for: "Camera")
       completion(false)
     @unknown default:
       completion(false)
     }
   }
 
-  // 显示相机不可用的提示
-  private func showCameraUnavailableAlert() {
-    permissionAlertTitle = "Camera Unavailable"
-    permissionAlertMessage = "This device does not have a camera or the camera is not available."
-    showPermissionAlert = true
+  private func VXgjxN445gMvz() {
+    pertitdh68UlnTVJt0B = "Camera Unavailable"
+    permsgBuwfKeufmnd9p = "This device does not have a camera or the camera is not available."
+    shperl2h5V8BF1DCoI = true
   }
 
-  // 请求麦克风权限
-  private func requestMicrophonePermission(completion: @escaping (Bool) -> Void) {
-    let micStatus = AVCaptureDevice.authorizationStatus(for: .audio)
+  private func reqmic6C1BJm67LgQHe(completion: @escaping (Bool) -> Void) {
+    let micP4wcKvnrbRgNlStatus = AVCaptureDevice.authorizationStatus(for: .audio)
 
-    switch micStatus {
+    switch micP4wcKvnrbRgNlStatus {
     case .authorized:
       completion(true)
     case .notDetermined:
@@ -507,49 +455,45 @@ struct PublishView: View {
           if granted {
             completion(true)
           } else {
-            self.showPermissionDeniedAlert(for: "Microphone")
+            self.denyYlQB6NDfVJpmg(for: "Microphone")
             completion(false)
           }
         }
       }
     case .denied, .restricted:
-      showPermissionDeniedAlert(for: "Microphone")
+      denyYlQB6NDfVJpmg(for: "Microphone")
       completion(false)
     @unknown default:
       completion(false)
     }
   }
 
-  // 显示权限被拒绝的提示
-  private func showPermissionDeniedAlert(for permission: String) {
-    permissionAlertTitle = "\(permission) Access Required"
-    permissionAlertMessage =
-      "Please enable \(permission) access in Settings to use this feature."
-    showPermissionAlert = true
+  private func denyYlQB6NDfVJpmg(for per4b8Gc1d3ZVSii: String) {
+    pertitdh68UlnTVJt0B = "\(per4b8Gc1d3ZVSii) Access Required"
+    permsgBuwfKeufmnd9p =
+      "Please enable \(per4b8Gc1d3ZVSii) access in Settings to use this feature."
+    shperl2h5V8BF1DCoI = true
   }
 
-  // 打开应用设置
   private func openAppSettings() {
     if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
       UIApplication.shared.open(settingsURL)
     }
   }
 
-  // 清除选中的视频
-  private func clearSelectedVideo() {
-    // 删除临时文件
-    if let url = selectedVideoURL {
-      try? FileManager.default.removeItem(at: url)
+  private func cleare89BAbhUsrv0E() {
+    if let GW12SiEqpMVSourl = sevdoGl9lwyWvjF4dj {
+      try? FileManager.default.removeItem(at: GW12SiEqpMVSourl)
     }
-    selectedVideoURL = nil
-    selectedVideoThumbnail = nil
+    sevdoGl9lwyWvjF4dj = nil
+    secoverIeISBAgiI58fB = nil
   }
 
   // MARK: - Upload Button
-  private var uploadButton: some View {
+  private var btnRc9xVKQlruGPp: some View {
     Button(action: {
       Task {
-        await upload()
+        await updaHjg6NYWzDJRI()
       }
     }) {
       ZStack {
@@ -561,7 +505,7 @@ struct PublishView: View {
               .stroke(Color.white, lineWidth: 2)
           )
 
-        if isUploading {
+        if isupdingihcxhWuaWfvpX {
           ProgressView()
             .progressViewStyle(CircularProgressViewStyle(tint: .white))
         } else {
@@ -571,182 +515,165 @@ struct PublishView: View {
         }
       }
     }
-    .disabled(!canUpload || isUploading)
+    .disabled(!canUpload || isupdingihcxhWuaWfvpX)
   }
 
   private var canUpload: Bool {
-    if publishType == .imagePost {
-      return !ideaText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-        && !selectedImages.isEmpty
+    if pubTypeWZOlcaTCZFIeL == .imagePost {
+      return !idea12u7sEM4VSkxy.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        && !imgsXUiHKeU6kPh5R.isEmpty
     } else {
-      return !contentText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-        && selectedVideoURL != nil
+      return !contomr5Z3F2pk25G.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        && sevdoGl9lwyWvjF4dj != nil
     }
   }
 
-  // MARK: - Upload Action
-  private func upload() async {
-    guard !isUploading else { return }
-    isUploading = true
+  private func updaHjg6NYWzDJRI() async {
+    guard !isupdingihcxhWuaWfvpX else { return }
+    isupdingihcxhWuaWfvpX = true
 
-    // 模拟上传延迟
     try? await Task.sleep(nanoseconds: 500_000_000)
 
-    guard let userId = authManager.currentUser?.id else {
-      isUploading = false
+    guard let uidt8QKZjZkVPBFi = auiGgZwlS2hzgS9.currentUser?.id else {
+      isupdingihcxhWuaWfvpX = false
       return
     }
 
-    if publishType == .imagePost {
-      // 发布图片帖子 - 支持多图
-      guard !selectedImages.isEmpty else {
-        isUploading = false
+    if pubTypeWZOlcaTCZFIeL == .imagePost {
+      guard !imgsXUiHKeU6kPh5R.isEmpty else {
+        isupdingihcxhWuaWfvpX = false
         return
       }
 
-      // 保存选中的图片到本地并获取文件名
-      let savedImageNames = await saveImagesToLocal(selectedImages)
+      let svdimgsztO1SlRxZ1Tpd = await localdacAaMu0rjqhusave(imgsXUiHKeU6kPh5R)
 
-      guard !savedImageNames.isEmpty else {
-        isUploading = false
+      guard !svdimgsztO1SlRxZ1Tpd.isEmpty else {
+        isupdingihcxhWuaWfvpX = false
         return
       }
 
-      let post = Post(
-        imageNames: savedImageNames,
-        authorId: userId,
-        content: ideaText.trimmingCharacters(in: .whitespacesAndNewlines),
+      let poqxzUqQ8fdptEV = Post(
+        imageNames: svdimgsztO1SlRxZ1Tpd,
+        authorId: uidt8QKZjZkVPBFi,
+        content: idea12u7sEM4VSkxy.trimmingCharacters(in: .whitespacesAndNewlines),
         timestamp: Date()
       )
 
-      viewModel.publishPost(post)
+      pubVmUgv9N9Lifjvva.pub3mTgQb2LHyvZ0post(poqxzUqQ8fdptEV)
 
-      // 发送通知，通知发现页刷新
       NotificationCenter.default.post(name: NSNotification.Name("PostPublished"), object: nil)
     } else {
-      // 发布视频
-      guard let videoURL = selectedVideoURL else {
-        isUploading = false
+      guard let vdurlXssUD21QGjYmX = sevdoGl9lwyWvjF4dj else {
+        isupdingihcxhWuaWfvpX = false
         return
       }
 
-      // 保存视频到本地并获取文件名
-      let savedVideoName = await saveVideoToLocal(videoURL)
-      let thumbnailName = await saveThumbnailToLocal(selectedVideoThumbnail)
+      let sdvdoCziNy6PARmUge = await tolocalXFRc0A0kqR0cp(vdurlXssUD21QGjYmX)
+      let yhucovrJ10tEwSu5ND0 = await savethumzU1ckn5rujAHa(secoverIeISBAgiI58fB)
 
-      let video = VideoItem(
-        imageName: thumbnailName ?? availableImages.randomElement() ?? "1akQNNqBpWFE3YsJ0J",
-        videoName: savedVideoName ?? videoURL.lastPathComponent,
-        title: contentText.trimmingCharacters(in: .whitespacesAndNewlines),
-        authorId: userId,
+      let vdoy3TtxmwyRELjo = VideoItem(
+        imageName: yhucovrJ10tEwSu5ND0 ?? "1akQNNqBpWFE3YsJ0J",
+        videoName: sdvdoCziNy6PARmUge ?? vdurlXssUD21QGjYmX.lastPathComponent,
+        title: contomr5Z3F2pk25G.trimmingCharacters(in: .whitespacesAndNewlines),
+        authorId: uidt8QKZjZkVPBFi,
         timestamp: Date(),
         likeCount: 0,
         isLiked: false
       )
 
-      viewModel.publishVideo(video)
+      pubVmUgv9N9Lifjvva.pubY1lwXpSC1Wwqjvdo(vdoy3TtxmwyRELjo)
 
-      // 发送通知，通知首页刷新
       NotificationCenter.default.post(name: NSNotification.Name("VideoPublished"), object: nil)
     }
 
-    isUploading = false
+    isupdingihcxhWuaWfvpX = false
     dismiss()
   }
 
-  // MARK: - Helper Methods
-
-  // 保存图片到本地
-  private func saveImagesToLocal(_ images: [UIImage]) async -> [String] {
-    var savedNames: [String] = []
-    let fileManager = FileManager.default
+  private func localdacAaMu0rjqhusave(_ imgs51hQYnsQk7GvQ: [UIImage]) async -> [String] {
+    var yHrPD5yq6JfU8: [String] = []
+    let B0jn2zDD0xv20 = FileManager.default
 
     guard
-      let documentsPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+      let EOSUh12HkfhZc = B0jn2zDD0xv20.urls(for: .documentDirectory, in: .userDomainMask).first
     else {
-      return savedNames
+      return yHrPD5yq6JfU8
     }
 
-    let imagesFolder = documentsPath.appendingPathComponent("UserImages", isDirectory: true)
+    let dtgf88jkHAWz2 = EOSUh12HkfhZc.appendingPathComponent("UserImages", isDirectory: true)
 
-    // 创建文件夹
-    try? fileManager.createDirectory(at: imagesFolder, withIntermediateDirectories: true)
+    try? B0jn2zDD0xv20.createDirectory(at: dtgf88jkHAWz2, withIntermediateDirectories: true)
 
-    for (index, image) in images.enumerated() {
-      let fileName = "img_\(UUID().uuidString)_\(index).jpg"
-      let fileURL = imagesFolder.appendingPathComponent(fileName)
+    for (index, imga5eS4KBPFIlsP) in imgs51hQYnsQk7GvQ.enumerated() {
+      let SmVoVtrGai9QXname = "img_\(UUID().uuidString)_\(index).jpg"
+      let PhZHvKxArD1Vfurl = dtgf88jkHAWz2.appendingPathComponent(SmVoVtrGai9QXname)
 
-      if let imageData = image.jpegData(compressionQuality: 0.8) {
+      if let kaOfvdzmnL0qzdata = imga5eS4KBPFIlsP.jpegData(compressionQuality: 0.8) {
         do {
-          try imageData.write(to: fileURL)
-          savedNames.append(fileName)
+          try kaOfvdzmnL0qzdata.write(to: PhZHvKxArD1Vfurl)
+          yHrPD5yq6JfU8.append(SmVoVtrGai9QXname)
         } catch {
           print("Failed to save image: \(error)")
         }
       }
     }
 
-    return savedNames
+    return yHrPD5yq6JfU8
   }
 
-  // 保存视频到本地
-  private func saveVideoToLocal(_ videoURL: URL) async -> String? {
-    let fileManager = FileManager.default
+  private func tolocalXFRc0A0kqR0cp(_ vdurlXssUD21QGjYmX: URL) async -> String? {
+    let B0jn2zDD0xv20 = FileManager.default
 
     guard
-      let documentsPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+      let EOSUh12HkfhZc = B0jn2zDD0xv20.urls(for: .documentDirectory, in: .userDomainMask).first
     else {
       return nil
     }
 
-    let videosFolder = documentsPath.appendingPathComponent("UserVideos", isDirectory: true)
+    let K2gJjTdEjAjlQ = EOSUh12HkfhZc.appendingPathComponent("UserVideos", isDirectory: true)
 
-    // 创建文件夹
-    try? fileManager.createDirectory(at: videosFolder, withIntermediateDirectories: true)
+    try? B0jn2zDD0xv20.createDirectory(at: K2gJjTdEjAjlQ, withIntermediateDirectories: true)
 
-    let fileName = "video_\(UUID().uuidString).mp4"
-    let destinationURL = videosFolder.appendingPathComponent(fileName)
+    let PWRaAV8K3bR5g = "video_\(UUID().uuidString).mp4"
+    let kp758Dh1k6t45 = K2gJjTdEjAjlQ.appendingPathComponent(PWRaAV8K3bR5g)
 
     do {
-      // 如果目标文件已存在，先删除
-      if fileManager.fileExists(atPath: destinationURL.path) {
-        try fileManager.removeItem(at: destinationURL)
+      if B0jn2zDD0xv20.fileExists(atPath: kp758Dh1k6t45.path) {
+        try B0jn2zDD0xv20.removeItem(at: kp758Dh1k6t45)
       }
-      try fileManager.copyItem(at: videoURL, to: destinationURL)
-      return fileName
+      try B0jn2zDD0xv20.copyItem(at: vdurlXssUD21QGjYmX, to: kp758Dh1k6t45)
+      return PWRaAV8K3bR5g
     } catch {
       print("Failed to save video: \(error)")
       return nil
     }
   }
 
-  // 保存缩略图到本地
-  private func saveThumbnailToLocal(_ thumbnail: UIImage?) async -> String? {
-    guard let thumbnail = thumbnail else { return nil }
+  private func savethumzU1ckn5rujAHa(_ fpnLlYpMWnniZimg: UIImage?) async -> String? {
+    guard let fpnLlYpMWnniZimg = fpnLlYpMWnniZimg else { return nil }
 
-    let fileManager = FileManager.default
+    let B0jn2zDD0xv20 = FileManager.default
 
     guard
-      let documentsPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+      let IpDIobvsq4gHm = B0jn2zDD0xv20.urls(for: .documentDirectory, in: .userDomainMask).first
     else {
       return nil
     }
 
-    let thumbnailsFolder = documentsPath.appendingPathComponent(
+    let fxOMR9l1lmoEp = IpDIobvsq4gHm.appendingPathComponent(
       "VideoThumbnails", isDirectory: true)
 
-    // 创建文件夹
-    try? fileManager.createDirectory(at: thumbnailsFolder, withIntermediateDirectories: true)
+    try? B0jn2zDD0xv20.createDirectory(at: fxOMR9l1lmoEp, withIntermediateDirectories: true)
 
-    let fileName = "thumb_\(UUID().uuidString).jpg"
-    let fileURL = thumbnailsFolder.appendingPathComponent(fileName)
+    let PWRaAV8K3bR5g = "thumb_\(UUID().uuidString).jpg"
+    let PhZHvKxArD1Vfurl = fxOMR9l1lmoEp.appendingPathComponent(PWRaAV8K3bR5g)
 
-    if let imageData = thumbnail.jpegData(compressionQuality: 0.8) {
+    if let imageData = fpnLlYpMWnniZimg.jpegData(compressionQuality: 0.8) {
       do {
-        try imageData.write(to: fileURL)
-        return fileName
+        try imageData.write(to: PhZHvKxArD1Vfurl)
+        return PWRaAV8K3bR5g
       } catch {
-        print("Failed to save thumbnail: \(error)")
+        print("Failed to save fpnLlYpMWnniZimg: \(error)")
       }
     }
 
@@ -756,33 +683,32 @@ struct PublishView: View {
 
 // MARK: - Publish ViewModel
 @MainActor
-class PublishViewModel: ObservableObject {
-  private let videoService: VideoDataServiceProtocol = VideoDataService.shared
-  private let postService: PostDataServiceProtocol = PostDataService.shared
+class PubVmod3vAA52GUNFoOZ: ObservableObject {
+  private let vdserOJXCL1WFIbuOc: VideoDataServiceProtocol = VideoDataService.shared
+  private let poser5DXejfkHzyddJ: PostDataServiceProtocol = PostDataService.shared
 
-  func publishVideo(_ video: VideoItem) {
-    videoService.addVideo(video)
+  func pubY1lwXpSC1Wwqjvdo(_ vdvZnBjc7NSl5ag: VideoItem) {
+    vdserOJXCL1WFIbuOc.addVideo(vdvZnBjc7NSl5ag)
   }
 
-  func publishPost(_ post: Post) {
-    postService.addPost(post)
+  func pub3mTgQb2LHyvZ0post(_ povZnBjc7NSl5ag: Post) {
+    poser5DXejfkHzyddJ.addPost(povZnBjc7NSl5ag)
   }
 }
 
-// MARK: - Video Picker View (从相册选择视频)
-struct VideoPickerView: UIViewControllerRepresentable {
-  @Binding var selectedVideoURL: URL?
-  @Binding var selectedThumbnail: UIImage?
+struct VdoPickir3kyO9OU2zK7: UIViewControllerRepresentable {
+  @Binding var sevdoGl9lwyWvjF4dj: URL?
+  @Binding var selethumIQeRFSe6PHrqc: UIImage?
   @Environment(\.dismiss) var dismiss
 
   func makeUIViewController(context: Context) -> PHPickerViewController {
-    var config = PHPickerConfiguration()
-    config.filter = .videos
-    config.selectionLimit = 1
+    var CJrlsXBHZUTZp = PHPickerConfiguration()
+    CJrlsXBHZUTZp.filter = .videos
+    CJrlsXBHZUTZp.selectionLimit = 1
 
-    let picker = PHPickerViewController(configuration: config)
-    picker.delegate = context.coordinator
-    return picker
+    let KuFWINl1YIOIU = PHPickerViewController(configuration: CJrlsXBHZUTZp)
+    KuFWINl1YIOIU.delegate = context.coordinator
+    return KuFWINl1YIOIU
   }
 
   func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {}
@@ -792,38 +718,37 @@ struct VideoPickerView: UIViewControllerRepresentable {
   }
 
   class Coordinator: NSObject, PHPickerViewControllerDelegate {
-    let parent: VideoPickerView
+    let parent: VdoPickir3kyO9OU2zK7
 
-    init(_ parent: VideoPickerView) {
+    init(_ parent: VdoPickir3kyO9OU2zK7) {
       self.parent = parent
     }
 
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
       parent.dismiss()
 
-      guard let result = results.first else { return }
+      guard let resikJjNiSco6qam = results.first else { return }
 
-      // 检查是否包含视频
-      if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
-        result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) {
-          url, error in
-          guard let url = url, error == nil else {
+      if resikJjNiSco6qam.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
+        resikJjNiSco6qam.itemProvider.loadFileRepresentation(
+          forTypeIdentifier: UTType.movie.identifier
+        ) {
+          urlnfrW05lC0g8r1, error in
+          guard let urlnfrW05lC0g8r1 = urlnfrW05lC0g8r1, error == nil else {
             print("Error loading video: \(error?.localizedDescription ?? "unknown error")")
             return
           }
 
-          // 复制视频到临时目录
-          let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(
+          let tempz7YK06SiU67Eb = FileManager.default.temporaryDirectory.appendingPathComponent(
             UUID().uuidString + ".mp4")
           do {
-            try FileManager.default.copyItem(at: url, to: tempURL)
+            try FileManager.default.copyItem(at: urlnfrW05lC0g8r1, to: tempz7YK06SiU67Eb)
 
-            // 生成缩略图
-            let thumbnail = self.generateThumbnail(for: tempURL)
+            let fpnLlYpMWnniZimg = self.gencover1loVoUk8z6Qeh(for: tempz7YK06SiU67Eb)
 
             DispatchQueue.main.async {
-              self.parent.selectedVideoURL = tempURL
-              self.parent.selectedThumbnail = thumbnail
+              self.parent.sevdoGl9lwyWvjF4dj = tempz7YK06SiU67Eb
+              self.parent.selethumIQeRFSe6PHrqc = fpnLlYpMWnniZimg
             }
           } catch {
             print("Error copying video: \(error)")
@@ -832,56 +757,52 @@ struct VideoPickerView: UIViewControllerRepresentable {
       }
     }
 
-    // 生成视频缩略图
-    func generateThumbnail(for url: URL) -> UIImage? {
-      let asset = AVURLAsset(url: url)
-      let imageGenerator = AVAssetImageGenerator(asset: asset)
+    func gencover1loVoUk8z6Qeh(for urlt8FewAnDGYCKD: URL) -> UIImage? {
+      let assetruU7IGrp7lApb = AVURLAsset(url: urlt8FewAnDGYCKD)
+      let imageGenerator = AVAssetImageGenerator(asset: assetruU7IGrp7lApb)
       imageGenerator.appliesPreferredTrackTransform = true
 
-      // 使用同步方式获取缩略图（在后台线程调用）
       let semaphore = DispatchSemaphore(value: 0)
-      var resultImage: UIImage?
+      var resimgocdnkKfWztsB0: UIImage?
 
       imageGenerator.generateCGImageAsynchronously(
         for: CMTime(seconds: 0, preferredTimescale: 1)
       ) { cgImage, _, error in
         if let cgImage = cgImage {
-          resultImage = UIImage(cgImage: cgImage)
+          resimgocdnkKfWztsB0 = UIImage(cgImage: cgImage)
         } else if let error = error {
-          print("Error generating thumbnail: \(error)")
+          print("Error generating fpnLlYpMWnniZimg: \(error)")
         }
         semaphore.signal()
       }
 
       semaphore.wait()
-      return resultImage
+      return resimgocdnkKfWztsB0
     }
   }
 }
 
-// MARK: - Camera Recorder View (相机录制视频)
-struct CameraRecorderView: View {
-  @Binding var selectedVideoURL: URL?
-  @Binding var selectedThumbnail: UIImage?
+struct CameReckLUE1X6e3zr67: View {
+  @Binding var sevdoGl9lwyWvjF4dj: URL?
+  @Binding var selethumIQeRFSe6PHrqc: UIImage?
   @Environment(\.dismiss) var dismiss
 
-  @State private var showError: Bool = false
-  @State private var errorMessage: String = ""
+  @State private var serrK3D4dQvfOkUws: Bool = false
+  @State private var hV8a15rojr0C5: String = ""
 
   var body: some View {
     Group {
       if UIImagePickerController.isSourceTypeAvailable(.camera) {
-        CameraRecorderViewController(
-          selectedVideoURL: $selectedVideoURL,
-          selectedThumbnail: $selectedThumbnail,
-          onError: { error in
-            errorMessage = error
-            showError = true
+        CamRecCtrQ8WEG86doVOWx(
+          sevdoGl9lwyWvjF4dj: $sevdoGl9lwyWvjF4dj,
+          selthumrhT9RWNICXkN0: $selethumIQeRFSe6PHrqc,
+          onError: { errLTBL22RZnsW1U in
+            hV8a15rojr0C5 = errLTBL22RZnsW1U
+            serrK3D4dQvfOkUws = true
           }
         )
         .ignoresSafeArea()
       } else {
-        // 相机不可用时显示提示
         VStack(spacing: 20) {
           Image(systemName: "camera.fill")
             .font(.system(size: 60))
@@ -906,25 +827,24 @@ struct CameraRecorderView: View {
         }
       }
     }
-    .alert("Error", isPresented: $showError) {
+    .alert("Error", isPresented: $serrK3D4dQvfOkUws) {
       Button("OK") {
         dismiss()
       }
     } message: {
-      Text(errorMessage)
+      Text(hV8a15rojr0C5)
     }
   }
 }
 
 // MARK: - Camera Recorder ViewController Representable
-struct CameraRecorderViewController: UIViewControllerRepresentable {
-  @Binding var selectedVideoURL: URL?
-  @Binding var selectedThumbnail: UIImage?
+struct CamRecCtrQ8WEG86doVOWx: UIViewControllerRepresentable {
+  @Binding var sevdoGl9lwyWvjF4dj: URL?
+  @Binding var selthumrhT9RWNICXkN0: UIImage?
   var onError: (String) -> Void
   @Environment(\.dismiss) var dismiss
 
   func makeUIViewController(context: Context) -> UIViewController {
-    // 再次检查相机是否可用
     guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
       let errorVC = UIViewController()
       DispatchQueue.main.async {
@@ -934,13 +854,12 @@ struct CameraRecorderViewController: UIViewControllerRepresentable {
     }
 
     do {
-      let picker = UIImagePickerController()
-      picker.sourceType = .camera
+      let ORMegHdAvz30Y = UIImagePickerController()
+      ORMegHdAvz30Y.sourceType = .camera
 
-      // 检查是否支持视频录制
       guard
-        let availableMediaTypes = UIImagePickerController.availableMediaTypes(for: .camera),
-        availableMediaTypes.contains(UTType.movie.identifier)
+        let EiS47YIGsI6OH = UIImagePickerController.availableMediaTypes(for: .camera),
+        EiS47YIGsI6OH.contains(UTType.movie.identifier)
       else {
         DispatchQueue.main.async {
           onError("Video recording is not supported on this device.")
@@ -948,12 +867,12 @@ struct CameraRecorderViewController: UIViewControllerRepresentable {
         return UIViewController()
       }
 
-      picker.mediaTypes = [UTType.movie.identifier]
-      picker.videoMaximumDuration = 60  // 最大录制时长60秒
-      picker.videoQuality = .typeHigh
-      picker.cameraCaptureMode = .video
-      picker.delegate = context.coordinator
-      return picker
+      ORMegHdAvz30Y.mediaTypes = [UTType.movie.identifier]
+      ORMegHdAvz30Y.videoMaximumDuration = 60
+      ORMegHdAvz30Y.videoQuality = .typeHigh
+      ORMegHdAvz30Y.cameraCaptureMode = .video
+      ORMegHdAvz30Y.delegate = context.coordinator
+      return ORMegHdAvz30Y
     }
   }
 
@@ -964,9 +883,9 @@ struct CameraRecorderViewController: UIViewControllerRepresentable {
   }
 
   class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    let parent: CameraRecorderViewController
+    let parent: CamRecCtrQ8WEG86doVOWx
 
-    init(_ parent: CameraRecorderViewController) {
+    init(_ parent: CamRecCtrQ8WEG86doVOWx) {
       self.parent = parent
     }
 
@@ -976,22 +895,19 @@ struct CameraRecorderViewController: UIViewControllerRepresentable {
     ) {
       parent.dismiss()
 
-      if let videoURL = info[.mediaURL] as? URL {
-        // 复制视频到临时目录
-        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(
+      if let vdurlXssUD21QGjYmX = info[.mediaURL] as? URL {
+        let CVxW5DgmaDSaG = FileManager.default.temporaryDirectory.appendingPathComponent(
           UUID().uuidString + ".mp4")
         do {
-          try FileManager.default.copyItem(at: videoURL, to: tempURL)
+          try FileManager.default.copyItem(at: vdurlXssUD21QGjYmX, to: CVxW5DgmaDSaG)
 
-          // 生成缩略图
-          let thumbnail = generateThumbnail(for: tempURL)
+          let fpnLlYpMWnniZimg = gencover1loVoUk8z6Qeh(for: CVxW5DgmaDSaG)
 
           DispatchQueue.main.async {
-            self.parent.selectedVideoURL = tempURL
-            self.parent.selectedThumbnail = thumbnail
+            self.parent.sevdoGl9lwyWvjF4dj = CVxW5DgmaDSaG
+            self.parent.selthumrhT9RWNICXkN0 = fpnLlYpMWnniZimg
           }
         } catch {
-          print("Error copying video: \(error)")
           DispatchQueue.main.async {
             self.parent.onError("Failed to save the recorded video.")
           }
@@ -1003,52 +919,49 @@ struct CameraRecorderViewController: UIViewControllerRepresentable {
       parent.dismiss()
     }
 
-    // 生成视频缩略图
-    func generateThumbnail(for url: URL) -> UIImage? {
-      let asset = AVURLAsset(url: url)
-      let imageGenerator = AVAssetImageGenerator(asset: asset)
+    func gencover1loVoUk8z6Qeh(for urlE0jJA1Yu0rnsp: URL) -> UIImage? {
+      let RxVHNhK0EooWCasset = AVURLAsset(url: urlE0jJA1Yu0rnsp)
+      let imageGenerator = AVAssetImageGenerator(asset: RxVHNhK0EooWCasset)
       imageGenerator.appliesPreferredTrackTransform = true
 
-      // 使用同步方式获取缩略图（在后台线程调用）
       let semaphore = DispatchSemaphore(value: 0)
-      var resultImage: UIImage?
+      var resimgocdnkKfWztsB0: UIImage?
 
       imageGenerator.generateCGImageAsynchronously(
         for: CMTime(seconds: 0, preferredTimescale: 1)
       ) { cgImage, _, error in
         if let cgImage = cgImage {
-          resultImage = UIImage(cgImage: cgImage)
+          resimgocdnkKfWztsB0 = UIImage(cgImage: cgImage)
         } else if let error = error {
-          print("Error generating thumbnail: \(error)")
+          print("Error generating fpnLlYpMWnniZimg: \(error)")
         }
         semaphore.signal()
       }
 
       semaphore.wait()
-      return resultImage
+      return resimgocdnkKfWztsB0
     }
   }
 }
 
-// MARK: - Custom Text Editor (支持 Done 按钮关闭键盘)
-struct CustomTextEditor: UIViewRepresentable {
+struct TxtdtOlMxaoJnUeEsL: UIViewRepresentable {
   @Binding var text: String
 
   func makeUIView(context: Context) -> UITextView {
-    let textView = UITextView()
-    textView.delegate = context.coordinator
-    textView.font = .systemFont(ofSize: 15)
-    textView.textColor = .black
-    textView.backgroundColor = .clear
-    textView.returnKeyType = .done
-    textView.textContainerInset = .zero
-    textView.textContainer.lineFragmentPadding = 0
-    return textView
+    let QzjZ7Rf5PFm2P = UITextView()
+    QzjZ7Rf5PFm2P.delegate = context.coordinator
+    QzjZ7Rf5PFm2P.font = .systemFont(ofSize: 15)
+    QzjZ7Rf5PFm2P.textColor = .black
+    QzjZ7Rf5PFm2P.backgroundColor = .clear
+    QzjZ7Rf5PFm2P.returnKeyType = .done
+    QzjZ7Rf5PFm2P.textContainerInset = .zero
+    QzjZ7Rf5PFm2P.textContainer.lineFragmentPadding = 0
+    return QzjZ7Rf5PFm2P
   }
 
-  func updateUIView(_ uiView: UITextView, context: Context) {
-    if uiView.text != text {
-      uiView.text = text
+  func updateUIView(_ uiv1Vigq7Lmv9zvX: UITextView, context: Context) {
+    if uiv1Vigq7Lmv9zvX.text != text {
+      uiv1Vigq7Lmv9zvX.text = text
     }
   }
 
@@ -1057,22 +970,21 @@ struct CustomTextEditor: UIViewRepresentable {
   }
 
   class Coordinator: NSObject, UITextViewDelegate {
-    let parent: CustomTextEditor
+    let parent: TxtdtOlMxaoJnUeEsL
 
-    init(_ parent: CustomTextEditor) {
+    init(_ parent: TxtdtOlMxaoJnUeEsL) {
       self.parent = parent
     }
 
-    func textViewDidChange(_ textView: UITextView) {
-      parent.text = textView.text
+    func textViewDidChange(_ ttvvK0Q7rkBj9XNB: UITextView) {
+      parent.text = ttvvK0Q7rkBj9XNB.text
     }
 
     func textView(
-      _ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String
+      _ cfIqW17yIXljA: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String
     ) -> Bool {
-      // 当用户点击 Done 按钮时（输入换行符），关闭键盘
-      if text == "\n" && textView.returnKeyType == .done {
-        textView.resignFirstResponder()
+      if text == "\n" && cfIqW17yIXljA.returnKeyType == .done {
+        cfIqW17yIXljA.resignFirstResponder()
         return false
       }
       return true
@@ -1081,5 +993,5 @@ struct CustomTextEditor: UIViewRepresentable {
 }
 
 // #Preview {
-//     PublishView(publishType: .video)
+//     PublishView(pubTypeWZOlcaTCZFIeL: .video)
 // }

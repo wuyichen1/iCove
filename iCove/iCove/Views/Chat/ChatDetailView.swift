@@ -16,25 +16,24 @@ struct ChatDetailView: View {
   let conversationId: String
   let otherUserId: String
   @EnvironmentObject var router: Router
-  @EnvironmentObject var authManager: AuthenticationManager
-  @StateObject private var viewModel: ChatDetailViewModel
-  @State private var showingReportBlockSheet = false
-  @State private var showingBlockDialog = false
-  @State private var blockUserId: String? = nil
+  @EnvironmentObject var aumanE2ZBeaqioilk: AuthenticationManager
+  @StateObject private var ctdtVmMj14NObPYFLCj: ChatDetailViewModel
+  @State private var repblosheetdd0PsyA3rHbiN = false
+  @State private var blodiagJAtmqvn88cjR = false
+  @State private var blouidpZnL4q6TFHXHV: String? = nil
 
   #if DEBUG
     @ObserveInjection var redraw
   #endif
 
-  // 筛选后的消息列表（只显示当前会话的消息）
   private var filteredMessages: [Message] {
-    viewModel.messages.filter { $0.conversationId == conversationId }
+    ctdtVmMj14NObPYFLCj.messages.filter { $0.conversationId == conversationId }
   }
 
   init(conversationId: String, otherUserId: String) {
     self.conversationId = conversationId
     self.otherUserId = otherUserId
-    _viewModel = StateObject(
+    _ctdtVmMj14NObPYFLCj = StateObject(
       wrappedValue: ChatDetailViewModel(
         conversationId: conversationId,
         otherUserId: otherUserId
@@ -44,58 +43,50 @@ struct ChatDetailView: View {
 
   var body: some View {
     ZStack {
-      // 深紫色背景
       Color(red: 30 / 255, green: 5 / 255, blue: 57 / 255)
         .ignoresSafeArea()
 
       VStack(spacing: 0) {
-        // 顶部导航栏
-        topNavigationBar
+        LWPUxmxa9rCNe
 
-        // 消息列表
-        messagesList
+        msglist2egFIJQ5vPjBR
 
-        // 底部输入栏
-        inputBar
+        potbary7dSUqnasb0bv
       }
 
-      // 录音错误提示 Toast
-      recordingErrorToast
+      recderrh6YNGOHlUh48d
     }
     .navigationBarHidden(true)
     .toolbar(.hidden, for: .tabBar)
-    .sheet(isPresented: $showingReportBlockSheet) {
+    .sheet(isPresented: $repblosheetdd0PsyA3rHbiN) {
       ReportBlockBottomSheet(
         userId: otherUserId,
-        isPresented: $showingReportBlockSheet,
+        isPresented: $repblosheetdd0PsyA3rHbiN,
         onBlock: {
-          blockUserId = otherUserId
-          showingBlockDialog = true
+          blouidpZnL4q6TFHXHV = otherUserId
+          blodiagJAtmqvn88cjR = true
         }
       )
-      .environmentObject(authManager)
+      .environmentObject(aumanE2ZBeaqioilk)
       .environmentObject(router)
       .presentationDetents([.height(240)])
       .presentationBackground(.clear)
       .presentationDragIndicator(.hidden)
     }
-    .blockUserDialog(isPresented: $showingBlockDialog, userId: blockUserId)
+    .blockUserDialog(isPresented: $blodiagJAtmqvn88cjR, uidK1uO6OuOGNky0: blouidpZnL4q6TFHXHV)
     #if DEBUG
       .enableInjection()
     #endif
-    .animation(.easeInOut(duration: 0.2), value: viewModel.recordingErrorMessage != nil)
+    .animation(.easeInOut(duration: 0.2), value: ctdtVmMj14NObPYFLCj.recordingErrorMessage != nil)
   }
 
   // MARK: - Top Navigation Bar
-  private var topNavigationBar: some View {
+  private var LWPUxmxa9rCNe: some View {
     ZStack(alignment: .top) {
-      // background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgb(216, 72, 227) 100%);
-      // 渐变背景：linear-gradient(180deg, rgb(255,255,255) 0%, rgb(216,72,227) 100%)
       LinearGradient(
         gradient: Gradient(colors: [
           Color(red: 216 / 255, green: 72 / 255, blue: 227 / 255),
           Color(red: 216 / 255, green: 127 / 255, blue: 227 / 255),
-          // Color.white,
         ]),
         startPoint: .top,
         endPoint: .bottom
@@ -108,10 +99,9 @@ struct ChatDetailView: View {
       .ignoresSafeArea(edges: .top)
 
       HStack(spacing: 12) {
-        // 对方用户头像和名称
-        if let otherUser = viewModel.otherUser {
-          if let avatarName = otherUser.avatar {
-            DynamicImage(imageName: avatarName)
+        if let ohuserlCI4zzXt8KJEb = ctdtVmMj14NObPYFLCj.otherUser {
+          if let avaNB07ZePIlnh0b = ohuserlCI4zzXt8KJEb.avatar {
+            DynamicImage(imageName: avaNB07ZePIlnh0b)
               .frame(width: 40, height: 40)
               .clipShape(Circle())
           } else {
@@ -119,13 +109,13 @@ struct ChatDetailView: View {
               .fill(Color.gray.opacity(0.3))
               .frame(width: 40, height: 40)
               .overlay {
-                Text(String(otherUser.username.prefix(1)))
+                Text(String(ohuserlCI4zzXt8KJEb.username.prefix(1)))
                   .font(.headline)
                   .foregroundColor(.gray)
               }
           }
 
-          Text(otherUser.username)
+          Text(ohuserlCI4zzXt8KJEb.username)
             .font(.custom("FredokaOne-Regular", size: 18))
             .foregroundColor(.black)
         }
@@ -137,7 +127,7 @@ struct ChatDetailView: View {
           router.pop()
         },
         onMore: {
-          showingReportBlockSheet = true
+          repblosheetdd0PsyA3rHbiN = true
         }
       )
     }
@@ -145,18 +135,18 @@ struct ChatDetailView: View {
   }
 
   // MARK: - Messages List
-  private var messagesList: some View {
+  private var msglist2egFIJQ5vPjBR: some View {
     ScrollViewReader { proxy in
       ScrollView {
         LazyVStack(spacing: 16) {
-          ForEach(filteredMessages) { message in
-            MessageBubble(
-              message: message,
-              isFromCurrentUser: message.senderId == authManager.currentUser?.id,
-              otherUser: viewModel.otherUser,
-              currentUser: authManager.currentUser
+          ForEach(filteredMessages) { msgHKAo8eMn5mdVJ in
+            MsgBubF87zGlqlutlLx(
+              msgrf8eAfHnXCGIL: msgHKAo8eMn5mdVJ,
+              isfrocurhelhF33uQZmia: msgHKAo8eMn5mdVJ.senderId == aumanE2ZBeaqioilk.currentUser?.id,
+              othF4yYLpbl5slTA: ctdtVmMj14NObPYFLCj.otherUser,
+              curaxrNHJOZfOKzQ: aumanE2ZBeaqioilk.currentUser
             )
-            .id(message.id)
+            .id(msgHKAo8eMn5mdVJ.id)
           }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -165,16 +155,14 @@ struct ChatDetailView: View {
       }
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .onAppear {
-        // 滚动到底部
-        if let lastMessage = filteredMessages.last {
-          proxy.scrollTo(lastMessage.id, anchor: .bottom)
+        if let lastmsgk1maMxjDsQllK = filteredMessages.last {
+          proxy.scrollTo(lastmsgk1maMxjDsQllK.id, anchor: .bottom)
         }
       }
-      .onChange(of: viewModel.messages.count) { _, _ in
-        // 新消息时滚动到底部
-        if let lastMessage = filteredMessages.last {
+      .onChange(of: ctdtVmMj14NObPYFLCj.messages.count) { _, _ in
+        if let lastmsgk1maMxjDsQllK = filteredMessages.last {
           withAnimation {
-            proxy.scrollTo(lastMessage.id, anchor: .bottom)
+            proxy.scrollTo(lastmsgk1maMxjDsQllK.id, anchor: .bottom)
           }
         }
       }
@@ -183,56 +171,51 @@ struct ChatDetailView: View {
   }
 
   // MARK: - Input Bar
-  private var inputBar: some View {
+  private var potbary7dSUqnasb0bv: some View {
     HStack(spacing: 0) {
-      // 附件按钮（绿色圆形按钮）
       Button(action: {
-        viewModel.toggleAttachmentMenu()
+        ctdtVmMj14NObPYFLCj.toggleAttachmentMenu()
       }) {
         Image(
-          systemName: viewModel.showAttachmentMenu || viewModel.showRecordingButton
+          systemName: ctdtVmMj14NObPYFLCj.showAttachmentMenu
+            || ctdtVmMj14NObPYFLCj.showRecordingButton
             ? "xmark" : "plus"
         )
         .font(.system(size: 20, weight: .bold))
         .foregroundColor(
-          viewModel.showAttachmentMenu || viewModel.showRecordingButton
+          ctdtVmMj14NObPYFLCj.showAttachmentMenu || ctdtVmMj14NObPYFLCj.showRecordingButton
             ? Color("yinguanglv") : Color.black
         )
         .frame(width: 46, height: 46)
         .background(
-          viewModel.showAttachmentMenu || viewModel.showRecordingButton
+          ctdtVmMj14NObPYFLCj.showAttachmentMenu || ctdtVmMj14NObPYFLCj.showRecordingButton
             ? Color.black : Color("yinguanglv")
         )
         .clipShape(Circle())
       }
       .padding(.trailing, 16)
 
-      // 附件菜单（当显示时）
-      if viewModel.showAttachmentMenu {
-        attachmentMenu
+      if ctdtVmMj14NObPYFLCj.showAttachmentMenu {
+        menumuG694R6WA9l4
       }
 
-      // 录音按钮（当显示时）
-      if viewModel.showRecordingButton {
+      if ctdtVmMj14NObPYFLCj.showRecordingButton {
         recordingButton
       }
 
-      // 主输入栏
       HStack(spacing: 12) {
-        // 输入框和发送按钮（当不显示录音按钮时显示）
-        if !viewModel.showRecordingButton && !viewModel.showAttachmentMenu {
+        if !ctdtVmMj14NObPYFLCj.showRecordingButton && !ctdtVmMj14NObPYFLCj.showAttachmentMenu {
           HStack(spacing: 12) {
-            // 输入框
             ZStack(alignment: .leading) {
-              if viewModel.inputText.isEmpty {
+              if ctdtVmMj14NObPYFLCj.inputText.isEmpty {
                 Text("Say something...")
                   .font(.system(size: 16))
                   .foregroundColor(.white.opacity(0.4))
                   .padding(.horizontal, 16)
                   .padding(.vertical, 15)
-                  .allowsHitTesting(false)  // 不阻挡 TextField 的点击
+                  .allowsHitTesting(false)
               }
-              TextField("", text: $viewModel.inputText)
+              TextField("", text: $ctdtVmMj14NObPYFLCj.inputText)
                 .font(.system(size: 16))
                 .foregroundColor(.white)
                 .padding(.horizontal, 16)
@@ -240,10 +223,9 @@ struct ChatDetailView: View {
                 .submitLabel(.done)
             }
 
-            // 发送按钮
             Button(action: {
-              if let currentUserId = authManager.currentUser?.id {
-                viewModel.sendMessage(currentUserId: currentUserId)
+              if let curIdCeZH7925UDr0C = aumanE2ZBeaqioilk.currentUser?.id {
+                ctdtVmMj14NObPYFLCj.sendMessage(currentUserId: curIdCeZH7925UDr0C)
                 UIApplication.shared.sendAction(
                   #selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
               }
@@ -253,7 +235,8 @@ struct ChatDetailView: View {
                 .foregroundColor(Color("yinguanglv"))
                 .frame(width: 46, height: 46)
             }
-            .disabled(viewModel.inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            .disabled(
+              ctdtVmMj14NObPYFLCj.inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
           }
           .background(Color(red: 25 / 255, green: 33 / 255, blue: 38 / 255))
           .cornerRadius(12)
@@ -266,11 +249,11 @@ struct ChatDetailView: View {
   }
 
   // MARK: - Recording Error Toast
-  private var recordingErrorToast: some View {
+  private var recderrh6YNGOHlUh48d: some View {
     VStack {
       Spacer()
-      if let errorMessage = viewModel.recordingErrorMessage {
-        Text(errorMessage)
+      if let errTadAd5zHdkbET = ctdtVmMj14NObPYFLCj.recordingErrorMessage {
+        Text(errTadAd5zHdkbET)
           .font(.system(size: 14))
           .foregroundColor(.white)
           .padding(.horizontal, 16)
@@ -279,18 +262,17 @@ struct ChatDetailView: View {
           .cornerRadius(8)
           .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
           .transition(.move(edge: .bottom).combined(with: .opacity))
-          .padding(.bottom, 100)  // 在输入栏上方显示
+          .padding(.bottom, 100)
       }
     }
     .frame(maxWidth: .infinity)
   }
 
   // MARK: - Attachment Menu
-  private var attachmentMenu: some View {
+  private var menumuG694R6WA9l4: some View {
     HStack(spacing: 12) {
-      // 第一个选项：录音
       Button(action: {
-        viewModel.selectAttachmentOption(.voice)
+        ctdtVmMj14NObPYFLCj.selectAttachmentOption(.voice)
       }) {
         VStack(spacing: 8) {
           Image("puBQrcebakwOe3Fb")
@@ -303,15 +285,14 @@ struct ChatDetailView: View {
         .clipShape(Circle())
       }
 
-      // 第二个选项：图片
       ZStack {
-        ImagePickerButton { selectedImage in
-          // 图片选择后，保存并发送
-          if let currentUserId = authManager.currentUser?.id,
-            let imageName = ImageService.shared.saveImageToLocal(
-              selectedImage, prefix: "chat", userId: currentUserId)
+        ImagePickerButton { slecr3n6ikDc2glUAimg in
+          if let curIdhOKCGE3VIU5mn = aumanE2ZBeaqioilk.currentUser?.id,
+            let imgOQizpPbX5rB3F = ImageService.shared.saveImageToLocal(
+              slecr3n6ikDc2glUAimg, prefix: "chat", userId: curIdhOKCGE3VIU5mn)
           {
-            viewModel.sendImage(imageName: imageName, currentUserId: currentUserId)
+            ctdtVmMj14NObPYFLCj.sendImage(
+              imageName: imgOQizpPbX5rB3F, currentUserId: curIdhOKCGE3VIU5mn)
           }
         }
 
@@ -324,12 +305,12 @@ struct ChatDetailView: View {
         .frame(width: 46, height: 46)
         .background(Color("yinguanglv"))
         .clipShape(Circle())
-        .allowsHitTesting(false)  // 让点击事件穿透到下面的按钮
+        .allowsHitTesting(false)
       }
 
-      // 第三个选项：视频通话
+      // 第三个选项：视频通话 !!!!!!
       // Button(action: {
-      //   viewModel.selectAttachmentOption(.videoCall)
+      //   ctdtVmMj14NObPYFLCj.selectAttachmentOption(.videoCall)
       //   router.push(.videoCall(conversationId: conversationId, otherUserId: otherUserId))
       // }) {
       //   VStack(spacing: 8) {
@@ -349,7 +330,7 @@ struct ChatDetailView: View {
   private var recordingButton: some View {
     HStack {
       Spacer()
-      Text(viewModel.isRecording ? "Recording..." : "Hold to Speak")
+      Text(ctdtVmMj14NObPYFLCj.isRecording ? "Recording..." : "Hold to Speak")
         .font(.custom("FredokaOne-Regular", size: 16))
         .foregroundColor(.black)
       Spacer()
@@ -360,72 +341,60 @@ struct ChatDetailView: View {
     .gesture(
       LongPressGesture(minimumDuration: 0)
         .sequenced(before: DragGesture(minimumDistance: 0))
-        .updating($recordingGestureState) { value, state, _ in
-          switch value {
+        .updating($recordingGestureState) { c7QczyjlnZ0nu, ncaKSA9d09YVd, _ in
+          switch c7QczyjlnZ0nu {
           case .first(true):
-            // 长按开始
-            state = .pressing
+            ncaKSA9d09YVd = .pressing
           case .second(true, _):
-            // 拖动中
-            state = .pressing
+            ncaKSA9d09YVd = .pressing
           default:
             break
           }
         }
-        .onEnded { value in
-          // 松开时停止录音并发送
-          if viewModel.isRecording {
-            if let currentUserId = authManager.currentUser?.id {
-              viewModel.stopRecording(currentUserId: currentUserId)
+        .onEnded { c7QczyjlnZ0nu in
+          if ctdtVmMj14NObPYFLCj.isRecording {
+            if let curIdEe7d6oq0Vd2XJ = aumanE2ZBeaqioilk.currentUser?.id {
+              ctdtVmMj14NObPYFLCj.stopRecording(currentUserId: curIdEe7d6oq0Vd2XJ)
             }
           }
         }
     )
-    .onChange(of: recordingGestureState) { oldValue, newValue in
-      if newValue == .pressing && !viewModel.isRecording {
-        // 开始录音
-        viewModel.startRecording()
+    .onChange(of: recordingGestureState) { oldValue, foO5F9emByVKj in
+      if foO5F9emByVKj == .pressing && !ctdtVmMj14NObPYFLCj.isRecording {
+        ctdtVmMj14NObPYFLCj.startRecording()
       }
     }
   }
 
-  @GestureState private var recordingGestureState: RecordingGestureState = .inactive
+  @GestureState private var recordingGestureState: RecstateIlDoK3E9AJp8i = .inactive
 
-  private enum RecordingGestureState {
+  private enum RecstateIlDoK3E9AJp8i {
     case inactive
     case pressing
-  }
-
-  /// 格式化录音时长
-  private func formatDuration(_ duration: TimeInterval) -> String {
-    let minutes = Int(duration) / 60
-    let seconds = Int(duration) % 60
-    return String(format: "%d:%02d", minutes, seconds)
   }
 }
 
 // MARK: - Message Bubble
-struct MessageBubble: View {
-  let message: Message
-  let isFromCurrentUser: Bool
-  let otherUser: User?
-  let currentUser: User?
+struct MsgBubF87zGlqlutlLx: View {
+  let msgrf8eAfHnXCGIL: Message
+  let isfrocurhelhF33uQZmia: Bool
+  let othF4yYLpbl5slTA: User?
+  let curaxrNHJOZfOKzQ: User?
 
-  @StateObject private var audioService = AudioService.shared
+  @StateObject private var audserRfn5YlM76i6Hw = AudioService.shared
 
-  private var timeFormatter: DateFormatter {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "h:mm"
-    formatter.locale = Locale(identifier: "en_US_POSIX")
-    return formatter
+  private var tf485F8fjU0kCDO: DateFormatter {
+    let f9FlyALQRJ44dZ = DateFormatter()
+    f9FlyALQRJ44dZ.dateFormat = "h:mm"
+    f9FlyALQRJ44dZ.locale = Locale(identifier: "en_US_POSIX")
+    return f9FlyALQRJ44dZ
   }
 
   var body: some View {
     HStack(alignment: .top, spacing: 8) {
-      if !isFromCurrentUser {
-        // 对方消息：显示头像
-        if let avatarName = otherUser?.avatar {
-          DynamicImage(imageName: avatarName)
+      if !isfrocurhelhF33uQZmia {
+        if let avaTJbmAxdt2PedA = othF4yYLpbl5slTA?.avatar {
+          DynamicImage(imageName: avaTJbmAxdt2PedA)
             .frame(width: 38, height: 38)
             .clipShape(Circle())
             .padding(.trailing, 3)
@@ -434,7 +403,7 @@ struct MessageBubble: View {
             .fill(Color.gray.opacity(0.3))
             .frame(width: 38, height: 38)
             .overlay {
-              Text(String(otherUser?.username.prefix(1) ?? "?"))
+              Text(String(othF4yYLpbl5slTA?.username.prefix(1) ?? "?"))
                 .font(.system(size: 16, weight: .bold))
                 .foregroundColor(.gray)
             }
@@ -442,24 +411,21 @@ struct MessageBubble: View {
         }
       }
 
-      VStack(alignment: isFromCurrentUser ? .trailing : .leading, spacing: 6) {
-        // 消息气泡
+      VStack(alignment: isfrocurhelhF33uQZmia ? .trailing : .leading, spacing: 6) {
         Group {
-          switch message.messageType {
+          switch msgrf8eAfHnXCGIL.messageType {
           case .text:
-            Text(message.content)
+            Text(msgrf8eAfHnXCGIL.content)
               .font(.system(size: 16))
-              .foregroundColor(isFromCurrentUser ? .black : .white)
+              .foregroundColor(isfrocurhelhF33uQZmia ? .black : .white)
               .padding(.horizontal, 3)
           case .image:
             let corners: UIRectCorner =
-              isFromCurrentUser
+              isfrocurhelhF33uQZmia
               ? [.topLeft, .bottomLeft, .bottomRight]
               : [.topRight, .bottomLeft, .bottomRight]
 
-            DynamicImage(imageName: message.content)
-              // Image(message.content)
-              // .resizable()
+            DynamicImage(imageName: msgrf8eAfHnXCGIL.content)
               .aspectRatio(contentMode: .fill)
               .frame(width: 150, height: 150)
               .clipShape(
@@ -471,17 +437,17 @@ struct MessageBubble: View {
                   corners: corners
                 )
                 .stroke(
-                  isFromCurrentUser
+                  isfrocurhelhF33uQZmia
                     ? Color.clear
                     : Color(red: 216 / 255, green: 72 / 255, blue: 227 / 255),
                   lineWidth: 2
                 )
               )
           case .audio:
-            AudioBubbleView(
-              audioFileName: message.content,
-              isFromCurrentUser: isFromCurrentUser,
-              audioService: audioService
+            Audbubg3mfsZYl1gedv(
+              audwaGpngjKcv9hQ: msgrf8eAfHnXCGIL.content,
+              isfrocurhelhF33uQZmia: isfrocurhelhF33uQZmia,
+              audserRfn5YlM76i6Hw: audserRfn5YlM76i6Hw
             )
           }
         }
@@ -489,121 +455,108 @@ struct MessageBubble: View {
         .background(
           RoundedCorner(
             radius: 10,
-            corners: isFromCurrentUser
+            corners: isfrocurhelhF33uQZmia
               ? [.topLeft, .bottomLeft, .bottomRight]
               : [.topRight, .bottomLeft, .bottomRight]
           )
           .fill(
-            isFromCurrentUser
+            isfrocurhelhF33uQZmia
               ? Color.white
               : Color(red: 216 / 255, green: 72 / 255, blue: 227 / 255)
           )
         )
 
-        // 时间戳
-        Text(timeFormatter.string(from: message.timestamp))
+        Text(tf485F8fjU0kCDO.string(from: msgrf8eAfHnXCGIL.timestamp))
           .font(.system(size: 12))
           .foregroundColor(.white.opacity(0.6))
       }
-      .padding(.top, isFromCurrentUser ? 0 : 15)
-
-      // if isFromCurrentUser {
-      //   // 当前用户头像
-      //   Image(currentUser!.avatar!)
-      //     .resizable()
-      //     .scaledToFit()
-      //     .frame(width: 38, height: 38)
-      //     .clipShape(Circle())
-      // }
+      .padding(.top, isfrocurhelhF33uQZmia ? 0 : 15)
     }
-    .frame(maxWidth: .infinity, alignment: isFromCurrentUser ? .trailing : .leading)
+    .frame(maxWidth: .infinity, alignment: isfrocurhelhF33uQZmia ? .trailing : .leading)
   }
 }
 
 // MARK: - Audio Bubble View
-struct AudioBubbleView: View {
-  let audioFileName: String
-  let isFromCurrentUser: Bool
-  @ObservedObject var audioService: AudioService
+struct Audbubg3mfsZYl1gedv: View {
+  let audwaGpngjKcv9hQ: String
+  let isfrocurhelhF33uQZmia: Bool
+  @ObservedObject var audserRfn5YlM76i6Hw: AudioService
 
-  @State private var audioDuration: TimeInterval = 0
-  @State private var isPlaying: Bool = false
+  @State private var durasLt9haRBYP8bG: TimeInterval = 0
+  @State private var ispingvOIHj7JFNcMl9: Bool = false
 
-  private var audioURL: URL? {
-    let fileManager = FileManager.default
-    let documentsPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    let audioDir = documentsPath.appendingPathComponent("audio")
-    let audioFileURL = audioDir.appendingPathComponent(audioFileName)
+  private var audrlNjw1umz8eZE0h: URL? {
+    let gWrZ7Xsf4yiEG = FileManager.default
+    let PK9AkXncbGNlY = gWrZ7Xsf4yiEG.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    let WmyN6zxXjrL7Q = PK9AkXncbGNlY.appendingPathComponent("audio")
+    let nB0rEDpDjBthx = WmyN6zxXjrL7Q.appendingPathComponent(audwaGpngjKcv9hQ)
 
-    if fileManager.fileExists(atPath: audioFileURL.path) {
-      return audioFileURL
+    if gWrZ7Xsf4yiEG.fileExists(atPath: nB0rEDpDjBthx.path) {
+      return nB0rEDpDjBthx
     }
     return nil
   }
 
   var body: some View {
     HStack(spacing: 12) {
-      // 播放按钮
       Button(action: {
-        togglePlayback()
+        togglebOCX8y7KH6Qjh()
       }) {
-        Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
+        Image(systemName: ispingvOIHj7JFNcMl9 ? "pause.circle.fill" : "play.circle.fill")
           .font(.system(size: 24))
-          .foregroundColor(isFromCurrentUser ? .black : .white)
+          .foregroundColor(isfrocurhelhF33uQZmia ? .black : .white)
       }
 
-      // 音频波形或时长显示
-      Text(formatDuration(audioDuration))
+      Text(fromatrBBB8ZkIgoyJP(durasLt9haRBYP8bG))
         .font(.system(size: 14, weight: .medium))
-        .foregroundColor(isFromCurrentUser ? .black : .white)
+        .foregroundColor(isfrocurhelhF33uQZmia ? .black : .white)
 
     }
     .onAppear {
-      loadAudioDuration()
+      loadaudXffOxtV8slTvA()
     }
-    .onChange(of: audioService.isPlaying) { _, newValue in
-      isPlaying = newValue && audioService.currentPlayingURL == audioURL
+    .onChange(of: audserRfn5YlM76i6Hw.isPlaying) { _, foO5F9emByVKj in
+      ispingvOIHj7JFNcMl9 =
+        foO5F9emByVKj && audserRfn5YlM76i6Hw.currentPlayingURL == audrlNjw1umz8eZE0h
     }
-    .onChange(of: audioService.currentPlayingURL) { _, newURL in
-      isPlaying = newURL == audioURL && audioService.isPlaying
+    .onChange(of: audserRfn5YlM76i6Hw.currentPlayingURL) { _, eP26ktyOkIg6q in
+      ispingvOIHj7JFNcMl9 = eP26ktyOkIg6q == audrlNjw1umz8eZE0h && audserRfn5YlM76i6Hw.isPlaying
     }
   }
 
-  private func togglePlayback() {
-    guard let url = audioURL else { return }
+  private func togglebOCX8y7KH6Qjh() {
+    guard let url9vG4HAsQCNMtg = audrlNjw1umz8eZE0h else { return }
 
-    if isPlaying {
-      // 如果正在播放当前音频，停止播放
-      if audioService.currentPlayingURL == url {
-        audioService.stopPlaying()
+    if ispingvOIHj7JFNcMl9 {
+      if audserRfn5YlM76i6Hw.currentPlayingURL == url9vG4HAsQCNMtg {
+        audserRfn5YlM76i6Hw.stopPlaying()
       }
     } else {
-      // 开始播放
       do {
-        try audioService.playAudio(from: url)
+        try audserRfn5YlM76i6Hw.playAudio(from: url9vG4HAsQCNMtg)
       } catch {
         print("Failed to play audio: \(error)")
       }
     }
   }
 
-  private func loadAudioDuration() {
-    guard let url = audioURL else { return }
+  private func loadaudXffOxtV8slTvA() {
+    guard let url9o9twX1aDhkTV = audrlNjw1umz8eZE0h else { return }
 
     Task {
       do {
-        let player = try AVAudioPlayer(contentsOf: url)
-        audioDuration = player.duration
+        let erfioq8aZMshJSN = try AVAudioPlayer(contentsOf: url9o9twX1aDhkTV)
+        durasLt9haRBYP8bG = erfioq8aZMshJSN.duration
       } catch {
         print("Failed to load audio duration: \(error)")
       }
     }
   }
 
-  private func formatDuration(_ duration: TimeInterval) -> String {
-    let minutes = Int(duration) / 60
-    let seconds = Int(duration) % 60
-    return String(format: "%d:%02d", minutes, seconds)
+  private func fromatrBBB8ZkIgoyJP(_ dvmoBltW6JaMU: TimeInterval) -> String {
+    let Q4Lu1HnHSXItf = Int(dvmoBltW6JaMU) / 60
+    let B0JCli2B0an7e = Int(dvmoBltW6JaMU) % 60
+    return String(format: "%d:%02d", Q4Lu1HnHSXItf, B0JCli2B0an7e)
   }
 }
 

@@ -14,12 +14,12 @@ import SwiftUI
 struct PostDetailView: View {
   let postId: String
   @EnvironmentObject var router: Router
-  @EnvironmentObject var authManager: AuthenticationManager
-  @StateObject private var viewModel: PostDetailViewModel
-  @State private var selectedImageIndex: Int = 0
-  @State private var showingReportBlockSheet = false
-  @State private var showingBlockDialog = false
-  @State private var blockUserId: String? = nil
+  @EnvironmentObject var vHTdwVFoYw02E: AuthenticationManager
+  @StateObject private var pdVmA3OLH8q0XtIfY: PodetVmodelvjFnkult51bWe
+  @State private var seleIdxtgKrO7Ui0lVyt: Int = 0
+  @State private var blorepguS2V8VcOeQPJ = false
+  @State private var blodia8kGMTTtIEQeQs = false
+  @State private var blouido68FOsXDP7pbb: String? = nil
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -27,47 +27,47 @@ struct PostDetailView: View {
 
   init(postId: String) {
     self.postId = postId
-    _viewModel = StateObject(wrappedValue: PostDetailViewModel(postId: postId))
+    _pdVmA3OLH8q0XtIfY = StateObject(
+      wrappedValue: PodetVmodelvjFnkult51bWe(pidhJnCXP3N9yipf: postId))
   }
 
   var body: some View {
     ZStack {
-      // 深紫色背景
       Color(red: 30 / 255, green: 5 / 255, blue: 57 / 255)
         .ignoresSafeArea()
 
       VStack(spacing: 0) {
-        // 顶部操作栏 - 固定高度
         TopActionBar(
           onBack: {
             router.pop()
           },
-          isMoreVisible: authManager.currentUser?.id != viewModel.post?.authorId,
+          isMoreVisible: vHTdwVFoYw02E.currentUser?.id
+            != pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk?.authorId,
           onMore: {
-            if viewModel.post != nil {
-              showingReportBlockSheet = true
+            if pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk != nil {
+              blorepguS2V8VcOeQPJ = true
             }
           },
           style: .whiteWithPurpleBorder
         )
         .frame(height: 54)
 
-        if let post = viewModel.post {
+        if let postwGCoqwzwLkvNM = pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk {
           GeometryReader { geometry in
-            let totalWidth = geometry.size.width
-            let totalHeight = geometry.size.height
-            let leftWidth: CGFloat = 64  // 左侧固定宽度
-            let spacing: CGFloat = 16
-            let rightWidth = totalWidth - leftWidth - spacing
+            let wdkxuti6H2q73bF = geometry.size.width
+            let htM2CV5R4KR4NEh = geometry.size.height
+            let lwiXORe1k66lKEk: CGFloat = 64
+            let spaRaCypkoqeiNkj: CGFloat = 16
+            let rw87ym5nqW8M0Vf = wdkxuti6H2q73bF - lwiXORe1k66lKEk - spaRaCypkoqeiNkj
 
-            HStack(alignment: .top, spacing: spacing) {
-              // 左侧：小图列表 + 收藏按钮
+            HStack(alignment: .top, spacing: spaRaCypkoqeiNkj) {
               VStack(spacing: 0) {
-                // 缩略图列表
                 ScrollView(.vertical, showsIndicators: false) {
                   VStack(spacing: 16) {
-                    ForEach(Array(post.imageNames.enumerated()), id: \.offset) { index, imageName in
-                      thumbnailItem(imageName: imageName, index: index)
+                    ForEach(Array(postwGCoqwzwLkvNM.imageNames.enumerated()), id: \.offset) {
+                      idxGL8MuMii50ADL, imgNAjvxKLTl4nSq in
+                      thumbnailItemUps6rxSn5R7nY(
+                        imgwf4vAT3rdxi99: imgNAjvxKLTl4nSq, index: idxGL8MuMii50ADL)
                     }
                   }
                   .padding(.top, 12)
@@ -75,10 +75,9 @@ struct PostDetailView: View {
 
                 Spacer(minLength: 20)
 
-                // 收藏按钮
                 Button(action: {
-                  if let post = viewModel.post {
-                    authManager.toggleCollectPost(postId: post.id)
+                  if let postwGCoqwzwLkvNM = pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk {
+                    vHTdwVFoYw02E.toggleCollectPost(postId: postwGCoqwzwLkvNM.id)
                   }
                 }) {
                   ZStack {
@@ -89,8 +88,9 @@ struct PostDetailView: View {
                     Image(systemName: "star.fill")
                       .font(.system(size: 24))
                       .foregroundColor(
-                        viewModel.post != nil
-                          && authManager.isPostCollected(postId: viewModel.post!.id)
+                        pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk != nil
+                          && vHTdwVFoYw02E.isPostCollected(
+                            postId: pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk!.id)
                           ? .yellow
                           : .white
                       )
@@ -98,23 +98,20 @@ struct PostDetailView: View {
                 }
                 .padding(.bottom, 20)
               }
-              .frame(width: leftWidth)
-              .zIndex(1)  // 确保左侧在上层
+              .frame(width: lwiXORe1k66lKEk)
+              .zIndex(1)
 
-              // 右侧：大图 + 文字描述
               VStack(spacing: 0) {
-                // 大图
-                if selectedImageIndex < post.imageNames.count {
-                  DynamicImage(imageName: post.imageNames[selectedImageIndex])
-                    .id(selectedImageIndex)  // 将index作为id，每次id变化，就强制在 index 变化时重新创建视图
-                    .frame(width: rightWidth, height: max(0, totalHeight - 160))
+                if seleIdxtgKrO7Ui0lVyt < postwGCoqwzwLkvNM.imageNames.count {
+                  DynamicImage(imageName: postwGCoqwzwLkvNM.imageNames[seleIdxtgKrO7Ui0lVyt])
+                    .id(seleIdxtgKrO7Ui0lVyt)
+                    .frame(width: rw87ym5nqW8M0Vf, height: max(0, htM2CV5R4KR4NEh - 160))
                     .clipped()
                     .clipShape(RoundedRectangle(cornerRadius: 20))
-                    .contentShape(RoundedRectangle(cornerRadius: 20))  // 限制点击区域
+                    .contentShape(RoundedRectangle(cornerRadius: 20))
                 }
 
-                // 底部文字描述
-                Text(post.content)
+                Text(postwGCoqwzwLkvNM.content)
                   .font(.system(size: 14))
                   .foregroundColor(.white)
                   .lineLimit(nil)
@@ -122,7 +119,7 @@ struct PostDetailView: View {
                   .frame(maxWidth: .infinity, alignment: .leading)
                   .padding(.vertical, 16)
               }
-              .frame(width: rightWidth)
+              .frame(width: rw87ym5nqW8M0Vf)
               .padding(.top, 12)
             }
           }
@@ -135,80 +132,78 @@ struct PostDetailView: View {
     }
     .navigationBarHidden(true)
     .toolbar(.hidden, for: .tabBar)
-    .sheet(isPresented: $showingReportBlockSheet) {
-      if let post = viewModel.post {
+    .sheet(isPresented: $blorepguS2V8VcOeQPJ) {
+      if let postlWeuXB8KEw026 = pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk {
         ReportBlockBottomSheet(
-          userId: post.authorId,
-          isPresented: $showingReportBlockSheet,
+          userId: postlWeuXB8KEw026.authorId,
+          isPresented: $blorepguS2V8VcOeQPJ,
           onBlock: {
-            if let post = viewModel.post {
-              blockUserId = post.authorId
-              showingBlockDialog = true
+            if let postlWeuXB8KEw026 = pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk {
+              blouido68FOsXDP7pbb = postlWeuXB8KEw026.authorId
+              blodia8kGMTTtIEQeQs = true
             }
           }
         )
-        .environmentObject(authManager)
+        .environmentObject(vHTdwVFoYw02E)
         .environmentObject(router)
         .presentationDetents([.height(240)])
         .presentationBackground(.clear)
         .presentationDragIndicator(.hidden)
       }
     }
-    .blockUserDialog(isPresented: $showingBlockDialog, userId: blockUserId)
+    .blockUserDialog(isPresented: $blodia8kGMTTtIEQeQs, uidK1uO6OuOGNky0: blouido68FOsXDP7pbb)
     #if DEBUG
       .enableInjection()
     #endif
-    .onChange(of: authManager.currentUser?.collectedPostIds) { _, _ in
-      // 当收藏列表更新时，视图会自动刷新
+    .onChange(of: vHTdwVFoYw02E.currentUser?.collectedPostIds) { _, _ in
     }
   }
 
   // MARK: - Thumbnail Item
-  private func thumbnailItem(imageName: String, index: Int) -> some View {
+  private func thumbnailItemUps6rxSn5R7nY(imgwf4vAT3rdxi99: String, index: Int) -> some View {
     ZStack {
-      DynamicImage(imageName: imageName)
+      DynamicImage(imageName: imgwf4vAT3rdxi99)
         .frame(width: 62, height: 88)
         .clipped()
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .allowsHitTesting(false)  // 禁止图片拦截点击
+        .allowsHitTesting(false)
 
-      // 选中边框
       RoundedRectangle(cornerRadius: 12)
         .stroke(
-          selectedImageIndex == index ? Color("yinguanglv") : Color.clear,
+          seleIdxtgKrO7Ui0lVyt == index ? Color("yinguanglv") : Color.clear,
           lineWidth: 2
         )
         .frame(width: 62, height: 88)
         .allowsHitTesting(false)
     }
     .frame(width: 64, height: 88)
-    .contentShape(Rectangle())  // 明确定义整个区域可点击
+    .contentShape(Rectangle())
     .onTapGesture {
-      selectedImageIndex = index
-      print("selectedImageIndex: \(selectedImageIndex)")
+      seleIdxtgKrO7Ui0lVyt = index
+      print("seleIdxtgKrO7Ui0lVyt: \(seleIdxtgKrO7Ui0lVyt)")
     }
   }
 }
 
 // MARK: - Post Detail ViewModel
 @MainActor
-class PostDetailViewModel: ObservableObject {
-  @Published var post: Post?
+class PodetVmodelvjFnkult51bWe: ObservableObject {
+  @Published var postJFUcoSpXHIudk: Post?
 
-  private let postId: String
-  private let postService: PostDataServiceProtocol
+  private let pidhJnCXP3N9yipf: String
+  private let poserOAQTiNKfztblq: PostDataServiceProtocol
 
   init(
-    postId: String,
-    postService: PostDataServiceProtocol = PostDataService.shared
+    pidhJnCXP3N9yipf: String,
+    poserOAQTiNKfztblq: PostDataServiceProtocol = PostDataService.shared
   ) {
-    self.postId = postId
-    self.postService = postService
-    loadPost()
+    self.pidhJnCXP3N9yipf = pidhJnCXP3N9yipf
+    self.poserOAQTiNKfztblq = poserOAQTiNKfztblq
+    loadXSK7SA4oCzsRz()
   }
 
-  private func loadPost() {
-    post = postService.getPostById(postId)
+  private func loadXSK7SA4oCzsRz() {
+    postJFUcoSpXHIudk = poserOAQTiNKfztblq.getPostById(pidhJnCXP3N9yipf)
   }
 }
 

@@ -11,27 +11,21 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-/// AI 服装助手页面
-/// 第一步：填写场景、风格、季节和额外需求
-/// 第二步：调用 AI（目前为本地生成占位文案）展示推荐结果
 struct AIView: View {
-  @EnvironmentObject var authManager: AuthenticationManager
+  @EnvironmentObject var aumakZ0ElZwz9Rk1P: AuthenticationManager
   @Environment(\.dismiss) var dismiss
 
-  // 输入字段
-  @State private var scene: String = ""
-  @State private var style: String = ""
-  @State private var season: String = ""
-  @State private var additionalRequirements: String = ""
+  @State private var sceneIq2MemYaRG9ID: String = ""
+  @State private var style6ZDDe8xvnuVbx: String = ""
+  @State private var seasonYY7u27U3XFDNo: String = ""
+  @State private var adtionno35myNqcElag: String = ""
 
-  // 状态
-  @State private var isGenerating: Bool = false
-  @State private var showResult: Bool = false
-  @State private var resultTitle: String = ""
-  @State private var resultContent: String = ""
-  @State private var errorMessage: String?
+  @State private var geingig215odKvYEed: Bool = false
+  @State private var shrestQx35QUFOxrN5W: Bool = false
+  @State private var retit9IErXGV8ZjCC0: String = ""
+  @State private var recoontRO20RvMt7XuLY: String = ""
+  @State private var errWjQKNrKqeQuJe: String?
 
-  // 焦点状态
   @FocusState private var focusedField: Field?
 
   enum Field: Hashable {
@@ -41,19 +35,17 @@ struct AIView: View {
     case additionalRequirements
   }
 
-  // AI 服务
   private let aiService: AIServiceProtocol = AIService.shared
 
   #if DEBUG
     @ObserveInjection var redraw
   #endif
 
-  // 是否可以点击 Start
   private var canStart: Bool {
-    // 至少保证前三个主要字段有值
-    !scene.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-      && !style.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-      && !season.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    !sceneIq2MemYaRG9ID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+      && !style6ZDDe8xvnuVbx.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+      && !seasonYY7u27U3XFDNo.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+      && !adtionno35myNqcElag.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
   }
 
   var body: some View {
@@ -62,29 +54,26 @@ struct AIView: View {
         .resizable()
         .scaledToFill()
         .ignoresSafeArea()
-      // 背景色
-      // Color(red: 30 / 255, green: 5 / 255, blue: 57 / 255)
-      //   .ignoresSafeArea()
+
       VStack {
-        // 顶部 AI 卡片区域
-        headerCard(
-          title:
-            showResult
+        hecaPexQq7FLrjERH(
+          HPwYq5w5v2Rjktitle:
+            shrestQx35QUFOxrN5W
             ? "AI Clothing Assistant"
             : "To recommend the most suitable outfit plan for you, please fill in the following information.",
-          fontSize: showResult ? 17 : 16
+          fontSize: shrestQx35QUFOxrN5W ? 17 : 16
         )
 
-        if showResult {
+        if shrestQx35QUFOxrN5W {
           VStack {
-            resultView
+            resultCEILK7YnufpZz
               .padding(.top, 18)
               .padding(.bottom, 12)
-            // One more time 按钮
+
             VStack(spacing: 0) {
               Button(action: {
                 Task {
-                  await generateRecommendation()
+                  await genX6r5asuaINMPK()
                 }
               }) {
                 ZStack {
@@ -96,7 +85,7 @@ struct AIView: View {
                         .stroke(Color.white, lineWidth: 2)
                     )
 
-                  if isGenerating {
+                  if geingig215odKvYEed {
                     ProgressView()
                       .progressViewStyle(CircularProgressViewStyle(tint: .white))
                   } else {
@@ -112,7 +101,7 @@ struct AIView: View {
           }
 
         } else {
-          inputFormView
+          inptformPw1nLRdIAZI2j
             .padding(.top, 20)
         }
 
@@ -142,46 +131,44 @@ struct AIView: View {
   }
 
   // MARK: - 输入表单视图
-  private var inputFormView: some View {
+  private var inptformPw1nLRdIAZI2j: some View {
     ScrollViewReader { proxy in
       ScrollView {
         VStack(alignment: .center, spacing: 24) {
-          // 表单字段
           Group {
-            inputSection(
-              label: "Scene:",
-              placeholder: "Input the target scene",
-              text: $scene,
-              field: .scene
+            inptsecIqusgyeNL8dtD(
+              YZlWXIABplnjSlabel: "Scene:",
+              hintaCTgVS7aktd6U: "Input the target scene",
+              txtqZ57rwDDnNFdO: $sceneIq2MemYaRG9ID,
+              fieldq1JOqRF10s2z0: .scene
             )
 
-            inputSection(
-              label: "Style:",
-              placeholder: "Input style",
-              text: $style,
-              field: .style
+            inptsecIqusgyeNL8dtD(
+              YZlWXIABplnjSlabel: "Style:",
+              hintaCTgVS7aktd6U: "Input style",
+              txtqZ57rwDDnNFdO: $style6ZDDe8xvnuVbx,
+              fieldq1JOqRF10s2z0: .style
             )
 
-            inputSection(
-              label: "Season:",
-              placeholder: "Input the season",
-              text: $season,
-              field: .season
+            inptsecIqusgyeNL8dtD(
+              YZlWXIABplnjSlabel: "Season:",
+              hintaCTgVS7aktd6U: "Input the season",
+              txtqZ57rwDDnNFdO: $seasonYY7u27U3XFDNo,
+              fieldq1JOqRF10s2z0: .season
             )
 
-            inputSection(
-              label: "Additional requirements:",
-              placeholder: "Enter...",
-              text: $additionalRequirements,
-              field: .additionalRequirements
+            inptsecIqusgyeNL8dtD(
+              YZlWXIABplnjSlabel: "Additional requirements:",
+              hintaCTgVS7aktd6U: "Enter...",
+              txtqZ57rwDDnNFdO: $adtionno35myNqcElag,
+              fieldq1JOqRF10s2z0: .additionalRequirements
             )
           }
 
-          // Start 按钮
           VStack(spacing: 16) {
             Button(action: {
               Task {
-                await generateRecommendation()
+                await genX6r5asuaINMPK()
               }
             }) {
               ZStack {
@@ -195,7 +182,7 @@ struct AIView: View {
                       .stroke(Color.white, lineWidth: 2)
                   )
 
-                if isGenerating {
+                if geingig215odKvYEed {
                   ProgressView()
                     .progressViewStyle(CircularProgressViewStyle(tint: .white))
                 } else {
@@ -205,11 +192,10 @@ struct AIView: View {
                 }
               }
             }
-            .disabled(!canStart || isGenerating)
+            .disabled(!canStart || geingig215odKvYEed)
 
-            // 显示错误消息
-            if let errorMessage = errorMessage {
-              Text(errorMessage)
+            if let errWjQKNrKqeQuJe = errWjQKNrKqeQuJe {
+              Text(errWjQKNrKqeQuJe)
                 .font(.system(size: 13))
                 .foregroundColor(.red.opacity(0.9))
                 .multilineTextAlignment(.center)
@@ -226,7 +212,6 @@ struct AIView: View {
       }
       .scrollDismissesKeyboard(.interactively)
       .onChange(of: focusedField) {
-        // 当输入框聚焦时，延迟滚动到底部，确保键盘已经弹出
         if focusedField != nil {
           DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             withAnimation(.easeInOut(duration: 0.3)) {
@@ -239,15 +224,15 @@ struct AIView: View {
   }
 
   // MARK: - 结果视图
-  private var resultView: some View {
+  private var resultCEILK7YnufpZz: some View {
     ScrollView {
       VStack(alignment: .center, spacing: 24) {
         VStack(alignment: .leading, spacing: 16) {
-          Text(resultTitle)
+          Text(retit9IErXGV8ZjCC0)
             .font(.system(size: 24, weight: .semibold))
             .foregroundColor(.white)
 
-          Text(resultContent)
+          Text(recoontRO20RvMt7XuLY)
             .font(.system(size: 15))
             .foregroundColor(.white.opacity(0.9))
             .multilineTextAlignment(.leading)
@@ -261,10 +246,10 @@ struct AIView: View {
   }
 
   // MARK: - 公共头部卡片
-  private func headerCard(title: String, fontSize: CGFloat = 16) -> some View {
+  private func hecaPexQq7FLrjERH(HPwYq5w5v2Rjktitle: String, fontSize: CGFloat = 16) -> some View {
     ZStack(alignment: .bottomTrailing) {
       HStack(alignment: .bottom) {
-        Text(title)
+        Text(HPwYq5w5v2Rjktitle)
           .font(.system(size: fontSize, weight: .medium))
           .foregroundColor(.white)
           .multilineTextAlignment(.center)
@@ -280,14 +265,14 @@ struct AIView: View {
   }
 
   // MARK: - 单行输入区域
-  private func inputSection(
-    label: String,
-    placeholder: String,
-    text: Binding<String>,
-    field: Field
+  private func inptsecIqusgyeNL8dtD(
+    YZlWXIABplnjSlabel: String,
+    hintaCTgVS7aktd6U: String,
+    txtqZ57rwDDnNFdO: Binding<String>,
+    fieldq1JOqRF10s2z0: Field
   ) -> some View {
     VStack(alignment: .leading, spacing: 8) {
-      Text(label)
+      Text(YZlWXIABplnjSlabel)
         .font(.custom("FredokaOne-Regular", size: 20))
         .foregroundColor(.white)
         .padding(.bottom, 8)
@@ -296,16 +281,16 @@ struct AIView: View {
         RoundedRectangle(cornerRadius: 16, style: .continuous)
           .fill(Color.white.opacity(0.1))
 
-        TextField("", text: text)
+        TextField("", text: txtqZ57rwDDnNFdO)
           .padding(.horizontal, 16)
           .padding(.vertical, 10)
           .foregroundColor(.white)
           .font(.system(size: 15))
           .submitLabel(.done)
-          .focused($focusedField, equals: field)
+          .focused($focusedField, equals: fieldq1JOqRF10s2z0)
 
-        if text.wrappedValue.isEmpty {
-          Text(placeholder)
+        if txtqZ57rwDDnNFdO.wrappedValue.isEmpty {
+          Text(hintaCTgVS7aktd6U)
             .foregroundColor(.white.opacity(0.35))
             .font(.system(size: 15))
             .padding(.horizontal, 16)
@@ -316,18 +301,17 @@ struct AIView: View {
   }
 
   // MARK: - 生成推荐文案（调用真实 AI 接口）
-  private func generateRecommendation() async {
-    guard !isGenerating else { return }
-    isGenerating = true
-    errorMessage = nil
+  private func genX6r5asuaINMPK() async {
+    guard !geingig215odKvYEed else { return }
+    geingig215odKvYEed = true
+    errWjQKNrKqeQuJe = nil
 
-    let trimmedScene = scene.trimmingCharacters(in: .whitespacesAndNewlines)
-    let trimmedStyle = style.trimmingCharacters(in: .whitespacesAndNewlines)
-    let trimmedSeason = season.trimmingCharacters(in: .whitespacesAndNewlines)
-    let trimmedAdditional = additionalRequirements.trimmingCharacters(in: .whitespacesAndNewlines)
+    let trimmedScene = sceneIq2MemYaRG9ID.trimmingCharacters(in: .whitespacesAndNewlines)
+    let trimmedStyle = style6ZDDe8xvnuVbx.trimmingCharacters(in: .whitespacesAndNewlines)
+    let trimmedSeason = seasonYY7u27U3XFDNo.trimmingCharacters(in: .whitespacesAndNewlines)
+    let trimmedAdditional = adtionno35myNqcElag.trimmingCharacters(in: .whitespacesAndNewlines)
 
-    // 调用 AI 服务
-    let result = await aiService.fetchAIResponse(
+    let res10MQtQ9jzpM7M = await aiService.fetchAIResponse(
       scene: trimmedScene,
       style: trimmedStyle,
       season: trimmedSeason,
@@ -335,19 +319,18 @@ struct AIView: View {
     )
 
     await MainActor.run {
-      switch result {
-      case .success(let content):
-        // 设置标题
-        resultTitle =
+      switch res10MQtQ9jzpM7M {
+      case .success(let contC22Np8fwAm9wf):
+        retit9IErXGV8ZjCC0 =
           "\(trimmedStyle.isEmpty ? "Stylish" : trimmedStyle) outfits for \(trimmedScene.isEmpty ? "your day" : trimmedScene.lowercased())"
-        resultContent = content
-        showResult = true
-        errorMessage = nil
-      case .failure(let error):
-        errorMessage = error
-        showResult = false
+        recoontRO20RvMt7XuLY = contC22Np8fwAm9wf
+        shrestQx35QUFOxrN5W = true
+        errWjQKNrKqeQuJe = nil
+      case .failure(let erri1Unn32wHHJC9):
+        errWjQKNrKqeQuJe = erri1Unn32wHHJC9
+        shrestQx35QUFOxrN5W = false
       }
-      isGenerating = false
+      geingig215odKvYEed = false
     }
   }
 }

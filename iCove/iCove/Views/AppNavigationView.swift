@@ -93,7 +93,7 @@ struct AppNavigationView<Content: View>: View {
         .environmentObject(authManager)
         .toolbar(.hidden, for: .tabBar)
     case .publish(let type):
-      PublishView(publishType: type)
+      PublishView(pubTypeWZOlcaTCZFIeL: type)
         .environmentObject(authManager)
         .toolbar(.hidden, for: .tabBar)
     case .report(let userId):

@@ -8,13 +8,13 @@
 import SwiftUI
 
 #if DEBUG
-  import HotSwiftUI  // 导入库
+  import HotSwiftUI
 #endif
 
 struct MessagesView: View {
   @EnvironmentObject var authManager: AuthenticationManager
   @EnvironmentObject var router: Router
-  @StateObject private var viewModel = MessagesViewModel()
+  @StateObject private var msgVmF2Lqw623eNcEQ = MessagesViewModel()
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -28,16 +28,14 @@ struct MessagesView: View {
         .ignoresSafeArea()
 
       VStack(spacing: 0) {
-        // 顶部标题区域
-        headerSection
+        headCtGXnfNzPOtB9
 
-        // 内容区域
-        if viewModel.isLoading && viewModel.conversations.isEmpty {
-          loadingView
-        } else if viewModel.filteredConversations.isEmpty {
-          emptyStateView
+        if msgVmF2Lqw623eNcEQ.isLoading && msgVmF2Lqw623eNcEQ.conversations.isEmpty {
+          load3N0pekaWxcINz
+        } else if msgVmF2Lqw623eNcEQ.filteredConversations.isEmpty {
+          empty3rBzY4NiLW8S0
         } else {
-          contentView
+          contviewJmAAAY0uuWp2o
         }
       }
     }
@@ -46,27 +44,26 @@ struct MessagesView: View {
       .enableInjection()
     #endif
     .onAppear {
-      viewModel.currentUserId = authManager.currentUser?.id
+      msgVmF2Lqw623eNcEQ.currentUserId = authManager.currentUser?.id
       Task {
-        await viewModel.loadConversations()
+        await msgVmF2Lqw623eNcEQ.loadConversations()
       }
-      viewModel.updateAuthManager(authManager)
+      msgVmF2Lqw623eNcEQ.updateAuthManager(authManager)
     }
     .onChange(of: authManager.currentUser?.id) { _, newUserId in
-      viewModel.currentUserId = newUserId
+      msgVmF2Lqw623eNcEQ.currentUserId = newUserId
     }
     .onChange(of: router.path.count) { _, _ in
       // 当从聊天详情页返回时，刷新会话列表
       Task {
-        await viewModel.loadConversations()
+        await msgVmF2Lqw623eNcEQ.loadConversations()
       }
     }
   }
 
   // MARK: - Header Section
-  private var headerSection: some View {
+  private var headCtGXnfNzPOtB9: some View {
     VStack(spacing: 0) {
-      // Chat 标题
       HStack {
         Text("Chat")
           .font(.custom("FredokaOne-Regular", size: 32))
@@ -78,26 +75,22 @@ struct MessagesView: View {
       .padding(.top, 50)
       .padding(.bottom, 24)
 
-      // 当前用户头像和名称
-      if let currentUser = authManager.currentUser {
+      if let cur2bmc2wWma30FM = authManager.currentUser {
         VStack(spacing: 12) {
-          // 用户头像（带渐变边框）
           ProfileImageView(
-            avatar: currentUser.avatar,
-            username: currentUser.username,
+            avatar: cur2bmc2wWma30FM.avatar,
+            username: cur2bmc2wWma30FM.username,
             size: 120,
             subSize: 32,
           )
 
-          // 用户名
-          Text(currentUser.username)
+          Text(cur2bmc2wWma30FM.username)
             .font(.custom("FredokaOne-Regular", size: 18))
             .foregroundColor(.white)
         }
         .padding(.bottom, 24)
       }
 
-      // Friends 标题
       HStack {
         Text("Friends")
           .font(.custom("FredokaOne-Regular", size: 24))
@@ -111,29 +104,31 @@ struct MessagesView: View {
   }
 
   // MARK: - Content View
-  private var contentView: some View {
+  private var contviewJmAAAY0uuWp2o: some View {
     ScrollView {
       LazyVStack(spacing: 16) {
-        ForEach(viewModel.filteredConversations) { conversation in
-          ConversationRow(conversation: conversation)
+        ForEach(msgVmF2Lqw623eNcEQ.filteredConversations) { conwmUe1XZOr9gjf in
+          ConsrowKqezRbZ2wK891(con8BsmRqnI3CNXy: conwmUe1XZOr9gjf)
             .onTapGesture {
-              viewModel.markAsRead(conversation)
-              // 获取对方用户ID并跳转到聊天详情页
-              if let currentUserId = authManager.currentUser?.id,
-                let otherUserId = conversation.participantIds.first(where: { $0 != currentUserId })
+              msgVmF2Lqw623eNcEQ.markAsRead(conwmUe1XZOr9gjf)
+              if let curidrkRFFpUdKgG15 = authManager.currentUser?.id,
+                let ohidzECAIqalKWo1v = conwmUe1XZOr9gjf.participantIds.first(where: {
+                  $0 != curidrkRFFpUdKgG15
+                })
               {
-                router.push(.chatDetail(conversationId: conversation.id, otherUserId: otherUserId))
+                router.push(
+                  .chatDetail(conversationId: conwmUe1XZOr9gjf.id, otherUserId: ohidzECAIqalKWo1v))
               }
             }
         }
       }
       .padding(.horizontal, 20)
-      .padding(.bottom, 130)  // 为底部导航栏留出空间
+      .padding(.bottom, 130)
     }
   }
 
   // MARK: - Loading View
-  private var loadingView: some View {
+  private var load3N0pekaWxcINz: some View {
     VStack(spacing: 20) {
       Spacer()
       ProgressView()
@@ -150,7 +145,7 @@ struct MessagesView: View {
   }
 
   // MARK: - Empty State View
-  private var emptyStateView: some View {
+  private var empty3rBzY4NiLW8S0: some View {
     EmptyPlaceholderView()
       .padding(.bottom, 120)
       .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -158,50 +153,47 @@ struct MessagesView: View {
 }
 
 // MARK: - Conversation Row
-struct ConversationRow: View {
-  let conversation: Conversation
+struct ConsrowKqezRbZ2wK891: View {
+  let con8BsmRqnI3CNXy: Conversation
   @EnvironmentObject var authManager: AuthenticationManager
-  @StateObject private var viewModel: ConversationRowViewModel
+  @StateObject private var msgVmF2Lqw623eNcEQ: ConversationRowViewModel
 
-  init(conversation: Conversation) {
-    self.conversation = conversation
-    _viewModel = StateObject(wrappedValue: ConversationRowViewModel(conversation: conversation))
+  init(con8BsmRqnI3CNXy: Conversation) {
+    self.con8BsmRqnI3CNXy = con8BsmRqnI3CNXy
+    _msgVmF2Lqw623eNcEQ = StateObject(
+      wrappedValue: ConversationRowViewModel(consxrlKxXeyn3ZuZ: con8BsmRqnI3CNXy))
   }
 
-  private var timeFormatter: DateFormatter {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "h:mma"
-    formatter.locale = Locale(identifier: "en_US_POSIX")
-    formatter.amSymbol = "AM"
-    formatter.pmSymbol = "PM"
-    return formatter
+  private var tf6EoNKpJDHIDsY: DateFormatter {
+    let cTnvabJM8yhRC = DateFormatter()
+    cTnvabJM8yhRC.dateFormat = "h:mma"
+    cTnvabJM8yhRC.locale = Locale(identifier: "en_US_POSIX")
+    cTnvabJM8yhRC.amSymbol = "AM"
+    cTnvabJM8yhRC.pmSymbol = "PM"
+    return cTnvabJM8yhRC
   }
 
   var body: some View {
     ZStack(alignment: .topLeading) {
-      // 右侧：深紫色聊天气泡
       ZStack {
         Image("todrcOCVKxRfLanQ")
           .resizable()
-          // .scaledToFill()
           .frame(width: .infinity, height: 80)
 
         VStack(alignment: .leading, spacing: 12) {
-          // 用户名和时间戳
           HStack {
-            Text(viewModel.otherUser?.username ?? "Unknown")
+            Text(msgVmF2Lqw623eNcEQ.otho3VTO7Iv2zruSuser?.username ?? "Unknown")
               .font(.custom("FredokaOne-Regular", size: 16))
               .foregroundColor(.white)
 
             Spacer()
 
-            Text(timeFormatter.string(from: conversation.timestamp))
+            Text(tf6EoNKpJDHIDsY.string(from: con8BsmRqnI3CNXy.timestamp))
               .font(.system(size: 12))
               .foregroundColor(.white.opacity(0.6))
           }
 
-          // 消息预览
-          Text(conversation.lastMessage.isEmpty ? "" : conversation.lastMessage)
+          Text(con8BsmRqnI3CNXy.lastMessage.isEmpty ? "" : con8BsmRqnI3CNXy.lastMessage)
             .font(.system(size: 14))
             .foregroundColor(.white.opacity(0.7))
             .lineLimit(1)
@@ -213,22 +205,20 @@ struct ConversationRow: View {
       }
       .padding(.top, 12)
 
-      // 左侧：小头像（带渐变边框）
       ProfileImageView(
-        avatar: viewModel.otherUser?.avatar,
-        username: viewModel.otherUser?.username ?? "Unknown",
+        avatar: msgVmF2Lqw623eNcEQ.otho3VTO7Iv2zruSuser?.avatar,
+        username: msgVmF2Lqw623eNcEQ.otho3VTO7Iv2zruSuser?.username ?? "Unknown",
         size: 62,
         subSize: 16,
       )
       .padding(.leading, 14)
     }
     .frame(maxWidth: .infinity)
-    // .background(.green)
     .onAppear {
-      viewModel.loadOtherUser(currentUserId: authManager.currentUser?.id)
+      msgVmF2Lqw623eNcEQ.loadOthu4P6GoHUkqgY8y(curidfeXd1hpSLgFwU: authManager.currentUser?.id)
     }
     .onChange(of: authManager.currentUser?.id) { _, newUserId in
-      viewModel.loadOtherUser(currentUserId: newUserId)
+      msgVmF2Lqw623eNcEQ.loadOthu4P6GoHUkqgY8y(curidfeXd1hpSLgFwU: newUserId)
     }
   }
 }
@@ -236,34 +226,31 @@ struct ConversationRow: View {
 // MARK: - Conversation Row ViewModel
 @MainActor
 class ConversationRowViewModel: ObservableObject {
-  @Published var otherUser: User?
+  @Published var otho3VTO7Iv2zruSuser: User?
 
-  private let conversation: Conversation
-  private let authService: AuthenticationServiceProtocol
+  private let consuP2F0P4sZeUTr: Conversation
+  private let auserssXbqBgILAt9v: AuthenticationServiceProtocol
 
   init(
-    conversation: Conversation,
-    authService: AuthenticationServiceProtocol = AuthenticationService.shared
+    consxrlKxXeyn3ZuZ: Conversation,
+    auserssXbqBgILAt9v: AuthenticationServiceProtocol = AuthenticationService.shared
   ) {
-    self.conversation = conversation
-    self.authService = authService
+    self.consuP2F0P4sZeUTr = consxrlKxXeyn3ZuZ
+    self.auserssXbqBgILAt9v = auserssXbqBgILAt9v
   }
 
-  func loadOtherUser(currentUserId: String?) {
-    // 获取当前用户ID
-    guard let currentUserId = currentUserId else {
-      otherUser = nil
+  func loadOthu4P6GoHUkqgY8y(curidfeXd1hpSLgFwU: String?) {
+    guard let curidfeXd1hpSLgFwU = curidfeXd1hpSLgFwU else {
+      otho3VTO7Iv2zruSuser = nil
       return
     }
 
-    // 从会话参与者中找到对方用户ID
-    let otherUserId = conversation.participantIds.first { $0 != currentUserId }
+    let ohidfT4K8ECeO6Xhc = consuP2F0P4sZeUTr.participantIds.first { $0 != curidfeXd1hpSLgFwU }
 
-    // 根据对方用户ID获取用户信息
-    if let otherUserId = otherUserId {
-      otherUser = authService.getUserById(otherUserId)
+    if let ohidfT4K8ECeO6Xhc = ohidfT4K8ECeO6Xhc {
+      otho3VTO7Iv2zruSuser = auserssXbqBgILAt9v.getUserById(ohidfT4K8ECeO6Xhc)
     } else {
-      otherUser = nil
+      otho3VTO7Iv2zruSuser = nil
     }
   }
 }
