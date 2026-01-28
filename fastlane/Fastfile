@@ -103,7 +103,7 @@ platform :ios do
 
     register_devices(
       devices: {
-        "iPhone" => "00008110-00066DE92E00402E",
+        "iPhone" => "00008110-001A2C3D4E58001E",
       }
     )
 
