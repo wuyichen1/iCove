@@ -1,5 +1,5 @@
 //
-//  AuthenticationView.swift
+//  AuthCW5IFQbXt8XViView.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/14.
@@ -11,18 +11,18 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-enum AuthMode {
-  case signIn
-  case signUp
-  case forgotPassword
+enum AuthModeg4BqkLhWQKgsh {
+  case S6jCVHP1l4JrX
+  case MtR06GhhdHl5i
+  case dw9OrzTJRvChU
 }
 
-struct AuthenticationView: View {
+struct AuthCW5IFQbXt8XViView: View {
   @EnvironmentObject var auma3KvMQWRVzrTCZGp: AuthManagA645b8Y0Aod3aVmod
   @Environment(\.dismiss) var dismiss
-  @State private var mode3SKlR1H07hi4ZBl: AuthMode
+  @State private var mode3SKlR1H07hi4ZBl: AuthModeg4BqkLhWQKgsh
 
-  init(initialMode: AuthMode = .signIn) {
+  init(initialMode: AuthModeg4BqkLhWQKgsh = .S6jCVHP1l4JrX) {
     _mode3SKlR1H07hi4ZBl = State(initialValue: initialMode)
   }
 
@@ -76,12 +76,12 @@ struct AuthenticationView: View {
             .padding(.horizontal, 20)
 
           if let error = errmsgi9duPT2fqcbcvfo {
-            errOxLHD7e0ndNTp(message: error)
+            errOxLHD7e0ndNTp(HHbyW98KExDSA: error)
               .padding(.horizontal, 24)
               .padding(.top, 16)
           }
 
-          if mode3SKlR1H07hi4ZBl == .signIn {
+          if mode3SKlR1H07hi4ZBl == .S6jCVHP1l4JrX {
             fotgotRN5jQEDPhRdQ1
               .padding(.top, 12)
               .padding(.horizontal, 20)
@@ -89,7 +89,7 @@ struct AuthenticationView: View {
 
           btncBchUpNCl4X43
             .padding(.horizontal, 60)
-            .padding(.top, mode3SKlR1H07hi4ZBl == .signIn ? 60 : 80)
+            .padding(.top, mode3SKlR1H07hi4ZBl == .S6jCVHP1l4JrX ? 60 : 80)
 
           Spacer(minLength: 50)
         }
@@ -113,12 +113,11 @@ struct AuthenticationView: View {
     #endif
   }
 
-  // MARK: - Back Button
   private var bkL5cecExmlgPWHux: some View {
     Button(action: {
-      if mode3SKlR1H07hi4ZBl == .forgotPassword {
+      if mode3SKlR1H07hi4ZBl == .dw9OrzTJRvChU {
         withAnimation {
-          mode3SKlR1H07hi4ZBl = .signIn
+          mode3SKlR1H07hi4ZBl = .S6jCVHP1l4JrX
           clearhkfAVTsIibARi()
         }
       } else {
@@ -136,7 +135,6 @@ struct AuthenticationView: View {
     }
   }
 
-  // MARK: - Logo Section
   private var logo13ZXjEEX0x1hlEF: some View {
     VStack(spacing: 12) {
       Image("icove_logo")
@@ -151,11 +149,10 @@ struct AuthenticationView: View {
     }
   }
 
-  // MARK: - Title Section
   private var tithFfG9Ak5SztiQAC: some View {
     HStack {
       Group {
-        if mode3SKlR1H07hi4ZBl == .forgotPassword {
+        if mode3SKlR1H07hi4ZBl == .dw9OrzTJRvChU {
           StarText(
             text: "Forgot password",
             textSize: 22,
@@ -171,36 +168,34 @@ struct AuthenticationView: View {
 
   }
 
-  // MARK: - Mode Switcher
   private var modeSwitcherJ5cgedl9eW: some View {
     HStack(spacing: 50) {
       Button(action: {
         withAnimation {
-          mode3SKlR1H07hi4ZBl = .signIn
+          mode3SKlR1H07hi4ZBl = .S6jCVHP1l4JrX
           cerrcZ5BelI16SwWL()
         }
       }) {
         StarText(
           text: "Sign in",
-          textColor: mode3SKlR1H07hi4ZBl == .signIn ? .white : .white.opacity(0.5)
+          textColor: mode3SKlR1H07hi4ZBl == .S6jCVHP1l4JrX ? .white : .white.opacity(0.5)
         )
       }
 
       Button(action: {
         withAnimation {
-          mode3SKlR1H07hi4ZBl = .signUp
+          mode3SKlR1H07hi4ZBl = .MtR06GhhdHl5i
           cerrcZ5BelI16SwWL()
         }
       }) {
         StarText(
           text: "Sign up",
-          textColor: mode3SKlR1H07hi4ZBl == .signUp ? .white : .white.opacity(0.5)
+          textColor: mode3SKlR1H07hi4ZBl == .MtR06GhhdHl5i ? .white : .white.opacity(0.5)
         )
       }
     }
   }
 
-  // MARK: - Form Section
   private var formkz4vDSML4ytGk: some View {
     VStack(spacing: 24) {
       Iptem1Avn34LiVdrFR(
@@ -234,7 +229,7 @@ struct AuthenticationView: View {
         }
       }
       .onSubmit {
-        if mode3SKlR1H07hi4ZBl == .signIn {
+        if mode3SKlR1H07hi4ZBl == .S6jCVHP1l4JrX {
           Task {
             await submBSw3CzMS9Tsk0()
           }
@@ -243,7 +238,7 @@ struct AuthenticationView: View {
         }
       }
 
-      if mode3SKlR1H07hi4ZBl == .signUp || mode3SKlR1H07hi4ZBl == .forgotPassword {
+      if mode3SKlR1H07hi4ZBl == .MtR06GhhdHl5i || mode3SKlR1H07hi4ZBl == .dw9OrzTJRvChU {
         AuthPasswordField(
           j9MDDPu2hh7QZicon: "jASWmFLKpFnsoplY",
           hintBAmFW1kxABjuu: "Enter the password again",
@@ -267,13 +262,12 @@ struct AuthenticationView: View {
     }
   }
 
-  // MARK: - Forgot Password Link
   private var fotgotRN5jQEDPhRdQ1: some View {
     HStack {
       Spacer()
       Button(action: {
         withAnimation {
-          mode3SKlR1H07hi4ZBl = .forgotPassword
+          mode3SKlR1H07hi4ZBl = .dw9OrzTJRvChU
           clearhkfAVTsIibARi()
         }
       }) {
@@ -284,7 +278,6 @@ struct AuthenticationView: View {
     }
   }
 
-  // MARK: - Action Button
   private var btncBchUpNCl4X43: some View {
     PrimaryButton(
       title: btext9b6vEmwn9TNJy,
@@ -301,21 +294,20 @@ struct AuthenticationView: View {
 
   private var btext9b6vEmwn9TNJy: String {
     switch mode3SKlR1H07hi4ZBl {
-    case .signIn:
+    case .S6jCVHP1l4JrX:
       return "SIGN IN"
-    case .signUp:
+    case .MtR06GhhdHl5i:
       return "SIGN UP"
-    case .forgotPassword:
+    case .dw9OrzTJRvChU:
       return "SAVE"
     }
   }
 
-  // MARK: - Error Banner
-  private func errOxLHD7e0ndNTp(message: String) -> some View {
+  private func errOxLHD7e0ndNTp(HHbyW98KExDSA: String) -> some View {
     HStack {
       Image(systemName: "exclamationmark.triangle.fill")
         .foregroundColor(.red)
-      Text(message)
+      Text(HHbyW98KExDSA)
         .font(.subheadline)
         .foregroundColor(.red)
       Spacer()
@@ -325,12 +317,11 @@ struct AuthenticationView: View {
     .cornerRadius(8)
   }
 
-  // MARK: - Validation
   private var validzDJF20YfnBW8u: Bool {
     switch mode3SKlR1H07hi4ZBl {
-    case .signIn:
+    case .S6jCVHP1l4JrX:
       return !email5JGG0viqiPJadRO.isEmpty && !pwdx92WFu5sk3xxEyV.isEmpty
-    case .signUp, .forgotPassword:
+    case .MtR06GhhdHl5i, .dw9OrzTJRvChU:
       return !email5JGG0viqiPJadRO.isEmpty && !pwdx92WFu5sk3xxEyV.isEmpty
         && !confirmiOZaPPK51vdlEGm.isEmpty
     }
@@ -384,7 +375,7 @@ struct AuthenticationView: View {
     let ULrnmxYeO2ogk = valiemailFIGi8YWzd()
     let SDNKMdpjfqvPe = vapwdS2kxyN6VQML87()
 
-    if mode3SKlR1H07hi4ZBl == .signUp || mode3SKlR1H07hi4ZBl == .forgotPassword {
+    if mode3SKlR1H07hi4ZBl == .MtR06GhhdHl5i || mode3SKlR1H07hi4ZBl == .dw9OrzTJRvChU {
       let isConfirmValid = vaconfccrhC43nDwUEq()
       return ULrnmxYeO2ogk && SDNKMdpjfqvPe && isConfirmValid
     }
@@ -392,7 +383,6 @@ struct AuthenticationView: View {
     return ULrnmxYeO2ogk && SDNKMdpjfqvPe
   }
 
-  // MARK: - Actions
   private func submBSw3CzMS9Tsk0() async {
     focusF8V7w9DiIGa3tTN = nil
     errmsgi9duPT2fqcbcvfo = nil
@@ -403,18 +393,19 @@ struct AuthenticationView: View {
 
     do {
       switch mode3SKlR1H07hi4ZBl {
-      case .signIn:
+      case .S6jCVHP1l4JrX:
         try await auma3KvMQWRVzrTCZGp.logini2AfORx9Y0cOC(
           Yc7aEPUWtsLiC: email5JGG0viqiPJadRO, dbCMz0ksUEfDw: pwdx92WFu5sk3xxEyV)
-      case .signUp:
+      case .MtR06GhhdHl5i:
         let oHLiBEbYkYiUm = email5JGG0viqiPJadRO.components(separatedBy: "@").first ?? "User"
         try await auma3KvMQWRVzrTCZGp.registerPAms88DfTLWMl(
-          Qjhs1UuEXxKto: email5JGG0viqiPJadRO, AYVm1fJqgpm5W: pwdx92WFu5sk3xxEyV, dTzVtlmF1dSnU: oHLiBEbYkYiUm)
-      case .forgotPassword:
+          Qjhs1UuEXxKto: email5JGG0viqiPJadRO, AYVm1fJqgpm5W: pwdx92WFu5sk3xxEyV,
+          dTzVtlmF1dSnU: oHLiBEbYkYiUm)
+      case .dw9OrzTJRvChU:
         try await aserv1UesNFlnX1FWfJc.resetAD5RG71gufWEh(
           e1NwZPJd8HYCD8: email5JGG0viqiPJadRO, LwBDL4g9GeWqW: pwdx92WFu5sk3xxEyV)
         withAnimation {
-          mode3SKlR1H07hi4ZBl = .signIn
+          mode3SKlR1H07hi4ZBl = .S6jCVHP1l4JrX
           clearhkfAVTsIibARi()
         }
       }
@@ -442,7 +433,6 @@ struct AuthenticationView: View {
   }
 }
 
-// MARK: - Auth Input Field Component
 struct Iptem1Avn34LiVdrFR: View {
   let EHXKujwG9gCDlicon: String
   let hintBZaEEP3rGcZQT: String
@@ -494,7 +484,6 @@ struct Iptem1Avn34LiVdrFR: View {
   }
 }
 
-// MARK: - Auth Password Field Component
 struct AuthPasswordField: View {
   let j9MDDPu2hh7QZicon: String
   let hintBAmFW1kxABjuu: String
@@ -565,7 +554,3 @@ struct AuthPasswordField: View {
 
   }
 }
-
-// #Preview {
-//     AuthenticationView()
-// }

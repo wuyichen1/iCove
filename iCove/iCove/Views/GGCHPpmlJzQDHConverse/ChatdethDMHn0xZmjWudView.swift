@@ -80,7 +80,6 @@ struct ChatDetailView: View {
     .animation(.easeInOut(duration: 0.2), value: ctdtVmMj14NObPYFLCj.oQJFpzwEuhOCverr != nil)
   }
 
-  // MARK: - Top Navigation Bar
   private var LWPUxmxa9rCNe: some View {
     ZStack(alignment: .top) {
       LinearGradient(
@@ -134,7 +133,6 @@ struct ChatDetailView: View {
     .frame(height: 60)
   }
 
-  // MARK: - Messages List
   private var msglist2egFIJQ5vPjBR: some View {
     ScrollViewReader { proxy in
       ScrollView {
@@ -171,7 +169,6 @@ struct ChatDetailView: View {
     .frame(maxWidth: .infinity, maxHeight: .infinity)
   }
 
-  // MARK: - Input Bar
   private var potbary7dSUqnasb0bv: some View {
     HStack(spacing: 0) {
       Button(action: {
@@ -250,7 +247,6 @@ struct ChatDetailView: View {
     .background(Color(red: 30 / 255, green: 5 / 255, blue: 57 / 255))
   }
 
-  // MARK: - Recording Error Toast
   private var recderrh6YNGOHlUh48d: some View {
     VStack {
       Spacer()
@@ -270,7 +266,6 @@ struct ChatDetailView: View {
     .frame(maxWidth: .infinity)
   }
 
-  // MARK: - Attachment Menu
   private var menumuG694R6WA9l4: some View {
     HStack(spacing: 12) {
       Button(action: {
@@ -328,7 +323,6 @@ struct ChatDetailView: View {
     }
   }
 
-  // MARK: - Recording Button
   private var recordingButton: some View {
     HStack {
       Spacer()
@@ -376,7 +370,6 @@ struct ChatDetailView: View {
   }
 }
 
-// MARK: - Message Bubble
 struct MsgBubF87zGlqlutlLx: View {
   let msgrf8eAfHnXCGIL: Message
   let isfrocurhelhF33uQZmia: Bool
@@ -478,7 +471,6 @@ struct MsgBubF87zGlqlutlLx: View {
   }
 }
 
-// MARK: - Audio Bubble View
 struct Audbubg3mfsZYl1gedv: View {
   let audwaGpngjKcv9hQ: String
   let isfrocurhelhF33uQZmia: Bool
@@ -562,9 +554,3 @@ struct Audbubg3mfsZYl1gedv: View {
     return String(format: "%d:%02d", Q4Lu1HnHSXItf, B0JCli2B0an7e)
   }
 }
-
-// #Preview {
-//   ChatDetailView(conversationId: "conv_001", otherUserId: "user_002")
-//     .environmentObject(Router())
-//     .environmentObject(AuthManagA645b8Y0Aod3aVmod())
-// }

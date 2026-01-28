@@ -12,7 +12,7 @@ import SwiftUI
 #endif
 
 struct MessagesView: View {
-  @EnvironmentObject var authManager: AuthManagA645b8Y0Aod3aVmod
+  @EnvironmentObject var tq7s5nIv3nwgL: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
   @StateObject private var msgVmF2Lqw623eNcEQ = MsgSE8UQxD8j7C19Vmod()
 
@@ -44,24 +44,22 @@ struct MessagesView: View {
       .enableInjection()
     #endif
     .onAppear {
-      msgVmF2Lqw623eNcEQ.cuidjO17fn13slPB0 = authManager.currvj9QRUUPOWY4Ouser?.id
+      msgVmF2Lqw623eNcEQ.cuidjO17fn13slPB0 = tq7s5nIv3nwgL.currvj9QRUUPOWY4Ouser?.id
       Task {
         await msgVmF2Lqw623eNcEQ.MZ6eJcEBDp82N()
       }
-      msgVmF2Lqw623eNcEQ.updAuma7Cif2ltv9c65t(authManager)
+      msgVmF2Lqw623eNcEQ.updAuma7Cif2ltv9c65t(tq7s5nIv3nwgL)
     }
-    .onChange(of: authManager.currvj9QRUUPOWY4Ouser?.id) { _, newUserId in
+    .onChange(of: tq7s5nIv3nwgL.currvj9QRUUPOWY4Ouser?.id) { _, newUserId in
       msgVmF2Lqw623eNcEQ.cuidjO17fn13slPB0 = newUserId
     }
     .onChange(of: router.path.count) { _, _ in
-      // 当从聊天详情页返回时，刷新会话列表
       Task {
         await msgVmF2Lqw623eNcEQ.MZ6eJcEBDp82N()
       }
     }
   }
 
-  // MARK: - Header Section
   private var headCtGXnfNzPOtB9: some View {
     VStack(spacing: 0) {
       HStack {
@@ -75,7 +73,7 @@ struct MessagesView: View {
       .padding(.top, 50)
       .padding(.bottom, 24)
 
-      if let cur2bmc2wWma30FM = authManager.currvj9QRUUPOWY4Ouser {
+      if let cur2bmc2wWma30FM = tq7s5nIv3nwgL.currvj9QRUUPOWY4Ouser {
         VStack(spacing: 12) {
           ProfileImageView(
             avatar: cur2bmc2wWma30FM.avatar,
@@ -103,7 +101,6 @@ struct MessagesView: View {
     }
   }
 
-  // MARK: - Content View
   private var contviewJmAAAY0uuWp2o: some View {
     ScrollView {
       LazyVStack(spacing: 16) {
@@ -111,13 +108,14 @@ struct MessagesView: View {
           ConsrowKqezRbZ2wK891(con8BsmRqnI3CNXy: conwmUe1XZOr9gjf)
             .onTapGesture {
               msgVmF2Lqw623eNcEQ.markOihyOHcXCrdV7(conwmUe1XZOr9gjf)
-              if let curidrkRFFpUdKgG15 = authManager.currvj9QRUUPOWY4Ouser?.id,
+              if let curidrkRFFpUdKgG15 = tq7s5nIv3nwgL.currvj9QRUUPOWY4Ouser?.id,
                 let ohidzECAIqalKWo1v = conwmUe1XZOr9gjf.participantIds.first(where: {
                   $0 != curidrkRFFpUdKgG15
                 })
               {
                 router.push(
-                  .chatDetail(conversationId: conwmUe1XZOr9gjf.id, otherUserId: ohidzECAIqalKWo1v))
+                  .chadetBhKPSi5YgfcOZ(
+                    cid7EWVIP6LCiVby: conwmUe1XZOr9gjf.id, uidKePZA2dVjXZzF: ohidzECAIqalKWo1v))
               }
             }
         }
@@ -127,7 +125,6 @@ struct MessagesView: View {
     }
   }
 
-  // MARK: - Loading View
   private var load3N0pekaWxcINz: some View {
     VStack(spacing: 20) {
       Spacer()
@@ -144,7 +141,6 @@ struct MessagesView: View {
     .frame(maxWidth: .infinity, maxHeight: .infinity)
   }
 
-  // MARK: - Empty State View
   private var empty3rBzY4NiLW8S0: some View {
     EmptyPlaceholderView()
       .padding(.bottom, 120)
@@ -152,10 +148,9 @@ struct MessagesView: View {
   }
 }
 
-// MARK: - Conversation Row
 struct ConsrowKqezRbZ2wK891: View {
   let con8BsmRqnI3CNXy: Conversation
-  @EnvironmentObject var authManager: AuthManagA645b8Y0Aod3aVmod
+  @EnvironmentObject var tq7s5nIv3nwgL: AuthManagA645b8Y0Aod3aVmod
   @StateObject private var msgVmF2Lqw623eNcEQ: ConversationRowViewModel
 
   init(con8BsmRqnI3CNXy: Conversation) {
@@ -216,15 +211,14 @@ struct ConsrowKqezRbZ2wK891: View {
     .frame(maxWidth: .infinity)
     .onAppear {
       msgVmF2Lqw623eNcEQ.loadOthu4P6GoHUkqgY8y(
-        curidfeXd1hpSLgFwU: authManager.currvj9QRUUPOWY4Ouser?.id)
+        curidfeXd1hpSLgFwU: tq7s5nIv3nwgL.currvj9QRUUPOWY4Ouser?.id)
     }
-    .onChange(of: authManager.currvj9QRUUPOWY4Ouser?.id) { _, newUserId in
+    .onChange(of: tq7s5nIv3nwgL.currvj9QRUUPOWY4Ouser?.id) { _, newUserId in
       msgVmF2Lqw623eNcEQ.loadOthu4P6GoHUkqgY8y(curidfeXd1hpSLgFwU: newUserId)
     }
   }
 }
 
-// MARK: - Conversation Row ViewModel
 @MainActor
 class ConversationRowViewModel: ObservableObject {
   @Published var otho3VTO7Iv2zruSuser: User?
@@ -255,8 +249,3 @@ class ConversationRowViewModel: ObservableObject {
     }
   }
 }
-
-// #Preview {
-//     MessagesView()
-//         .environmentObject(AuthManagA645b8Y0Aod3aVmod())
-// }
