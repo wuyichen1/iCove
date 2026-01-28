@@ -16,7 +16,7 @@ struct ReportBlockBottomSheet: View {
   let userId: String
   @Binding var isPresented: Bool
   var onBlock: (() -> Void)? = nil
-  @EnvironmentObject var authManager: AuthenticationManager
+  @EnvironmentObject var authManager: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
 
   @State private var user: User?
@@ -148,6 +148,6 @@ struct ReportBlockBottomSheet: View {
   }
 
   private func loadUser() {
-    user = AuthenticationService.shared.getUserById(userId)
+    user = Authsdmd0VXzbAnDYServ.shared.getbyidQwpUuIWnzzs99(userId)
   }
 }

@@ -7,26 +7,22 @@
 
 import Foundation
 
-// MARK: - Authentication Models
-
-/// 认证响应模型
-struct AuthResponse {
-  let token: String
-  let user: User
+struct AznsY674Pb5bXx {
+  let xvoSkiukR4DXftoken: String
+  let userVMVsqf1elekSw: User
 }
 
-/// 用户模型
 struct User: Codable, Identifiable {
   let id: String
   let email: String
   let username: String
   let avatar: String?
   let balance: Int
-  var bio: String? 
-  var collectedPostIds: [String] 
-  var blockedUserIds: [String] 
-  var followingUserIds: [String] 
-  var followerUserIds: [String] 
+  var bio: String?
+  var collectedPostIds: [String]
+  var blockedUserIds: [String]
+  var followingUserIds: [String]
+  var followerUserIds: [String]
 
   enum CodingKeys: String, CodingKey {
     case id
@@ -108,7 +104,7 @@ enum AuthError: LocalizedError {
   case userNotFound(String)
   case emailAlreadyExists(String)
 
-  var errorDescription: String? {
+  var erdesniu2dZl1hSlti: String? {
     switch self {
     case .networkError(let message),
       .invalidEmail(let message),

@@ -12,8 +12,8 @@ import SwiftUI
 #endif
 
 struct DiscoverView: View {
-  @EnvironmentObject var aumaOPNRYtaLzBwfO: AuthenticationManager
-  @StateObject private var disVmrWpELPZVmt8tD: DiscoverViewModel
+  @EnvironmentObject var aumaOPNRYtaLzBwfO: AuthManagA645b8Y0Aod3aVmod
+  @StateObject private var disVmrWpELPZVmt8tD: DiscouU6Bh8Exak2IXVmod
   @State private var sblo5BJbOqoX3oUyD = false
   @State private var blouidGAKcNhg8hC0qh: String? = nil
   @State private var repbloM1RyF4YUhJXVs = false
@@ -26,7 +26,7 @@ struct DiscoverView: View {
   #endif
 
   init() {
-    _disVmrWpELPZVmt8tD = StateObject(wrappedValue: DiscoverViewModel())
+    _disVmrWpELPZVmt8tD = StateObject(wrappedValue: DiscouU6Bh8Exak2IXVmod())
   }
 
   var body: some View {
@@ -41,8 +41,8 @@ struct DiscoverView: View {
 
         head80bQQTa3yQG7S
 
-        if disVmrWpELPZVmt8tD.isLoading && disVmrWpELPZVmt8tD.collectedPosts.isEmpty
-          && disVmrWpELPZVmt8tD.allPosts.isEmpty
+        if disVmrWpELPZVmt8tD.islingumgdWs0fYfz52 && disVmrWpELPZVmt8tD.colp8W7CMTdrTSK9g.isEmpty
+          && disVmrWpELPZVmt8tD.allp8jyycPefN5IIz.isEmpty
         {
           loadOycj4QRSkyG0J
         } else {
@@ -95,11 +95,11 @@ struct DiscoverView: View {
       .enableInjection()
     #endif
     .onAppear {
-      disVmrWpELPZVmt8tD.updateAuthManager(aumaOPNRYtaLzBwfO)
+      disVmrWpELPZVmt8tD.updAuma7Cif2ltv9c65t(aumaOPNRYtaLzBwfO)
     }
     // 监听收藏列表的变化
-    .onChange(of: aumaOPNRYtaLzBwfO.currentUser?.collectedPostIds) { oldValue, newValue in
-      disVmrWpELPZVmt8tD.refreshCollectedPosts()
+    .onChange(of: aumaOPNRYtaLzBwfO.currvj9QRUUPOWY4Ouser?.collectedPostIds) { oldValue, newValue in
+      disVmrWpELPZVmt8tD.refAYUyaJd0ZNl9v()
     }
     .onChange(of: uid2IoIb4lqiLMOQ) { oldValue, hEGLmW1NGMvRj in
       if let uidSvIde6DOjDz8o = hEGLmW1NGMvRj, !repbloM1RyF4YUhJXVs {
@@ -153,7 +153,7 @@ struct DiscoverView: View {
   private var contview7LBPOsWKb8MIs: some View {
     VStack(alignment: .leading, spacing: 0) {
 
-      if !disVmrWpELPZVmt8tD.collectedPosts.isEmpty {
+      if !disVmrWpELPZVmt8tD.colp8W7CMTdrTSK9g.isEmpty {
         VStack {
           HStack {
             StarText(
@@ -218,14 +218,14 @@ struct DiscoverView: View {
           .padding(.bottom, 6)
           .padding(.leading, 16)
 
-          if disVmrWpELPZVmt8tD.allPosts.isEmpty {
+          if disVmrWpELPZVmt8tD.allp8jyycPefN5IIz.isEmpty {
             EmptyPlaceholderView()
               .padding(.bottom, 120)
               .frame(maxWidth: .infinity, maxHeight: .infinity)
           } else {
             ScrollView {
               LazyVStack(spacing: 16) {
-                ForEach(disVmrWpELPZVmt8tD.allPosts) { post in
+                ForEach(disVmrWpELPZVmt8tD.allp8jyycPefN5IIz) { post in
                   PocardrDm6S2F8tYSbU(
                     postjmttDhoS3qgib: post,
                     onBlozWbxoGpaIWfTW: {
@@ -246,7 +246,7 @@ struct DiscoverView: View {
               .padding(.top, 10)
               .animation(
                 .spring(response: 0.5, dampingFraction: 0.65, blendDuration: 0.4),
-                value: disVmrWpELPZVmt8tD.allPosts
+                value: disVmrWpELPZVmt8tD.allp8jyycPefN5IIz
               )
 
             }
@@ -271,7 +271,7 @@ struct DiscoverView: View {
       ScrollViewReader { proxy in
         ScrollView(.horizontal, showsIndicators: false) {
           HStack(spacing: cardSpacing) {
-            ForEach(Array(disVmrWpELPZVmt8tD.collectedPosts.enumerated()), id: \.element.id) {
+            ForEach(Array(disVmrWpELPZVmt8tD.colp8W7CMTdrTSK9g.enumerated()), id: \.element.id) {
               index, post in
               if let firstImage = post.imageNames.first {
                 CollectionCardView(
@@ -299,7 +299,7 @@ struct DiscoverView: View {
         .scrollDismissesKeyboard(.never)
         .frame(width: screenWidth)
         .onAppear {
-          if !disVmrWpELPZVmt8tD.collectedPosts.isEmpty {
+          if !disVmrWpELPZVmt8tD.colp8W7CMTdrTSK9g.isEmpty {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
               proxy.scrollTo(0, anchor: .center)
             }
@@ -322,7 +322,7 @@ struct CollectionCardView: View {
   let containerHeight: CGFloat
   let scrollWidth: CGFloat
   var onrepbloooTsNyqTWt2Qu: ((String) -> Void)? = nil
-  @EnvironmentObject var aumaOPNRYtaLzBwfO: AuthenticationManager
+  @EnvironmentObject var aumaOPNRYtaLzBwfO: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
 
   var body: some View {
@@ -361,7 +361,7 @@ struct CollectionCardView: View {
       .clipShape(RoundedRectangle(cornerRadius: 16))
       .overlay(
         VStack {
-          if aumaOPNRYtaLzBwfO.currentUser?.id != post.authorId {
+          if aumaOPNRYtaLzBwfO.currvj9QRUUPOWY4Ouser?.id != post.authorId {
             HStack {
               Spacer()
 
@@ -381,12 +381,12 @@ struct CollectionCardView: View {
           HStack {
             Spacer()
             Button(action: {
-              aumaOPNRYtaLzBwfO.toggleCollectPost(postId: post.id)
+              aumaOPNRYtaLzBwfO.toggleB2rGhFgSQb0qAcol(pid3rhTIg1jfRXQj: post.id)
             }) {
               Image(systemName: "star.fill")
                 .font(.system(size: 18))
                 .foregroundColor(
-                  aumaOPNRYtaLzBwfO.isPostCollected(postId: post.id) ? .yellow : .white
+                  aumaOPNRYtaLzBwfO.isColBbbiJ8jXV5fKI(pid3rhTIg1jfRXQj: post.id) ? .yellow : .white
                 )
                 .padding(8)
                 .background(Color("buttonPurple"))
@@ -413,9 +413,9 @@ struct PocardrDm6S2F8tYSbU: View {
   let postjmttDhoS3qgib: Post
   var onBlozWbxoGpaIWfTW: (() -> Void)? = nil
   var onrepbloooTsNyqTWt2Qu: ((String) -> Void)? = nil
-  @StateObject private var disVmrWpELPZVmt8tD: PostCardViewModel
+  @StateObject private var disVmrWpELPZVmt8tD: PostcdppOzBHrSEqXxfVmod
   @EnvironmentObject var router: Router
-  @EnvironmentObject var aumaOPNRYtaLzBwfO: AuthenticationManager
+  @EnvironmentObject var aumaOPNRYtaLzBwfO: AuthManagA645b8Y0Aod3aVmod
 
   init(
     postjmttDhoS3qgib: Post, onBlozWbxoGpaIWfTW: (() -> Void)? = nil,
@@ -425,17 +425,17 @@ struct PocardrDm6S2F8tYSbU: View {
     self.onBlozWbxoGpaIWfTW = onBlozWbxoGpaIWfTW
     self.onrepbloooTsNyqTWt2Qu = onrepbloooTsNyqTWt2Qu
     _disVmrWpELPZVmt8tD = StateObject(
-      wrappedValue: PostCardViewModel(authorId: postjmttDhoS3qgib.authorId))
+      wrappedValue: PostcdppOzBHrSEqXxfVmod(auidhmUVmgwfUL08N: postjmttDhoS3qgib.authorId))
   }
 
   var body: some View {
     VStack(alignment: .leading, spacing: 0) {
       HStack(alignment: .top) {
-        if let auth9fNAHb3e5Z8U4 = disVmrWpELPZVmt8tD.author,
+        if let auth9fNAHb3e5Z8U4 = disVmrWpELPZVmt8tD.atSDfJi0ntFvhx3,
           let ava338PmT5u5k4nm = auth9fNAHb3e5Z8U4.avatar
         {
           Button(action: {
-            if let auth9fNAHb3e5Z8U4 = disVmrWpELPZVmt8tD.author {
+            if let auth9fNAHb3e5Z8U4 = disVmrWpELPZVmt8tD.atSDfJi0ntFvhx3 {
               router.push(.profile(userId: auth9fNAHb3e5Z8U4.id, showBackicon: true))
             }
           }) {
@@ -456,7 +456,7 @@ struct PocardrDm6S2F8tYSbU: View {
             )
             .frame(width: 46, height: 46)
             .overlay {
-              if let authVrLYkrwpBRD31 = disVmrWpELPZVmt8tD.author {
+              if let authVrLYkrwpBRD31 = disVmrWpELPZVmt8tD.atSDfJi0ntFvhx3 {
                 Text(String(authVrLYkrwpBRD31.username.prefix(1)))
                   .font(.headline)
                   .foregroundColor(.pink)
@@ -466,15 +466,15 @@ struct PocardrDm6S2F8tYSbU: View {
 
         VStack(alignment: .leading, spacing: 8) {
           HStack {
-            Text(disVmrWpELPZVmt8tD.author?.username ?? "Unknown")
+            Text(disVmrWpELPZVmt8tD.atSDfJi0ntFvhx3?.username ?? "Unknown")
               .font(.custom("FredokaOne-Regular", size: 17))
               .foregroundColor(.white)
 
             Spacer()
 
-            if aumaOPNRYtaLzBwfO.currentUser?.id != postjmttDhoS3qgib.authorId {
+            if aumaOPNRYtaLzBwfO.currvj9QRUUPOWY4Ouser?.id != postjmttDhoS3qgib.authorId {
               Button(action: {
-                if let auidx1DP54a9z5Puo = disVmrWpELPZVmt8tD.author?.id {
+                if let auidx1DP54a9z5Puo = disVmrWpELPZVmt8tD.atSDfJi0ntFvhx3?.id {
                   onrepbloooTsNyqTWt2Qu?(auidx1DP54a9z5Puo)
                 }
               }) {
@@ -540,7 +540,7 @@ struct PocardrDm6S2F8tYSbU: View {
     )
     .cornerRadius(20)
     .onAppear {
-      disVmrWpELPZVmt8tD.setAuthManager(aumaOPNRYtaLzBwfO)
+      disVmrWpELPZVmt8tD.setJv27Ie1wK02GM(aumaOPNRYtaLzBwfO)
     }
   }
 }

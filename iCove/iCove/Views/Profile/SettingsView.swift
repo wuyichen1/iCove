@@ -12,7 +12,7 @@ import SwiftUI
 #endif
 
 struct SettingsView: View {
-  @EnvironmentObject var TZn9Psbmx6nlq: AuthenticationManager
+  @EnvironmentObject var TZn9Psbmx6nlq: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
   @Environment(\.dismiss) var dismiss
   @State private var sdelI9WcIDcqYmOFT = false
@@ -60,7 +60,7 @@ struct SettingsView: View {
 
             setbtnnGkQ3HgdYpOrc(titlHeVgRclzqrl3v: "Log Out", isPrim6Ooi8SHCn75ud: true) {
               Task {
-                await TZn9Psbmx6nlq.logout()
+                await TZn9Psbmx6nlq.logoutWfSgkdWFVCXy1()
                 router.popToRoot()
               }
             }
@@ -141,7 +141,7 @@ struct SettingsView: View {
   private func delAnttlypdVYhivb4k5() async {
     defer { sdelI9WcIDcqYmOFT = false }
     do {
-      try await TZn9Psbmx6nlq.deleteAccount()
+      try await TZn9Psbmx6nlq.delGwzevOwddsi6i()
       router.popToRoot()
     } catch {
       print("Delete account failed: \(error)")

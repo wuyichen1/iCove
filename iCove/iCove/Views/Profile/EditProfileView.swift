@@ -14,7 +14,7 @@ import UIKit
 #endif
 
 struct EditProfileView: View {
-  @EnvironmentObject var FUmIz00KvBJa2: AuthenticationManager
+  @EnvironmentObject var FUmIz00KvBJa2: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
   @Environment(\.dismiss) var dismiss
 
@@ -53,7 +53,7 @@ struct EditProfileView: View {
     .navigationBarHidden(true)
     .onAppear {
       if pTN8hZ9kCDZmYuname.isEmpty {
-        pTN8hZ9kCDZmYuname = FUmIz00KvBJa2.currentUser?.username ?? ""
+        pTN8hZ9kCDZmYuname = FUmIz00KvBJa2.currvj9QRUUPOWY4Ouser?.username ?? ""
       }
     }
     #if DEBUG
@@ -92,21 +92,21 @@ struct EditProfileView: View {
         if let selmgUW9WZvxFvNWaI = selmgUW9WZvxFvNWaI {
           ProfileImageView(
             avatar: selmgUW9WZvxFvNWaI,
-            username: FUmIz00KvBJa2.currentUser?.username ?? "",
+            username: FUmIz00KvBJa2.currvj9QRUUPOWY4Ouser?.username ?? "",
             size: 115,
             subSize: 32
           )
-        } else if let avajoEEIb3dBxOav = FUmIz00KvBJa2.currentUser?.avatar {
+        } else if let avajoEEIb3dBxOav = FUmIz00KvBJa2.currvj9QRUUPOWY4Ouser?.avatar {
           ProfileImageView(
             avatar: avajoEEIb3dBxOav,
-            username: FUmIz00KvBJa2.currentUser?.username ?? "",
+            username: FUmIz00KvBJa2.currvj9QRUUPOWY4Ouser?.username ?? "",
             size: 115,
             subSize: 32
           )
         } else {
           ProfileImageView(
             avatar: "icove_logo",
-            username: FUmIz00KvBJa2.currentUser?.username ?? "",
+            username: FUmIz00KvBJa2.currvj9QRUUPOWY4Ouser?.username ?? "",
             size: 115,
             subSize: 32
           )
@@ -182,10 +182,10 @@ struct EditProfileView: View {
     let viTiNWw93cVOn = pTN8hZ9kCDZmYuname.trimmingCharacters(in: .whitespacesAndNewlines)
     guard !viTiNWw93cVOn.isEmpty else { return }
 
-    FUmIz00KvBJa2.updateUsername(viTiNWw93cVOn)
+    FUmIz00KvBJa2.updunamespsqxOby9PquA(viTiNWw93cVOn)
 
     if let gGdHWvOquOIBy = selmgUW9WZvxFvNWaI {
-      FUmIz00KvBJa2.updateAvatar(gGdHWvOquOIBy)
+      FUmIz00KvBJa2.updavaiyCs1j96Lelzs(gGdHWvOquOIBy)
       selmgUW9WZvxFvNWaI = nil
     }
 

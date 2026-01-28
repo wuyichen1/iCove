@@ -10,7 +10,7 @@
 
 **排查步骤**：
 1. 打开 `Models/PaymentModels.swift` 文件
-2. 检查 `diamondPackages` 数组中的 `productId`
+2. 检查 `diaPckgscQLNBm8gVonHu` 数组中的 `productId`
 3. 确保与 App Store Connect 中的产品 ID **完全一致**（包括大小写）
 
 **当前配置的产品 ID**：

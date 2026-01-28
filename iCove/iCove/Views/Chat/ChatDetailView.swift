@@ -16,8 +16,8 @@ struct ChatDetailView: View {
   let conversationId: String
   let otherUserId: String
   @EnvironmentObject var router: Router
-  @EnvironmentObject var aumanE2ZBeaqioilk: AuthenticationManager
-  @StateObject private var ctdtVmMj14NObPYFLCj: ChatDetailViewModel
+  @EnvironmentObject var aumanE2ZBeaqioilk: AuthManagA645b8Y0Aod3aVmod
+  @StateObject private var ctdtVmMj14NObPYFLCj: ChatDeth7xaLfsJnyiaYVmod
   @State private var repblosheetdd0PsyA3rHbiN = false
   @State private var blodiagJAtmqvn88cjR = false
   @State private var blouidpZnL4q6TFHXHV: String? = nil
@@ -27,16 +27,16 @@ struct ChatDetailView: View {
   #endif
 
   private var filteredMessages: [Message] {
-    ctdtVmMj14NObPYFLCj.messages.filter { $0.conversationId == conversationId }
+    ctdtVmMj14NObPYFLCj.W9fdBCK2PwNT9.filter { $0.conversationId == conversationId }
   }
 
   init(conversationId: String, otherUserId: String) {
     self.conversationId = conversationId
     self.otherUserId = otherUserId
     _ctdtVmMj14NObPYFLCj = StateObject(
-      wrappedValue: ChatDetailViewModel(
-        conversationId: conversationId,
-        otherUserId: otherUserId
+      wrappedValue: ChatDeth7xaLfsJnyiaYVmod(
+        cvidAQ11yFJplzflU: conversationId,
+        ouid9I27rq3XslYVV: otherUserId
       )
     )
   }
@@ -77,7 +77,7 @@ struct ChatDetailView: View {
     #if DEBUG
       .enableInjection()
     #endif
-    .animation(.easeInOut(duration: 0.2), value: ctdtVmMj14NObPYFLCj.recordingErrorMessage != nil)
+    .animation(.easeInOut(duration: 0.2), value: ctdtVmMj14NObPYFLCj.oQJFpzwEuhOCverr != nil)
   }
 
   // MARK: - Top Navigation Bar
@@ -99,7 +99,7 @@ struct ChatDetailView: View {
       .ignoresSafeArea(edges: .top)
 
       HStack(spacing: 12) {
-        if let ohuserlCI4zzXt8KJEb = ctdtVmMj14NObPYFLCj.otherUser {
+        if let ohuserlCI4zzXt8KJEb = ctdtVmMj14NObPYFLCj.othWYFKvCmorLqVV {
           if let avaNB07ZePIlnh0b = ohuserlCI4zzXt8KJEb.avatar {
             DynamicImage(imageName: avaNB07ZePIlnh0b)
               .frame(width: 40, height: 40)
@@ -142,9 +142,10 @@ struct ChatDetailView: View {
           ForEach(filteredMessages) { msgHKAo8eMn5mdVJ in
             MsgBubF87zGlqlutlLx(
               msgrf8eAfHnXCGIL: msgHKAo8eMn5mdVJ,
-              isfrocurhelhF33uQZmia: msgHKAo8eMn5mdVJ.senderId == aumanE2ZBeaqioilk.currentUser?.id,
-              othF4yYLpbl5slTA: ctdtVmMj14NObPYFLCj.otherUser,
-              curaxrNHJOZfOKzQ: aumanE2ZBeaqioilk.currentUser
+              isfrocurhelhF33uQZmia: msgHKAo8eMn5mdVJ.senderId
+                == aumanE2ZBeaqioilk.currvj9QRUUPOWY4Ouser?.id,
+              othF4yYLpbl5slTA: ctdtVmMj14NObPYFLCj.othWYFKvCmorLqVV,
+              curaxrNHJOZfOKzQ: aumanE2ZBeaqioilk.currvj9QRUUPOWY4Ouser
             )
             .id(msgHKAo8eMn5mdVJ.id)
           }
@@ -159,7 +160,7 @@ struct ChatDetailView: View {
           proxy.scrollTo(lastmsgk1maMxjDsQllK.id, anchor: .bottom)
         }
       }
-      .onChange(of: ctdtVmMj14NObPYFLCj.messages.count) { _, _ in
+      .onChange(of: ctdtVmMj14NObPYFLCj.W9fdBCK2PwNT9.count) { _, _ in
         if let lastmsgk1maMxjDsQllK = filteredMessages.last {
           withAnimation {
             proxy.scrollTo(lastmsgk1maMxjDsQllK.id, anchor: .bottom)
@@ -174,40 +175,40 @@ struct ChatDetailView: View {
   private var potbary7dSUqnasb0bv: some View {
     HStack(spacing: 0) {
       Button(action: {
-        ctdtVmMj14NObPYFLCj.toggleAttachmentMenu()
+        ctdtVmMj14NObPYFLCj.togzxj4RWZ5iWkLD()
       }) {
         Image(
-          systemName: ctdtVmMj14NObPYFLCj.showAttachmentMenu
-            || ctdtVmMj14NObPYFLCj.showRecordingButton
+          systemName: ctdtVmMj14NObPYFLCj.xUUF5t6Gbyhne
+            || ctdtVmMj14NObPYFLCj.sBZVfHlN89O0Y
             ? "xmark" : "plus"
         )
         .font(.system(size: 20, weight: .bold))
         .foregroundColor(
-          ctdtVmMj14NObPYFLCj.showAttachmentMenu || ctdtVmMj14NObPYFLCj.showRecordingButton
+          ctdtVmMj14NObPYFLCj.xUUF5t6Gbyhne || ctdtVmMj14NObPYFLCj.sBZVfHlN89O0Y
             ? Color("yinguanglv") : Color.black
         )
         .frame(width: 46, height: 46)
         .background(
-          ctdtVmMj14NObPYFLCj.showAttachmentMenu || ctdtVmMj14NObPYFLCj.showRecordingButton
+          ctdtVmMj14NObPYFLCj.xUUF5t6Gbyhne || ctdtVmMj14NObPYFLCj.sBZVfHlN89O0Y
             ? Color.black : Color("yinguanglv")
         )
         .clipShape(Circle())
       }
       .padding(.trailing, 16)
 
-      if ctdtVmMj14NObPYFLCj.showAttachmentMenu {
+      if ctdtVmMj14NObPYFLCj.xUUF5t6Gbyhne {
         menumuG694R6WA9l4
       }
 
-      if ctdtVmMj14NObPYFLCj.showRecordingButton {
+      if ctdtVmMj14NObPYFLCj.sBZVfHlN89O0Y {
         recordingButton
       }
 
       HStack(spacing: 12) {
-        if !ctdtVmMj14NObPYFLCj.showRecordingButton && !ctdtVmMj14NObPYFLCj.showAttachmentMenu {
+        if !ctdtVmMj14NObPYFLCj.sBZVfHlN89O0Y && !ctdtVmMj14NObPYFLCj.xUUF5t6Gbyhne {
           HStack(spacing: 12) {
             ZStack(alignment: .leading) {
-              if ctdtVmMj14NObPYFLCj.inputText.isEmpty {
+              if ctdtVmMj14NObPYFLCj.inpfBw841kKnHeft.isEmpty {
                 Text("Say something...")
                   .font(.system(size: 16))
                   .foregroundColor(.white.opacity(0.4))
@@ -215,7 +216,7 @@ struct ChatDetailView: View {
                   .padding(.vertical, 15)
                   .allowsHitTesting(false)
               }
-              TextField("", text: $ctdtVmMj14NObPYFLCj.inputText)
+              TextField("", text: $ctdtVmMj14NObPYFLCj.inpfBw841kKnHeft)
                 .font(.system(size: 16))
                 .foregroundColor(.white)
                 .padding(.horizontal, 16)
@@ -224,8 +225,8 @@ struct ChatDetailView: View {
             }
 
             Button(action: {
-              if let curIdCeZH7925UDr0C = aumanE2ZBeaqioilk.currentUser?.id {
-                ctdtVmMj14NObPYFLCj.sendMessage(currentUserId: curIdCeZH7925UDr0C)
+              if let curIdCeZH7925UDr0C = aumanE2ZBeaqioilk.currvj9QRUUPOWY4Ouser?.id {
+                ctdtVmMj14NObPYFLCj.sendb9kzu5TB4hAkL(cuidoM2I0g1VnXoXW: curIdCeZH7925UDr0C)
                 UIApplication.shared.sendAction(
                   #selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
               }
@@ -236,7 +237,8 @@ struct ChatDetailView: View {
                 .frame(width: 46, height: 46)
             }
             .disabled(
-              ctdtVmMj14NObPYFLCj.inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+              ctdtVmMj14NObPYFLCj.inpfBw841kKnHeft.trimmingCharacters(in: .whitespacesAndNewlines)
+                .isEmpty)
           }
           .background(Color(red: 25 / 255, green: 33 / 255, blue: 38 / 255))
           .cornerRadius(12)
@@ -252,7 +254,7 @@ struct ChatDetailView: View {
   private var recderrh6YNGOHlUh48d: some View {
     VStack {
       Spacer()
-      if let errTadAd5zHdkbET = ctdtVmMj14NObPYFLCj.recordingErrorMessage {
+      if let errTadAd5zHdkbET = ctdtVmMj14NObPYFLCj.oQJFpzwEuhOCverr {
         Text(errTadAd5zHdkbET)
           .font(.system(size: 14))
           .foregroundColor(.white)
@@ -272,7 +274,7 @@ struct ChatDetailView: View {
   private var menumuG694R6WA9l4: some View {
     HStack(spacing: 12) {
       Button(action: {
-        ctdtVmMj14NObPYFLCj.selectAttachmentOption(.voice)
+        ctdtVmMj14NObPYFLCj.selex31VUBVkwrtCB(.voiceGR1jUIKQ73wI7)
       }) {
         VStack(spacing: 8) {
           Image("puBQrcebakwOe3Fb")
@@ -287,12 +289,12 @@ struct ChatDetailView: View {
 
       ZStack {
         ImagePickerButton { slecr3n6ikDc2glUAimg in
-          if let curIdhOKCGE3VIU5mn = aumanE2ZBeaqioilk.currentUser?.id,
-            let imgOQizpPbX5rB3F = ImageService.shared.saveImageToLocal(
-              slecr3n6ikDc2glUAimg, prefix: "chat", userId: curIdhOKCGE3VIU5mn)
+          if let curIdhOKCGE3VIU5mn = aumanE2ZBeaqioilk.currvj9QRUUPOWY4Ouser?.id,
+            let imgOQizpPbX5rB3F = ImgservxfMOg08cd0r7q.shared.savTolocalGnA4faaPYNYmz(
+              slecr3n6ikDc2glUAimg, prefix9Z9hDXriSUPhB: "chat", uid0UcUIvLw3HhOS: curIdhOKCGE3VIU5mn)
           {
-            ctdtVmMj14NObPYFLCj.sendImage(
-              imageName: imgOQizpPbX5rB3F, currentUserId: curIdhOKCGE3VIU5mn)
+            ctdtVmMj14NObPYFLCj.sndimgTJyqAu4MxapC3(
+              img02k8jBULdZ5To: imgOQizpPbX5rB3F, cutaQz3mfJvoGWS: curIdhOKCGE3VIU5mn)
           }
         }
 
@@ -310,7 +312,7 @@ struct ChatDetailView: View {
 
       // 第三个选项：视频通话 !!!!!!
       // Button(action: {
-      //   ctdtVmMj14NObPYFLCj.selectAttachmentOption(.videoCall)
+      //   ctdtVmMj14NObPYFLCj.selex31VUBVkwrtCB(.videoCall)
       //   router.push(.videoCall(conversationId: conversationId, otherUserId: otherUserId))
       // }) {
       //   VStack(spacing: 8) {
@@ -330,7 +332,7 @@ struct ChatDetailView: View {
   private var recordingButton: some View {
     HStack {
       Spacer()
-      Text(ctdtVmMj14NObPYFLCj.isRecording ? "Recording..." : "Hold to Speak")
+      Text(ctdtVmMj14NObPYFLCj.recingqavn8VXVjnhFw ? "Recording..." : "Hold to Speak")
         .font(.custom("FredokaOne-Regular", size: 16))
         .foregroundColor(.black)
       Spacer()
@@ -352,16 +354,16 @@ struct ChatDetailView: View {
           }
         }
         .onEnded { c7QczyjlnZ0nu in
-          if ctdtVmMj14NObPYFLCj.isRecording {
-            if let curIdEe7d6oq0Vd2XJ = aumanE2ZBeaqioilk.currentUser?.id {
-              ctdtVmMj14NObPYFLCj.stopRecording(currentUserId: curIdEe7d6oq0Vd2XJ)
+          if ctdtVmMj14NObPYFLCj.recingqavn8VXVjnhFw {
+            if let curIdEe7d6oq0Vd2XJ = aumanE2ZBeaqioilk.currvj9QRUUPOWY4Ouser?.id {
+              ctdtVmMj14NObPYFLCj.stop45lI9JRtaBQBg(c6GQKa0ch0YKY: curIdEe7d6oq0Vd2XJ)
             }
           }
         }
     )
     .onChange(of: recordingGestureState) { oldValue, foO5F9emByVKj in
-      if foO5F9emByVKj == .pressing && !ctdtVmMj14NObPYFLCj.isRecording {
-        ctdtVmMj14NObPYFLCj.startRecording()
+      if foO5F9emByVKj == .pressing && !ctdtVmMj14NObPYFLCj.recingqavn8VXVjnhFw {
+        ctdtVmMj14NObPYFLCj.startd9fMj5HrwT7X4()
       }
     }
   }
@@ -381,7 +383,7 @@ struct MsgBubF87zGlqlutlLx: View {
   let othF4yYLpbl5slTA: User?
   let curaxrNHJOZfOKzQ: User?
 
-  @StateObject private var audserRfn5YlM76i6Hw = AudioService.shared
+  @StateObject private var audserRfn5YlM76i6Hw = AudServIjFimBlyqhPqL.shared
 
   private var tf485F8fjU0kCDO: DateFormatter {
     let f9FlyALQRJ44dZ = DateFormatter()
@@ -480,7 +482,7 @@ struct MsgBubF87zGlqlutlLx: View {
 struct Audbubg3mfsZYl1gedv: View {
   let audwaGpngjKcv9hQ: String
   let isfrocurhelhF33uQZmia: Bool
-  @ObservedObject var audserRfn5YlM76i6Hw: AudioService
+  @ObservedObject var audserRfn5YlM76i6Hw: AudServIjFimBlyqhPqL
 
   @State private var durasLt9haRBYP8bG: TimeInterval = 0
   @State private var ispingvOIHj7JFNcMl9: Bool = false
@@ -515,12 +517,13 @@ struct Audbubg3mfsZYl1gedv: View {
     .onAppear {
       loadaudXffOxtV8slTvA()
     }
-    .onChange(of: audserRfn5YlM76i6Hw.isPlaying) { _, foO5F9emByVKj in
+    .onChange(of: audserRfn5YlM76i6Hw.ispingMRBbNuQyubCWx) { _, foO5F9emByVKj in
       ispingvOIHj7JFNcMl9 =
-        foO5F9emByVKj && audserRfn5YlM76i6Hw.currentPlayingURL == audrlNjw1umz8eZE0h
+        foO5F9emByVKj && audserRfn5YlM76i6Hw.cururlgodvV9Jg90QXr == audrlNjw1umz8eZE0h
     }
-    .onChange(of: audserRfn5YlM76i6Hw.currentPlayingURL) { _, eP26ktyOkIg6q in
-      ispingvOIHj7JFNcMl9 = eP26ktyOkIg6q == audrlNjw1umz8eZE0h && audserRfn5YlM76i6Hw.isPlaying
+    .onChange(of: audserRfn5YlM76i6Hw.cururlgodvV9Jg90QXr) { _, eP26ktyOkIg6q in
+      ispingvOIHj7JFNcMl9 =
+        eP26ktyOkIg6q == audrlNjw1umz8eZE0h && audserRfn5YlM76i6Hw.ispingMRBbNuQyubCWx
     }
   }
 
@@ -528,12 +531,12 @@ struct Audbubg3mfsZYl1gedv: View {
     guard let url9vG4HAsQCNMtg = audrlNjw1umz8eZE0h else { return }
 
     if ispingvOIHj7JFNcMl9 {
-      if audserRfn5YlM76i6Hw.currentPlayingURL == url9vG4HAsQCNMtg {
-        audserRfn5YlM76i6Hw.stopPlaying()
+      if audserRfn5YlM76i6Hw.cururlgodvV9Jg90QXr == url9vG4HAsQCNMtg {
+        audserRfn5YlM76i6Hw.stopWuAtWgjNjseJu()
       }
     } else {
       do {
-        try audserRfn5YlM76i6Hw.playAudio(from: url9vG4HAsQCNMtg)
+        try audserRfn5YlM76i6Hw.playEIFmrihmHyTVX(from: url9vG4HAsQCNMtg)
       } catch {
         print("Failed to play audio: \(error)")
       }
@@ -563,5 +566,5 @@ struct Audbubg3mfsZYl1gedv: View {
 // #Preview {
 //   ChatDetailView(conversationId: "conv_001", otherUserId: "user_002")
 //     .environmentObject(Router())
-//     .environmentObject(AuthenticationManager())
+//     .environmentObject(AuthManagA645b8Y0Aod3aVmod())
 // }

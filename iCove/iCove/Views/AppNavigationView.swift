@@ -14,8 +14,8 @@ import SwiftUI
 /// 导航容器视图 - 承载 NavigationStack
 struct AppNavigationView<Content: View>: View {
   @EnvironmentObject var router: Router
-  @EnvironmentObject var authManager: AuthenticationManager
-  @EnvironmentObject var paymentViewModel: PaymentViewModel
+  @EnvironmentObject var authManager: AuthManagA645b8Y0Aod3aVmod
+  @EnvironmentObject var paymentViewModel: Payn8tqsrRpmXPZWVmod
   let content: () -> Content
 
   #if DEBUG
@@ -110,7 +110,7 @@ struct AppNavigationView<Content: View>: View {
   /// 根据视频 ID 创建详情页
   @ViewBuilder
   private func detailView(for videoId: String) -> some View {
-    let videos = VideoDataService.shared.loadVideos()
+    let videos = VdoServ63WnoDbxzFob0.shared.loc5f3UJvuhXYjoD()
     if let video = videos.first(where: { $0.id == videoId }) {
       VideoDetailView(video: video)
         .environmentObject(router)

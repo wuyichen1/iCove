@@ -1,5 +1,5 @@
 //
-//  VideoDataService.swift
+//  VdoServ63WnoDbxzFob0.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/14.
@@ -7,67 +7,63 @@
 
 import Foundation
 
-protocol VideoDataServiceProtocol {
-  func loadVideos() -> [VideoItem]
-  func saveVideos(_ videos: [VideoItem])
-  func addVideo(_ video: VideoItem)
-  func updateVideo(_ video: VideoItem)
-  func deleteVideo(id: String)
+protocol VdoServproc63WnoDbxzFob0 {
+  func loc5f3UJvuhXYjoD() -> [VideoItem]
+  func svSqlFE3ULuRtoH(_ rAIVHT5oIl1m4: [VideoItem])
+  func addXIOHH83trw3Bg(_ b5tIDyhypErQ7: VideoItem)
+  func upduCnYQ7R2p8zJ7(_ C2SXSxh6CnoId: VideoItem)
+  func deldfb2Q12WwQ6hu(fxpCMTYSJuxny: String)
 }
 
-class VideoDataService: VideoDataServiceProtocol {
-  static let shared = VideoDataService()
+class VdoServ63WnoDbxzFob0: VdoServproc63WnoDbxzFob0 {
+  static let shared = VdoServ63WnoDbxzFob0()
 
-  private let videosKey = "saved_videos"
+  private let vkey3l5k8ZxDbEMLR = "3wBCZp3nhICp3"
 
   private init() {
-    if loadVideos().isEmpty {
-      initializeSampleVideos()
+    if loc5f3UJvuhXYjoD().isEmpty {
+      initCvRtb8OC1h22A()
     }
 
   }
 
-  // MARK: - Public Methods
-
-  func loadVideos() -> [VideoItem] {
-    guard let data = UserDefaults.standard.data(forKey: videosKey),
-      let videos = try? JSONDecoder().decode([VideoItem].self, from: data)
+  func loc5f3UJvuhXYjoD() -> [VideoItem] {
+    guard let Bkim5OXjSIBcx = UserDefaults.standard.data(forKey: vkey3l5k8ZxDbEMLR),
+      let TUJDU7IUMfgPE = try? JSONDecoder().decode([VideoItem].self, from: Bkim5OXjSIBcx)
     else {
       return []
     }
-    return videos
+    return TUJDU7IUMfgPE
   }
 
-  func saveVideos(_ videos: [VideoItem]) {
-    if let data = try? JSONEncoder().encode(videos) {
-      UserDefaults.standard.set(data, forKey: videosKey)
+  func svSqlFE3ULuRtoH(_ rAIVHT5oIl1m4: [VideoItem]) {
+    if let vPdo3KPI1ginP = try? JSONEncoder().encode(rAIVHT5oIl1m4) {
+      UserDefaults.standard.set(vPdo3KPI1ginP, forKey: vkey3l5k8ZxDbEMLR)
     }
   }
 
-  func addVideo(_ video: VideoItem) {
-    var videos = loadVideos()
-    videos.insert(video, at: 0)
-    saveVideos(videos)
+  func addXIOHH83trw3Bg(_ b5tIDyhypErQ7: VideoItem) {
+    var rAIVHT5oIl1m4 = loc5f3UJvuhXYjoD()
+    rAIVHT5oIl1m4.insert(b5tIDyhypErQ7, at: 0)
+    svSqlFE3ULuRtoH(rAIVHT5oIl1m4)
   }
 
-  func updateVideo(_ video: VideoItem) {
-    var videos = loadVideos()
-    if let index = videos.firstIndex(where: { $0.id == video.id }) {
-      videos[index] = video
-      saveVideos(videos)
+  func upduCnYQ7R2p8zJ7(_ C2SXSxh6CnoId: VideoItem) {
+    var rAIVHT5oIl1m4 = loc5f3UJvuhXYjoD()
+    if let index = rAIVHT5oIl1m4.firstIndex(where: { $0.id == C2SXSxh6CnoId.id }) {
+      rAIVHT5oIl1m4[index] = C2SXSxh6CnoId
+      svSqlFE3ULuRtoH(rAIVHT5oIl1m4)
     }
   }
 
-  func deleteVideo(id: String) {
-    var videos = loadVideos()
-    videos.removeAll { $0.id == id }
-    saveVideos(videos)
+  func deldfb2Q12WwQ6hu(fxpCMTYSJuxny: String) {
+    var rAIVHT5oIl1m4 = loc5f3UJvuhXYjoD()
+    rAIVHT5oIl1m4.removeAll { $0.id == fxpCMTYSJuxny }
+    svSqlFE3ULuRtoH(rAIVHT5oIl1m4)
   }
 
-  // MARK: - Private Methods
-
-  private func initializeSampleVideos() {
-    let sampleVideos: [VideoItem] = [
+  private func initCvRtb8OC1h22A() {
+    let yzdyEklAn2P2n: [VideoItem] = [
       VideoItem(
         id: "video_001",
         imageName: "RClW0Qk7ObNtk86q1",
@@ -132,6 +128,6 @@ class VideoDataService: VideoDataServiceProtocol {
       ),
     ]
 
-    saveVideos(sampleVideos)
+    svSqlFE3ULuRtoH(yzdyEklAn2P2n)
   }
 }

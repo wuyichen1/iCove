@@ -27,13 +27,13 @@ struct iCoveApp: App {
     #endif
   }
 
-  @StateObject private var authManager = AuthenticationManager()
+  @StateObject private var authManager = AuthManagA645b8Y0Aod3aVmod()
 
-  // 创建全局的 PaymentViewModel，在 app 启动时初始化
+  // 创建全局的 Payn8tqsrRpmXPZWVmod，在 app 启动时初始化
   // 注意：这里先使用临时的 authManager，在 RootView 中会更新为实际的 authManager
-  @StateObject private var paymentViewModel: PaymentViewModel = {
-    let tempAuthManager = AuthenticationManager()
-    return PaymentViewModel(authManager: tempAuthManager, autoInitialize: true)
+  @StateObject private var paymentViewModel: Payn8tqsrRpmXPZWVmod = {
+    let tempAuthManager = AuthManagA645b8Y0Aod3aVmod()
+    return Payn8tqsrRpmXPZWVmod(IS2i7T25V612b: tempAuthManager, autoInitialize: true)
   }()
 
   var body: some Scene {
@@ -46,8 +46,8 @@ struct iCoveApp: App {
 }
 
 struct RootView: View {
-  @EnvironmentObject var authManager: AuthenticationManager
-  @EnvironmentObject var paymentViewModel: PaymentViewModel
+  @EnvironmentObject var authManager: AuthManagA645b8Y0Aod3aVmod
+  @EnvironmentObject var paymentViewModel: Payn8tqsrRpmXPZWVmod
   @StateObject private var router = Router()
 
   #if DEBUG
@@ -56,7 +56,7 @@ struct RootView: View {
 
   var body: some View {
     Group {
-      if authManager.isAuthenticated {
+      if authManager.isAutheda3IsmZzs015L5 {
         MainTabView()
           .environmentObject(authManager)
           .environmentObject(paymentViewModel)
@@ -69,9 +69,9 @@ struct RootView: View {
         .environmentObject(router)
       }
     }
-    .animation(.easeInOut(duration: 0.3), value: authManager.isAuthenticated)
+    .animation(.easeInOut(duration: 0.3), value: authManager.isAutheda3IsmZzs015L5)
     .onAppear {
-      paymentViewModel.updateAuthManager(authManager)
+      paymentViewModel.updAuma7Cif2ltv9c65t(authManager)
     }
     #if DEBUG
       .enableInjection()

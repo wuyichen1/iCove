@@ -15,7 +15,7 @@ import SwiftUI
 struct VideoDetailView: View {
   let video: VideoItem
   @EnvironmentObject var router: Router
-  @EnvironmentObject var fggp6oQ8ajgQJ: AuthenticationManager
+  @EnvironmentObject var fggp6oQ8ajgQJ: AuthManagA645b8Y0Aod3aVmod
   @StateObject private var vdVmM7Y8nCqxkUdxr: VdoModRfABf7Hmv5B3L
   @State private var shocomxEwZWd9vW0DWQ = false
   @State private var shorepLN0qrzU93ezm5 = false
@@ -146,7 +146,7 @@ struct VideoDetailView: View {
         onBack: {
           router.pop()
         },
-        isMoreVisible: fggp6oQ8ajgQJ.currentUser?.id != video.authorId,
+        isMoreVisible: fggp6oQ8ajgQJ.currvj9QRUUPOWY4Ouser?.id != video.authorId,
         onMore: {
           reuid1Hjpq9xSCefWC = video.authorId
           shorepLN0qrzU93ezm5 = true
@@ -202,17 +202,17 @@ class VdoModRfABf7Hmv5B3L: ObservableObject {
   @Published var aue7tBYETD3uMWE: User?
   @Published var comcnt1yKL9CDOTbUPL: Int = 0
 
-  private let vdoserdoTQkhB26w63l: VideoDataServiceProtocol
-  private let comserPgOQJOSzvXa7g: CommentDataServiceProtocol
-  private let auser6aU9JT6MzLuR5: AuthenticationServiceProtocol
-  private weak var fggp6oQ8ajgQJ: AuthenticationManager?
+  private let vdoserdoTQkhB26w63l: VdoServproc63WnoDbxzFob0
+  private let comserPgOQJOSzvXa7g: ComNAQ136mFLYkZJServproc
+  private let auser6aU9JT6MzLuR5: Authsdmd0VXzbAnDYServProc
+  private weak var fggp6oQ8ajgQJ: AuthManagA645b8Y0Aod3aVmod?
 
   init(
     video: VideoItem,
-    vdoserdoTQkhB26w63l: VideoDataServiceProtocol = VideoDataService.shared,
-    comserPgOQJOSzvXa7g: CommentDataServiceProtocol = CommentDataService.shared,
-    auser6aU9JT6MzLuR5: AuthenticationServiceProtocol = AuthenticationService.shared,
-    fggp6oQ8ajgQJ: AuthenticationManager? = nil
+    vdoserdoTQkhB26w63l: VdoServproc63WnoDbxzFob0 = VdoServ63WnoDbxzFob0.shared,
+    comserPgOQJOSzvXa7g: ComNAQ136mFLYkZJServproc = ComNAQ136mFLYkZJServ.shared,
+    auser6aU9JT6MzLuR5: Authsdmd0VXzbAnDYServProc = Authsdmd0VXzbAnDYServ.shared,
+    fggp6oQ8ajgQJ: AuthManagA645b8Y0Aod3aVmod? = nil
   ) {
     self.vdowndXDeVKvaItC = video
     self.vdoserdoTQkhB26w63l = vdoserdoTQkhB26w63l
@@ -272,10 +272,12 @@ class VdoModRfABf7Hmv5B3L: ObservableObject {
     NotificationCenter.default.removeObserver(self)
   }
 
-  func setau9acW6L3twRIdS(_ fggp6oQ8ajgQJ: AuthenticationManager) {
+  func setau9acW6L3twRIdS(_ fggp6oQ8ajgQJ: AuthManagA645b8Y0Aod3aVmod) {
     self.fggp6oQ8ajgQJ = fggp6oQ8ajgQJ
-    if let currentUser = fggp6oQ8ajgQJ.currentUser, currentUser.id == vdowndXDeVKvaItC.authorId {
-      aue7tBYETD3uMWE = currentUser
+    if let curcdUbPGWeWrHDn = fggp6oQ8ajgQJ.currvj9QRUUPOWY4Ouser,
+      curcdUbPGWeWrHDn.id == vdowndXDeVKvaItC.authorId
+    {
+      aue7tBYETD3uMWE = curcdUbPGWeWrHDn
     }
     loadcnttc3bFoIhvq1o2()
   }
@@ -287,13 +289,13 @@ class VdoModRfABf7Hmv5B3L: ObservableObject {
     } else {
       vdowndXDeVKvaItC.likeCount = max(0, vdowndXDeVKvaItC.likeCount - 1)
     }
-    vdoserdoTQkhB26w63l.updateVideo(vdowndXDeVKvaItC)
+    vdoserdoTQkhB26w63l.upduCnYQ7R2p8zJ7(vdowndXDeVKvaItC)
   }
 
   private func loadauWIW09n9WMBwMK() {
-    aue7tBYETD3uMWE = auser6aU9JT6MzLuR5.getUserById(vdowndXDeVKvaItC.authorId)
+    aue7tBYETD3uMWE = auser6aU9JT6MzLuR5.getbyidQwpUuIWnzzs99(vdowndXDeVKvaItC.authorId)
 
-    if aue7tBYETD3uMWE == nil, let curL5QaQqVhnOWsu = fggp6oQ8ajgQJ?.currentUser,
+    if aue7tBYETD3uMWE == nil, let curL5QaQqVhnOWsu = fggp6oQ8ajgQJ?.currvj9QRUUPOWY4Ouser,
       curL5QaQqVhnOWsu.id == vdowndXDeVKvaItC.authorId
     {
       aue7tBYETD3uMWE = curL5QaQqVhnOWsu
@@ -301,13 +303,13 @@ class VdoModRfABf7Hmv5B3L: ObservableObject {
   }
 
   private func loadcnttc3bFoIhvq1o2() {
-    let n6dXuVrxrkgzd = comserPgOQJOSzvXa7g.loadComments(for: vdowndXDeVKvaItC.id)
+    let n6dXuVrxrkgzd = comserPgOQJOSzvXa7g.locom1GrYz4YRiuJOq(for: vdowndXDeVKvaItC.id)
     let HuOH8bJg0TF4q = flitb2TFkKz4FGj7N(n6dXuVrxrkgzd)
     comcnt1yKL9CDOTbUPL = HuOH8bJg0TF4q.count
   }
 
   private func flitb2TFkKz4FGj7N(_ cmtsEkOTgC4a9jVcO: [Comment]) -> [Comment] {
-    guard let blouidMRw5H0CE3upXU = fggp6oQ8ajgQJ?.currentUser?.blockedUserIds,
+    guard let blouidMRw5H0CE3upXU = fggp6oQ8ajgQJ?.currvj9QRUUPOWY4Ouser?.blockedUserIds,
       !blouidMRw5H0CE3upXU.isEmpty
     else {
       return cmtsEkOTgC4a9jVcO

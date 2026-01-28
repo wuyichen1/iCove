@@ -12,12 +12,12 @@ import SwiftUI
 #endif
 
 struct HomeView: View {
-  @StateObject private var homeVmjdlzoNirJwfU3 = HomeViewModel()
+  @StateObject private var homeVmjdlzoNirJwfU3 = Home8T3vLYQ252bVOVmod()
   @State private var unlocktNhKCw8OwGS0t = false
   @State private var bloHwHbzDrKcFZIB = false
   @State private var blouidlt760IOhzkW9F: String? = nil
   @EnvironmentObject var router: Router
-  @EnvironmentObject var aumaCUWZltQs5HPyQ: AuthenticationManager
+  @EnvironmentObject var aumaCUWZltQs5HPyQ: AuthManagA645b8Y0Aod3aVmod
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -41,15 +41,15 @@ struct HomeView: View {
 
       if unlocktNhKCw8OwGS0t {
         UnlockConfirmDialog(
-          hasEnoughBalance: (aumaCUWZltQs5HPyQ.currentUser?.balance ?? 0) >= 200,
+          hasEnoughBalance: (aumaCUWZltQs5HPyQ.currvj9QRUUPOWY4Ouser?.balance ?? 0) >= 200,
           onCancel: {
             unlocktNhKCw8OwGS0t = false
           },
           onConfirm: {
             unlocktNhKCw8OwGS0t = false
-            let fGVDGutNgJkr8 = (aumaCUWZltQs5HPyQ.currentUser?.balance ?? 0) >= 200
+            let fGVDGutNgJkr8 = (aumaCUWZltQs5HPyQ.currvj9QRUUPOWY4Ouser?.balance ?? 0) >= 200
             if fGVDGutNgJkr8 {
-              aumaCUWZltQs5HPyQ.deductBalance(200)
+              aumaCUWZltQs5HPyQ.dedPlf7hXe73EGoR(200)
               router.push(.ai)
             } else {
               router.push(.wallet)
@@ -62,7 +62,7 @@ struct HomeView: View {
     .blockUserDialog(isPresented: $bloHwHbzDrKcFZIB, uidK1uO6OuOGNky0: blouidlt760IOhzkW9F)
     .navigationBarHidden(true)
     .onAppear {
-      homeVmjdlzoNirJwfU3.updateAuthManager(aumaCUWZltQs5HPyQ)
+      homeVmjdlzoNirJwfU3.updAuma7Cif2ltv9c65t(aumaCUWZltQs5HPyQ)
     }
     #if DEBUG
       .enableInjection()
@@ -175,12 +175,12 @@ struct HomeView: View {
 
         ScrollView {
           Group {
-            if homeVmjdlzoNirJwfU3.isLoading && homeVmjdlzoNirJwfU3.videos.isEmpty {
+            if homeVmjdlzoNirJwfU3.vdosZ4quBSX4FRJNb.isEmpty {
               ProgressView("Loading...")
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 40)
                 .padding(.horizontal, 20)
-            } else if homeVmjdlzoNirJwfU3.videos.isEmpty {
+            } else if homeVmjdlzoNirJwfU3.vdosZ4quBSX4FRJNb.isEmpty {
               EmptyPlaceholderView()
             } else {
               vdoGridCzet9yZf7eXm4
@@ -207,18 +207,18 @@ struct HomeView: View {
         GridItem(.fixed(cawdPvXk0Kj0Izw8a), spacing: 20),
       ], spacing: 16
     ) {
-      ForEach(homeVmjdlzoNirJwfU3.videos) { video in
+      ForEach(homeVmjdlzoNirJwfU3.vdosZ4quBSX4FRJNb) { vdNFv9O0ej5hmqw in
         Vdocard7h6FK0PGkN3cd(
           cdwdrOSeXsSp0Ug3k: cawdPvXk0Kj0Izw8a,
-          vdoVuG66awy9cJsL: video,
+          vdoVuG66awy9cJsL: vdNFv9O0ej5hmqw,
           onlikejlPDEZySX6stm: {
-            homeVmjdlzoNirJwfU3.toggleLike(for: video)
+            homeVmjdlzoNirJwfU3.toliEdMtmZVDsInnP(for: vdNFv9O0ej5hmqw)
           },
           onp5mmhUnSEipCn: {
-            router.push(.detail(id: video.id))
+            router.push(.detail(id: vdNFv9O0ej5hmqw.id))
           },
           onBloIsLioTo3Y3fNs: {
-            blouidlt760IOhzkW9F = video.authorId
+            blouidlt760IOhzkW9F = vdNFv9O0ej5hmqw.authorId
             bloHwHbzDrKcFZIB = true
           }
         )
@@ -237,7 +237,7 @@ struct Vdocard7h6FK0PGkN3cd: View {
   let onlikejlPDEZySX6stm: () -> Void
   var onp5mmhUnSEipCn: (() -> Void)? = nil
   var onBloIsLioTo3Y3fNs: (() -> Void)? = nil
-  @EnvironmentObject var aumaCUWZltQs5HPyQ: AuthenticationManager
+  @EnvironmentObject var aumaCUWZltQs5HPyQ: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
   @State private var showingReportBlockSheet = false
 
@@ -273,7 +273,7 @@ struct Vdocard7h6FK0PGkN3cd: View {
       .cornerRadius(8)
       .padding(8)
 
-      if aumaCUWZltQs5HPyQ.currentUser?.id != vdoVuG66awy9cJsL.authorId {
+      if aumaCUWZltQs5HPyQ.currvj9QRUUPOWY4Ouser?.id != vdoVuG66awy9cJsL.authorId {
         VStack {
           HStack {
             Spacer()

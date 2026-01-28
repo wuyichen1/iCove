@@ -7,45 +7,45 @@
 支付功能包含以下三个核心文件：
 
 1. **Models/PaymentModels.swift** - 支付相关的数据模型
-2. **Services/PaymentService.swift** - 支付服务，处理 StoreKit 逻辑
-3. **ViewModels/PaymentViewModel.swift** - 支付视图模型，管理支付状态
+2. **Services/PayServnDaWE7QuyO56j.swift** - 支付服务，处理 StoreKit 逻辑
+3. **ViewModels/Payn8tqsrRpmXPZWVmod.swift** - 支付视图模型，管理支付状态
 
 ## 🚀 快速开始
 
-### 1. 在 View 中使用 PaymentViewModel
+### 1. 在 View 中使用 Payn8tqsrRpmXPZWVmod
 
 ```swift
 import SwiftUI
 
 struct PaymentView: View {
-    @StateObject private var paymentViewModel: PaymentViewModel
+    @StateObject private var paymentViewModel: Payn8tqsrRpmXPZWVmod
     @EnvironmentObject var authManager: AuthenticationManager
     
     init(authManager: AuthenticationManager) {
-        _paymentViewModel = StateObject(wrappedValue: PaymentViewModel(authManager: authManager))
+        _paymentViewModel = StateObject(wrappedValue: Payn8tqsrRpmXPZWVmod(authManager: authManager))
     }
     
     var body: some View {
         VStack {
             // 显示产品列表
-            if paymentViewModel.isLoadingProducts {
+            if paymentViewModel.lopingSfYVxI17xwzFY {
                 ProgressView("加载产品中...")
             } else {
                 List(paymentViewModel.products) { product in
                     ProductRow(product: product) {
                         // 点击购买
                         Task {
-                            await paymentViewModel.purchaseProduct(productId: product.id)
+                            await paymentViewModel.relpay7vImdn19ATr15(productId: product.id)
                         }
                     }
                 }
             }
             
             // 显示支付状态
-            if case .success = paymentViewModel.paymentStatus {
+            if case .success = paymentViewModel.stuXwBv2xiiWPj4U {
                 Text("支付成功！")
                     .foregroundColor(.green)
-            } else if case .failed(let message) = paymentViewModel.paymentStatus {
+            } else if case .failed(let message) = paymentViewModel.stuXwBv2xiiWPj4U {
                 Text("支付失败：\(message)")
                     .foregroundColor(.red)
             }
@@ -53,7 +53,7 @@ struct PaymentView: View {
         .onAppear {
             // 初始化支付（如果还未初始化）
             Task {
-                await paymentViewModel.initializePayment()
+                await paymentViewModel.initZKQ7zcla5jX0Y()
             }
         }
     }
@@ -65,7 +65,7 @@ struct PaymentView: View {
 ```swift
 // 购买指定产品
 Task {
-    await paymentViewModel.purchaseProduct(productId: "lvbsvhxcgcrvesor")
+    await paymentViewModel.relpay7vImdn19ATr15(productId: "lvbsvhxcgcrvesor")
 }
 ```
 
@@ -74,7 +74,7 @@ Task {
 ```swift
 // 恢复之前的购买
 Task {
-    await paymentViewModel.restorePurchases()
+    await paymentViewModel.restorePiBwOqacnYVqP()
 }
 ```
 
@@ -82,7 +82,7 @@ Task {
 
 ```swift
 // 在 View 中监听支付状态变化
-switch paymentViewModel.paymentStatus {
+switch paymentViewModel.stuXwBv2xiiWPj4U {
 case .idle:
     // 空闲状态
     break
@@ -115,7 +115,7 @@ case .restored:
 在 `Models/PaymentModels.swift` 中配置产品 ID 和对应的钻石数量：
 
 ```swift
-let diamondPackages: [DiamondPackage] = [
+let diaPckgscQLNBm8gVonHu: [DiamondPackage] = [
     DiamondPackage(productId: "lvbsvhxcgcrvesor", diamonds: 100, packageName: "小包"),
     DiamondPackage(productId: "dxismgcwewhrtezo", diamonds: 500, packageName: "中包"),
     // ... 更多产品
@@ -142,34 +142,34 @@ let diamondPackages: [DiamondPackage] = [
 
 ## 📝 主要功能说明
 
-### PaymentViewModel 主要方法
+### Payn8tqsrRpmXPZWVmod 主要方法
 
-- `initializePayment()` - 初始化支付系统
-- `loadProducts()` - 加载产品列表
-- `purchaseProduct(productId:)` - 购买指定产品
-- `restorePurchases()` - 恢复购买
+- `initZKQ7zcla5jX0Y()` - 初始化支付系统
+- `loadzXWNROryo53Db()` - 加载产品列表
+- `relpay7vImdn19ATr15(productId:)` - 购买指定产品
+- `restorePiBwOqacnYVqP()` - 恢复购买
 - `refreshProducts()` - 刷新产品列表
-- `resetPaymentStatus()` - 重置支付状态
+- `redssf7ssJoNt3ObDB()` - 重置支付状态
 
-### PaymentService 主要方法
+### PayServnDaWE7QuyO56j 主要方法
 
-- `isPaymentServiceAvailable()` - 检查支付服务是否可用
-- `queryProducts(productIds:)` - 查询产品详情
-- `purchaseProduct(_:)` - 购买产品
-- `restorePurchases()` - 恢复购买
-- `finishTransaction(_:)` - 完成交易
-- `clearPendingTransactions()` - 清理待处理交易（iOS）
+- `isAvailjlkIs8sFhRyC5()` - 检查支付服务是否可用
+- `querym7j0xNY0Nr6V3(productIds:)` - 查询产品详情
+- `relpay7vImdn19ATr15(_:)` - 购买产品
+- `restorePiBwOqacnYVqP()` - 恢复购买
+- `finishvQzZS2oVkuJ9q(_:)` - 完成交易
+- `clearRG70yxJRihqqg()` - 清理待处理交易（iOS）
 
 ## 🔄 支付流程
 
-1. **初始化**：调用 `initializePayment()` 检查服务可用性并加载产品
+1. **初始化**：调用 `initZKQ7zcla5jX0Y()` 检查服务可用性并加载产品
 2. **选择产品**：用户选择要购买的产品
-3. **发起购买**：调用 `purchaseProduct(productId:)` 发起购买
+3. **发起购买**：调用 `relpay7vImdn19ATr15(productId:)` 发起购买
 4. **处理结果**：
    - 成功：自动更新用户余额（通过 `AuthenticationManager.addBalance()`）
    - 失败：显示错误信息
    - 取消：用户取消购买
-5. **完成交易**：交易成功后自动调用 `finishTransaction()` 完成交易
+5. **完成交易**：交易成功后自动调用 `finishvQzZS2oVkuJ9q()` 完成交易
 
 ## ⚠️ 注意事项
 

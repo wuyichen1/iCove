@@ -12,9 +12,9 @@ import SwiftUI
 #endif
 
 struct WalletView: View {
-  @EnvironmentObject var a2pv1DU9eRMWzG: AuthenticationManager
+  @EnvironmentObject var a2pv1DU9eRMWzG: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
-  @EnvironmentObject var payVmdEt8htQp1V38FI: PaymentViewModel
+  @EnvironmentObject var payVmdEt8htQp1V38FI: Payn8tqsrRpmXPZWVmod
 
   @State private var payAlerto35gd3AGljvjh = false
   @State private var almsgYevgprGg8OOMT = ""
@@ -48,8 +48,8 @@ struct WalletView: View {
             ],
             spacing: 0
           ) {
-            ForEach(Array(diamondPackages.enumerated()), id: \.element.id) { index, option in
-              purchaseCard(option: option, index: index)
+            ForEach(Array(diaPckgscQLNBm8gVonHu.enumerated()), id: \.element.id) { index, option in
+              prcardPaymentProduct(opt0WgonV2TGpPtW: option, index: index)
             }
           }
           .padding(.horizontal, 20)
@@ -70,22 +70,22 @@ struct WalletView: View {
     }
     .navigationBarHidden(true)
     .onAppear {
-      payVmdEt8htQp1V38FI.updateAuthManager(a2pv1DU9eRMWzG)
+      payVmdEt8htQp1V38FI.updAuma7Cif2ltv9c65t(a2pv1DU9eRMWzG)
 
-      if payVmdEt8htQp1V38FI.products.isEmpty && !payVmdEt8htQp1V38FI.isLoadingProducts {
+      if payVmdEt8htQp1V38FI.pros1FessbjOCPZuE.isEmpty && !payVmdEt8htQp1V38FI.lopingSfYVxI17xwzFY {
         Task {
-          await payVmdEt8htQp1V38FI.loadProducts()
+          await payVmdEt8htQp1V38FI.loadzXWNROryo53Db()
         }
       }
     }
     .alert("Payment", isPresented: $payAlerto35gd3AGljvjh) {
       Button("OK", role: .cancel) {
-        payVmdEt8htQp1V38FI.resetPaymentStatus()
+        payVmdEt8htQp1V38FI.redssf7ssJoNt3ObDB()
       }
     } message: {
       Text(almsgYevgprGg8OOMT)
     }
-    .onChange(of: payVmdEt8htQp1V38FI.paymentStatus) { _, newStatus in
+    .onChange(of: payVmdEt8htQp1V38FI.stuXwBv2xiiWPj4U) { _, newStatus in
       hanChangeeo7azSfT38yzY(newStatus)
     }
     #if DEBUG
@@ -93,7 +93,6 @@ struct WalletView: View {
     #endif
   }
 
-  // MARK: - Header
   private var topae5fstR00vn56: some View {
     VStack(spacing: 16) {
       HStack {
@@ -125,7 +124,7 @@ struct WalletView: View {
             .scaledToFit()
             .frame(width: 30, height: 30)
 
-          Text("\(a2pv1DU9eRMWzG.currentUser?.balance ?? 0)")
+          Text("\(a2pv1DU9eRMWzG.currvj9QRUUPOWY4Ouser?.balance ?? 0)")
             .font(.custom("FredokaOne-Regular", size: 20))
             .foregroundColor(.black)
         }
@@ -140,14 +139,14 @@ struct WalletView: View {
     }
   }
 
-  // MARK: - Purchase Card
-  private func purchaseCard(option: PurchaseOption, index: Int) -> some View {
-    let isSelected = selidx58gTTlEulUWHL == index
+  private func prcardPaymentProduct(opt0WgonV2TGpPtW: PuroptWphPFw4mRa9N9, index: Int) -> some View
+  {
+    let setdiCWeSKqcQG0io = selidx58gTTlEulUWHL == index
 
     return Button {
       selidx58gTTlEulUWHL = index
       Task {
-        await hanPurcR2z380uw1K6WH(w7JuZqW8xTmzuopt: option, index: index)
+        await hanPurcR2z380uw1K6WH(w7JuZqW8xTmzuopt: opt0WgonV2TGpPtW, index: index)
       }
     } label: {
       ZStack {
@@ -155,7 +154,7 @@ struct WalletView: View {
           .resizable()
           .overlay(
             Group {
-              if isSelected {
+              if setdiCWeSKqcQG0io {
                 RoundedRectangle(cornerRadius: 12)
                   .stroke(Color.white, lineWidth: 2)
               }
@@ -171,14 +170,14 @@ struct WalletView: View {
             .frame(width: 30, height: 30)
             .padding(.top, 5)
 
-          Text("\(option.carrots)")
+          Text("\(opt0WgonV2TGpPtW.carrotsze1FZwh5WkpoW)")
             .font(.custom("FredokaOne-Regular", size: 20))
             .foregroundColor(.black)
             .lineLimit(1)
             .minimumScaleFactor(0.8)
             .padding(.top, 5)
 
-          Text("$\(String(format: "%.2f", option.price))")
+          Text("$\(String(format: "%.2f", opt0WgonV2TGpPtW.pricevsq55ZFkHtJBE))")
             .font(.system(size: 14, weight: .semibold))
             .foregroundColor(.black)
             .frame(minWidth: 0, maxWidth: .infinity)
@@ -199,14 +198,12 @@ struct WalletView: View {
     .disabled(procs4HE3zkNHwbOT2)
   }
 
-  private func hanPurcR2z380uw1K6WH(w7JuZqW8xTmzuopt: PurchaseOption, index: Int) async {
-    if payVmdEt8htQp1V38FI.products.isEmpty {
-      await payVmdEt8htQp1V38FI.loadProducts()
-    }
-    await payVmdEt8htQp1V38FI.purchaseProduct(productId: w7JuZqW8xTmzuopt.productId)
+  private func hanPurcR2z380uw1K6WH(w7JuZqW8xTmzuopt: PuroptWphPFw4mRa9N9, index: Int) async {
+    await payVmdEt8htQp1V38FI.relpay7vImdn19ATr15(
+      pidkxe68JHwzNP58: w7JuZqW8xTmzuopt.pcodedDuCfV7Kep75r)
   }
 
-  private func hanChangeeo7azSfT38yzY(_ status: PaymentStatus) {
+  private func hanChangeeo7azSfT38yzY(_ status: Psystus60ZmDMzftZSZw) {
     procs4HE3zkNHwbOT2 = false
 
     switch status {

@@ -12,7 +12,7 @@ import SwiftUI
 #endif
 
 struct WelcomeView: View {
-  @EnvironmentObject var ayIqvfBR4TwQOWd: AuthenticationManager
+  @EnvironmentObject var ayIqvfBR4TwQOWd: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
   @State private var emloginYuHtY3QnSdwzD = false
   @State private var signupcu6miHNMEZWff = false
@@ -209,7 +209,7 @@ struct WelcomeView: View {
 
   private func hanquickC7Qqgoa8yAcW3() async {
     do {
-      try await ayIqvfBR4TwQOWd.quickLogin()
+      try await ayIqvfBR4TwQOWd.quickOomfaPN43DvOC()
     } catch {
       print("Quick login error: \(error)")
     }
@@ -218,5 +218,5 @@ struct WelcomeView: View {
 
 // #Preview {
 //     WelcomeView()
-//         .environmentObject(AuthenticationManager())
+//         .environmentObject(AuthManagA645b8Y0Aod3aVmod())
 // }

@@ -16,7 +16,7 @@ struct CommentSheet: View {
   let blouidl77j5c0KC5XIJ: String
   var onrepec8s8iLFaxS8w: ((String) -> Void)? = nil
   @Environment(\.dismiss) var dismiss
-  @EnvironmentObject var aumaEJ7EvQZ9Ow9Qt: AuthenticationManager
+  @EnvironmentObject var aumaEJ7EvQZ9Ow9Qt: AuthManagA645b8Y0Aod3aVmod
   @StateObject private var commVmq0MjQlJrqM7lc: Comshet6Zv0ZcOxmY14fVmod
   @State private var comtxtFNpc30NkkZAmp: String = ""
   @FocusState private var isfocusTN3GRBtL8yBZe: Bool
@@ -132,7 +132,7 @@ struct CommentSheet: View {
 
   private func sendWPnm5SxHY3TXN() {
     guard !comtxtFNpc30NkkZAmp.isEmpty else { return }
-    guard let uidzNUsLgwNBhkPV = aumaEJ7EvQZ9Ow9Qt.currentUser?.id else {
+    guard let uidzNUsLgwNBhkPV = aumaEJ7EvQZ9Ow9Qt.currvj9QRUUPOWY4Ouser?.id else {
       return
     }
 
@@ -157,7 +157,7 @@ struct ComRowtbQX2Vx6D7P1X: View {
   var onrepec8s8iLFaxS8w: ((String) -> Void)? = nil
   var onDismiss: (() -> Void)? = nil
   @StateObject private var commVmq0MjQlJrqM7lc: CommentRowViewModel
-  @EnvironmentObject var aumaEJ7EvQZ9Ow9Qt: AuthenticationManager
+  @EnvironmentObject var aumaEJ7EvQZ9Ow9Qt: AuthManagA645b8Y0Aod3aVmod
 
   init(
     commXyUfkhL61UsfP: Comment, onrepec8s8iLFaxS8w: ((String) -> Void)? = nil,
@@ -212,7 +212,7 @@ struct ComRowtbQX2Vx6D7P1X: View {
 
       Spacer()
 
-      if aumaEJ7EvQZ9Ow9Qt.currentUser?.id != commXyUfkhL61UsfP.authorId {
+      if aumaEJ7EvQZ9Ow9Qt.currvj9QRUUPOWY4Ouser?.id != commXyUfkhL61UsfP.authorId {
         Button(action: {
           onDismiss?()
           onrepec8s8iLFaxS8w?(commXyUfkhL61UsfP.authorId)
@@ -233,14 +233,14 @@ struct ComRowtbQX2Vx6D7P1X: View {
 @MainActor
 class CommentRowViewModel: ObservableObject {
   @Published var autG49bxkSZNTSoj: User?
-  private let auserR3pj18n5NpYAk: AuthenticationServiceProtocol
+  private let auserR3pj18n5NpYAk: Authsdmd0VXzbAnDYServProc
   private let auidvPFJA8KR5FrlQ: String
-  private weak var aumaEJ7EvQZ9Ow9Qt: AuthenticationManager?
+  private weak var aumaEJ7EvQZ9Ow9Qt: AuthManagA645b8Y0Aod3aVmod?
 
   init(
     auidvPFJA8KR5FrlQ: String,
-    auserR3pj18n5NpYAk: AuthenticationServiceProtocol = AuthenticationService.shared,
-    aumaEJ7EvQZ9Ow9Qt: AuthenticationManager? = nil
+    auserR3pj18n5NpYAk: Authsdmd0VXzbAnDYServProc = Authsdmd0VXzbAnDYServ.shared,
+    aumaEJ7EvQZ9Ow9Qt: AuthManagA645b8Y0Aod3aVmod? = nil
   ) {
     self.auserR3pj18n5NpYAk = auserR3pj18n5NpYAk
     self.auidvPFJA8KR5FrlQ = auidvPFJA8KR5FrlQ
@@ -266,11 +266,11 @@ class CommentRowViewModel: ObservableObject {
     NotificationCenter.default.removeObserver(self)
   }
 
-  func setauthGPLlm37lQUk83(_ aumaEJ7EvQZ9Ow9Qt: AuthenticationManager) {
+  func setauthGPLlm37lQUk83(_ aumaEJ7EvQZ9Ow9Qt: AuthManagA645b8Y0Aod3aVmod) {
     self.aumaEJ7EvQZ9Ow9Qt = aumaEJ7EvQZ9Ow9Qt
     if autG49bxkSZNTSoj == nil {
       loadPh9fIYKN4H1VK(auidMZ4GBtu2JcrNb: auidvPFJA8KR5FrlQ)
-    } else if let cur2PDO5bTwrgcV1 = aumaEJ7EvQZ9Ow9Qt.currentUser,
+    } else if let cur2PDO5bTwrgcV1 = aumaEJ7EvQZ9Ow9Qt.currvj9QRUUPOWY4Ouser,
       cur2PDO5bTwrgcV1.id == auidvPFJA8KR5FrlQ
     {
       autG49bxkSZNTSoj = cur2PDO5bTwrgcV1
@@ -278,9 +278,9 @@ class CommentRowViewModel: ObservableObject {
   }
 
   private func loadPh9fIYKN4H1VK(auidMZ4GBtu2JcrNb: String) {
-    autG49bxkSZNTSoj = auserR3pj18n5NpYAk.getUserById(auidMZ4GBtu2JcrNb)
+    autG49bxkSZNTSoj = auserR3pj18n5NpYAk.getbyidQwpUuIWnzzs99(auidMZ4GBtu2JcrNb)
 
-    if autG49bxkSZNTSoj == nil, let cur2PDO5bTwrgcV1 = aumaEJ7EvQZ9Ow9Qt?.currentUser,
+    if autG49bxkSZNTSoj == nil, let cur2PDO5bTwrgcV1 = aumaEJ7EvQZ9Ow9Qt?.currvj9QRUUPOWY4Ouser,
       cur2PDO5bTwrgcV1.id == auidMZ4GBtu2JcrNb
     {
       autG49bxkSZNTSoj = cur2PDO5bTwrgcV1
@@ -293,13 +293,13 @@ class CommentRowViewModel: ObservableObject {
 class Comshet6Zv0ZcOxmY14fVmod: ObservableObject {
   @Published var comts4oMmysR5908NJ: [Comment] = []
 
-  private let comserWiCuAnR5hJMER: CommentDataServiceProtocol
+  private let comserWiCuAnR5hJMER: ComNAQ136mFLYkZJServproc
   private let vdoidD9HGYfeBdbb8g: String
-  private var aumaEJ7EvQZ9Ow9Qt: AuthenticationManager?
+  private var aumaEJ7EvQZ9Ow9Qt: AuthManagA645b8Y0Aod3aVmod?
 
   init(
     vdoidD9HGYfeBdbb8g: String,
-    comserWiCuAnR5hJMER: CommentDataServiceProtocol = CommentDataService.shared
+    comserWiCuAnR5hJMER: ComNAQ136mFLYkZJServproc = ComNAQ136mFLYkZJServ.shared
   ) {
     self.vdoidD9HGYfeBdbb8g = vdoidD9HGYfeBdbb8g
     self.comserWiCuAnR5hJMER = comserWiCuAnR5hJMER
@@ -339,7 +339,7 @@ class Comshet6Zv0ZcOxmY14fVmod: ObservableObject {
     }
   }
 
-  func updElJ8PgaCm1Wv1(_ aumaEJ7EvQZ9Ow9Qt: AuthenticationManager) {
+  func updElJ8PgaCm1Wv1(_ aumaEJ7EvQZ9Ow9Qt: AuthManagA645b8Y0Aod3aVmod) {
     self.aumaEJ7EvQZ9Ow9Qt = aumaEJ7EvQZ9Ow9Qt
     loadZcvv3thwYzKoq()
   }
@@ -349,17 +349,17 @@ class Comshet6Zv0ZcOxmY14fVmod: ObservableObject {
   }
 
   func addr9jkmimqGYIjL(_ FVhF7Yo8gJ64W: Comment) {
-    comserWiCuAnR5hJMER.addComment(FVhF7Yo8gJ64W)
+    comserWiCuAnR5hJMER.addJsTIYRdRpgWGh(FVhF7Yo8gJ64W)
     loadZcvv3thwYzKoq()
   }
 
   private func loadZcvv3thwYzKoq() {
-    let allyA1PHKFj6lXhZ = comserWiCuAnR5hJMER.loadComments(for: vdoidD9HGYfeBdbb8g)
+    let allyA1PHKFj6lXhZ = comserWiCuAnR5hJMER.locom1GrYz4YRiuJOq(for: vdoidD9HGYfeBdbb8g)
     comts4oMmysR5908NJ = flitercomjSELAiSQQVTWq(allyA1PHKFj6lXhZ)
   }
 
   private func flitercomjSELAiSQQVTWq(_ comts4oMmysR5908NJ: [Comment]) -> [Comment] {
-    guard let bloUidsvYpWGX4L3qBuy = aumaEJ7EvQZ9Ow9Qt?.currentUser?.blockedUserIds,
+    guard let bloUidsvYpWGX4L3qBuy = aumaEJ7EvQZ9Ow9Qt?.currvj9QRUUPOWY4Ouser?.blockedUserIds,
       !bloUidsvYpWGX4L3qBuy.isEmpty
     else {
       return comts4oMmysR5908NJ
@@ -370,5 +370,5 @@ class Comshet6Zv0ZcOxmY14fVmod: ObservableObject {
 
 // #Preview {
 //     CommentSheet(videoId: "test_video_id")
-//         .environmentObject(AuthenticationManager())
+//         .environmentObject(AuthManagA645b8Y0Aod3aVmod())
 // }

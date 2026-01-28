@@ -10,7 +10,6 @@ import SwiftUI
 
 @MainActor
 class ProfileViewModel: ObservableObject {
-  // MARK: - Published Properties
   @Published var user: User?
   @Published var isFollowing: Bool = false
   @Published var isLoading: Bool = false
@@ -18,27 +17,24 @@ class ProfileViewModel: ObservableObject {
   @Published var settings: [SettingItem] = []
   @Published var userVideos: [VideoItem] = []
 
-  // MARK: - Private Properties
-  private let authManager: AuthenticationManager
+  private let authManager: AuthManagA645b8Y0Aod3aVmod
   private let targetUserId: String?
-  private let authService: AuthenticationServiceProtocol
+  private let authService: Authsdmd0VXzbAnDYServProc
   private var userUpdateObserver: NSObjectProtocol?
 
-  // MARK: - Computed Properties
   var isCurrentUser: Bool {
     guard let targetUserId = targetUserId,
-      let currentUserId = authManager.currentUser?.id
+      let currentUserId = authManager.currvj9QRUUPOWY4Ouser?.id
     else {
       return targetUserId == nil
     }
     return targetUserId == currentUserId
   }
 
-  // MARK: - Initialization
   init(
-    authManager: AuthenticationManager,
+    authManager: AuthManagA645b8Y0Aod3aVmod,
     userId: String? = nil,
-    authService: AuthenticationServiceProtocol = AuthenticationService.shared
+    authService: Authsdmd0VXzbAnDYServProc = Authsdmd0VXzbAnDYServ.shared
   ) {
     self.authManager = authManager
     self.targetUserId = userId
@@ -57,7 +53,7 @@ class ProfileViewModel: ObservableObject {
     ) { [weak self] _ in
       if self?.isCurrentUser == true {
         Task { @MainActor [weak self] in
-          self?.user = self?.authManager.currentUser
+          self?.user = self?.authManager.currvj9QRUUPOWY4Ouser
         }
       }
     }
@@ -76,21 +72,21 @@ class ProfileViewModel: ObservableObject {
     isLoading = true
     errorMessage = nil
 
-    let userIdToLoad = targetUserId ?? authManager.currentUser?.id
+    let userIdToLoad = targetUserId ?? authManager.currvj9QRUUPOWY4Ouser?.id
 
     if let userId = userIdToLoad {
       loadUserVideos(userId: userId)
 
       if isCurrentUser {
         // 当前用户资料：直接使用当前用户信息
-        user = authManager.currentUser
+        user = authManager.currvj9QRUUPOWY4Ouser
         isFollowing = false  // 自己不能关注自己
       } else {
         // 他人资料：优先从认证服务中读取真实用户信息
-        if let otherUser = authService.getUserById(userId) {
+        if let otherUser = authService.getbyidQwpUuIWnzzs99(userId) {
           user = otherUser
           // 检查当前用户是否关注了该用户
-          if let currentUserId = authManager.currentUser?.id {
+          if let currentUserId = authManager.currvj9QRUUPOWY4Ouser?.id {
             isFollowing = otherUser.followerUserIds.contains(currentUserId)
           }
         } else {
@@ -117,14 +113,14 @@ class ProfileViewModel: ObservableObject {
 
   // MARK: - Load User Videos
   private func loadUserVideos(userId: String) {
-    let allVideos = VideoDataService.shared.loadVideos()
+    let allVideos = VdoServ63WnoDbxzFob0.shared.loc5f3UJvuhXYjoD()
     userVideos = allVideos.filter { $0.authorId == userId }
       .sorted { $0.timestamp > $1.timestamp }
   }
 
   func toggleFollow() {
     guard var targetUser = user, !isCurrentUser,
-      let currentUserId = authManager.currentUser?.id
+      let currentUserId = authManager.currvj9QRUUPOWY4Ouser?.id
     else { return }
 
     isFollowing.toggle()
@@ -133,26 +129,26 @@ class ProfileViewModel: ObservableObject {
       if !targetUser.followerUserIds.contains(currentUserId) {
         targetUser.followerUserIds.append(currentUserId)
       }
-      if var currentUser = authManager.currentUser,
-        !currentUser.followingUserIds.contains(targetUser.id)
+      if var curYI7CMii2WiBmI = authManager.currvj9QRUUPOWY4Ouser,
+        !curYI7CMii2WiBmI.followingUserIds.contains(targetUser.id)
       {
-        currentUser.followingUserIds.append(targetUser.id)
-        authManager.currentUser = currentUser
+        curYI7CMii2WiBmI.followingUserIds.append(targetUser.id)
+        authManager.currvj9QRUUPOWY4Ouser = curYI7CMii2WiBmI
       }
     } else {
       targetUser.followerUserIds.removeAll { $0 == currentUserId }
-      if var currentUser = authManager.currentUser {
-        currentUser.followingUserIds.removeAll { $0 == targetUser.id }
-        authManager.currentUser = currentUser
+      if var curYI7CMii2WiBmI = authManager.currvj9QRUUPOWY4Ouser {
+        curYI7CMii2WiBmI.followingUserIds.removeAll { $0 == targetUser.id }
+        authManager.currvj9QRUUPOWY4Ouser = curYI7CMii2WiBmI
       }
     }
 
     user = targetUser
   }
 
-  func sendMessage(router: Router) {
+  func sendb9kzu5TB4hAkL(router: Router) {
     guard let targetUserId = targetUserId,
-      let currentUserId = authManager.currentUser?.id,
+      let currentUserId = authManager.currvj9QRUUPOWY4Ouser?.id,
       targetUserId != currentUserId
     else {
       return
@@ -168,8 +164,8 @@ class ProfileViewModel: ObservableObject {
 
   // MARK: - Private Methods
   private func findOrCreateConversation(currentUserId: String, otherUserId: String) -> String {
-    let conversationService = ConversationDataService.shared
-    let allConversations = conversationService.loadAllConversations()
+    let conversationService = ConvsalHLauR9oVrqseServ.shared
+    let allConversations = conversationService.lovsNlpHQLpsFndh7()
 
     if let existingConversation = allConversations.first(where: { conversation in
       conversation.participantIds.contains(currentUserId)
@@ -189,16 +185,16 @@ class ProfileViewModel: ObservableObject {
       isUnread: false,
       isPinned: false
     )
-    conversationService.saveConversation(newConversation)
+    conversationService.svHB7pq1gSf83pa(newConversation)
 
     return newConversationId
   }
 
   func updateBio(_ newBio: String) {
-    guard var currentUser = authManager.currentUser, isCurrentUser else { return }
-    currentUser.bio = newBio.isEmpty ? nil : newBio
-    authManager.currentUser = currentUser
-    user = currentUser
+    guard var curYI7CMii2WiBmI = authManager.currvj9QRUUPOWY4Ouser, isCurrentUser else { return }
+    curYI7CMii2WiBmI.bio = newBio.isEmpty ? nil : newBio
+    authManager.currvj9QRUUPOWY4Ouser = curYI7CMii2WiBmI
+    user = curYI7CMii2WiBmI
   }
 
   func handleSettingAction(_ setting: SettingItem) {
@@ -215,24 +211,12 @@ class ProfileViewModel: ObservableObject {
       print("打开关于")
     case .logout:
       Task {
-        await logout()
+        await logoutWfSgkdWFVCXy1()
       }
     }
   }
 
-  func logout() async {
-    await authManager.logout()
+  func logoutWfSgkdWFVCXy1() async {
+    await authManager.logoutWfSgkdWFVCXy1()
   }
-
-  // // MARK: - Private Methods
-  // private func loadSettings() {
-  //   settings = [
-  //     SettingItem(title: "账户设置", icon: "person.circle", type: .account),
-  //     SettingItem(title: "隐私设置", icon: "lock.shield", type: .privacy),
-  //     SettingItem(title: "通知设置", icon: "bell", type: .notification),
-  //     SettingItem(title: "外观设置", icon: "paintbrush", type: .appearance),
-  //     SettingItem(title: "关于", icon: "info.circle", type: .about),
-  //     SettingItem(title: "退出登录", icon: "arrow.right.square", type: .logout, isDestructive: true),
-  //   ]
-  // }
 }

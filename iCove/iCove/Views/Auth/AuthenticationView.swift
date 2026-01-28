@@ -18,7 +18,7 @@ enum AuthMode {
 }
 
 struct AuthenticationView: View {
-  @EnvironmentObject var auma3KvMQWRVzrTCZGp: AuthenticationManager
+  @EnvironmentObject var auma3KvMQWRVzrTCZGp: AuthManagA645b8Y0Aod3aVmod
   @Environment(\.dismiss) var dismiss
   @State private var mode3SKlR1H07hi4ZBl: AuthMode
 
@@ -39,7 +39,7 @@ struct AuthenticationView: View {
 
   @State private var S4UbytlZEPCRhxZing: Bool = false
 
-  private let aserv1UesNFlnX1FWfJc: AuthenticationServiceProtocol = AuthenticationService.shared
+  private let aserv1UesNFlnX1FWfJc: Authsdmd0VXzbAnDYServProc = Authsdmd0VXzbAnDYServ.shared
 
   @FocusState private var focusF8V7w9DiIGa3tTN: AuthField?
 
@@ -404,15 +404,15 @@ struct AuthenticationView: View {
     do {
       switch mode3SKlR1H07hi4ZBl {
       case .signIn:
-        try await auma3KvMQWRVzrTCZGp.login(
-          email: email5JGG0viqiPJadRO, password: pwdx92WFu5sk3xxEyV)
+        try await auma3KvMQWRVzrTCZGp.logini2AfORx9Y0cOC(
+          Yc7aEPUWtsLiC: email5JGG0viqiPJadRO, dbCMz0ksUEfDw: pwdx92WFu5sk3xxEyV)
       case .signUp:
         let oHLiBEbYkYiUm = email5JGG0viqiPJadRO.components(separatedBy: "@").first ?? "User"
-        try await auma3KvMQWRVzrTCZGp.register(
-          email: email5JGG0viqiPJadRO, password: pwdx92WFu5sk3xxEyV, username: oHLiBEbYkYiUm)
+        try await auma3KvMQWRVzrTCZGp.registerPAms88DfTLWMl(
+          Qjhs1UuEXxKto: email5JGG0viqiPJadRO, AYVm1fJqgpm5W: pwdx92WFu5sk3xxEyV, dTzVtlmF1dSnU: oHLiBEbYkYiUm)
       case .forgotPassword:
-        try await aserv1UesNFlnX1FWfJc.resetPassword(
-          email: email5JGG0viqiPJadRO, newPassword: pwdx92WFu5sk3xxEyV)
+        try await aserv1UesNFlnX1FWfJc.resetAD5RG71gufWEh(
+          e1NwZPJd8HYCD8: email5JGG0viqiPJadRO, LwBDL4g9GeWqW: pwdx92WFu5sk3xxEyV)
         withAnimation {
           mode3SKlR1H07hi4ZBl = .signIn
           clearhkfAVTsIibARi()

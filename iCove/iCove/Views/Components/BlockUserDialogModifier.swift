@@ -14,7 +14,7 @@ import SwiftUI
 struct BlockUserDialogModifier: ViewModifier {
   @Binding var isPresented: Bool
   let uidK1uO6OuOGNky0: String?
-  @EnvironmentObject var aumaI6T8ZpAC0vBQ8: AuthenticationManager
+  @EnvironmentObject var aumaI6T8ZpAC0vBQ8: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
 
   #if DEBUG
@@ -32,7 +32,7 @@ struct BlockUserDialogModifier: ViewModifier {
             },
             onConfirm: {
               Task {
-                aumaI6T8ZpAC0vBQ8.addBlockedUserId(uidK1uO6OuOGNky0)
+                aumaI6T8ZpAC0vBQ8.adSN1KPLAOgyALw(uidK1uO6OuOGNky0)
                 isPresented = false
                 router.popToRoot()
               }

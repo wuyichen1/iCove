@@ -18,7 +18,7 @@ import UniformTypeIdentifiers
 
 struct PublishView: View {
   @Environment(\.dismiss) var dismiss
-  @EnvironmentObject var auiGgZwlS2hzgS9: AuthenticationManager
+  @EnvironmentObject var auiGgZwlS2hzgS9: AuthManagA645b8Y0Aod3aVmod
   @StateObject private var pubVmUgv9N9Lifjvva = PubVmod3vAA52GUNFoOZ()
 
   let pubTypeWZOlcaTCZFIeL: PublishType
@@ -534,7 +534,7 @@ struct PublishView: View {
 
     try? await Task.sleep(nanoseconds: 500_000_000)
 
-    guard let uidt8QKZjZkVPBFi = auiGgZwlS2hzgS9.currentUser?.id else {
+    guard let uidt8QKZjZkVPBFi = auiGgZwlS2hzgS9.currvj9QRUUPOWY4Ouser?.id else {
       isupdingihcxhWuaWfvpX = false
       return
     }
@@ -684,15 +684,15 @@ struct PublishView: View {
 // MARK: - Publish ViewModel
 @MainActor
 class PubVmod3vAA52GUNFoOZ: ObservableObject {
-  private let vdserOJXCL1WFIbuOc: VideoDataServiceProtocol = VideoDataService.shared
-  private let poser5DXejfkHzyddJ: PostDataServiceProtocol = PostDataService.shared
+  private let vdserOJXCL1WFIbuOc: VdoServproc63WnoDbxzFob0 = VdoServ63WnoDbxzFob0.shared
+  private let poser5DXejfkHzyddJ: PostServprocK4dfzEM6tLRcc = PostServK4dfzEM6tLRcc.shared
 
   func pubY1lwXpSC1Wwqjvdo(_ vdvZnBjc7NSl5ag: VideoItem) {
-    vdserOJXCL1WFIbuOc.addVideo(vdvZnBjc7NSl5ag)
+    vdserOJXCL1WFIbuOc.addXIOHH83trw3Bg(vdvZnBjc7NSl5ag)
   }
 
   func pub3mTgQb2LHyvZ0post(_ povZnBjc7NSl5ag: Post) {
-    poser5DXejfkHzyddJ.addPost(povZnBjc7NSl5ag)
+    poser5DXejfkHzyddJ.addHqRpcCjOX2uuE(povZnBjc7NSl5ag)
   }
 }
 

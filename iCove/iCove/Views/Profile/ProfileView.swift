@@ -13,7 +13,7 @@ import SwiftUI
 
 struct ProfileView: View {
   @ObservedObject var proVm92qjXCvXAr8i6: ProfileViewModel
-  @EnvironmentObject var d7nokg2HlCh2O: AuthenticationManager
+  @EnvironmentObject var d7nokg2HlCh2O: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
   @Environment(\.dismiss) var dismiss
   var sbacSTmLA8PZKM2AW: Bool = true
@@ -47,14 +47,14 @@ struct ProfileView: View {
       }
       .blockUserDialog(isPresented: $dWGK5bUYeS2aC, uidK1uO6OuOGNky0: bouidSPG3NVxZahTZe)
       .navigationBarHidden(true)
-      .onChange(of: d7nokg2HlCh2O.currentUser?.avatar) { _, _ in
+      .onChange(of: d7nokg2HlCh2O.currvj9QRUUPOWY4Ouser?.avatar) { _, _ in
         if proVm92qjXCvXAr8i6.isCurrentUser {
           Task {
             await proVm92qjXCvXAr8i6.refresh()
           }
         }
       }
-      .onChange(of: d7nokg2HlCh2O.currentUser?.username) { _, _ in
+      .onChange(of: d7nokg2HlCh2O.currvj9QRUUPOWY4Ouser?.username) { _, _ in
         if proVm92qjXCvXAr8i6.isCurrentUser {
           Task {
             await proVm92qjXCvXAr8i6.refresh()
@@ -322,7 +322,7 @@ struct ProfileView: View {
         router.push(.wallet)
       }) {
         HStack {
-          Text("Balance: \(d7nokg2HlCh2O.currentUser?.balance ?? 0)")
+          Text("Balance: \(d7nokg2HlCh2O.currvj9QRUUPOWY4Ouser?.balance ?? 0)")
             .font(.custom("FredokaOne-Regular", size: 18))
             .foregroundColor(.white)
         }
@@ -352,7 +352,7 @@ struct ProfileView: View {
         }
 
         Button(action: {
-          proVm92qjXCvXAr8i6.sendMessage(router: router)
+          proVm92qjXCvXAr8i6.sendb9kzu5TB4hAkL(router: router)
         }) {
           Text("Message")
             .font(.headline)
@@ -371,5 +371,5 @@ struct ProfileView: View {
 }
 
 // #Preview {
-//     ProfileView(proVm92qjXCvXAr8i6: ProfileViewModel(d7nokg2HlCh2O: AuthenticationManager()))
+//     ProfileView(proVm92qjXCvXAr8i6: ProfileViewModel(d7nokg2HlCh2O: AuthManagA645b8Y0Aod3aVmod()))
 // }

@@ -15,7 +15,7 @@ struct VideoCallView: View {
   let conversationId: String
   let otherUserId: String
   @EnvironmentObject var router: Router
-  @EnvironmentObject var authManager: AuthenticationManager
+  @EnvironmentObject var authManager: AuthManagA645b8Y0Aod3aVmod
   @StateObject private var viewModel: VideoCallViewModel
 
   #if DEBUG
@@ -95,12 +95,12 @@ class VideoCallViewModel: ObservableObject {
 
   private let conversationId: String
   private let otherUserId: String
-  private let authService: AuthenticationServiceProtocol
+  private let authService: Authsdmd0VXzbAnDYServProc
 
   init(
     conversationId: String,
     otherUserId: String,
-    authService: AuthenticationServiceProtocol = AuthenticationService.shared
+    authService: Authsdmd0VXzbAnDYServProc = Authsdmd0VXzbAnDYServ.shared
   ) {
     self.conversationId = conversationId
     self.otherUserId = otherUserId
@@ -109,12 +109,12 @@ class VideoCallViewModel: ObservableObject {
   }
 
   func loadOtherUser() {
-    otherUser = authService.getUserById(otherUserId)
+    otherUser = authService.getbyidQwpUuIWnzzs99(otherUserId)
   }
 }
 
 // #Preview {
 //   VideoCallView(conversationId: "conv_001", otherUserId: "user_002")
 //     .environmentObject(Router())
-//     .environmentObject(AuthenticationManager())
+//     .environmentObject(AuthManagA645b8Y0Aod3aVmod())
 // }

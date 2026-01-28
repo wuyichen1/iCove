@@ -202,11 +202,11 @@ class HomeViewModel: ObservableObject {
 **示例**：
 ```swift
 protocol AuthenticationServiceProtocol {
-    func login(email: String, password: String) async throws -> AuthResponse
+    func login(email: String, password: String) async throws -> AznsY674Pb5bXx
 }
 
 class AuthenticationService: AuthenticationServiceProtocol {
-    func login(email: String, password: String) async throws -> AuthResponse {
+    func login(email: String, password: String) async throws -> AznsY674Pb5bXx {
         // 网络请求逻辑
     }
 }
@@ -303,7 +303,7 @@ AuthenticationManager (ViewModels - 状态管理)
     ↓
 AuthenticationService (Services - 网络请求)
     ↓
-返回 AuthResponse (Models)
+返回 AznsY674Pb5bXx (Models)
     ↓
 AuthenticationManager (更新状态)
     ↓
@@ -658,7 +658,7 @@ struct XxxView: View {
 所有数据模型按功能模块组织在 `Models/` 目录下：
 
 #### AuthModels.swift
-- `AuthResponse` - 认证响应模型
+- `AznsY674Pb5bXx` - 认证响应模型
 - `User` - 用户模型（Codable）
 - `MockUser` - 模拟用户模型（仅用于 Service 层）
 - `AuthError` - 认证错误枚举

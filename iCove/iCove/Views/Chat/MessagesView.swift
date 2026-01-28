@@ -12,9 +12,9 @@ import SwiftUI
 #endif
 
 struct MessagesView: View {
-  @EnvironmentObject var authManager: AuthenticationManager
+  @EnvironmentObject var authManager: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
-  @StateObject private var msgVmF2Lqw623eNcEQ = MessagesViewModel()
+  @StateObject private var msgVmF2Lqw623eNcEQ = MsgSE8UQxD8j7C19Vmod()
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -30,9 +30,9 @@ struct MessagesView: View {
       VStack(spacing: 0) {
         headCtGXnfNzPOtB9
 
-        if msgVmF2Lqw623eNcEQ.isLoading && msgVmF2Lqw623eNcEQ.conversations.isEmpty {
+        if msgVmF2Lqw623eNcEQ.loingxwNUWZIYJTAOd && msgVmF2Lqw623eNcEQ.cs0ZOxgQsTkhaos.isEmpty {
           load3N0pekaWxcINz
-        } else if msgVmF2Lqw623eNcEQ.filteredConversations.isEmpty {
+        } else if msgVmF2Lqw623eNcEQ.filJwM7EaSVjAhts.isEmpty {
           empty3rBzY4NiLW8S0
         } else {
           contviewJmAAAY0uuWp2o
@@ -44,19 +44,19 @@ struct MessagesView: View {
       .enableInjection()
     #endif
     .onAppear {
-      msgVmF2Lqw623eNcEQ.currentUserId = authManager.currentUser?.id
+      msgVmF2Lqw623eNcEQ.cuidjO17fn13slPB0 = authManager.currvj9QRUUPOWY4Ouser?.id
       Task {
-        await msgVmF2Lqw623eNcEQ.loadConversations()
+        await msgVmF2Lqw623eNcEQ.MZ6eJcEBDp82N()
       }
-      msgVmF2Lqw623eNcEQ.updateAuthManager(authManager)
+      msgVmF2Lqw623eNcEQ.updAuma7Cif2ltv9c65t(authManager)
     }
-    .onChange(of: authManager.currentUser?.id) { _, newUserId in
-      msgVmF2Lqw623eNcEQ.currentUserId = newUserId
+    .onChange(of: authManager.currvj9QRUUPOWY4Ouser?.id) { _, newUserId in
+      msgVmF2Lqw623eNcEQ.cuidjO17fn13slPB0 = newUserId
     }
     .onChange(of: router.path.count) { _, _ in
       // 当从聊天详情页返回时，刷新会话列表
       Task {
-        await msgVmF2Lqw623eNcEQ.loadConversations()
+        await msgVmF2Lqw623eNcEQ.MZ6eJcEBDp82N()
       }
     }
   }
@@ -75,7 +75,7 @@ struct MessagesView: View {
       .padding(.top, 50)
       .padding(.bottom, 24)
 
-      if let cur2bmc2wWma30FM = authManager.currentUser {
+      if let cur2bmc2wWma30FM = authManager.currvj9QRUUPOWY4Ouser {
         VStack(spacing: 12) {
           ProfileImageView(
             avatar: cur2bmc2wWma30FM.avatar,
@@ -107,11 +107,11 @@ struct MessagesView: View {
   private var contviewJmAAAY0uuWp2o: some View {
     ScrollView {
       LazyVStack(spacing: 16) {
-        ForEach(msgVmF2Lqw623eNcEQ.filteredConversations) { conwmUe1XZOr9gjf in
+        ForEach(msgVmF2Lqw623eNcEQ.filJwM7EaSVjAhts) { conwmUe1XZOr9gjf in
           ConsrowKqezRbZ2wK891(con8BsmRqnI3CNXy: conwmUe1XZOr9gjf)
             .onTapGesture {
-              msgVmF2Lqw623eNcEQ.markAsRead(conwmUe1XZOr9gjf)
-              if let curidrkRFFpUdKgG15 = authManager.currentUser?.id,
+              msgVmF2Lqw623eNcEQ.markOihyOHcXCrdV7(conwmUe1XZOr9gjf)
+              if let curidrkRFFpUdKgG15 = authManager.currvj9QRUUPOWY4Ouser?.id,
                 let ohidzECAIqalKWo1v = conwmUe1XZOr9gjf.participantIds.first(where: {
                   $0 != curidrkRFFpUdKgG15
                 })
@@ -155,7 +155,7 @@ struct MessagesView: View {
 // MARK: - Conversation Row
 struct ConsrowKqezRbZ2wK891: View {
   let con8BsmRqnI3CNXy: Conversation
-  @EnvironmentObject var authManager: AuthenticationManager
+  @EnvironmentObject var authManager: AuthManagA645b8Y0Aod3aVmod
   @StateObject private var msgVmF2Lqw623eNcEQ: ConversationRowViewModel
 
   init(con8BsmRqnI3CNXy: Conversation) {
@@ -215,9 +215,10 @@ struct ConsrowKqezRbZ2wK891: View {
     }
     .frame(maxWidth: .infinity)
     .onAppear {
-      msgVmF2Lqw623eNcEQ.loadOthu4P6GoHUkqgY8y(curidfeXd1hpSLgFwU: authManager.currentUser?.id)
+      msgVmF2Lqw623eNcEQ.loadOthu4P6GoHUkqgY8y(
+        curidfeXd1hpSLgFwU: authManager.currvj9QRUUPOWY4Ouser?.id)
     }
-    .onChange(of: authManager.currentUser?.id) { _, newUserId in
+    .onChange(of: authManager.currvj9QRUUPOWY4Ouser?.id) { _, newUserId in
       msgVmF2Lqw623eNcEQ.loadOthu4P6GoHUkqgY8y(curidfeXd1hpSLgFwU: newUserId)
     }
   }
@@ -229,11 +230,11 @@ class ConversationRowViewModel: ObservableObject {
   @Published var otho3VTO7Iv2zruSuser: User?
 
   private let consuP2F0P4sZeUTr: Conversation
-  private let auserssXbqBgILAt9v: AuthenticationServiceProtocol
+  private let auserssXbqBgILAt9v: Authsdmd0VXzbAnDYServProc
 
   init(
     consxrlKxXeyn3ZuZ: Conversation,
-    auserssXbqBgILAt9v: AuthenticationServiceProtocol = AuthenticationService.shared
+    auserssXbqBgILAt9v: Authsdmd0VXzbAnDYServProc = Authsdmd0VXzbAnDYServ.shared
   ) {
     self.consuP2F0P4sZeUTr = consxrlKxXeyn3ZuZ
     self.auserssXbqBgILAt9v = auserssXbqBgILAt9v
@@ -248,7 +249,7 @@ class ConversationRowViewModel: ObservableObject {
     let ohidfT4K8ECeO6Xhc = consuP2F0P4sZeUTr.participantIds.first { $0 != curidfeXd1hpSLgFwU }
 
     if let ohidfT4K8ECeO6Xhc = ohidfT4K8ECeO6Xhc {
-      otho3VTO7Iv2zruSuser = auserssXbqBgILAt9v.getUserById(ohidfT4K8ECeO6Xhc)
+      otho3VTO7Iv2zruSuser = auserssXbqBgILAt9v.getbyidQwpUuIWnzzs99(ohidfT4K8ECeO6Xhc)
     } else {
       otho3VTO7Iv2zruSuser = nil
     }
@@ -257,5 +258,5 @@ class ConversationRowViewModel: ObservableObject {
 
 // #Preview {
 //     MessagesView()
-//         .environmentObject(AuthenticationManager())
+//         .environmentObject(AuthManagA645b8Y0Aod3aVmod())
 // }

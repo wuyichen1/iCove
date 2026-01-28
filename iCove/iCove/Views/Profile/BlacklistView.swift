@@ -12,7 +12,7 @@ import SwiftUI
 #endif
 
 struct BlacklistView: View {
-  @EnvironmentObject var au8PAPgSVGmoAhD: AuthenticationManager
+  @EnvironmentObject var au8PAPgSVGmoAhD: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
   @StateObject private var blcAzRj9NhSBUoqvVmod = BlcAZzdkCZPB1o2aVmdl()
 
@@ -51,8 +51,8 @@ struct BlacklistView: View {
     .navigationBarHidden(true)
     .onAppear {
       blcAzRj9NhSBUoqvVmod.loadBlockedUsers(
-        blouidFKnKiKBUzjZq0: au8PAPgSVGmoAhD.currentUser?.blockedUserIds ?? [],
-        ausernBbJzsGRqu4eF: AuthenticationService.shared
+        blouidFKnKiKBUzjZq0: au8PAPgSVGmoAhD.currvj9QRUUPOWY4Ouser?.blockedUserIds ?? [],
+        ausernBbJzsGRqu4eF: Authsdmd0VXzbAnDYServ.shared
       )
     }
     #if DEBUG
@@ -100,7 +100,7 @@ struct BlacklistView: View {
             Spacer()
 
             Button {
-              au8PAPgSVGmoAhD.removeBlockedUserId(userNtm79g6kOJtqr.id)
+              au8PAPgSVGmoAhD.reNRhAhnjCSdO8F(userNtm79g6kOJtqr.id)
               blcAzRj9NhSBUoqvVmod.removeUser(uidTb4r3Jbz7orP5: userNtm79g6kOJtqr.id)
             } label: {
               Text("Remove")
@@ -142,10 +142,10 @@ class BlcAZzdkCZPB1o2aVmdl: ObservableObject {
   @Published var blouserctQXbGMX3kUgr: [User] = []
 
   func loadBlockedUsers(
-    blouidFKnKiKBUzjZq0: [String], ausernBbJzsGRqu4eF: AuthenticationServiceProtocol
+    blouidFKnKiKBUzjZq0: [String], ausernBbJzsGRqu4eF: Authsdmd0VXzbAnDYServProc
   ) {
     blouserctQXbGMX3kUgr = blouidFKnKiKBUzjZq0.compactMap { uidTb4r3Jbz7orP5 in
-      ausernBbJzsGRqu4eF.getUserById(uidTb4r3Jbz7orP5)
+      ausernBbJzsGRqu4eF.getbyidQwpUuIWnzzs99(uidTb4r3Jbz7orP5)
     }
   }
 

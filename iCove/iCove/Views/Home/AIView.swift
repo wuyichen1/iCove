@@ -12,7 +12,7 @@ import SwiftUI
 #endif
 
 struct AIView: View {
-  @EnvironmentObject var aumakZ0ElZwz9Rk1P: AuthenticationManager
+  @EnvironmentObject var aumakZ0ElZwz9Rk1P: AuthManagA645b8Y0Aod3aVmod
   @Environment(\.dismiss) var dismiss
 
   @State private var sceneIq2MemYaRG9ID: String = ""
@@ -29,13 +29,13 @@ struct AIView: View {
   @FocusState private var focusedField: Field?
 
   enum Field: Hashable {
-    case scene
-    case style
-    case season
+    case sceneU1K4wRfeNnrnI
+    case styleXtwRAqUlv5bSD
+    case seasonn6GCC7Kt1FsbA
     case additionalRequirements
   }
 
-  private let aiService: AIServiceProtocol = AIService.shared
+  private let aiService: AIservCkCeIgWDTOo9Qproc = AIservCkCeIgWDTOo9Q.shared
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -140,21 +140,21 @@ struct AIView: View {
               YZlWXIABplnjSlabel: "Scene:",
               hintaCTgVS7aktd6U: "Input the target scene",
               txtqZ57rwDDnNFdO: $sceneIq2MemYaRG9ID,
-              fieldq1JOqRF10s2z0: .scene
+              fieldq1JOqRF10s2z0: .sceneU1K4wRfeNnrnI
             )
 
             inptsecIqusgyeNL8dtD(
               YZlWXIABplnjSlabel: "Style:",
               hintaCTgVS7aktd6U: "Input style",
               txtqZ57rwDDnNFdO: $style6ZDDe8xvnuVbx,
-              fieldq1JOqRF10s2z0: .style
+              fieldq1JOqRF10s2z0: .styleXtwRAqUlv5bSD
             )
 
             inptsecIqusgyeNL8dtD(
               YZlWXIABplnjSlabel: "Season:",
               hintaCTgVS7aktd6U: "Input the season",
               txtqZ57rwDDnNFdO: $seasonYY7u27U3XFDNo,
-              fieldq1JOqRF10s2z0: .season
+              fieldq1JOqRF10s2z0: .seasonn6GCC7Kt1FsbA
             )
 
             inptsecIqusgyeNL8dtD(
@@ -311,22 +311,22 @@ struct AIView: View {
     let trimmedSeason = seasonYY7u27U3XFDNo.trimmingCharacters(in: .whitespacesAndNewlines)
     let trimmedAdditional = adtionno35myNqcElag.trimmingCharacters(in: .whitespacesAndNewlines)
 
-    let res10MQtQ9jzpM7M = await aiService.fetchAIResponse(
-      scene: trimmedScene,
-      style: trimmedStyle,
-      season: trimmedSeason,
+    let res10MQtQ9jzpM7M = await aiService.fetchZo8oCPHSVeWHl(
+      sceneU1K4wRfeNnrnI: trimmedScene,
+      styleXtwRAqUlv5bSD: trimmedStyle,
+      seasonn6GCC7Kt1FsbA: trimmedSeason,
       additionalRequirements: trimmedAdditional
     )
 
     await MainActor.run {
       switch res10MQtQ9jzpM7M {
-      case .success(let contC22Np8fwAm9wf):
+      case .susccamK2ph7M7WkX(let contC22Np8fwAm9wf):
         retit9IErXGV8ZjCC0 =
           "\(trimmedStyle.isEmpty ? "Stylish" : trimmedStyle) outfits for \(trimmedScene.isEmpty ? "your day" : trimmedScene.lowercased())"
         recoontRO20RvMt7XuLY = contC22Np8fwAm9wf
         shrestQx35QUFOxrN5W = true
         errWjQKNrKqeQuJe = nil
-      case .failure(let erri1Unn32wHHJC9):
+      case .failFdvRecB9dfUuQ(let erri1Unn32wHHJC9):
         errWjQKNrKqeQuJe = erri1Unn32wHHJC9
         shrestQx35QUFOxrN5W = false
       }

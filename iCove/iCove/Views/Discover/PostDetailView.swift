@@ -14,7 +14,7 @@ import SwiftUI
 struct PostDetailView: View {
   let postId: String
   @EnvironmentObject var router: Router
-  @EnvironmentObject var vHTdwVFoYw02E: AuthenticationManager
+  @EnvironmentObject var vHTdwVFoYw02E: AuthManagA645b8Y0Aod3aVmod
   @StateObject private var pdVmA3OLH8q0XtIfY: PodetVmodelvjFnkult51bWe
   @State private var seleIdxtgKrO7Ui0lVyt: Int = 0
   @State private var blorepguS2V8VcOeQPJ = false
@@ -41,7 +41,7 @@ struct PostDetailView: View {
           onBack: {
             router.pop()
           },
-          isMoreVisible: vHTdwVFoYw02E.currentUser?.id
+          isMoreVisible: vHTdwVFoYw02E.currvj9QRUUPOWY4Ouser?.id
             != pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk?.authorId,
           onMore: {
             if pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk != nil {
@@ -77,7 +77,7 @@ struct PostDetailView: View {
 
                 Button(action: {
                   if let postwGCoqwzwLkvNM = pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk {
-                    vHTdwVFoYw02E.toggleCollectPost(postId: postwGCoqwzwLkvNM.id)
+                    vHTdwVFoYw02E.toggleB2rGhFgSQb0qAcol(pid3rhTIg1jfRXQj: postwGCoqwzwLkvNM.id)
                   }
                 }) {
                   ZStack {
@@ -89,8 +89,8 @@ struct PostDetailView: View {
                       .font(.system(size: 24))
                       .foregroundColor(
                         pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk != nil
-                          && vHTdwVFoYw02E.isPostCollected(
-                            postId: pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk!.id)
+                          && vHTdwVFoYw02E.isColBbbiJ8jXV5fKI(
+                            pid3rhTIg1jfRXQj: pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk!.id)
                           ? .yellow
                           : .white
                       )
@@ -155,7 +155,7 @@ struct PostDetailView: View {
     #if DEBUG
       .enableInjection()
     #endif
-    .onChange(of: vHTdwVFoYw02E.currentUser?.collectedPostIds) { _, _ in
+    .onChange(of: vHTdwVFoYw02E.currvj9QRUUPOWY4Ouser?.collectedPostIds) { _, _ in
     }
   }
 
@@ -191,11 +191,11 @@ class PodetVmodelvjFnkult51bWe: ObservableObject {
   @Published var postJFUcoSpXHIudk: Post?
 
   private let pidhJnCXP3N9yipf: String
-  private let poserOAQTiNKfztblq: PostDataServiceProtocol
+  private let poserOAQTiNKfztblq: PostServprocK4dfzEM6tLRcc
 
   init(
     pidhJnCXP3N9yipf: String,
-    poserOAQTiNKfztblq: PostDataServiceProtocol = PostDataService.shared
+    poserOAQTiNKfztblq: PostServprocK4dfzEM6tLRcc = PostServK4dfzEM6tLRcc.shared
   ) {
     self.pidhJnCXP3N9yipf = pidhJnCXP3N9yipf
     self.poserOAQTiNKfztblq = poserOAQTiNKfztblq
@@ -203,7 +203,7 @@ class PodetVmodelvjFnkult51bWe: ObservableObject {
   }
 
   private func loadXSK7SA4oCzsRz() {
-    postJFUcoSpXHIudk = poserOAQTiNKfztblq.getPostById(pidhJnCXP3N9yipf)
+    postJFUcoSpXHIudk = poserOAQTiNKfztblq.gepoidnrfBTqdPsaCHv(pidhJnCXP3N9yipf)
   }
 }
 

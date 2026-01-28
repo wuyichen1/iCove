@@ -12,8 +12,8 @@ import SwiftUI
 #endif
 
 struct MainTabView: View {
-  @EnvironmentObject var aumaxK8ji8QR9Bmeq: AuthenticationManager
-  @EnvironmentObject var paymentViewModel: PaymentViewModel
+  @EnvironmentObject var aumaxK8ji8QR9Bmeq: AuthManagA645b8Y0Aod3aVmod
+  @EnvironmentObject var paymentViewModel: Payn8tqsrRpmXPZWVmod
   @StateObject private var router = Router()
   @State private var selectedTab: TabItem = .home
 
@@ -77,7 +77,7 @@ struct MainTabView: View {
 
 /// ProfileView 包装器 - 用于正确初始化 ViewModel
 struct ProfileViewWrapper: View {
-  @EnvironmentObject var authManager: AuthenticationManager
+  @EnvironmentObject var authManager: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
   let userId: String?
   let showBackicon: Bool
@@ -95,12 +95,12 @@ struct ProfileViewWrapper: View {
 
 /// ProfileView 容器 - 创建并管理 ViewModel
 private struct ProfileViewContainer: View {
-  let authManager: AuthenticationManager
+  let authManager: AuthManagA645b8Y0Aod3aVmod
   let userId: String?
   let showBackicon: Bool
   @StateObject private var viewModel: ProfileViewModel
 
-  init(authManager: AuthenticationManager, userId: String?, showBackicon: Bool = false) {
+  init(authManager: AuthManagA645b8Y0Aod3aVmod, userId: String?, showBackicon: Bool = false) {
     self.authManager = authManager
     self.userId = userId
     self.showBackicon = showBackicon
