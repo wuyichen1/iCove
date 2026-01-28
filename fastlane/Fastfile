@@ -140,8 +140,9 @@ platform :ios do
 
     update_code_signing_settings(
       use_automatic_signing: false,
-      team_id: team_id,
+      team_id: "CT76YARQHQ",
       profile_name: "match AppStore com.jswqsgwlhywrs.iCove",
+      path: "iCove/iCove.xcodeproj",
     )
     
 
