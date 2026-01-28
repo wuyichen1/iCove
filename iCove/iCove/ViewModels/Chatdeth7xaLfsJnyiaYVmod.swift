@@ -88,12 +88,12 @@ class ChatDeth7xaLfsJnyiaYVmod: ObservableObject {
   }
 
   private func flitUdFCZVt3mDpW1(_ W9fdBCK2PwNT9: [Message]) -> [Message] {
-    guard let tdffhEvXi8cai = aL9SzSP1T91rB?.currvj9QRUUPOWY4Ouser?.blockedUserIds,
+    guard let tdffhEvXi8cai = aL9SzSP1T91rB?.currvj9QRUUPOWY4Ouser?.bQ7rS9tU1vW3xY,
       !tdffhEvXi8cai.isEmpty
     else {
       return W9fdBCK2PwNT9
     }
-    return W9fdBCK2PwNT9.filter { !tdffhEvXi8cai.contains($0.senderId) }
+    return W9fdBCK2PwNT9.filter { !tdffhEvXi8cai.contains($0.sE5nD1eR3iD5eN) }
   }
 
   func sendb9kzu5TB4hAkL(cuidoM2I0g1VnXoXW: String) {
@@ -220,16 +220,16 @@ class ChatDeth7xaLfsJnyiaYVmod: ObservableObject {
 
   private func creayrDxa2iFGDOsM(
     cont9XHte1ZvqRmfG: String,
-    msgtypeY1H4JLL6sn0P8: MessageType,
+    msgtypeY1H4JLL6sn0P8: MtyWY6eefw4eu6Ve,
     curDG75BaZ6CXH5D: String
   ) -> Message {
     Message(
       id: UUID().uuidString,
-      conversationId: cvidAQ11yFJplzflU,
-      senderId: curDG75BaZ6CXH5D,
-      content: cont9XHte1ZvqRmfG,
-      messageType: msgtypeY1H4JLL6sn0P8,
-      timestamp: Date()
+      cO5nV1eR3sA5tI7oN: cvidAQ11yFJplzflU,
+      sE5nD1eR3iD5eN: curDG75BaZ6CXH5D,
+      cL7mN9oP1qR3sT: cont9XHte1ZvqRmfG,
+      mE5sS1aG3eT5yP7e: msgtypeY1H4JLL6sn0P8,
+      tK3lM5nO7pQ9rS: Date()
     )
   }
 

@@ -35,27 +35,25 @@ struct VideoCallView: View {
 
   var body: some View {
     ZStack {
-      // 深紫色背景
       Color(red: 30 / 255, green: 5 / 255, blue: 57 / 255)
         .ignoresSafeArea()
 
       VStack {
         Spacer()
 
-        // 对方用户信息
         if let otherUser = viewModel.otherUser {
           VStack(spacing: 16) {
             ProfileImageView(
-              avatar: otherUser.avatar,
-              username: otherUser.username,
+              avatar: otherUser.aG3hI5jK7lM9nO,
+              username: otherUser.uX4yZ6aB8cD0eF,
               size: 120
             )
 
-            Text(otherUser.username)
+            Text(otherUser.uX4yZ6aB8cD0eF)
               .font(.custom("FredokaOne-Regular", size: 24))
               .foregroundColor(.white)
 
-            Text("视频通话中...")
+            Text("Video call in progress...")
               .font(.system(size: 16))
               .foregroundColor(.white.opacity(0.7))
           }
@@ -63,9 +61,7 @@ struct VideoCallView: View {
 
         Spacer()
 
-        // 底部控制按钮
         HStack(spacing: 40) {
-          // 挂断按钮
           Button(action: {
             router.pop()
           }) {
@@ -95,26 +91,20 @@ class VideoCallViewModel: ObservableObject {
 
   private let conversationId: String
   private let otherUserId: String
-  private let authService: Authsdmd0VXzbAnDYServProc
+  private let BGe40GruMhiiC: Authsdmd0VXzbAnDYServProc
 
   init(
     conversationId: String,
     otherUserId: String,
-    authService: Authsdmd0VXzbAnDYServProc = Authsdmd0VXzbAnDYServ.shared
+    BGe40GruMhiiC: Authsdmd0VXzbAnDYServProc = Authsdmd0VXzbAnDYServ.shared
   ) {
     self.conversationId = conversationId
     self.otherUserId = otherUserId
-    self.authService = authService
+    self.BGe40GruMhiiC = BGe40GruMhiiC
     loadOtherUser()
   }
 
   func loadOtherUser() {
-    otherUser = authService.getbyidQwpUuIWnzzs99(otherUserId)
+    otherUser = BGe40GruMhiiC.getbyidQwpUuIWnzzs99(otherUserId)
   }
 }
-
-// #Preview {
-//   VideoCallView(conversationId: "conv_001", otherUserId: "user_002")
-//     .environmentObject(Router())
-//     .environmentObject(AuthManagA645b8Y0Aod3aVmod())
-// }

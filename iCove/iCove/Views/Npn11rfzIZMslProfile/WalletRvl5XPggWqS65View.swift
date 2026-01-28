@@ -1,5 +1,5 @@
 //
-//  WalletView.swift
+//  WalletRvl5XPggWqS65View.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/19.
@@ -11,7 +11,7 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-struct WalletView: View {
+struct WalletRvl5XPggWqS65View: View {
   @EnvironmentObject var a2pv1DU9eRMWzG: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
   @EnvironmentObject var payVmdEt8htQp1V38FI: Payn8tqsrRpmXPZWVmod
@@ -124,7 +124,7 @@ struct WalletView: View {
             .scaledToFit()
             .frame(width: 30, height: 30)
 
-          Text("\(a2pv1DU9eRMWzG.currvj9QRUUPOWY4Ouser?.balance ?? 0)")
+          Text("\(a2pv1DU9eRMWzG.currvj9QRUUPOWY4Ouser?.bP2qR4sT6uV8wX ?? 0)")
             .font(.custom("FredokaOne-Regular", size: 20))
             .foregroundColor(.black)
         }

@@ -1,5 +1,5 @@
 //
-//  ReportView.swift
+//  ReportywNvhJra7xXCDView.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/22.
@@ -18,12 +18,12 @@ enum RepOpt99DIA5JdHxK8b: String, CaseIterable {
   case maliciousHarassment = "Malicious harassment"
   case others = "Others"
 
-  var displayName: String {
+  var ywNvhJra7xXCD: String {
     return rawValue
   }
 }
 
-struct ReportView: View {
+struct ReportywNvhJra7xXCDView: View {
   let userId: String
   @EnvironmentObject var router: Router
   @State private var selTziV60YH9YAzS: RepOpt99DIA5JdHxK8b? = RepOpt99DIA5JdHxK8b.allCases.first
@@ -119,7 +119,7 @@ struct ReportView: View {
     Button(action: {
       selTziV60YH9YAzS = optB63sHWmtfkfeI
     }) {
-      Text(optB63sHWmtfkfeI.displayName)
+      Text(optB63sHWmtfkfeI.ywNvhJra7xXCD)
         .font(.system(size: 16, weight: .medium))
         .foregroundColor(.black)
         .frame(maxWidth: .infinity)

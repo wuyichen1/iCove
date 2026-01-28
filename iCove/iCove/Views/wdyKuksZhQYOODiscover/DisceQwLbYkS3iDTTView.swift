@@ -1,5 +1,5 @@
 //
-//  DiscoverView.swift
+//  DisceQwLbYkS3iDTTView.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/14.
@@ -11,7 +11,7 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-struct DiscoverView: View {
+struct DisceQwLbYkS3iDTTView: View {
   @EnvironmentObject var aumaOPNRYtaLzBwfO: AuthManagA645b8Y0Aod3aVmod
   @StateObject private var disVmrWpELPZVmt8tD: DiscouU6Bh8Exak2IXVmod
   @State private var sblo5BJbOqoX3oUyD = false
@@ -50,7 +50,7 @@ struct DiscoverView: View {
         }
       }
     }
-    .blockUserDialog(isPresented: $sblo5BJbOqoX3oUyD, uidK1uO6OuOGNky0: blouidGAKcNhg8hC0qh)
+    .blockDiaLcTUIAjgtcOHd(isPresented: $sblo5BJbOqoX3oUyD, uidK1uO6OuOGNky0: blouidGAKcNhg8hC0qh)
     .sheet(
       isPresented: Binding(
         get: { repbloM1RyF4YUhJXVs },
@@ -97,8 +97,7 @@ struct DiscoverView: View {
     .onAppear {
       disVmrWpELPZVmt8tD.updAuma7Cif2ltv9c65t(aumaOPNRYtaLzBwfO)
     }
-    // 监听收藏列表的变化
-    .onChange(of: aumaOPNRYtaLzBwfO.currvj9QRUUPOWY4Ouser?.collectedPostIds) { oldValue, newValue in
+    .onChange(of: aumaOPNRYtaLzBwfO.currvj9QRUUPOWY4Ouser?.cP9hI1jK3lM5nO) { oldValue, newValue in
       disVmrWpELPZVmt8tD.refAYUyaJd0ZNl9v()
     }
     .onChange(of: uid2IoIb4lqiLMOQ) { oldValue, hEGLmW1NGMvRj in
@@ -117,7 +116,6 @@ struct DiscoverView: View {
     }
   }
 
-  // MARK: - Header Section
   private var head80bQQTa3yQG7S: some View {
     VStack(spacing: 0) {
       HStack {
@@ -133,7 +131,6 @@ struct DiscoverView: View {
     }
   }
 
-  // MARK: - Loading View
   private var loadOycj4QRSkyG0J: some View {
     VStack(spacing: 20) {
       Spacer()
@@ -149,14 +146,13 @@ struct DiscoverView: View {
     .frame(maxWidth: .infinity, maxHeight: .infinity)
   }
 
-  // MARK: - Content View
   private var contview7LBPOsWKb8MIs: some View {
     VStack(alignment: .leading, spacing: 0) {
 
       if !disVmrWpELPZVmt8tD.colp8W7CMTdrTSK9g.isEmpty {
         VStack {
           HStack {
-            StarText(
+            StarTextThyUv3yWgSTcz(
               text: "My collection",
               textColor: Color("yinguanglv"),
               textSize: 18
@@ -194,7 +190,7 @@ struct DiscoverView: View {
                 .clipped()
 
               HStack {
-                StarText(
+                StarTextThyUv3yWgSTcz(
                   text: "All",
                   textColor: .black,
                   textSize: 18
@@ -205,7 +201,7 @@ struct DiscoverView: View {
             .frame(height: 45)
 
             Button(action: {
-              router.push(.publish(type: .imagePost))
+              router.push(.publish(type: .imgHkANxe83jDb0E))
             }) {
               Image("Tz0wJDM3mdSWeD0Y")
                 .resizable()
@@ -219,7 +215,7 @@ struct DiscoverView: View {
           .padding(.leading, 16)
 
           if disVmrWpELPZVmt8tD.allp8jyycPefN5IIz.isEmpty {
-            EmptyPlaceholderView()
+            EmptyJYGRYC2t97Qi3()
               .padding(.bottom, 120)
               .frame(maxWidth: .infinity, maxHeight: .infinity)
           } else {
@@ -229,7 +225,7 @@ struct DiscoverView: View {
                   PocardrDm6S2F8tYSbU(
                     postjmttDhoS3qgib: post,
                     onBlozWbxoGpaIWfTW: {
-                      blouidGAKcNhg8hC0qh = post.authorId
+                      blouidGAKcNhg8hC0qh = post.aC9dE1fG3hI5jK
                       sblo5BJbOqoX3oUyD = true
                     },
                     onrepbloooTsNyqTWt2Qu: { userId in
@@ -237,7 +233,7 @@ struct DiscoverView: View {
                     }
                   )
                   .onTapGesture {
-                    router.push(.postDetail(postId: post.id))
+                    router.push(.podeti0Gx1PwxsKGxM(postId: post.id))
                   }
                 }
               }
@@ -257,7 +253,6 @@ struct DiscoverView: View {
     }
   }
 
-  // MARK: - Collection Carousel
   private var collectionCarousel: some View {
     GeometryReader { geometry in
       let screenWidth = geometry.size.width
@@ -273,7 +268,7 @@ struct DiscoverView: View {
           HStack(spacing: cardSpacing) {
             ForEach(Array(disVmrWpELPZVmt8tD.colp8W7CMTdrTSK9g.enumerated()), id: \.element.id) {
               index, post in
-              if let firstImage = post.imageNames.first {
+              if let firstImage = post.iT1uV3wX5yZ7aB.first {
                 CollectionCardView(
                   imageName: firstImage,
                   post: post,
@@ -312,7 +307,6 @@ struct DiscoverView: View {
   }
 }
 
-// MARK: - Collection Card View ！！！！！！！！！！
 struct CollectionCardView: View {
   let imageName: String
   let post: Post
@@ -356,17 +350,17 @@ struct CollectionCardView: View {
   }
 
   private var cardView: some View {
-    DynamicImage(imageName: imageName, contentMode: .fill)
+    DymiimgYKxe1c8TyvAiL(imgMx6GF7oyJoIJA: imageName, contentMode: .fill)
       .frame(width: itemWidth, height: cardHeight)
       .clipShape(RoundedRectangle(cornerRadius: 16))
       .overlay(
         VStack {
-          if aumaOPNRYtaLzBwfO.currvj9QRUUPOWY4Ouser?.id != post.authorId {
+          if aumaOPNRYtaLzBwfO.currvj9QRUUPOWY4Ouser?.id != post.aC9dE1fG3hI5jK {
             HStack {
               Spacer()
 
               Button(action: {
-                onrepbloooTsNyqTWt2Qu?(post.authorId)
+                onrepbloooTsNyqTWt2Qu?(post.aC9dE1fG3hI5jK)
               }) {
                 Image(systemName: "ellipsis")
                   .font(.system(size: 24))
@@ -403,12 +397,11 @@ struct CollectionCardView: View {
       )
       .contentShape(RoundedRectangle(cornerRadius: 16))
       .onTapGesture {
-        router.push(.postDetail(postId: post.id))
+        router.push(.podeti0Gx1PwxsKGxM(postId: post.id))
       }
   }
 }
 
-// MARK: - Post Card
 struct PocardrDm6S2F8tYSbU: View {
   let postjmttDhoS3qgib: Post
   var onBlozWbxoGpaIWfTW: (() -> Void)? = nil
@@ -425,21 +418,22 @@ struct PocardrDm6S2F8tYSbU: View {
     self.onBlozWbxoGpaIWfTW = onBlozWbxoGpaIWfTW
     self.onrepbloooTsNyqTWt2Qu = onrepbloooTsNyqTWt2Qu
     _disVmrWpELPZVmt8tD = StateObject(
-      wrappedValue: PostcdppOzBHrSEqXxfVmod(auidhmUVmgwfUL08N: postjmttDhoS3qgib.authorId))
+      wrappedValue: PostcdppOzBHrSEqXxfVmod(auidhmUVmgwfUL08N: postjmttDhoS3qgib.aC9dE1fG3hI5jK))
   }
 
   var body: some View {
     VStack(alignment: .leading, spacing: 0) {
       HStack(alignment: .top) {
         if let auth9fNAHb3e5Z8U4 = disVmrWpELPZVmt8tD.atSDfJi0ntFvhx3,
-          let ava338PmT5u5k4nm = auth9fNAHb3e5Z8U4.avatar
+          let ava338PmT5u5k4nm = auth9fNAHb3e5Z8U4.aG3hI5jK7lM9nO
         {
           Button(action: {
             if let auth9fNAHb3e5Z8U4 = disVmrWpELPZVmt8tD.atSDfJi0ntFvhx3 {
-              router.push(.profile(userId: auth9fNAHb3e5Z8U4.id, showBackicon: true))
+              router.push(
+                .profibW16jiY12DMmv(uidmhh7e21b987RS: auth9fNAHb3e5Z8U4.id, showBackicon: true))
             }
           }) {
-            DynamicImage(imageName: ava338PmT5u5k4nm)
+            DymiimgYKxe1c8TyvAiL(imgMx6GF7oyJoIJA: ava338PmT5u5k4nm)
               .frame(width: 46, height: 46)
               .clipShape(Circle())
           }
@@ -457,7 +451,7 @@ struct PocardrDm6S2F8tYSbU: View {
             .frame(width: 46, height: 46)
             .overlay {
               if let authVrLYkrwpBRD31 = disVmrWpELPZVmt8tD.atSDfJi0ntFvhx3 {
-                Text(String(authVrLYkrwpBRD31.username.prefix(1)))
+                Text(String(authVrLYkrwpBRD31.uX4yZ6aB8cD0eF.prefix(1)))
                   .font(.headline)
                   .foregroundColor(.pink)
               }
@@ -466,13 +460,13 @@ struct PocardrDm6S2F8tYSbU: View {
 
         VStack(alignment: .leading, spacing: 8) {
           HStack {
-            Text(disVmrWpELPZVmt8tD.atSDfJi0ntFvhx3?.username ?? "Unknown")
+            Text(disVmrWpELPZVmt8tD.atSDfJi0ntFvhx3?.uX4yZ6aB8cD0eF ?? "Unknown")
               .font(.custom("FredokaOne-Regular", size: 17))
               .foregroundColor(.white)
 
             Spacer()
 
-            if aumaOPNRYtaLzBwfO.currvj9QRUUPOWY4Ouser?.id != postjmttDhoS3qgib.authorId {
+            if aumaOPNRYtaLzBwfO.currvj9QRUUPOWY4Ouser?.id != postjmttDhoS3qgib.aC9dE1fG3hI5jK {
               Button(action: {
                 if let auidx1DP54a9z5Puo = disVmrWpELPZVmt8tD.atSDfJi0ntFvhx3?.id {
                   onrepbloooTsNyqTWt2Qu?(auidx1DP54a9z5Puo)
@@ -485,25 +479,26 @@ struct PocardrDm6S2F8tYSbU: View {
             }
           }
 
-          Text(postjmttDhoS3qgib.content)
+          Text(postjmttDhoS3qgib.cL7mN9oP1qR3sT)
             .font(.system(size: 14))
             .foregroundColor(.white)
             .lineLimit(3)
             .padding(.bottom, 6)
 
-          if !postjmttDhoS3qgib.imageNames.isEmpty {
+          if !postjmttDhoS3qgib.iT1uV3wX5yZ7aB.isEmpty {
             HStack(spacing: 8) {
-              ForEach(Array(postjmttDhoS3qgib.imageNames.prefix(3).enumerated()), id: \.offset) {
+              ForEach(Array(postjmttDhoS3qgib.iT1uV3wX5yZ7aB.prefix(3).enumerated()), id: \.offset)
+              {
                 index, imgDAdCYdjyI3UVw in
                 ZStack {
-                  DynamicImage(imageName: imgDAdCYdjyI3UVw)
+                  DymiimgYKxe1c8TyvAiL(imgMx6GF7oyJoIJA: imgDAdCYdjyI3UVw)
                     .frame(
                       width: (UIScreen.main.bounds.width - 150) / 3,
                       height: (UIScreen.main.bounds.width - 150) / 3
                     )
                     .clipShape(RoundedRectangle(cornerRadius: 8))
 
-                  if index == 2 && postjmttDhoS3qgib.imageNames.count > 3 {
+                  if index == 2 && postjmttDhoS3qgib.iT1uV3wX5yZ7aB.count > 3 {
                     RoundedRectangle(cornerRadius: 8)
                       .fill(Color.black.opacity(0.5))
                       .frame(
@@ -511,7 +506,7 @@ struct PocardrDm6S2F8tYSbU: View {
                         height: (UIScreen.main.bounds.width - 150) / 3
                       )
 
-                    Text("+\(postjmttDhoS3qgib.imageNames.count - 3)")
+                    Text("+\(postjmttDhoS3qgib.iT1uV3wX5yZ7aB.count - 3)")
                       .font(.system(size: 18, weight: .bold))
                       .foregroundColor(.white)
                   }
@@ -544,7 +539,3 @@ struct PocardrDm6S2F8tYSbU: View {
     }
   }
 }
-
-// #Preview {
-//     DiscoverView()
-// }

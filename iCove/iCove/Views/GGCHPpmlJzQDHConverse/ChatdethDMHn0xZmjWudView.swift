@@ -1,5 +1,5 @@
 //
-//  ChatDetailView.swift
+//  ChatdethDMHn0xZmjWudView.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/16.
@@ -12,7 +12,7 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-struct ChatDetailView: View {
+struct ChatdethDMHn0xZmjWudView: View {
   let conversationId: String
   let otherUserId: String
   @EnvironmentObject var router: Router
@@ -27,7 +27,7 @@ struct ChatDetailView: View {
   #endif
 
   private var filteredMessages: [Message] {
-    ctdtVmMj14NObPYFLCj.W9fdBCK2PwNT9.filter { $0.conversationId == conversationId }
+    ctdtVmMj14NObPYFLCj.W9fdBCK2PwNT9.filter { $0.cO5nV1eR3sA5tI7oN == conversationId }
   }
 
   init(conversationId: String, otherUserId: String) {
@@ -73,7 +73,7 @@ struct ChatDetailView: View {
       .presentationBackground(.clear)
       .presentationDragIndicator(.hidden)
     }
-    .blockUserDialog(isPresented: $blodiagJAtmqvn88cjR, uidK1uO6OuOGNky0: blouidpZnL4q6TFHXHV)
+    .blockDiaLcTUIAjgtcOHd(isPresented: $blodiagJAtmqvn88cjR, uidK1uO6OuOGNky0: blouidpZnL4q6TFHXHV)
     #if DEBUG
       .enableInjection()
     #endif
@@ -99,8 +99,8 @@ struct ChatDetailView: View {
 
       HStack(spacing: 12) {
         if let ohuserlCI4zzXt8KJEb = ctdtVmMj14NObPYFLCj.othWYFKvCmorLqVV {
-          if let avaNB07ZePIlnh0b = ohuserlCI4zzXt8KJEb.avatar {
-            DynamicImage(imageName: avaNB07ZePIlnh0b)
+          if let avaNB07ZePIlnh0b = ohuserlCI4zzXt8KJEb.aG3hI5jK7lM9nO {
+            DymiimgYKxe1c8TyvAiL(imgMx6GF7oyJoIJA: avaNB07ZePIlnh0b)
               .frame(width: 40, height: 40)
               .clipShape(Circle())
           } else {
@@ -108,20 +108,20 @@ struct ChatDetailView: View {
               .fill(Color.gray.opacity(0.3))
               .frame(width: 40, height: 40)
               .overlay {
-                Text(String(ohuserlCI4zzXt8KJEb.username.prefix(1)))
+                Text(String(ohuserlCI4zzXt8KJEb.uX4yZ6aB8cD0eF.prefix(1)))
                   .font(.headline)
                   .foregroundColor(.gray)
               }
           }
 
-          Text(ohuserlCI4zzXt8KJEb.username)
+          Text(ohuserlCI4zzXt8KJEb.uX4yZ6aB8cD0eF)
             .font(.custom("FredokaOne-Regular", size: 18))
             .foregroundColor(.black)
         }
       }
       .padding(.top, 3)
 
-      TopActionBar(
+      TopcCTKlwHKCaLhH(
         onBack: {
           router.pop()
         },
@@ -140,7 +140,7 @@ struct ChatDetailView: View {
           ForEach(filteredMessages) { msgHKAo8eMn5mdVJ in
             MsgBubF87zGlqlutlLx(
               msgrf8eAfHnXCGIL: msgHKAo8eMn5mdVJ,
-              isfrocurhelhF33uQZmia: msgHKAo8eMn5mdVJ.senderId
+              isfrocurhelhF33uQZmia: msgHKAo8eMn5mdVJ.sE5nD1eR3iD5eN
                 == aumanE2ZBeaqioilk.currvj9QRUUPOWY4Ouser?.id,
               othF4yYLpbl5slTA: ctdtVmMj14NObPYFLCj.othWYFKvCmorLqVV,
               curaxrNHJOZfOKzQ: aumanE2ZBeaqioilk.currvj9QRUUPOWY4Ouser
@@ -286,7 +286,8 @@ struct ChatDetailView: View {
         ImagePickerButton { slecr3n6ikDc2glUAimg in
           if let curIdhOKCGE3VIU5mn = aumanE2ZBeaqioilk.currvj9QRUUPOWY4Ouser?.id,
             let imgOQizpPbX5rB3F = ImgservxfMOg08cd0r7q.shared.savTolocalGnA4faaPYNYmz(
-              slecr3n6ikDc2glUAimg, prefix9Z9hDXriSUPhB: "chat", uid0UcUIvLw3HhOS: curIdhOKCGE3VIU5mn)
+              slecr3n6ikDc2glUAimg, prefix9Z9hDXriSUPhB: "chat",
+              uid0UcUIvLw3HhOS: curIdhOKCGE3VIU5mn)
           {
             ctdtVmMj14NObPYFLCj.sndimgTJyqAu4MxapC3(
               img02k8jBULdZ5To: imgOQizpPbX5rB3F, cutaQz3mfJvoGWS: curIdhOKCGE3VIU5mn)
@@ -388,8 +389,8 @@ struct MsgBubF87zGlqlutlLx: View {
   var body: some View {
     HStack(alignment: .top, spacing: 8) {
       if !isfrocurhelhF33uQZmia {
-        if let avaTJbmAxdt2PedA = othF4yYLpbl5slTA?.avatar {
-          DynamicImage(imageName: avaTJbmAxdt2PedA)
+        if let avaTJbmAxdt2PedA = othF4yYLpbl5slTA?.aG3hI5jK7lM9nO {
+          DymiimgYKxe1c8TyvAiL(imgMx6GF7oyJoIJA: avaTJbmAxdt2PedA)
             .frame(width: 38, height: 38)
             .clipShape(Circle())
             .padding(.trailing, 3)
@@ -398,7 +399,7 @@ struct MsgBubF87zGlqlutlLx: View {
             .fill(Color.gray.opacity(0.3))
             .frame(width: 38, height: 38)
             .overlay {
-              Text(String(othF4yYLpbl5slTA?.username.prefix(1) ?? "?"))
+              Text(String(othF4yYLpbl5slTA?.uX4yZ6aB8cD0eF.prefix(1) ?? "?"))
                 .font(.system(size: 16, weight: .bold))
                 .foregroundColor(.gray)
             }
@@ -408,9 +409,9 @@ struct MsgBubF87zGlqlutlLx: View {
 
       VStack(alignment: isfrocurhelhF33uQZmia ? .trailing : .leading, spacing: 6) {
         Group {
-          switch msgrf8eAfHnXCGIL.messageType {
+          switch msgrf8eAfHnXCGIL.mE5sS1aG3eT5yP7e {
           case .text:
-            Text(msgrf8eAfHnXCGIL.content)
+            Text(msgrf8eAfHnXCGIL.cL7mN9oP1qR3sT)
               .font(.system(size: 16))
               .foregroundColor(isfrocurhelhF33uQZmia ? .black : .white)
               .padding(.horizontal, 3)
@@ -420,7 +421,7 @@ struct MsgBubF87zGlqlutlLx: View {
               ? [.topLeft, .bottomLeft, .bottomRight]
               : [.topRight, .bottomLeft, .bottomRight]
 
-            DynamicImage(imageName: msgrf8eAfHnXCGIL.content)
+            DymiimgYKxe1c8TyvAiL(imgMx6GF7oyJoIJA: msgrf8eAfHnXCGIL.cL7mN9oP1qR3sT)
               .aspectRatio(contentMode: .fill)
               .frame(width: 150, height: 150)
               .clipShape(
@@ -440,7 +441,7 @@ struct MsgBubF87zGlqlutlLx: View {
               )
           case .audio:
             Audbubg3mfsZYl1gedv(
-              audwaGpngjKcv9hQ: msgrf8eAfHnXCGIL.content,
+              audwaGpngjKcv9hQ: msgrf8eAfHnXCGIL.cL7mN9oP1qR3sT,
               isfrocurhelhF33uQZmia: isfrocurhelhF33uQZmia,
               audserRfn5YlM76i6Hw: audserRfn5YlM76i6Hw
             )
@@ -461,7 +462,7 @@ struct MsgBubF87zGlqlutlLx: View {
           )
         )
 
-        Text(tf485F8fjU0kCDO.string(from: msgrf8eAfHnXCGIL.timestamp))
+        Text(tf485F8fjU0kCDO.string(from: msgrf8eAfHnXCGIL.tK3lM5nO7pQ9rS))
           .font(.system(size: 12))
           .foregroundColor(.white.opacity(0.6))
       }

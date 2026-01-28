@@ -153,7 +153,7 @@ struct AuthCW5IFQbXt8XViView: View {
     HStack {
       Group {
         if mode3SKlR1H07hi4ZBl == .dw9OrzTJRvChU {
-          StarText(
+          StarTextThyUv3yWgSTcz(
             text: "Forgot password",
             textSize: 22,
           )
@@ -176,7 +176,7 @@ struct AuthCW5IFQbXt8XViView: View {
           cerrcZ5BelI16SwWL()
         }
       }) {
-        StarText(
+        StarTextThyUv3yWgSTcz(
           text: "Sign in",
           textColor: mode3SKlR1H07hi4ZBl == .S6jCVHP1l4JrX ? .white : .white.opacity(0.5)
         )
@@ -188,7 +188,7 @@ struct AuthCW5IFQbXt8XViView: View {
           cerrcZ5BelI16SwWL()
         }
       }) {
-        StarText(
+        StarTextThyUv3yWgSTcz(
           text: "Sign up",
           textColor: mode3SKlR1H07hi4ZBl == .MtR06GhhdHl5i ? .white : .white.opacity(0.5)
         )
@@ -279,7 +279,7 @@ struct AuthCW5IFQbXt8XViView: View {
   }
 
   private var btncBchUpNCl4X43: some View {
-    PrimaryButton(
+    BtnjDlKDD6h7eI3t(
       title: btext9b6vEmwn9TNJy,
       action: {
         Task {

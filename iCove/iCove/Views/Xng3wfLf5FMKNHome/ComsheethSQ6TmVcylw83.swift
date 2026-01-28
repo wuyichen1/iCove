@@ -1,5 +1,5 @@
 //
-//  CommentSheet.swift
+//  ComsheethSQ6TmVcylw83.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/16.
@@ -11,7 +11,7 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-struct CommentSheet: View {
+struct ComsheethSQ6TmVcylw83: View {
   let vdoidD9HGYfeBdbb8g: String
   let blouidl77j5c0KC5XIJ: String
   var onrepec8s8iLFaxS8w: ((String) -> Void)? = nil
@@ -137,10 +137,10 @@ struct CommentSheet: View {
     }
 
     let commui4flLwFoDkRY = Comment(
-      videoId: vdoidD9HGYfeBdbb8g,
-      authorId: uidzNUsLgwNBhkPV,
-      content: comtxtFNpc30NkkZAmp,
-      timestamp: Date()
+      vI3dE5oI7dN9eN: vdoidD9HGYfeBdbb8g,
+      aC9dE1fG3hI5jK: uidzNUsLgwNBhkPV,
+      cL7mN9oP1qR3sT: comtxtFNpc30NkkZAmp,
+      tK3lM5nO7pQ9rS: Date()
     )
 
     commVmq0MjQlJrqM7lc.addr9jkmimqGYIjL(commui4flLwFoDkRY)
@@ -151,7 +151,6 @@ struct CommentSheet: View {
   }
 }
 
-// MARK: - Comment Row
 struct ComRowtbQX2Vx6D7P1X: View {
   let commXyUfkhL61UsfP: Comment
   var onrepec8s8iLFaxS8w: ((String) -> Void)? = nil
@@ -167,14 +166,14 @@ struct ComRowtbQX2Vx6D7P1X: View {
     self.onrepec8s8iLFaxS8w = onrepec8s8iLFaxS8w
     self.onDismiss = onDismiss
     _commVmq0MjQlJrqM7lc = StateObject(
-      wrappedValue: CommentRowViewModel(auidvPFJA8KR5FrlQ: commXyUfkhL61UsfP.authorId))
+      wrappedValue: CommentRowViewModel(auidvPFJA8KR5FrlQ: commXyUfkhL61UsfP.aC9dE1fG3hI5jK))
   }
 
   var body: some View {
     HStack(alignment: .top, spacing: 12) {
       if let auVVhVZlC8YeUdr = commVmq0MjQlJrqM7lc.autG49bxkSZNTSoj {
-        if let avatarName = auVVhVZlC8YeUdr.avatar {
-          DynamicImage(imageName: avatarName)
+        if let avatarName = auVVhVZlC8YeUdr.aG3hI5jK7lM9nO {
+          DymiimgYKxe1c8TyvAiL(imgMx6GF7oyJoIJA: avatarName)
             .frame(width: 50, height: 50)
             .clipShape(Circle())
             .overlay(
@@ -186,7 +185,7 @@ struct ComRowtbQX2Vx6D7P1X: View {
             .fill(Color.pink.opacity(0.3))
             .frame(width: 50, height: 50)
             .overlay {
-              Text(String(auVVhVZlC8YeUdr.username.prefix(1)))
+              Text(String(auVVhVZlC8YeUdr.uX4yZ6aB8cD0eF.prefix(1)))
                 .font(.headline)
                 .foregroundColor(.pink)
             }
@@ -199,12 +198,12 @@ struct ComRowtbQX2Vx6D7P1X: View {
 
       VStack(alignment: .leading, spacing: 4) {
         if let auVVhVZlC8YeUdr = commVmq0MjQlJrqM7lc.autG49bxkSZNTSoj {
-          Text(auVVhVZlC8YeUdr.username)
+          Text(auVVhVZlC8YeUdr.uX4yZ6aB8cD0eF)
             .font(.system(size: 14, weight: .bold))
             .foregroundColor(.black)
         }
 
-        Text(commXyUfkhL61UsfP.content)
+        Text(commXyUfkhL61UsfP.cL7mN9oP1qR3sT)
           .font(.system(size: 14))
           .foregroundColor(.black.opacity(0.8))
           .fixedSize(horizontal: false, vertical: true)
@@ -212,10 +211,10 @@ struct ComRowtbQX2Vx6D7P1X: View {
 
       Spacer()
 
-      if aumaEJ7EvQZ9Ow9Qt.currvj9QRUUPOWY4Ouser?.id != commXyUfkhL61UsfP.authorId {
+      if aumaEJ7EvQZ9Ow9Qt.currvj9QRUUPOWY4Ouser?.id != commXyUfkhL61UsfP.aC9dE1fG3hI5jK {
         Button(action: {
           onDismiss?()
-          onrepec8s8iLFaxS8w?(commXyUfkhL61UsfP.authorId)
+          onrepec8s8iLFaxS8w?(commXyUfkhL61UsfP.aC9dE1fG3hI5jK)
         }) {
           Image(systemName: "ellipsis")
             .font(.system(size: 16))
@@ -359,16 +358,11 @@ class Comshet6Zv0ZcOxmY14fVmod: ObservableObject {
   }
 
   private func flitercomjSELAiSQQVTWq(_ comts4oMmysR5908NJ: [Comment]) -> [Comment] {
-    guard let bloUidsvYpWGX4L3qBuy = aumaEJ7EvQZ9Ow9Qt?.currvj9QRUUPOWY4Ouser?.blockedUserIds,
+    guard let bloUidsvYpWGX4L3qBuy = aumaEJ7EvQZ9Ow9Qt?.currvj9QRUUPOWY4Ouser?.bQ7rS9tU1vW3xY,
       !bloUidsvYpWGX4L3qBuy.isEmpty
     else {
       return comts4oMmysR5908NJ
     }
-    return comts4oMmysR5908NJ.filter { !bloUidsvYpWGX4L3qBuy.contains($0.authorId) }
+    return comts4oMmysR5908NJ.filter { !bloUidsvYpWGX4L3qBuy.contains($0.aC9dE1fG3hI5jK) }
   }
 }
-
-// #Preview {
-//     CommentSheet(videoId: "test_video_id")
-//         .environmentObject(AuthManagA645b8Y0Aod3aVmod())
-// }

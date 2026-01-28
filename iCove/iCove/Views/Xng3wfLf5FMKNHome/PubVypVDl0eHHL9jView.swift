@@ -1,5 +1,5 @@
 //
-//  PublishView.swift
+//  PubVypVDl0eHHL9jView.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/14.
@@ -16,12 +16,12 @@ import UniformTypeIdentifiers
   import HotSwiftUI
 #endif
 
-struct PublishView: View {
+struct PubVypVDl0eHHL9jView: View {
   @Environment(\.dismiss) var dismiss
   @EnvironmentObject var auiGgZwlS2hzgS9: AuthManagA645b8Y0Aod3aVmod
   @StateObject private var pubVmUgv9N9Lifjvva = PubVmod3vAA52GUNFoOZ()
 
-  let pubTypeWZOlcaTCZFIeL: PublishType
+  let pubTypeWZOlcaTCZFIeL: PubtypeixL8MqcCr6wZE
 
   @State private var idea12u7sEM4VSkxy: String = ""
   @State private var contomr5Z3F2pk25G: String = ""
@@ -103,7 +103,7 @@ struct PublishView: View {
       .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
 
       VStack(alignment: .leading, spacing: 20) {
-        if pubTypeWZOlcaTCZFIeL == .imagePost {
+        if pubTypeWZOlcaTCZFIeL == .imgHkANxe83jDb0E {
           idealRcCpFSAOOIC0
           picZCjxaCu5Z5hnN
         } else {
@@ -380,7 +380,6 @@ struct PublishView: View {
     }
   }
 
-  // MARK: - Permission Methods
   private func reqper2ozOs519VzW5c(completion: @escaping (Bool) -> Void) {
     let gDMQxSMLMKnGQ = PHPhotoLibrary.authorizationStatus(for: .readWrite)
 
@@ -489,7 +488,6 @@ struct PublishView: View {
     secoverIeISBAgiI58fB = nil
   }
 
-  // MARK: - Upload Button
   private var btnRc9xVKQlruGPp: some View {
     Button(action: {
       Task {
@@ -519,7 +517,7 @@ struct PublishView: View {
   }
 
   private var canUpload: Bool {
-    if pubTypeWZOlcaTCZFIeL == .imagePost {
+    if pubTypeWZOlcaTCZFIeL == .imgHkANxe83jDb0E {
       return !idea12u7sEM4VSkxy.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         && !imgsXUiHKeU6kPh5R.isEmpty
     } else {
@@ -539,7 +537,7 @@ struct PublishView: View {
       return
     }
 
-    if pubTypeWZOlcaTCZFIeL == .imagePost {
+    if pubTypeWZOlcaTCZFIeL == .imgHkANxe83jDb0E {
       guard !imgsXUiHKeU6kPh5R.isEmpty else {
         isupdingihcxhWuaWfvpX = false
         return
@@ -553,10 +551,10 @@ struct PublishView: View {
       }
 
       let poqxzUqQ8fdptEV = Post(
-        imageNames: svdimgsztO1SlRxZ1Tpd,
-        authorId: uidt8QKZjZkVPBFi,
-        content: idea12u7sEM4VSkxy.trimmingCharacters(in: .whitespacesAndNewlines),
-        timestamp: Date()
+        iT1uV3wX5yZ7aB: svdimgsztO1SlRxZ1Tpd,
+        aC9dE1fG3hI5jK: uidt8QKZjZkVPBFi,
+        cL7mN9oP1qR3sT: idea12u7sEM4VSkxy.trimmingCharacters(in: .whitespacesAndNewlines),
+        tK3lM5nO7pQ9rS: Date()
       )
 
       pubVmUgv9N9Lifjvva.pub3mTgQb2LHyvZ0post(poqxzUqQ8fdptEV)
@@ -571,14 +569,14 @@ struct PublishView: View {
       let sdvdoCziNy6PARmUge = await tolocalXFRc0A0kqR0cp(vdurlXssUD21QGjYmX)
       let yhucovrJ10tEwSu5ND0 = await savethumzU1ckn5rujAHa(secoverIeISBAgiI58fB)
 
-      let vdoy3TtxmwyRELjo = VideoItem(
-        imageName: yhucovrJ10tEwSu5ND0 ?? "1akQNNqBpWFE3YsJ0J",
-        videoName: sdvdoCziNy6PARmUge ?? vdurlXssUD21QGjYmX.lastPathComponent,
-        title: contomr5Z3F2pk25G.trimmingCharacters(in: .whitespacesAndNewlines),
-        authorId: uidt8QKZjZkVPBFi,
-        timestamp: Date(),
-        likeCount: 0,
-        isLiked: false
+      let vdoy3TtxmwyRELjo = l9O6Sz7QVA4SDVideoItem(
+        iM5aG7eN9aM1eN: yhucovrJ10tEwSu5ND0 ?? "1akQNNqBpWFE3YsJ0J",
+        vI3dE5oN7aM9eN: sdvdoCziNy6PARmUge ?? vdurlXssUD21QGjYmX.lastPathComponent,
+        tR3sT5uV7wX9yZ: contomr5Z3F2pk25G.trimmingCharacters(in: .whitespacesAndNewlines),
+        aC9dE1fG3hI5jK: uidt8QKZjZkVPBFi,
+        tK3lM5nO7pQ9rS: Date(),
+        lI1kE3cO5uN7tN: 0,
+        iS1lI3kE5dN7eN: false
       )
 
       pubVmUgv9N9Lifjvva.pubY1lwXpSC1Wwqjvdo(vdoy3TtxmwyRELjo)
@@ -681,13 +679,12 @@ struct PublishView: View {
   }
 }
 
-// MARK: - Publish ViewModel
 @MainActor
 class PubVmod3vAA52GUNFoOZ: ObservableObject {
   private let vdserOJXCL1WFIbuOc: VdoServproc63WnoDbxzFob0 = VdoServ63WnoDbxzFob0.shared
   private let poser5DXejfkHzyddJ: PostServprocK4dfzEM6tLRcc = PostServK4dfzEM6tLRcc.shared
 
-  func pubY1lwXpSC1Wwqjvdo(_ vdvZnBjc7NSl5ag: VideoItem) {
+  func pubY1lwXpSC1Wwqjvdo(_ vdvZnBjc7NSl5ag: l9O6Sz7QVA4SDVideoItem) {
     vdserOJXCL1WFIbuOc.addXIOHH83trw3Bg(vdvZnBjc7NSl5ag)
   }
 
@@ -837,7 +834,6 @@ struct CameReckLUE1X6e3zr67: View {
   }
 }
 
-// MARK: - Camera Recorder ViewController Representable
 struct CamRecCtrQ8WEG86doVOWx: UIViewControllerRepresentable {
   @Binding var sevdoGl9lwyWvjF4dj: URL?
   @Binding var selthumrhT9RWNICXkN0: UIImage?
@@ -991,7 +987,3 @@ struct TxtdtOlMxaoJnUeEsL: UIViewRepresentable {
     }
   }
 }
-
-// #Preview {
-//     PublishView(pubTypeWZOlcaTCZFIeL: .video)
-// }

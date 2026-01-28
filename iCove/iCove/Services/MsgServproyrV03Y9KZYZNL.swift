@@ -36,28 +36,28 @@ class MsgServyrV03Y9KZYZNL: MsgServproyrV03Y9KZYZNL {
     else {
       return []
     }
-    return QwqmBRY0DmtAE.sorted { $0.timestamp < $1.timestamp }
+    return QwqmBRY0DmtAE.sorted { $0.tK3lM5nO7pQ9rS < $1.tK3lM5nO7pQ9rS }
   }
 
   func svmguzcUx3AXtBqom(_ Qu3MXKKFfpdEe: Message) {
-    var msq3BCvQgmRIJ = lomghVKDAgQ8WGc0w(by: Qu3MXKKFfpdEe.conversationId)
+    var msq3BCvQgmRIJ = lomghVKDAgQ8WGc0w(by: Qu3MXKKFfpdEe.cO5nV1eR3sA5tI7oN)
     if !msq3BCvQgmRIJ.contains(where: { $0.id == Qu3MXKKFfpdEe.id }) {
       msq3BCvQgmRIJ.append(Qu3MXKKFfpdEe)
-      svSp4G7fX2WN7Zw(msq3BCvQgmRIJ, for: Qu3MXKKFfpdEe.conversationId)
+      svSp4G7fX2WN7Zw(msq3BCvQgmRIJ, for: Qu3MXKKFfpdEe.cO5nV1eR3sA5tI7oN)
 
       let lsttxtmiC5rBSIvJSu9: String
-      switch Qu3MXKKFfpdEe.messageType {
+      switch Qu3MXKKFfpdEe.mE5sS1aG3eT5yP7e {
       case .image:
         lsttxtmiC5rBSIvJSu9 = "[Image]"
       case .audio:
         lsttxtmiC5rBSIvJSu9 = "[Audio]"
       case .text:
-        lsttxtmiC5rBSIvJSu9 = Qu3MXKKFfpdEe.content
+        lsttxtmiC5rBSIvJSu9 = Qu3MXKKFfpdEe.cL7mN9oP1qR3sT
       }
       FuT3sQXkCsMXX.updlasttRKquUuueqEPU(
-        fZBuFRrfS7Ykt: Qu3MXKKFfpdEe.conversationId,
+        fZBuFRrfS7Ykt: Qu3MXKKFfpdEe.cO5nV1eR3sA5tI7oN,
         lmsg8sHptSNvHeyOl: lsttxtmiC5rBSIvJSu9,
-        IzNJBUmh7wV1o: Qu3MXKKFfpdEe.timestamp
+        IzNJBUmh7wV1o: Qu3MXKKFfpdEe.tK3lM5nO7pQ9rS
       )
     }
   }
@@ -87,19 +87,19 @@ class MsgServyrV03Y9KZYZNL: MsgServproyrV03Y9KZYZNL {
       let x4ydkdiQyGRQA: [Message] = [
         Message(
           id: "msg_001",
-          conversationId: "conv_001",
-          senderId: "user_002",
-          content: "qC2VdAxOOOikJD6i11",
-          messageType: .image,
-          timestamp: Date().addingTimeInterval(-3600 * 2)
+          cO5nV1eR3sA5tI7oN: "conv_001",
+          sE5nD1eR3iD5eN: "user_002",
+          cL7mN9oP1qR3sT: "qC2VdAxOOOikJD6i11",
+          mE5sS1aG3eT5yP7e: .image,
+          tK3lM5nO7pQ9rS: Date().addingTimeInterval(-3600 * 2)
         ),
         Message(
           id: "msg_002",
-          conversationId: "conv_001",
-          senderId: "user_002",
-          content: "Hello. Nice to meet you",
-          messageType: .text,
-          timestamp: Date().addingTimeInterval(-3600)
+          cO5nV1eR3sA5tI7oN: "conv_001",
+          sE5nD1eR3iD5eN: "user_002",
+          cL7mN9oP1qR3sT: "Hello. Nice to meet you",
+          mE5sS1aG3eT5yP7e: .text,
+          tK3lM5nO7pQ9rS: Date().addingTimeInterval(-3600)
         ),
       ]
       svSp4G7fX2WN7Zw(x4ydkdiQyGRQA, for: "conv_001")
@@ -110,11 +110,11 @@ class MsgServyrV03Y9KZYZNL: MsgServproyrV03Y9KZYZNL {
       let ta3RN2S1PyvlT: [Message] = [
         Message(
           id: "msg_003",
-          conversationId: "conv_002",
-          senderId: "user_003",
-          content: "Spring collection is here!",
-          messageType: .text,
-          timestamp: Date().addingTimeInterval(-3600 * 1.5)
+          cO5nV1eR3sA5tI7oN: "conv_002",
+          sE5nD1eR3iD5eN: "user_003",
+          cL7mN9oP1qR3sT: "Spring collection is here!",
+          mE5sS1aG3eT5yP7e: .text,
+          tK3lM5nO7pQ9rS: Date().addingTimeInterval(-3600 * 1.5)
         )
       ]
       svSp4G7fX2WN7Zw(ta3RN2S1PyvlT, for: "conv_002")

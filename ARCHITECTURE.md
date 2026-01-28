@@ -81,14 +81,14 @@ iCove/
 │   │   └── ProfileModels.swift         # 我的页相关模型
 │   │
 │   ├── Views/                       # 视图层
-│   │   ├── AuthenticationView.swift     # 认证容器视图
+│   │   ├── AuthCW5IFQbXt8XViView.swift     # 认证容器视图
 │   │   ├── LoginView.swift             # 登录视图
 │   │   ├── RegisterView.swift          # 注册视图
 │   │   ├── MainTabView.swift           # 主 Tab 导航
-│   │   ├── HomeView.swift              # 首页视图
-│   │   ├── DiscoverView.swift         # 发现页视图
-│   │   ├── MessagesView.swift         # 消息页视图
-│   │   └── ProfileView.swift          # 我的页视图
+│   │   ├── HomezE7Bdgz5RAm6FView.swift              # 首页视图
+│   │   ├── DisceQwLbYkS3iDTTView.swift         # 发现页视图
+│   │   ├── MsgzLyr6EwJZs23eView.swift         # 消息页视图
+│   │   └── ProfilekgwebDS4EgDnqView.swift          # 我的页视图
 │   │
 │   ├── ViewModels/                 # 视图模型层
 │   │   ├── AuthenticationManager.swift # 认证状态管理器（全局）
@@ -97,7 +97,7 @@ iCove/
 │   │   ├── HomeViewModel.swift         # 首页视图模型
 │   │   ├── DiscoverViewModel.swift     # 发现页视图模型
 │   │   ├── MessagesViewModel.swift     # 消息页视图模型
-│   │   └── ProfileViewModel.swift      # 我的页视图模型
+│   │   └── ProfSR8H1KflnDrj9Vmod.swift      # 我的页视图模型
 │   │
 │   └── Services/                   # 服务层
 │       └── AuthenticationService.swift # 认证服务（网络请求）
@@ -151,7 +151,7 @@ struct User: Codable {
 
 **示例**：
 ```swift
-struct HomeView: View {
+struct HomezE7Bdgz5RAm6FView: View {
     @StateObject private var viewModel = HomeViewModel()
     
     var body: some View {
@@ -247,10 +247,10 @@ class AuthenticationService: AuthenticationServiceProtocol {
 - **类型**：容器视图
 - **职责**：管理四个主要 Tab 页面
 - **Tab 页面**：
-  1. **首页** (HomeView) - 内容流展示
-  2. **发现** (DiscoverView) - 探索推荐
-  3. **消息** (MessagesView) - 会话列表
-  4. **我的** (ProfileView) - 个人资料
+  1. **首页** (HomezE7Bdgz5RAm6FView) - 内容流展示
+  2. **发现** (DisceQwLbYkS3iDTTView) - 探索推荐
+  3. **消息** (MsgzLyr6EwJZs23eView) - 会话列表
+  4. **我的** (ProfilekgwebDS4EgDnqView) - 个人资料
 
 ### 3. 各功能模块
 
@@ -279,7 +279,7 @@ class AuthenticationService: AuthenticationServiceProtocol {
   - 置顶/删除操作
 
 #### 我的模块 (Profile)
-- **ViewModel**: `ProfileViewModel`
+- **ViewModel**: `ProfSR8H1KflnDrj9Vmod`
 - **功能**：
   - 个人资料展示
   - 统计数据展示
@@ -309,7 +309,7 @@ AuthenticationManager (更新状态)
     ↓
 RootView (监听 isAuthenticated)
     ↓
-自动切换视图 (MainTabView / AuthenticationView)
+自动切换视图 (MainTabView / AuthCW5IFQbXt8XViView)
 ```
 
 ### 2. 数据加载流程
@@ -404,7 +404,7 @@ View 自动更新 UI
 - 枚举使用单数形式：`SettingType`, `RefreshState`
 
 #### View
-- 以 `View` 结尾：`HomeView`, `LoginView`
+- 以 `View` 结尾：`HomezE7Bdgz5RAm6FView`, `LoginView`
 - 使用 PascalCase
 
 #### ViewModel
@@ -661,14 +661,14 @@ struct XxxView: View {
 - `AznsY674Pb5bXx` - 认证响应模型
 - `User` - 用户模型（Codable）
 - `MockUser` - 模拟用户模型（仅用于 Service 层）
-- `AuthError` - 认证错误枚举
+- `AuthErrorNLkjfmEVO3rVW` - 认证错误枚举
 
 #### HomeModels.swift
 - `FeedItem` - 首页内容项模型
 - `RefreshState` - 刷新状态枚举
 
 #### DiscoverModels.swift
-- `DiscoverItem` - 发现页内容项模型
+- `DiscitemMQE0TVcUSS7Z` - 发现页内容项模型
 - `TrendingTopic` - 热门话题模型
 - `DiscoverCategory` - 发现分类枚举
 - `TrendDirection` - 趋势方向枚举
@@ -678,7 +678,7 @@ struct XxxView: View {
 
 #### ProfileModels.swift
 - `UserProfile` - 用户资料模型
-- `SettingItem` - 设置项模型
+- `SettingItemG9ajK0rqU3bc7` - 设置项模型
 - `SettingType` - 设置类型枚举
 
 ### 模型设计原则

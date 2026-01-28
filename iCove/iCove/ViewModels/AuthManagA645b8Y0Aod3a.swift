@@ -73,12 +73,15 @@ class AuthManagA645b8Y0Aod3aVmod: ObservableObject {
     guard var utUelp445pyQf = currvj9QRUUPOWY4Ouser else { return }
     utUelp445pyQf = User(
       id: utUelp445pyQf.id,
-      email: utUelp445pyQf.email,
-      username: n6pTcgK3Tb42c7,
-      avatar: utUelp445pyQf.avatar,
-      balance: utUelp445pyQf.balance,
-      collectedPostIds: utUelp445pyQf.collectedPostIds,
-      blockedUserIds: utUelp445pyQf.blockedUserIds
+      eK8mN2pQ7rT9vW: utUelp445pyQf.eK8mN2pQ7rT9vW,
+      uX4yZ6aB8cD0eF: n6pTcgK3Tb42c7,
+      aG3hI5jK7lM9nO: utUelp445pyQf.aG3hI5jK7lM9nO,
+      bP2qR4sT6uV8wX: utUelp445pyQf.bP2qR4sT6uV8wX,
+      bY1zA3bC5dE7fG: utUelp445pyQf.bY1zA3bC5dE7fG,
+      cP9hI1jK3lM5nO: utUelp445pyQf.cP9hI1jK3lM5nO,
+      bQ7rS9tU1vW3xY: utUelp445pyQf.bQ7rS9tU1vW3xY,
+      fZ5aB7cD9eF1gH: utUelp445pyQf.fZ5aB7cD9eF1gH,
+      fI3jK5lM7nO9pQ: utUelp445pyQf.fI3jK5lM7nO9pQ
     )
     currvj9QRUUPOWY4Ouser = utUelp445pyQf
     percurVJbMlrKYhlnUG()
@@ -99,12 +102,15 @@ class AuthManagA645b8Y0Aod3aVmod: ObservableObject {
 
     ldNRkTlXX6bN0 = User(
       id: ldNRkTlXX6bN0.id,
-      email: ldNRkTlXX6bN0.email,
-      username: ldNRkTlXX6bN0.username,
-      avatar: KAdBujrN6znHJ,
-      balance: ldNRkTlXX6bN0.balance,
-      collectedPostIds: ldNRkTlXX6bN0.collectedPostIds,
-      blockedUserIds: ldNRkTlXX6bN0.blockedUserIds
+      eK8mN2pQ7rT9vW: ldNRkTlXX6bN0.eK8mN2pQ7rT9vW,
+      uX4yZ6aB8cD0eF: ldNRkTlXX6bN0.uX4yZ6aB8cD0eF,
+      aG3hI5jK7lM9nO: KAdBujrN6znHJ,
+      bP2qR4sT6uV8wX: ldNRkTlXX6bN0.bP2qR4sT6uV8wX,
+      bY1zA3bC5dE7fG: ldNRkTlXX6bN0.bY1zA3bC5dE7fG,
+      cP9hI1jK3lM5nO: ldNRkTlXX6bN0.cP9hI1jK3lM5nO,
+      bQ7rS9tU1vW3xY: ldNRkTlXX6bN0.bQ7rS9tU1vW3xY,
+      fZ5aB7cD9eF1gH: ldNRkTlXX6bN0.fZ5aB7cD9eF1gH,
+      fI3jK5lM7nO9pQ: ldNRkTlXX6bN0.fI3jK5lM7nO9pQ
     )
     currvj9QRUUPOWY4Ouser = ldNRkTlXX6bN0
     percurVJbMlrKYhlnUG()
@@ -121,7 +127,7 @@ class AuthManagA645b8Y0Aod3aVmod: ObservableObject {
   func toggleB2rGhFgSQb0qAcol(pid3rhTIg1jfRXQj: String) {
     guard var fcwH4uRl7V8JA = currvj9QRUUPOWY4Ouser else { return }
 
-    var col5vnqqpKbznnp6 = fcwH4uRl7V8JA.collectedPostIds
+    var col5vnqqpKbznnp6 = fcwH4uRl7V8JA.cP9hI1jK3lM5nO
     if col5vnqqpKbznnp6.contains(pid3rhTIg1jfRXQj) {
       col5vnqqpKbznnp6.removeAll { $0 == pid3rhTIg1jfRXQj }
     } else {
@@ -130,15 +136,15 @@ class AuthManagA645b8Y0Aod3aVmod: ObservableObject {
 
     fcwH4uRl7V8JA = User(
       id: fcwH4uRl7V8JA.id,
-      email: fcwH4uRl7V8JA.email,
-      username: fcwH4uRl7V8JA.username,
-      avatar: fcwH4uRl7V8JA.avatar,
-      balance: fcwH4uRl7V8JA.balance,
-      bio: fcwH4uRl7V8JA.bio,
-      collectedPostIds: col5vnqqpKbznnp6,
-      blockedUserIds: fcwH4uRl7V8JA.blockedUserIds,
-      followingUserIds: fcwH4uRl7V8JA.followingUserIds,
-      followerUserIds: fcwH4uRl7V8JA.followerUserIds
+      eK8mN2pQ7rT9vW: fcwH4uRl7V8JA.eK8mN2pQ7rT9vW,
+      uX4yZ6aB8cD0eF: fcwH4uRl7V8JA.uX4yZ6aB8cD0eF,
+      aG3hI5jK7lM9nO: fcwH4uRl7V8JA.aG3hI5jK7lM9nO,
+      bP2qR4sT6uV8wX: fcwH4uRl7V8JA.bP2qR4sT6uV8wX,
+      bY1zA3bC5dE7fG: fcwH4uRl7V8JA.bY1zA3bC5dE7fG,
+      cP9hI1jK3lM5nO: col5vnqqpKbznnp6,
+      bQ7rS9tU1vW3xY: fcwH4uRl7V8JA.bQ7rS9tU1vW3xY,
+      fZ5aB7cD9eF1gH: fcwH4uRl7V8JA.fZ5aB7cD9eF1gH,
+      fI3jK5lM7nO9pQ: fcwH4uRl7V8JA.fI3jK5lM7nO9pQ
     )
     currvj9QRUUPOWY4Ouser = fcwH4uRl7V8JA
     percurVJbMlrKYhlnUG()
@@ -161,7 +167,7 @@ class AuthManagA645b8Y0Aod3aVmod: ObservableObject {
   }
 
   func isColBbbiJ8jXV5fKI(pid3rhTIg1jfRXQj: String) -> Bool {
-    return currvj9QRUUPOWY4Ouser?.collectedPostIds.contains(pid3rhTIg1jfRXQj) ?? false
+    return currvj9QRUUPOWY4Ouser?.cP9hI1jK3lM5nO.contains(pid3rhTIg1jfRXQj) ?? false
   }
 
   private func saavaMittISSXcDfzz(_ XABaG0S2kDB0v: UIImage, uidiuW3QAEqba3c0: String) -> String {
@@ -190,12 +196,15 @@ class AuthManagA645b8Y0Aod3aVmod: ObservableObject {
     guard var WE93Ba4kitdoo = currvj9QRUUPOWY4Ouser else { return }
     WE93Ba4kitdoo = User(
       id: WE93Ba4kitdoo.id,
-      email: WE93Ba4kitdoo.email,
-      username: WE93Ba4kitdoo.username,
-      avatar: WE93Ba4kitdoo.avatar,
-      balance: WE93Ba4kitdoo.balance + c9QfLE0LEg8b0,
-      collectedPostIds: WE93Ba4kitdoo.collectedPostIds,
-      blockedUserIds: WE93Ba4kitdoo.blockedUserIds
+      eK8mN2pQ7rT9vW: WE93Ba4kitdoo.eK8mN2pQ7rT9vW,
+      uX4yZ6aB8cD0eF: WE93Ba4kitdoo.uX4yZ6aB8cD0eF,
+      aG3hI5jK7lM9nO: WE93Ba4kitdoo.aG3hI5jK7lM9nO,
+      bP2qR4sT6uV8wX: WE93Ba4kitdoo.bP2qR4sT6uV8wX + c9QfLE0LEg8b0,
+      bY1zA3bC5dE7fG: WE93Ba4kitdoo.bY1zA3bC5dE7fG,
+      cP9hI1jK3lM5nO: WE93Ba4kitdoo.cP9hI1jK3lM5nO,
+      bQ7rS9tU1vW3xY: WE93Ba4kitdoo.bQ7rS9tU1vW3xY,
+      fZ5aB7cD9eF1gH: WE93Ba4kitdoo.fZ5aB7cD9eF1gH,
+      fI3jK5lM7nO9pQ: WE93Ba4kitdoo.fI3jK5lM7nO9pQ
     )
     currvj9QRUUPOWY4Ouser = WE93Ba4kitdoo
     percurVJbMlrKYhlnUG()
@@ -203,15 +212,18 @@ class AuthManagA645b8Y0Aod3aVmod: ObservableObject {
 
   func dedPlf7hXe73EGoR(_ a9tnwfZU4sRwZF: Int) {
     guard var la5RRKhhNNKbc = currvj9QRUUPOWY4Ouser else { return }
-    let newBalance = max(0, la5RRKhhNNKbc.balance - a9tnwfZU4sRwZF)
+    let newBalance = max(0, la5RRKhhNNKbc.bP2qR4sT6uV8wX - a9tnwfZU4sRwZF)
     la5RRKhhNNKbc = User(
       id: la5RRKhhNNKbc.id,
-      email: la5RRKhhNNKbc.email,
-      username: la5RRKhhNNKbc.username,
-      avatar: la5RRKhhNNKbc.avatar,
-      balance: newBalance,
-      collectedPostIds: la5RRKhhNNKbc.collectedPostIds,
-      blockedUserIds: la5RRKhhNNKbc.blockedUserIds
+      eK8mN2pQ7rT9vW: la5RRKhhNNKbc.eK8mN2pQ7rT9vW,
+      uX4yZ6aB8cD0eF: la5RRKhhNNKbc.uX4yZ6aB8cD0eF,
+      aG3hI5jK7lM9nO: la5RRKhhNNKbc.aG3hI5jK7lM9nO,
+      bP2qR4sT6uV8wX: newBalance,
+      bY1zA3bC5dE7fG: la5RRKhhNNKbc.bY1zA3bC5dE7fG,
+      cP9hI1jK3lM5nO: la5RRKhhNNKbc.cP9hI1jK3lM5nO,
+      bQ7rS9tU1vW3xY: la5RRKhhNNKbc.bQ7rS9tU1vW3xY,
+      fZ5aB7cD9eF1gH: la5RRKhhNNKbc.fZ5aB7cD9eF1gH,
+      fI3jK5lM7nO9pQ: la5RRKhhNNKbc.fI3jK5lM7nO9pQ
     )
     currvj9QRUUPOWY4Ouser = la5RRKhhNNKbc
     percurVJbMlrKYhlnUG()
@@ -219,8 +231,8 @@ class AuthManagA645b8Y0Aod3aVmod: ObservableObject {
 
   func adSN1KPLAOgyALw(_ n2xr80LYPoFeC: String) {
     guard var MZ2U76C2WtQuV = currvj9QRUUPOWY4Ouser else { return }
-    if !MZ2U76C2WtQuV.blockedUserIds.contains(n2xr80LYPoFeC) {
-      MZ2U76C2WtQuV.blockedUserIds.append(n2xr80LYPoFeC)
+    if !MZ2U76C2WtQuV.bQ7rS9tU1vW3xY.contains(n2xr80LYPoFeC) {
+      MZ2U76C2WtQuV.bQ7rS9tU1vW3xY.append(n2xr80LYPoFeC)
       currvj9QRUUPOWY4Ouser = MZ2U76C2WtQuV
       percurVJbMlrKYhlnUG()
       NotificationCenter.default.post(
@@ -231,7 +243,7 @@ class AuthManagA645b8Y0Aod3aVmod: ObservableObject {
 
   func reNRhAhnjCSdO8F(_ n2xr80LYPoFeC: String) {
     guard var aKuzxZhWbrAfe = currvj9QRUUPOWY4Ouser else { return }
-    aKuzxZhWbrAfe.blockedUserIds.removeAll { $0 == n2xr80LYPoFeC }
+    aKuzxZhWbrAfe.bQ7rS9tU1vW3xY.removeAll { $0 == n2xr80LYPoFeC }
     currvj9QRUUPOWY4Ouser = aKuzxZhWbrAfe
     percurVJbMlrKYhlnUG()
     NotificationCenter.default.post(
@@ -254,8 +266,8 @@ class AuthManagA645b8Y0Aod3aVmod: ObservableObject {
 
   func adcol6OWHYe8mGyn86(_ pid3rhTIg1jfRXQj: String) {
     guard var ORHPJ5pDd59cU = currvj9QRUUPOWY4Ouser else { return }
-    if !ORHPJ5pDd59cU.collectedPostIds.contains(pid3rhTIg1jfRXQj) {
-      ORHPJ5pDd59cU.collectedPostIds.append(pid3rhTIg1jfRXQj)
+    if !ORHPJ5pDd59cU.cP9hI1jK3lM5nO.contains(pid3rhTIg1jfRXQj) {
+      ORHPJ5pDd59cU.cP9hI1jK3lM5nO.append(pid3rhTIg1jfRXQj)
       currvj9QRUUPOWY4Ouser = ORHPJ5pDd59cU
       percurVJbMlrKYhlnUG()
     }
@@ -263,7 +275,7 @@ class AuthManagA645b8Y0Aod3aVmod: ObservableObject {
 
   func removeCollectedPostId(_ pid3rhTIg1jfRXQj: String) {
     guard var ORHPJ5pDd59cU = currvj9QRUUPOWY4Ouser else { return }
-    ORHPJ5pDd59cU.collectedPostIds.removeAll { $0 == pid3rhTIg1jfRXQj }
+    ORHPJ5pDd59cU.cP9hI1jK3lM5nO.removeAll { $0 == pid3rhTIg1jfRXQj }
     currvj9QRUUPOWY4Ouser = ORHPJ5pDd59cU
     percurVJbMlrKYhlnUG()
   }

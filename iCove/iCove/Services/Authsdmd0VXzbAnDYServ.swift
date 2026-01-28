@@ -27,52 +27,52 @@ class Authsdmd0VXzbAnDYServ: Authsdmd0VXzbAnDYServProc {
   private var usersz9gmucno15OkO: [String: User] = [
     "user_001": User(
       id: "user_001",
-      email: "icove@gmail.com",
-      username: "Garrett",
-      avatar: "eitJTglOzkSfZvNi1",
-      balance: 1000,
-      collectedPostIds: ["post_001", "post_002", "post_003"],
-      blockedUserIds: [],
-      followingUserIds: ["user_002", "user_003"],
-      followerUserIds: ["user_002"]
+      eK8mN2pQ7rT9vW: "icove@gmail.com",
+      uX4yZ6aB8cD0eF: "Garrett",
+      aG3hI5jK7lM9nO: "eitJTglOzkSfZvNi1",
+      bP2qR4sT6uV8wX: 0,
+      cP9hI1jK3lM5nO: ["post_001", "post_002", "post_003"],
+      bQ7rS9tU1vW3xY: [],
+      fZ5aB7cD9eF1gH: ["user_002", "user_003"],
+      fI3jK5lM7nO9pQ: ["user_002"]
     ),
     "user_002": User(
       id: "user_002",
-      email: "",
-      username: "Nolan",
-      avatar: "eitJTglOzkSfZvNi2",
-      balance: 0,
-      followingUserIds: ["user_001"],
-      followerUserIds: ["user_001"]
+      eK8mN2pQ7rT9vW: "",
+      uX4yZ6aB8cD0eF: "Nolan",
+      aG3hI5jK7lM9nO: "eitJTglOzkSfZvNi2",
+      bP2qR4sT6uV8wX: 0,
+      fZ5aB7cD9eF1gH: ["user_001"],
+      fI3jK5lM7nO9pQ: ["user_001"]
     ),
     "user_003": User(
       id: "user_003",
-      email: "",
-      username: "Bishop",
-      avatar: "eitJTglOzkSfZvNi3",
-      balance: 0,
-      followerUserIds: ["user_001"]
+      eK8mN2pQ7rT9vW: "",
+      uX4yZ6aB8cD0eF: "Bishop",
+      aG3hI5jK7lM9nO: "eitJTglOzkSfZvNi3",
+      bP2qR4sT6uV8wX: 0,
+      fI3jK5lM7nO9pQ: ["user_001"]
     ),
     "user_004": User(
       id: "user_004",
-      email: "",
-      username: "Ruth",
-      avatar: "eitJTglOzkSfZvNi4",
-      balance: 0
+      eK8mN2pQ7rT9vW: "",
+      uX4yZ6aB8cD0eF: "Ruth",
+      aG3hI5jK7lM9nO: "eitJTglOzkSfZvNi4",
+      bP2qR4sT6uV8wX: 0
     ),
     "user_005": User(
       id: "user_005",
-      email: "",
-      username: "Silvia",
-      avatar: "eitJTglOzkSfZvNi5",
-      balance: 0
+      eK8mN2pQ7rT9vW: "",
+      uX4yZ6aB8cD0eF: "Silvia",
+      aG3hI5jK7lM9nO: "eitJTglOzkSfZvNi5",
+      bP2qR4sT6uV8wX: 0
     ),
     "user_006": User(
       id: "user_006",
-      email: "",
-      username: "Glinda",
-      avatar: "eitJTglOzkSfZvNi6",
-      balance: 0
+      eK8mN2pQ7rT9vW: "",
+      uX4yZ6aB8cD0eF: "Glinda",
+      aG3hI5jK7lM9nO: "eitJTglOzkSfZvNi6",
+      bP2qR4sT6uV8wX: 0
     ),
   ]
 
@@ -172,22 +172,22 @@ class Authsdmd0VXzbAnDYServ: Authsdmd0VXzbAnDYServProc {
     try await Task.sleep(nanoseconds: 1_000_000_000)
 
     guard isval7z4VcmVmK9Mui(e8MRjCPXAu0wXY) else {
-      throw AuthError.invalidEmail("Incorrect email format.")
+      throw AuthErrorNLkjfmEVO3rVW.U7PdwkbVVPUKx("Incorrect email format.")
     }
 
     guard IRqSrQCED3nMk.count >= 6 else {
-      throw AuthError.invalidPassword("The password must be at least 6 characters long.")
+      throw AuthErrorNLkjfmEVO3rVW.vj8Fe0ftzWxwW("The password must be at least 6 characters long.")
     }
 
     let uayE3XhyLo5Xv = e8MRjCPXAu0wXY.lowercased()
     guard let WFgvhOOYHIcWq = emtoidPYq44PQMLEKsf[uayE3XhyLo5Xv],
       let iGudaBL9xeDxn = usersz9gmucno15OkO[WFgvhOOYHIcWq]
     else {
-      throw AuthError.userNotFound("User does not exist.")
+      throw AuthErrorNLkjfmEVO3rVW.v4nww3wWciJDkm("User does not exist.")
     }
 
     guard pwd9k0LaTLq1KeVL[uayE3XhyLo5Xv] == IRqSrQCED3nMk else {
-      throw AuthError.invalidCredentials("Incorrect email or password.")
+      throw AuthErrorNLkjfmEVO3rVW.eFQHXvLi7fsCP("Incorrect email or password.")
     }
 
     let ZPBhIt8BW82kN = gentokLhDabp3qvYWS0(for: iGudaBL9xeDxn.id)
@@ -205,29 +205,29 @@ class Authsdmd0VXzbAnDYServ: Authsdmd0VXzbAnDYServProc {
     try await Task.sleep(nanoseconds: 1_000_000_000)
 
     guard isval7z4VcmVmK9Mui(Lp2UI0faMaN0D) else {
-      throw AuthError.invalidEmail("Incorrect email format.")
+      throw AuthErrorNLkjfmEVO3rVW.U7PdwkbVVPUKx("Incorrect email format.")
     }
 
     guard IRqSrQCED3nMk.count >= 6 else {
-      throw AuthError.invalidPassword("The password must be at least 6 characters long.")
+      throw AuthErrorNLkjfmEVO3rVW.vj8Fe0ftzWxwW("The password must be at least 6 characters long.")
     }
 
     guard DoH2qI10b8Ovo.count >= 2 && DoH2qI10b8Ovo.count <= 20 else {
-      throw AuthError.invalidUsername("The username must be between 2 and 20 characters long.")
+      throw AuthErrorNLkjfmEVO3rVW.EIC6Ls6G3rvp3("The username must be between 2 and 20 characters long.")
     }
 
     let uayE3XhyLo5Xv = Lp2UI0faMaN0D.lowercased()
     if emtoidPYq44PQMLEKsf[uayE3XhyLo5Xv] != nil {
-      throw AuthError.emailAlreadyExists("The email has already been registered.")
+      throw AuthErrorNLkjfmEVO3rVW.PSZGWN9sdlSYp("The email has already been registered.")
     }
 
     let WFgvhOOYHIcWq = "user_\(UUID().uuidString.prefix(8))"
     let XTmHns6NRlpLB = User(
       id: WFgvhOOYHIcWq,
-      email: uayE3XhyLo5Xv,
-      username: DoH2qI10b8Ovo,
-      avatar: "icove_logo",
-      balance: 0
+      eK8mN2pQ7rT9vW: uayE3XhyLo5Xv,
+      uX4yZ6aB8cD0eF: DoH2qI10b8Ovo,
+      aG3hI5jK7lM9nO: "icove_logo",
+      bP2qR4sT6uV8wX: 0
     )
     usersz9gmucno15OkO[WFgvhOOYHIcWq] = XTmHns6NRlpLB
     emtoidPYq44PQMLEKsf[uayE3XhyLo5Xv] = WFgvhOOYHIcWq
@@ -266,10 +266,10 @@ class Authsdmd0VXzbAnDYServ: Authsdmd0VXzbAnDYServProc {
 
       let XTmHns6NRlpLB = User(
         id: WFgvhOOYHIcWq,
-        email: mgpmQnAUc7BNX,
-        username: una5AuuJVrC7nWRk,
-        avatar: "icove_logo",
-        balance: 0
+        eK8mN2pQ7rT9vW: mgpmQnAUc7BNX,
+        uX4yZ6aB8cD0eF: una5AuuJVrC7nWRk,
+        aG3hI5jK7lM9nO: "icove_logo",
+        bP2qR4sT6uV8wX: 0
       )
 
       usersz9gmucno15OkO[WFgvhOOYHIcWq] = XTmHns6NRlpLB
@@ -300,8 +300,8 @@ class Authsdmd0VXzbAnDYServ: Authsdmd0VXzbAnDYServProc {
     let mnbUQ79Kx8XvH = MsgServyrV03Y9KZYZNL.shared
 
     let oFimSnnr4TeSy = BOfzdMCb6Hnv2.loc5f3UJvuhXYjoD()
-    let fdTC8GdRJIu8v = oFimSnnr4TeSy.filter { $0.authorId == uid7xnFp9WG31Lwa }.map(\.id)
-    let GDtCweRwLzpFf = oFimSnnr4TeSy.filter { $0.authorId != uid7xnFp9WG31Lwa }
+    let fdTC8GdRJIu8v = oFimSnnr4TeSy.filter { $0.aC9dE1fG3hI5jK == uid7xnFp9WG31Lwa }.map(\.id)
+    let GDtCweRwLzpFf = oFimSnnr4TeSy.filter { $0.aC9dE1fG3hI5jK != uid7xnFp9WG31Lwa }
     BOfzdMCb6Hnv2.svSqlFE3ULuRtoH(GDtCweRwLzpFf)
 
     for Scf3crrJa8FVY in fdTC8GdRJIu8v {
@@ -310,7 +310,7 @@ class Authsdmd0VXzbAnDYServ: Authsdmd0VXzbAnDYServProc {
     let TFtXfRpVBlub6 = Set(GDtCweRwLzpFf.map(\.id))
     for Scf3crrJa8FVY in TFtXfRpVBlub6 {
       let wOx2KSJCBqX7Q = rdFIWbniJo8Cn.locom1GrYz4YRiuJOq(for: Scf3crrJa8FVY)
-      let F5TSilKRGmwHy = wOx2KSJCBqX7Q.filter { $0.authorId != uid7xnFp9WG31Lwa }
+      let F5TSilKRGmwHy = wOx2KSJCBqX7Q.filter { $0.aC9dE1fG3hI5jK != uid7xnFp9WG31Lwa }
       if F5TSilKRGmwHy.count != wOx2KSJCBqX7Q.count {
         rdFIWbniJo8Cn.savesDxbX9dKjG5V(for: Scf3crrJa8FVY, a3vNkVhmvsEDE: F5TSilKRGmwHy)
       }
@@ -320,7 +320,7 @@ class Authsdmd0VXzbAnDYServ: Authsdmd0VXzbAnDYServProc {
 
     let QWqBIGB9ZGGcw = Vnp3TOMMzEiD5.lovsNlpHQLpsFndh7()
     let LqMzsu0nzvuqX = QWqBIGB9ZGGcw.filter {
-      $0.participantIds.contains(uid7xnFp9WG31Lwa)
+      $0.pA5rT1iC3iP5aN7t.contains(uid7xnFp9WG31Lwa)
     }
     for conv in LqMzsu0nzvuqX {
       mnbUQ79Kx8XvH.delfoiaBI3wrW9DqTE(conv.id)
@@ -328,18 +328,18 @@ class Authsdmd0VXzbAnDYServ: Authsdmd0VXzbAnDYServProc {
     }
 
     for (uid, var u) in usersz9gmucno15OkO where uid != uid7xnFp9WG31Lwa {
-      u.followingUserIds.removeAll { $0 == uid7xnFp9WG31Lwa }
-      u.followerUserIds.removeAll { $0 == uid7xnFp9WG31Lwa }
-      u.blockedUserIds.removeAll { $0 == uid7xnFp9WG31Lwa }
-      u.collectedPostIds.removeAll { Yze17msQEx71t.contains($0) }
+      u.fZ5aB7cD9eF1gH.removeAll { $0 == uid7xnFp9WG31Lwa }
+      u.fI3jK5lM7nO9pQ.removeAll { $0 == uid7xnFp9WG31Lwa }
+      u.bQ7rS9tU1vW3xY.removeAll { $0 == uid7xnFp9WG31Lwa }
+      u.cP9hI1jK3lM5nO.removeAll { Yze17msQEx71t.contains($0) }
       usersz9gmucno15OkO[uid] = u
     }
 
     if let u3SQIdmrJzowRu = usersz9gmucno15OkO[uid7xnFp9WG31Lwa] {
       usersz9gmucno15OkO.removeValue(forKey: uid7xnFp9WG31Lwa)
-      if !u3SQIdmrJzowRu.email.isEmpty {
-        emtoidPYq44PQMLEKsf.removeValue(forKey: u3SQIdmrJzowRu.email)
-        pwd9k0LaTLq1KeVL.removeValue(forKey: u3SQIdmrJzowRu.email)
+      if !u3SQIdmrJzowRu.eK8mN2pQ7rT9vW.isEmpty {
+        emtoidPYq44PQMLEKsf.removeValue(forKey: u3SQIdmrJzowRu.eK8mN2pQ7rT9vW)
+        pwd9k0LaTLq1KeVL.removeValue(forKey: u3SQIdmrJzowRu.eK8mN2pQ7rT9vW)
       }
       susPygtm1nqbnczn()
       seuidQCy323kI4VYic()
@@ -375,23 +375,23 @@ class Authsdmd0VXzbAnDYServ: Authsdmd0VXzbAnDYServProc {
     try await Task.sleep(nanoseconds: 1_500_000_000)
 
     guard isval7z4VcmVmK9Mui(e1NwZPJd8HYCD8) else {
-      throw AuthError.invalidEmail("Incorrect email format.")
+      throw AuthErrorNLkjfmEVO3rVW.U7PdwkbVVPUKx("Incorrect email format.")
     }
 
     guard LwBDL4g9GeWqW.count >= 6 else {
-      throw AuthError.invalidPassword("The password must be at least 6 characters long.")
+      throw AuthErrorNLkjfmEVO3rVW.vj8Fe0ftzWxwW("The password must be at least 6 characters long.")
     }
 
     let uayE3XhyLo5Xv = e1NwZPJd8HYCD8.lowercased()
     guard emtoidPYq44PQMLEKsf[uayE3XhyLo5Xv] != nil else {
-      throw AuthError.userNotFound("User does not exist.")
+      throw AuthErrorNLkjfmEVO3rVW.v4nww3wWciJDkm("User does not exist.")
     }
 
     pwd9k0LaTLq1KeVL[uayE3XhyLo5Xv] = LwBDL4g9GeWqW
     spwdsf6jja6zlH8CLY()
 
     if let q4u1IUczwDGh1q = getq9PrlZ8SdrKEmA(),
-      q4u1IUczwDGh1q.email == uayE3XhyLo5Xv
+      q4u1IUczwDGh1q.eK8mN2pQ7rT9vW == uayE3XhyLo5Xv
     {
       sqj68L09EvBJjUn(q4u1IUczwDGh1q)
     }

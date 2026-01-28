@@ -11,7 +11,6 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-/// 导航容器视图 - 承载 NavigationStack
 struct AppNavigationView<Content: View>: View {
   @EnvironmentObject var router: Router
   @EnvironmentObject var authManager: AuthManagA645b8Y0Aod3aVmod
@@ -38,66 +37,63 @@ struct AppNavigationView<Content: View>: View {
     #endif
   }
 
-  /// 根据路由返回对应的视图
   @ViewBuilder
   private func destinationView(for route: Route) -> some View {
     switch route {
-    case .home:
-      HomeView()
-    // home 是主页面，保持底部导航栏显示
-    case .detail(let id):
-      detailView(for: id)
-        // 详情页是二级页面，隐藏底部导航栏
+    case .homeQMOFX4gLvyU3x:
+      HomezE7Bdgz5RAm6FView()
+    case .vdodetfheedD4mgJl4V(let vidROutctPY4KAW9):
+      detailView(for: vidROutctPY4KAW9)
         .toolbar(.hidden, for: .tabBar)
-    case .postDetail(let postId):
-      PostDetailView(postId: postId)
+    case .podeti0Gx1PwxsKGxM(let postId):
+      Podetopjh8lRqGBvnoView(postId: postId)
         .environmentObject(router)
         .toolbar(.hidden, for: .tabBar)
-    case .chatDetail(let conversationId, let otherUserId):
-      ChatDetailView(conversationId: conversationId, otherUserId: otherUserId)
+    case .chadetBhKPSi5YgfcOZ(let conversationId, let otherUserId):
+      ChatdethDMHn0xZmjWudView(conversationId: conversationId, otherUserId: otherUserId)
         .environmentObject(router)
         .toolbar(.hidden, for: .tabBar)
     case .videoCall(let conversationId, let otherUserId):
       VideoCallView(conversationId: conversationId, otherUserId: otherUserId)
         .environmentObject(router)
         .toolbar(.hidden, for: .tabBar)
-    case .profile(let userId, let showBackicon):
+    case .profibW16jiY12DMmv(let userId, let showBackicon):
       ProfileViewWrapper(userId: userId, showBackicon: showBackicon)
         .environmentObject(router)
         .environmentObject(authManager)
         .environmentObject(paymentViewModel)
         .toolbar(.hidden, for: .tabBar)
     case .settings:
-      SettingsView()
+      SettingscMKlqK4i3uZzcView()
         .environmentObject(router)
         .environmentObject(authManager)
         .toolbar(.hidden, for: .tabBar)
     case .editProfile:
-      EditProfileView()
+      EditY3IAsBRQyIZ1dView()
         .environmentObject(router)
         .environmentObject(authManager)
         .toolbar(.hidden, for: .tabBar)
     case .blacklist:
-      BlacklistView()
+      BlacklistMRH0iOPUaqaWKView()
         .environmentObject(router)
         .environmentObject(authManager)
         .toolbar(.hidden, for: .tabBar)
     case .wallet:
-      WalletView()
+      WalletRvl5XPggWqS65View()
         .environmentObject(router)
         .environmentObject(authManager)
         .environmentObject(paymentViewModel)
         .toolbar(.hidden, for: .tabBar)
     case .ai:
-      AIView()
+      AIr0xPbmzogQH8YView()
         .environmentObject(authManager)
         .toolbar(.hidden, for: .tabBar)
     case .publish(let type):
-      PublishView(pubTypeWZOlcaTCZFIeL: type)
+      PubVypVDl0eHHL9jView(pubTypeWZOlcaTCZFIeL: type)
         .environmentObject(authManager)
         .toolbar(.hidden, for: .tabBar)
     case .report(let userId):
-      ReportView(userId: userId)
+      ReportywNvhJra7xXCDView(userId: userId)
         .environmentObject(router)
         .toolbar(.hidden, for: .tabBar)
     case .agreement(let url, let title):
@@ -107,16 +103,14 @@ struct AppNavigationView<Content: View>: View {
     }
   }
 
-  /// 根据视频 ID 创建详情页
   @ViewBuilder
   private func detailView(for videoId: String) -> some View {
     let videos = VdoServ63WnoDbxzFob0.shared.loc5f3UJvuhXYjoD()
     if let video = videos.first(where: { $0.id == videoId }) {
-      VideoDetailView(video: video)
+      VdodetTEFxjaiTtBG5ZView(video: video)
         .environmentObject(router)
     } else {
-      // 如果找不到视频，显示错误页面或返回首页
-      Text("视频不存在")
+      Text("Video not found")
         .foregroundColor(.secondary)
         .navigationBarTitleDisplayMode(.inline)
     }

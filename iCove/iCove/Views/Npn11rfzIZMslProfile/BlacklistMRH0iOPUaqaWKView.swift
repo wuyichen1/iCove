@@ -1,5 +1,5 @@
 //
-//  BlacklistView.swift
+//  BlacklistMRH0iOPUaqaWKView.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/19.
@@ -11,7 +11,7 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-struct BlacklistView: View {
+struct BlacklistMRH0iOPUaqaWKView: View {
   @EnvironmentObject var au8PAPgSVGmoAhD: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
   @StateObject private var blcAzRj9NhSBUoqvVmod = BlcAZzdkCZPB1o2aVmdl()
@@ -31,7 +31,7 @@ struct BlacklistView: View {
           .padding(.bottom, 10)
 
         if blcAzRj9NhSBUoqvVmod.blouserctQXbGMX3kUgr.isEmpty {
-          EmptyPlaceholderView()
+          EmptyJYGRYC2t97Qi3()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else {
           ScrollView {
@@ -51,7 +51,7 @@ struct BlacklistView: View {
     .navigationBarHidden(true)
     .onAppear {
       blcAzRj9NhSBUoqvVmod.loadBlockedUsers(
-        blouidFKnKiKBUzjZq0: au8PAPgSVGmoAhD.currvj9QRUUPOWY4Ouser?.blockedUserIds ?? [],
+        blouidFKnKiKBUzjZq0: au8PAPgSVGmoAhD.currvj9QRUUPOWY4Ouser?.bQ7rS9tU1vW3xY ?? [],
         ausernBbJzsGRqu4eF: Authsdmd0VXzbAnDYServ.shared
       )
     }
@@ -93,7 +93,7 @@ struct BlacklistView: View {
 
         VStack(alignment: .leading, spacing: 12) {
           HStack {
-            Text(userNtm79g6kOJtqr.username)
+            Text(userNtm79g6kOJtqr.uX4yZ6aB8cD0eF)
               .font(.custom("FredokaOne-Regular", size: 16))
               .foregroundColor(.white)
 
@@ -126,8 +126,8 @@ struct BlacklistView: View {
       .padding(.top, 12)
 
       ProfileImageView(
-        avatar: userNtm79g6kOJtqr.avatar,
-        username: userNtm79g6kOJtqr.username,
+        avatar: userNtm79g6kOJtqr.aG3hI5jK7lM9nO,
+        username: userNtm79g6kOJtqr.uX4yZ6aB8cD0eF,
         size: 62,
         subSize: 16,
       )

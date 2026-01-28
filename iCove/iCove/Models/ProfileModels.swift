@@ -7,23 +7,9 @@
 
 import Foundation
 
-// MARK: - Profile Models
-
-/// 设置项模型
-struct SettingItem: Identifiable {
+struct SettingItemG9ajK0rqU3bc7: Identifiable {
   let id = UUID()
-  let title: String
-  let icon: String
-  let type: SettingType
-  var isDestructive: Bool = false
-}
-
-/// 设置类型
-enum SettingType {
-  case account
-  case privacy
-  case notification
-  case appearance
-  case about
-  case logout
+  let tR3sT5uV7wX9yZ: String
+  let iC5oN7eN9aM1eN: String
+  var iS1dE3sT5rU7cT9v: Bool = false
 }

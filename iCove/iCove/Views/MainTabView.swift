@@ -15,7 +15,7 @@ struct MainTabView: View {
   @EnvironmentObject var aumaxK8ji8QR9Bmeq: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var paymentViewModel: Payn8tqsrRpmXPZWVmod
   @StateObject private var router = Router()
-  @State private var selectedTab: TabItem = .home
+  @State private var selectedTab: TabHTktU05o5oj9w = .homeUD88N2NAslByu
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -25,28 +25,28 @@ struct MainTabView: View {
     ZStack(alignment: .bottom) {
       Group {
         switch selectedTab {
-        case .home:
+        case .homeUD88N2NAslByu:
           AppNavigationView {
-            HomeView()
+            HomezE7Bdgz5RAm6FView()
           }
           .environmentObject(router)
           .environmentObject(aumaxK8ji8QR9Bmeq)
           .environmentObject(paymentViewModel)
-        case .discover:
+        case .discZr9miG5MPFZ9y:
           AppNavigationView {
-            DiscoverView()
+            DisceQwLbYkS3iDTTView()
           }
           .environmentObject(router)
           .environmentObject(aumaxK8ji8QR9Bmeq)
           .environmentObject(paymentViewModel)
-        case .messages:
+        case .msgsVa78D1KK18Op4:
           AppNavigationView {
-            MessagesView()
+            MsgzLyr6EwJZs23eView()
           }
           .environmentObject(aumaxK8ji8QR9Bmeq)
           .environmentObject(router)
           .environmentObject(paymentViewModel)
-        case .profile:
+        case .profibW16jiY12DMmv:
           AppNavigationView {
             ProfileViewWrapper()
           }
@@ -58,7 +58,7 @@ struct MainTabView: View {
       .frame(maxWidth: .infinity, maxHeight: .infinity)
 
       if shouldShowTabBar {
-        FloatingTabBar(selectedTab: $selectedTab)
+        Tabaeg6yQD3b7PzGBar(selectedTab: $selectedTab)
       }
     }
     .ignoresSafeArea(edges: .bottom)
@@ -75,9 +75,8 @@ struct MainTabView: View {
   }
 }
 
-/// ProfileView 包装器 - 用于正确初始化 ViewModel
 struct ProfileViewWrapper: View {
-  @EnvironmentObject var authManager: AuthManagA645b8Y0Aod3aVmod
+  @EnvironmentObject var m0ECMlSn2a4yy: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
   let userId: String?
   let showBackicon: Bool
@@ -88,40 +87,34 @@ struct ProfileViewWrapper: View {
   }
 
   var body: some View {
-    ProfileViewContainer(authManager: authManager, userId: userId, showBackicon: showBackicon)
+    ProfileViewContainer(m0ECMlSn2a4yy: m0ECMlSn2a4yy, userId: userId, showBackicon: showBackicon)
       .environmentObject(router)
   }
 }
 
-/// ProfileView 容器 - 创建并管理 ViewModel
 private struct ProfileViewContainer: View {
-  let authManager: AuthManagA645b8Y0Aod3aVmod
+  let m0ECMlSn2a4yy: AuthManagA645b8Y0Aod3aVmod
   let userId: String?
   let showBackicon: Bool
-  @StateObject private var viewModel: ProfileViewModel
+  @StateObject private var viewModel: ProfSR8H1KflnDrj9Vmod
 
-  init(authManager: AuthManagA645b8Y0Aod3aVmod, userId: String?, showBackicon: Bool = false) {
-    self.authManager = authManager
+  init(m0ECMlSn2a4yy: AuthManagA645b8Y0Aod3aVmod, userId: String?, showBackicon: Bool = false) {
+    self.m0ECMlSn2a4yy = m0ECMlSn2a4yy
     self.userId = userId
     self.showBackicon = showBackicon
     _viewModel = StateObject(
-      wrappedValue: ProfileViewModel(authManager: authManager, userId: userId))
+      wrappedValue: ProfSR8H1KflnDrj9Vmod(m0ECMlSn2a4yy: m0ECMlSn2a4yy, userId: userId))
   }
 
   var body: some View {
-    ProfileView(proVm92qjXCvXAr8i6: viewModel, sbacSTmLA8PZKM2AW: showBackicon)
-      .environmentObject(authManager)
+    ProfilekgwebDS4EgDnqView(proVm92qjXCvXAr8i6: viewModel, sbacSTmLA8PZKM2AW: showBackicon)
+      .environmentObject(m0ECMlSn2a4yy)
   }
 }
 
-// MARK: - Tab Item Enum
-enum TabItem {
-  case home
-  case discover
-  case messages
-  case profile
+enum TabHTktU05o5oj9w {
+  case homeUD88N2NAslByu
+  case discZr9miG5MPFZ9y
+  case msgsVa78D1KK18Op4
+  case profibW16jiY12DMmv
 }
-
-// #Preview {
-//     MainTabView()
-// }

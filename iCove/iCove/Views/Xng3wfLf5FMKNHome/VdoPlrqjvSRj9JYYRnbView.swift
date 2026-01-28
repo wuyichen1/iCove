@@ -1,5 +1,5 @@
 //
-//  VideoPlayerView.swift
+//  VdoPlrqjvSRj9JYYRnbView.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/16.
@@ -38,7 +38,7 @@ struct AVPlayerLayerView: UIViewRepresentable {
   }
 }
 
-struct VideoPlayerView: View {
+struct VdoPlrqjvSRj9JYYRnbView: View {
   let videoName: String
   let fileExtension: String = "mp4"
 
@@ -173,6 +173,3 @@ struct VideoPlayerView: View {
   }
 }
 
-// #Preview {
-//     VideoPlayerView(videoName: "YLXVqZ8wbqT0SSgp1")
-// }

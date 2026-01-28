@@ -24,42 +24,42 @@ class PostServK4dfzEM6tLRcc: PostServprocK4dfzEM6tLRcc {
   private let smp8MDGURI7EBZK8: [Post] = [
     Post(
       id: "post_001",
-      imageNames: [
+      iT1uV3wX5yZ7aB: [
         "qC2VdAxOOOikJD6i11",
         "qC2VdAxOOOikJD6i12",
         "qC2VdAxOOOikJD6i13",
       ],
-      authorId: "user_002",
-      content:
+      aC9dE1fG3hI5jK: "user_002",
+      cL7mN9oP1qR3sT:
         "Today, I wore a red sweater and a floral skirt, and added some delicate touches with pearl earrings.",
-      timestamp: Date().addingTimeInterval(-3600)
+      tK3lM5nO7pQ9rS: Date().addingTimeInterval(-3600)
     ),
     Post(
       id: "post_002",
-      imageNames: [
+      iT1uV3wX5yZ7aB: [
         "qC2VdAxOOOikJD6i21",
         "qC2VdAxOOOikJD6i22",
         "qC2VdAxOOOikJD6i23",
         "qC2VdAxOOOikJD6i24",
       ],
-      authorId: "user_003",
-      content:
+      aC9dE1fG3hI5jK: "user_003",
+      cL7mN9oP1qR3sT:
         "Who knows? Recently, I've been super into the green color scheme. Whether it's dark green or light green, it always looks super textured when worn.",
-      timestamp: Date().addingTimeInterval(-7200)
+      tK3lM5nO7pQ9rS: Date().addingTimeInterval(-7200)
     ),
     Post(
       id: "post_003",
-      imageNames: [
+      iT1uV3wX5yZ7aB: [
         "qC2VdAxOOOikJD6i31",
         "qC2VdAxOOOikJD6i32",
         "qC2VdAxOOOikJD6i33",
         "qC2VdAxOOOikJD6i34",
         "qC2VdAxOOOikJD6i35",
       ],
-      authorId: "user_004",
-      content:
+      aC9dE1fG3hI5jK: "user_004",
+      cL7mN9oP1qR3sT:
         "The main focus is on comfort. Simple combination, neat and tidy.",
-      timestamp: Date().addingTimeInterval(-14400)
+      tK3lM5nO7pQ9rS: Date().addingTimeInterval(-14400)
     ),
   ]
 
@@ -112,9 +112,9 @@ class PostServK4dfzEM6tLRcc: PostServprocK4dfzEM6tLRcc {
 
   func delNgIsy6xdaSP92(_ uidh88nMhcK8IH3Z: String) -> [String] {
     let JUQ8d5qdvZSjJ = lop2a7747mqGbbAJ()
-    let o7dgQ5ecnCmHN = JUQ8d5qdvZSjJ.filter { $0.authorId == uidh88nMhcK8IH3Z }
+    let o7dgQ5ecnCmHN = JUQ8d5qdvZSjJ.filter { $0.aC9dE1fG3hI5jK == uidh88nMhcK8IH3Z }
     let r2FrvQFwJDtSOK = o7dgQ5ecnCmHN.map(\.id)
-    let khERrUUEo5P4H = JUQ8d5qdvZSjJ.filter { $0.authorId != uidh88nMhcK8IH3Z }
+    let khERrUUEo5P4H = JUQ8d5qdvZSjJ.filter { $0.aC9dE1fG3hI5jK != uidh88nMhcK8IH3Z }
     sI73Ybh2Vhn2zM(khERrUUEo5P4H)
     return r2FrvQFwJDtSOK
   }

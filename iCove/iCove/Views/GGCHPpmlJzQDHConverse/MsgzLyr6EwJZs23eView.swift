@@ -1,5 +1,5 @@
 //
-//  MessagesView.swift
+//  MsgzLyr6EwJZs23eView.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/14.
@@ -11,7 +11,7 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-struct MessagesView: View {
+struct MsgzLyr6EwJZs23eView: View {
   @EnvironmentObject var tq7s5nIv3nwgL: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
   @StateObject private var msgVmF2Lqw623eNcEQ = MsgSE8UQxD8j7C19Vmod()
@@ -76,13 +76,13 @@ struct MessagesView: View {
       if let cur2bmc2wWma30FM = tq7s5nIv3nwgL.currvj9QRUUPOWY4Ouser {
         VStack(spacing: 12) {
           ProfileImageView(
-            avatar: cur2bmc2wWma30FM.avatar,
-            username: cur2bmc2wWma30FM.username,
+            avatar: cur2bmc2wWma30FM.aG3hI5jK7lM9nO,
+            username: cur2bmc2wWma30FM.uX4yZ6aB8cD0eF,
             size: 120,
             subSize: 32,
           )
 
-          Text(cur2bmc2wWma30FM.username)
+          Text(cur2bmc2wWma30FM.uX4yZ6aB8cD0eF)
             .font(.custom("FredokaOne-Regular", size: 18))
             .foregroundColor(.white)
         }
@@ -109,7 +109,7 @@ struct MessagesView: View {
             .onTapGesture {
               msgVmF2Lqw623eNcEQ.markOihyOHcXCrdV7(conwmUe1XZOr9gjf)
               if let curidrkRFFpUdKgG15 = tq7s5nIv3nwgL.currvj9QRUUPOWY4Ouser?.id,
-                let ohidzECAIqalKWo1v = conwmUe1XZOr9gjf.participantIds.first(where: {
+                let ohidzECAIqalKWo1v = conwmUe1XZOr9gjf.pA5rT1iC3iP5aN7t.first(where: {
                   $0 != curidrkRFFpUdKgG15
                 })
               {
@@ -142,7 +142,7 @@ struct MessagesView: View {
   }
 
   private var empty3rBzY4NiLW8S0: some View {
-    EmptyPlaceholderView()
+    EmptyJYGRYC2t97Qi3()
       .padding(.bottom, 120)
       .frame(maxWidth: .infinity, maxHeight: .infinity)
   }
@@ -177,18 +177,18 @@ struct ConsrowKqezRbZ2wK891: View {
 
         VStack(alignment: .leading, spacing: 12) {
           HStack {
-            Text(msgVmF2Lqw623eNcEQ.otho3VTO7Iv2zruSuser?.username ?? "Unknown")
+            Text(msgVmF2Lqw623eNcEQ.otho3VTO7Iv2zruSuser?.uX4yZ6aB8cD0eF ?? "Unknown")
               .font(.custom("FredokaOne-Regular", size: 16))
               .foregroundColor(.white)
 
             Spacer()
 
-            Text(tf6EoNKpJDHIDsY.string(from: con8BsmRqnI3CNXy.timestamp))
+            Text(tf6EoNKpJDHIDsY.string(from: con8BsmRqnI3CNXy.tK3lM5nO7pQ9rS))
               .font(.system(size: 12))
               .foregroundColor(.white.opacity(0.6))
           }
 
-          Text(con8BsmRqnI3CNXy.lastMessage.isEmpty ? "" : con8BsmRqnI3CNXy.lastMessage)
+          Text(con8BsmRqnI3CNXy.lA9sT1mE3sS5aG7e.isEmpty ? "" : con8BsmRqnI3CNXy.lA9sT1mE3sS5aG7e)
             .font(.system(size: 14))
             .foregroundColor(.white.opacity(0.7))
             .lineLimit(1)
@@ -201,8 +201,8 @@ struct ConsrowKqezRbZ2wK891: View {
       .padding(.top, 12)
 
       ProfileImageView(
-        avatar: msgVmF2Lqw623eNcEQ.otho3VTO7Iv2zruSuser?.avatar,
-        username: msgVmF2Lqw623eNcEQ.otho3VTO7Iv2zruSuser?.username ?? "Unknown",
+        avatar: msgVmF2Lqw623eNcEQ.otho3VTO7Iv2zruSuser?.aG3hI5jK7lM9nO,
+        username: msgVmF2Lqw623eNcEQ.otho3VTO7Iv2zruSuser?.uX4yZ6aB8cD0eF ?? "Unknown",
         size: 62,
         subSize: 16,
       )
@@ -240,7 +240,7 @@ class ConversationRowViewModel: ObservableObject {
       return
     }
 
-    let ohidfT4K8ECeO6Xhc = consuP2F0P4sZeUTr.participantIds.first { $0 != curidfeXd1hpSLgFwU }
+    let ohidfT4K8ECeO6Xhc = consuP2F0P4sZeUTr.pA5rT1iC3iP5aN7t.first { $0 != curidfeXd1hpSLgFwU }
 
     if let ohidfT4K8ECeO6Xhc = ohidfT4K8ECeO6Xhc {
       otho3VTO7Iv2zruSuser = auserssXbqBgILAt9v.getbyidQwpUuIWnzzs99(ohidfT4K8ECeO6Xhc)

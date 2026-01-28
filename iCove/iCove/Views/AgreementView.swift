@@ -34,7 +34,7 @@ struct AgreementView: View {
 
         ZStack {
           if let url = URL(string: urlString) {
-            WebView(url: url, isLoading: $loingXrAS8tIs4TCn1)
+            WebWaJMsgnMxY8hxView(url: url, isLoading: $loingXrAS8tIs4TCn1)
               .background(Color.white)
           } else {
             VStack(spacing: 16) {

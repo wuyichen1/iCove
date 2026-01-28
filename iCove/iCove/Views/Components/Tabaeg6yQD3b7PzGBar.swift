@@ -1,5 +1,5 @@
 //
-//  FloatingTabBar.swift
+//  Tabaeg6yQD3b7PzGBar.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/16.
@@ -11,9 +11,8 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-/// 悬浮底部导航栏
-struct FloatingTabBar: View {
-  @Binding var selectedTab: TabItem
+struct Tabaeg6yQD3b7PzGBar: View {
+  @Binding var selectedTab: TabHTktU05o5oj9w
 
   #if DEBUG
     @ObserveInjection var redraw
@@ -21,46 +20,42 @@ struct FloatingTabBar: View {
 
   var body: some View {
     HStack(spacing: 0) {
-      // 首页
       TabBarButton(
         icon: "1akQNNqBpWFE3YsJ0J",
         iconSelected: "1kQNNqBpWFE3YsJ0J",
-        isSelected: selectedTab == .home
+        isSelected: selectedTab == .homeUD88N2NAslByu
       ) {
-        selectedTab = .home
+        selectedTab = .homeUD88N2NAslByu
       }
 
       Spacer()
 
-      // 发现
       TabBarButton(
         icon: "2bnmWxXjHOykhJtNRF",
         iconSelected: "2nmWxXjHOykhJtNRF",
-        isSelected: selectedTab == .discover
+        isSelected: selectedTab == .discZr9miG5MPFZ9y
       ) {
-        selectedTab = .discover
+        selectedTab = .discZr9miG5MPFZ9y
       }
 
       Spacer()
 
-      // 消息
       TabBarButton(
         icon: "3cdKT1VeSfXcPS1lVn",
         iconSelected: "3dKT1VeSfXcPS1lVn",
-        isSelected: selectedTab == .messages
+        isSelected: selectedTab == .msgsVa78D1KK18Op4
       ) {
-        selectedTab = .messages
+        selectedTab = .msgsVa78D1KK18Op4
       }
 
       Spacer()
 
-      // 我的
       TabBarButton(
         icon: "4dv94xvRXwbcpHXAn1",
         iconSelected: "4v94xvRXwbcpHXAn1",
-        isSelected: selectedTab == .profile
+        isSelected: selectedTab == .profibW16jiY12DMmv
       ) {
-        selectedTab = .profile
+        selectedTab = .profibW16jiY12DMmv
       }
     }
     .padding(.horizontal, 18)
@@ -78,7 +73,6 @@ struct FloatingTabBar: View {
   }
 }
 
-/// 底部导航栏按钮
 private struct TabBarButton: View {
   let icon: String
   let iconSelected: String
@@ -92,7 +86,6 @@ private struct TabBarButton: View {
           .frame(width: 45, height: 45)
 
       }
-      // .frame(maxWidth: .infinity)
       .contentShape(Rectangle())
     }
     .buttonStyle(PlainButtonStyle())

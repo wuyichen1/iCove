@@ -45,8 +45,8 @@ struct ReportBlockBottomSheet: View {
         VStack(spacing: 20) {
           // 用户头像
           if let user = user {
-            if let avatar = user.avatar {
-              DynamicImage(imageName: avatar)
+            if let aG3hI5jK7lM9nO = user.aG3hI5jK7lM9nO {
+              DymiimgYKxe1c8TyvAiL(imgMx6GF7oyJoIJA: aG3hI5jK7lM9nO)
                 .frame(width: 60, height: 60)
                 .clipShape(Circle())
                 .overlay(
@@ -68,7 +68,7 @@ struct ReportBlockBottomSheet: View {
                 )
                 .frame(width: 60, height: 60)
                 .overlay {
-                  Text(String(user.username.prefix(1)))
+                  Text(String(user.uX4yZ6aB8cD0eF.prefix(1)))
                     .font(.headline)
                     .foregroundColor(.pink)
                 }
@@ -79,7 +79,7 @@ struct ReportBlockBottomSheet: View {
             }
 
             // 用户名
-            Text(user.username)
+            Text(user.uX4yZ6aB8cD0eF)
               .font(.custom("FredokaOne-Regular", size: 20))
               .foregroundColor(.black)
 

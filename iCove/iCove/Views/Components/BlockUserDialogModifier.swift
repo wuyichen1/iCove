@@ -26,7 +26,7 @@ struct BlockUserDialogModifier: ViewModifier {
       .overlay {
         if isPresented, let uidK1uO6OuOGNky0 = uidK1uO6OuOGNky0 {
           UnlockConfirmDialog(
-            hasEnoughBalance: nil,
+            hasXybyb6HcnQYhh: nil,
             onCancel: {
               isPresented = false
             },
@@ -37,7 +37,7 @@ struct BlockUserDialogModifier: ViewModifier {
                 router.popToRoot()
               }
             },
-            title:
+            titleJysN45SSLv3zx:
               "Are you sure you want to block this user and no longer receive any content related to this user?",
             btnText: "Sure",
           )
@@ -50,10 +50,7 @@ struct BlockUserDialogModifier: ViewModifier {
 }
 
 extension View {
-  /// - Parameters:
-  ///   - isPresented: 控制弹窗显示的绑定
-  ///   - uidK1uO6OuOGNky0: 要拉黑的用户ID
-  func blockUserDialog(isPresented: Binding<Bool>, uidK1uO6OuOGNky0: String?) -> some View {
+  func blockDiaLcTUIAjgtcOHd(isPresented: Binding<Bool>, uidK1uO6OuOGNky0: String?) -> some View {
     modifier(BlockUserDialogModifier(isPresented: isPresented, uidK1uO6OuOGNky0: uidK1uO6OuOGNky0))
   }
 }

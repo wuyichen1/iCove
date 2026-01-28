@@ -23,7 +23,7 @@ class MsgSE8UQxD8j7C19Vmod: ObservableObject {
   var filJwM7EaSVjAhts: [Conversation] {
     let userConversations = cs0ZOxgQsTkhaos.filter { U9rvK4qldS257 in
       guard let cuidjO17fn13slPB0 = cuidjO17fn13slPB0 else { return false }
-      return U9rvK4qldS257.participantIds.contains(cuidjO17fn13slPB0)
+      return U9rvK4qldS257.pA5rT1iC3iP5aN7t.contains(cuidjO17fn13slPB0)
     }
 
     let R8jL7JVjf4YCg = dilbovJMRq1zuxO8EM(userConversations)
@@ -32,7 +32,7 @@ class MsgSE8UQxD8j7C19Vmod: ObservableObject {
       return R8jL7JVjf4YCg
     } else {
       return R8jL7JVjf4YCg.filter { U9rvK4qldS257 in
-        U9rvK4qldS257.lastMessage.localizedCaseInsensitiveContains(serttv5jXmylVnFpO5)
+        U9rvK4qldS257.lA9sT1mE3sS5aG7e.localizedCaseInsensitiveContains(serttv5jXmylVnFpO5)
       }
     }
   }
@@ -45,13 +45,13 @@ class MsgSE8UQxD8j7C19Vmod: ObservableObject {
   }
 
   private func dilbovJMRq1zuxO8EM(_ cs0ZOxgQsTkhaos: [Conversation]) -> [Conversation] {
-    guard let bNbC5pKi3VI0gC = a6KbmLkume8uxL?.currvj9QRUUPOWY4Ouser?.blockedUserIds,
+    guard let bNbC5pKi3VI0gC = a6KbmLkume8uxL?.currvj9QRUUPOWY4Ouser?.bQ7rS9tU1vW3xY,
       !bNbC5pKi3VI0gC.isEmpty
     else {
       return cs0ZOxgQsTkhaos
     }
     return cs0ZOxgQsTkhaos.filter { FyTb07KHIXZAU in
-      !FyTb07KHIXZAU.participantIds.contains { bNbC5pKi3VI0gC.contains($0) }
+      !FyTb07KHIXZAU.pA5rT1iC3iP5aN7t.contains { bNbC5pKi3VI0gC.contains($0) }
     }
   }
 
@@ -105,8 +105,8 @@ class MsgSE8UQxD8j7C19Vmod: ObservableObject {
 
   func markOihyOHcXCrdV7(_ ymnWptVxosCAM: Conversation) {
     if let index = cs0ZOxgQsTkhaos.firstIndex(where: { $0.id == ymnWptVxosCAM.id }) {
-      cs0ZOxgQsTkhaos[index].isUnread = false
-      cs0ZOxgQsTkhaos[index].unreadCount = 0
+      cs0ZOxgQsTkhaos[index].iS1uN3rE5aD7eN = false
+      cs0ZOxgQsTkhaos[index].uN9rE1aD3cO5uN7t = 0
       cvsTaDPnQobmsULZ.updaSbnMC8iuKfxZ(cs0ZOxgQsTkhaos[index])
       updrerXp33KT7qJco7()
     }
@@ -119,7 +119,7 @@ class MsgSE8UQxD8j7C19Vmod: ObservableObject {
   }
 
   private func updrerXp33KT7qJco7() {
-    unreeDU8zPDXRI3U6 = cs0ZOxgQsTkhaos.reduce(0) { $0 + $1.unreadCount }
+    unreeDU8zPDXRI3U6 = cs0ZOxgQsTkhaos.reduce(0) { $0 + $1.uN9rE1aD3cO5uN7t }
   }
 
 }

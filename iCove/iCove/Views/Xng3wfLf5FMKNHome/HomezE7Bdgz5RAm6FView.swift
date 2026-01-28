@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  HomezE7Bdgz5RAm6FView.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/14.
@@ -11,7 +11,7 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-struct HomeView: View {
+struct HomezE7Bdgz5RAm6FView: View {
   @StateObject private var homeVmjdlzoNirJwfU3 = Home8T3vLYQ252bVOVmod()
   @State private var unlocktNhKCw8OwGS0t = false
   @State private var bloHwHbzDrKcFZIB = false
@@ -41,13 +41,13 @@ struct HomeView: View {
 
       if unlocktNhKCw8OwGS0t {
         UnlockConfirmDialog(
-          hasEnoughBalance: (aumaCUWZltQs5HPyQ.currvj9QRUUPOWY4Ouser?.balance ?? 0) >= 200,
+          hasXybyb6HcnQYhh: (aumaCUWZltQs5HPyQ.currvj9QRUUPOWY4Ouser?.bP2qR4sT6uV8wX ?? 0) >= 200,
           onCancel: {
             unlocktNhKCw8OwGS0t = false
           },
           onConfirm: {
             unlocktNhKCw8OwGS0t = false
-            let fGVDGutNgJkr8 = (aumaCUWZltQs5HPyQ.currvj9QRUUPOWY4Ouser?.balance ?? 0) >= 200
+            let fGVDGutNgJkr8 = (aumaCUWZltQs5HPyQ.currvj9QRUUPOWY4Ouser?.bP2qR4sT6uV8wX ?? 0) >= 200
             if fGVDGutNgJkr8 {
               aumaCUWZltQs5HPyQ.dedPlf7hXe73EGoR(200)
               router.push(.ai)
@@ -59,7 +59,7 @@ struct HomeView: View {
       }
 
     }
-    .blockUserDialog(isPresented: $bloHwHbzDrKcFZIB, uidK1uO6OuOGNky0: blouidlt760IOhzkW9F)
+    .blockDiaLcTUIAjgtcOHd(isPresented: $bloHwHbzDrKcFZIB, uidK1uO6OuOGNky0: blouidlt760IOhzkW9F)
     .navigationBarHidden(true)
     .onAppear {
       homeVmjdlzoNirJwfU3.updAuma7Cif2ltv9c65t(aumaCUWZltQs5HPyQ)
@@ -126,7 +126,6 @@ struct HomeView: View {
     }
   }
 
-  // MARK: - Popular Videos Section
   private var popvdoloZf5BoonHb19: some View {
     ZStack {
       RoundedRectangle(cornerRadius: 12)
@@ -150,7 +149,7 @@ struct HomeView: View {
                 .frame(width: 155, height: 48)
                 .clipped()
                 .cornerRadius(8)
-              StarText(
+              StarTextThyUv3yWgSTcz(
                 text: "Popular videos",
                 textColor: .black,
                 textSize: 16
@@ -161,7 +160,7 @@ struct HomeView: View {
           .padding(.trailing, 20)
 
           Button(action: {
-            router.push(.publish(type: .video))
+            router.push(.publish(type: .vdoSddWQll1w6vvS))
           }) {
             Image("Tz0wJDM3mdSWeD0Y")
               .resizable()
@@ -181,7 +180,7 @@ struct HomeView: View {
                 .padding(.vertical, 40)
                 .padding(.horizontal, 20)
             } else if homeVmjdlzoNirJwfU3.vdosZ4quBSX4FRJNb.isEmpty {
-              EmptyPlaceholderView()
+              EmptyJYGRYC2t97Qi3()
             } else {
               vdoGridCzet9yZf7eXm4
             }
@@ -195,7 +194,6 @@ struct HomeView: View {
     }
   }
 
-  // MARK: - Video Grid View
   private var vdoGridCzet9yZf7eXm4: some View {
     let screenWidth = UIScreen.main.bounds.width
     let avawidE2XtbQrINuXRi = screenWidth - 40
@@ -215,10 +213,10 @@ struct HomeView: View {
             homeVmjdlzoNirJwfU3.toliEdMtmZVDsInnP(for: vdNFv9O0ej5hmqw)
           },
           onp5mmhUnSEipCn: {
-            router.push(.detail(id: vdNFv9O0ej5hmqw.id))
+            router.push(.vdodetfheedD4mgJl4V(vidROutctPY4KAW9: vdNFv9O0ej5hmqw.id))
           },
           onBloIsLioTo3Y3fNs: {
-            blouidlt760IOhzkW9F = vdNFv9O0ej5hmqw.authorId
+            blouidlt760IOhzkW9F = vdNFv9O0ej5hmqw.aC9dE1fG3hI5jK
             bloHwHbzDrKcFZIB = true
           }
         )
@@ -230,10 +228,9 @@ struct HomeView: View {
   }
 }
 
-// MARK: - Video Card
 struct Vdocard7h6FK0PGkN3cd: View {
   let cdwdrOSeXsSp0Ug3k: CGFloat
-  let vdoVuG66awy9cJsL: VideoItem
+  let vdoVuG66awy9cJsL: l9O6Sz7QVA4SDVideoItem
   let onlikejlPDEZySX6stm: () -> Void
   var onp5mmhUnSEipCn: (() -> Void)? = nil
   var onBloIsLioTo3Y3fNs: (() -> Void)? = nil
@@ -243,7 +240,7 @@ struct Vdocard7h6FK0PGkN3cd: View {
 
   var body: some View {
     ZStack(alignment: .topLeading) {
-      DynamicImage(imageName: vdoVuG66awy9cJsL.imageName)
+      DymiimgYKxe1c8TyvAiL(imgMx6GF7oyJoIJA: vdoVuG66awy9cJsL.iM5aG7eN9aM1eN)
         .frame(width: cdwdrOSeXsSp0Ug3k, height: 220)
         .clipped()
         .cornerRadius(14)
@@ -254,12 +251,12 @@ struct Vdocard7h6FK0PGkN3cd: View {
 
       HStack(spacing: 4) {
         Button(action: onlikejlPDEZySX6stm) {
-          Image(systemName: vdoVuG66awy9cJsL.isLiked ? "heart.fill" : "heart")
+          Image(systemName: vdoVuG66awy9cJsL.iS1lI3kE5dN7eN ? "heart.fill" : "heart")
             .font(.system(size: 14))
             .foregroundColor(.white)
         }
         .buttonStyle(PlainButtonStyle())
-        Text("\(vdoVuG66awy9cJsL.likeCount)")
+        Text("\(vdoVuG66awy9cJsL.lI1kE3cO5uN7tN)")
           .font(.system(size: 12, weight: .medium))
           .foregroundColor(.white)
       }
@@ -273,7 +270,7 @@ struct Vdocard7h6FK0PGkN3cd: View {
       .cornerRadius(8)
       .padding(8)
 
-      if aumaCUWZltQs5HPyQ.currvj9QRUUPOWY4Ouser?.id != vdoVuG66awy9cJsL.authorId {
+      if aumaCUWZltQs5HPyQ.currvj9QRUUPOWY4Ouser?.id != vdoVuG66awy9cJsL.aC9dE1fG3hI5jK {
         VStack {
           HStack {
             Spacer()
@@ -296,7 +293,7 @@ struct Vdocard7h6FK0PGkN3cd: View {
       VStack {
         Spacer()
         VStack(alignment: .leading, spacing: 0) {
-          Text(vdoVuG66awy9cJsL.title)
+          Text(vdoVuG66awy9cJsL.tR3sT5uV7wX9yZ)
             .font(.system(size: 12))
             .foregroundColor(.white)
             .lineLimit(2)
@@ -320,7 +317,7 @@ struct Vdocard7h6FK0PGkN3cd: View {
     }
     .sheet(isPresented: $showingReportBlockSheet) {
       ReportBlockBottomSheet(
-        userId: vdoVuG66awy9cJsL.authorId,
+        userId: vdoVuG66awy9cJsL.aC9dE1fG3hI5jK,
         isPresented: $showingReportBlockSheet,
         onBlock: {
           onBloIsLioTo3Y3fNs?()
@@ -336,7 +333,6 @@ struct Vdocard7h6FK0PGkN3cd: View {
   }
 }
 
-// MARK: - Corner Radius Extension
 extension View {
   func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
     clipShape(RoundedCorner(radius: radius, corners: corners))
@@ -357,7 +353,6 @@ struct RoundedCorner: Shape {
   }
 }
 
-// MARK: - Top Border Shape
 struct TopborpathQocmohrb0utCT: Shape {
   var conradxrUXU0WJQ4cZU: CGFloat
 
@@ -387,7 +382,3 @@ struct TopborpathQocmohrb0utCT: Shape {
     return path9jM6m0KJy6kRl
   }
 }
-
-// #Preview {
-//     HomeView()
-// }

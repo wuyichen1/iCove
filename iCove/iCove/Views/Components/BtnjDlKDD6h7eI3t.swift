@@ -1,5 +1,5 @@
 //
-//  PrimaryButton.swift
+//  BtnjDlKDD6h7eI3t.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/14.
@@ -11,8 +11,7 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-/// 自定义主要按钮组件 - 带渐变背景
-struct PrimaryButton: View {
+struct BtnjDlKDD6h7eI3t: View {
   let title: String
   let action: () -> Void
   var isLoading: Bool = false
@@ -36,13 +35,11 @@ struct PrimaryButton: View {
         } else {
           Text(title)
             .font(.custom("FredokaOne-Regular", size: fontSize))
-          // Text(title)
-          //     .font(.system(size: fontSize, weight: fontWeight))
         }
       }
       .frame(width: width, height: height)
       .frame(maxWidth: width == nil ? .infinity : nil)
-      .foregroundColor(.white)  // 文本颜色
+      .foregroundColor(.white)
       .background(
         RoundedRectangle(cornerRadius: 16)
           .fill(backgroundColor)
@@ -53,15 +50,13 @@ struct PrimaryButton: View {
       }
     }
     .disabled(!isEnabled || isLoading)
-    // .opacity(isEnabled && !isLoading ? 1.0 : 0.6)
     #if DEBUG
       .enableInjection()
     #endif
-    .fixedSize(horizontal: width != nil, vertical: false)  //设置了宽度时防止水平拉伸
+    .fixedSize(horizontal: width != nil, vertical: false)
   }
 }
 
-/// 自定义次要按钮组件 - 只有边框
 struct SecondaryButton: View {
   let title: String
   let action: () -> Void
@@ -100,33 +95,3 @@ struct SecondaryButton: View {
     .opacity(isEnabled && !isLoading ? 1.0 : 0.6)
   }
 }
-
-// #Preview {
-//     VStack(spacing: 20) {
-//         PrimaryButton(title: "Primary Button", action: {})
-
-//         PrimaryButton(
-//             title: "Custom Color",
-//             action: {},
-//             backgroundColor: .blue
-//         )
-
-//         PrimaryButton(
-//             title: "Custom Gradient",
-//             action: {},
-//             backgroundColor: Color(red: 0.6, green: 0.3, blue: 0.8)
-//         )
-
-//         PrimaryButton(title: "Loading...", action: {}, isLoading: true)
-
-//         PrimaryButton(title: "Disabled", action: {}, isEnabled: false)
-
-//         SecondaryButton(title: "Secondary Button", action: {})
-
-//         SecondaryButton(title: "Loading...", action: {}, isLoading: true)
-
-//         SecondaryButton(title: "Disabled", action: {}, isEnabled: false)
-//     }
-//     .padding()
-//     .background(Color(red: 0.2, green: 0.1, blue: 0.3))
-// }

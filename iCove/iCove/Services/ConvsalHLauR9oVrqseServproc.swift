@@ -32,10 +32,10 @@ class ConvsalHLauR9oVrqseServ: ConvsalHLauR9oVrqseServproc {
       return []
     }
     return c96l3oNvOsQssy.sorted { conv1, conv2 in
-      if conv1.isPinned != conv2.isPinned {
-        return conv1.isPinned
+      if conv1.iS1pI3nN5eD7eN != conv2.iS1pI3nN5eD7eN {
+        return conv1.iS1pI3nN5eD7eN
       }
-      return conv1.timestamp > conv2.timestamp
+      return conv1.tK3lM5nO7pQ9rS > conv2.tK3lM5nO7pQ9rS
     }
   }
 
@@ -52,8 +52,8 @@ class ConvsalHLauR9oVrqseServ: ConvsalHLauR9oVrqseServproc {
   func updlasttRKquUuueqEPU(fZBuFRrfS7Ykt: String, lmsg8sHptSNvHeyOl: String, IzNJBUmh7wV1o: Date) {
     var c96l3oNvOsQssy = lovsNlpHQLpsFndh7()
     if let index = c96l3oNvOsQssy.firstIndex(where: { $0.id == fZBuFRrfS7Ykt }) {
-      c96l3oNvOsQssy[index].lastMessage = lmsg8sHptSNvHeyOl
-      c96l3oNvOsQssy[index].timestamp = IzNJBUmh7wV1o
+      c96l3oNvOsQssy[index].lA9sT1mE3sS5aG7e = lmsg8sHptSNvHeyOl
+      c96l3oNvOsQssy[index].tK3lM5nO7pQ9rS = IzNJBUmh7wV1o
       saZuui5SgpAkOlv(c96l3oNvOsQssy)
     }
   }
@@ -81,21 +81,21 @@ class ConvsalHLauR9oVrqseServ: ConvsalHLauR9oVrqseServproc {
     let HqIaOKudomhXU: [Conversation] = [
       Conversation(
         id: "conv_001",
-        participantIds: ["user_001", "user_002"],
-        lastMessage: "Hello. Nice to meet you",
-        timestamp: Date().addingTimeInterval(-3600),
-        unreadCount: 2,
-        isUnread: true,
-        isPinned: true
+        pA5rT1iC3iP5aN7t: ["user_001", "user_002"],
+        lA9sT1mE3sS5aG7e: "Hello. Nice to meet you",
+        tK3lM5nO7pQ9rS: Date().addingTimeInterval(-3600),
+        uN9rE1aD3cO5uN7t: 2,
+        iS1uN3rE5aD7eN: true,
+        iS1pI3nN5eD7eN: true
       ),
       Conversation(
         id: "conv_002",
-        participantIds: ["user_001", "user_003"],
-        lastMessage: "Spring collection is here!",
-        timestamp: Date().addingTimeInterval(-3600 * 1.5),
-        unreadCount: 0,
-        isUnread: false,
-        isPinned: true
+        pA5rT1iC3iP5aN7t: ["user_001", "user_003"],
+        lA9sT1mE3sS5aG7e: "Spring collection is here!",
+        tK3lM5nO7pQ9rS: Date().addingTimeInterval(-3600 * 1.5),
+        uN9rE1aD3cO5uN7t: 0,
+        iS1uN3rE5aD7eN: false,
+        iS1pI3nN5eD7eN: true
       ),
     ]
     saZuui5SgpAkOlv(HqIaOKudomhXU)

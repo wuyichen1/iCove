@@ -1,5 +1,5 @@
 //
-//  EditProfileView.swift
+//  EditY3IAsBRQyIZ1dView.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/19.
@@ -13,7 +13,7 @@ import UIKit
   import HotSwiftUI
 #endif
 
-struct EditProfileView: View {
+struct EditY3IAsBRQyIZ1dView: View {
   @EnvironmentObject var FUmIz00KvBJa2: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
   @Environment(\.dismiss) var dismiss
@@ -53,7 +53,7 @@ struct EditProfileView: View {
     .navigationBarHidden(true)
     .onAppear {
       if pTN8hZ9kCDZmYuname.isEmpty {
-        pTN8hZ9kCDZmYuname = FUmIz00KvBJa2.currvj9QRUUPOWY4Ouser?.username ?? ""
+        pTN8hZ9kCDZmYuname = FUmIz00KvBJa2.currvj9QRUUPOWY4Ouser?.uX4yZ6aB8cD0eF ?? ""
       }
     }
     #if DEBUG
@@ -92,21 +92,21 @@ struct EditProfileView: View {
         if let selmgUW9WZvxFvNWaI = selmgUW9WZvxFvNWaI {
           ProfileImageView(
             avatar: selmgUW9WZvxFvNWaI,
-            username: FUmIz00KvBJa2.currvj9QRUUPOWY4Ouser?.username ?? "",
+            username: FUmIz00KvBJa2.currvj9QRUUPOWY4Ouser?.uX4yZ6aB8cD0eF ?? "",
             size: 115,
             subSize: 32
           )
-        } else if let avajoEEIb3dBxOav = FUmIz00KvBJa2.currvj9QRUUPOWY4Ouser?.avatar {
+        } else if let avajoEEIb3dBxOav = FUmIz00KvBJa2.currvj9QRUUPOWY4Ouser?.aG3hI5jK7lM9nO {
           ProfileImageView(
             avatar: avajoEEIb3dBxOav,
-            username: FUmIz00KvBJa2.currvj9QRUUPOWY4Ouser?.username ?? "",
+            username: FUmIz00KvBJa2.currvj9QRUUPOWY4Ouser?.uX4yZ6aB8cD0eF ?? "",
             size: 115,
             subSize: 32
           )
         } else {
           ProfileImageView(
             avatar: "icove_logo",
-            username: FUmIz00KvBJa2.currvj9QRUUPOWY4Ouser?.username ?? "",
+            username: FUmIz00KvBJa2.currvj9QRUUPOWY4Ouser?.uX4yZ6aB8cD0eF ?? "",
             size: 115,
             subSize: 32
           )

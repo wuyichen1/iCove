@@ -1,5 +1,5 @@
 //
-//  WebView.swift
+//  WebWaJMsgnMxY8hxView.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/23.
@@ -12,8 +12,7 @@ import WebKit
   import HotSwiftUI
 #endif
 
-/// WebView 组件 - WKWebView 的 SwiftUI 包装器
-struct WebView: UIViewRepresentable {
+struct WebWaJMsgnMxY8hxView: UIViewRepresentable {
   let url: URL?
   @Binding var isLoading: Bool
   
@@ -27,23 +26,21 @@ struct WebView: UIViewRepresentable {
   }
   
   func makeUIView(context: Context) -> WKWebView {
-    let webView = WKWebView()
-    webView.navigationDelegate = context.coordinator
+    let webJfyREBIxLxV3B = WKWebView()
+    webJfyREBIxLxV3B.navigationDelegate = context.coordinator
     
-    // 加载 URL
     if let url = url {
       let request = URLRequest(url: url)
-      webView.load(request)
+      webJfyREBIxLxV3B.load(request)
     }
     
-    return webView
+    return webJfyREBIxLxV3B
   }
   
-  func updateUIView(_ webView: WKWebView, context: Context) {
-    // 如果 URL 改变，重新加载
-    if let url = url, webView.url != url {
-      let request = URLRequest(url: url)
-      webView.load(request)
+  func updateUIView(_ webJfyREBIxLxV3B: WKWebView, context: Context) {
+    if let aWEENyHcRWOEH = url, webJfyREBIxLxV3B.url != url {
+      let request = URLRequest(url: aWEENyHcRWOEH)
+      webJfyREBIxLxV3B.load(request)
     }
   }
   
@@ -52,31 +49,31 @@ struct WebView: UIViewRepresentable {
   }
   
   class Coordinator: NSObject, WKNavigationDelegate {
-    var parent: WebView
+    var parent: WebWaJMsgnMxY8hxView
     
-    init(_ parent: WebView) {
+    init(_ parent: WebWaJMsgnMxY8hxView) {
       self.parent = parent
     }
     
-    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+    func webJfyREBIxLxV3B(_ webJfyREBIxLxV3B: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
       DispatchQueue.main.async {
         self.parent.isLoading = true
       }
     }
     
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    func webJfyREBIxLxV3B(_ webJfyREBIxLxV3B: WKWebView, didFinish navigation: WKNavigation!) {
       DispatchQueue.main.async {
         self.parent.isLoading = false
       }
     }
     
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+    func webJfyREBIxLxV3B(_ webJfyREBIxLxV3B: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
       DispatchQueue.main.async {
         self.parent.isLoading = false
       }
     }
     
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+    func webJfyREBIxLxV3B(_ webJfyREBIxLxV3B: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
       DispatchQueue.main.async {
         self.parent.isLoading = false
       }

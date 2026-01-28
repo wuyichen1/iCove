@@ -1,5 +1,5 @@
 //
-//  ProfileView.swift
+//  ProfilekgwebDS4EgDnqView.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/14.
@@ -11,8 +11,8 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-struct ProfileView: View {
-  @ObservedObject var proVm92qjXCvXAr8i6: ProfileViewModel
+struct ProfilekgwebDS4EgDnqView: View {
+  @ObservedObject var proVm92qjXCvXAr8i6: ProfSR8H1KflnDrj9Vmod
   @EnvironmentObject var d7nokg2HlCh2O: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
   @Environment(\.dismiss) var dismiss
@@ -45,17 +45,17 @@ struct ProfileView: View {
           .presentationDragIndicator(.hidden)
         }
       }
-      .blockUserDialog(isPresented: $dWGK5bUYeS2aC, uidK1uO6OuOGNky0: bouidSPG3NVxZahTZe)
+      .blockDiaLcTUIAjgtcOHd(isPresented: $dWGK5bUYeS2aC, uidK1uO6OuOGNky0: bouidSPG3NVxZahTZe)
       .navigationBarHidden(true)
-      .onChange(of: d7nokg2HlCh2O.currvj9QRUUPOWY4Ouser?.avatar) { _, _ in
-        if proVm92qjXCvXAr8i6.isCurrentUser {
+      .onChange(of: d7nokg2HlCh2O.currvj9QRUUPOWY4Ouser?.aG3hI5jK7lM9nO) { _, _ in
+        if proVm92qjXCvXAr8i6.isCurghxDEHCC3hzYz {
           Task {
             await proVm92qjXCvXAr8i6.refresh()
           }
         }
       }
-      .onChange(of: d7nokg2HlCh2O.currvj9QRUUPOWY4Ouser?.username) { _, _ in
-        if proVm92qjXCvXAr8i6.isCurrentUser {
+      .onChange(of: d7nokg2HlCh2O.currvj9QRUUPOWY4Ouser?.uX4yZ6aB8cD0eF) { _, _ in
+        if proVm92qjXCvXAr8i6.isCurghxDEHCC3hzYz {
           Task {
             await proVm92qjXCvXAr8i6.refresh()
           }
@@ -68,7 +68,7 @@ struct ProfileView: View {
 
   @ViewBuilder
   private var contftHVwODkBRFb8: some View {
-    if proVm92qjXCvXAr8i6.isLoading && proVm92qjXCvXAr8i6.user == nil {
+    if proVm92qjXCvXAr8i6.l2z4XG5qy0RxI3 && proVm92qjXCvXAr8i6.user == nil {
       ProgressView("Loading...")
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     } else if let user = proVm92qjXCvXAr8i6.user {
@@ -104,7 +104,7 @@ struct ProfileView: View {
 
         HStack(alignment: .bottom, spacing: 16) {
           VStack(alignment: .leading, spacing: 20) {
-            Text(h6LZYZDfcNQ6wuser.username)
+            Text(h6LZYZDfcNQ6wuser.uX4yZ6aB8cD0eF)
               .font(.custom("FredokaOne-Regular", size: 22))
               .foregroundColor(.white)
 
@@ -125,9 +125,9 @@ struct ProfileView: View {
   }
 
   private func hbgnOIGnoEUJvFru(userCx2m3IMEYbKFx: User) -> some View {
-    let bgimgPK6UQbxg8zZcX = userCx2m3IMEYbKFx.avatar ?? "icove_logo"
+    let bgimgPK6UQbxg8zZcX = userCx2m3IMEYbKFx.aG3hI5jK7lM9nO ?? "icove_logo"
     return ZStack {
-      DynamicImage(imageName: bgimgPK6UQbxg8zZcX)
+      DymiimgYKxe1c8TyvAiL(imgMx6GF7oyJoIJA: bgimgPK6UQbxg8zZcX)
         .scaledToFill()
         .blur(radius: 3)
         .clipped()
@@ -144,8 +144,8 @@ struct ProfileView: View {
 
   private var topBar: some View {
     HStack {
-      if !proVm92qjXCvXAr8i6.isCurrentUser {
-        TopActionBar(
+      if !proVm92qjXCvXAr8i6.isCurghxDEHCC3hzYz {
+        TopcCTKlwHKCaLhH(
           onBack: {
             dismiss()
           },
@@ -172,7 +172,7 @@ struct ProfileView: View {
           Spacer()
 
           Button {
-            if proVm92qjXCvXAr8i6.isCurrentUser {
+            if proVm92qjXCvXAr8i6.isCurghxDEHCC3hzYz {
               router.push(.settings)
             } else {
               sretwmjJpTRjQbvyn = true
@@ -182,7 +182,7 @@ struct ProfileView: View {
               .fill(Color.white)
               .frame(width: 40, height: 40)
               .overlay(
-                Image(systemName: proVm92qjXCvXAr8i6.isCurrentUser ? "gearshape" : "ellipsis")
+                Image(systemName: proVm92qjXCvXAr8i6.isCurghxDEHCC3hzYz ? "gearshape" : "ellipsis")
                   .foregroundColor(Color("buttonPurple"))
               )
           }
@@ -195,8 +195,8 @@ struct ProfileView: View {
   }
 
   private func avaqymV9ds9RKiQv(u6olTxEbx2R0ej: User) -> some View {
-    let avax6IzejdmTR54E = u6olTxEbx2R0ej.avatar ?? "7X1p2a4Cu1Xn8nXt"
-    return DynamicImage(imageName: avax6IzejdmTR54E)
+    let avax6IzejdmTR54E = u6olTxEbx2R0ej.aG3hI5jK7lM9nO ?? "7X1p2a4Cu1Xn8nXt"
+    return DymiimgYKxe1c8TyvAiL(imgMx6GF7oyJoIJA: avax6IzejdmTR54E)
       .frame(width: 116, height: 180)
       .clipShape(RoundedRectangle(cornerRadius: 98, style: .continuous))
       .overlay(
@@ -239,15 +239,15 @@ struct ProfileView: View {
           .frame(width: 110, height: 45)
           .clipped()
 
-        StarText(
+        StarTextThyUv3yWgSTcz(
           text: "Works",
           textColor: .black,
           textSize: 18
         )
       }
 
-      if proVm92qjXCvXAr8i6.userVideos.isEmpty {
-        EmptyPlaceholderView()
+      if proVm92qjXCvXAr8i6.KtIKR8YgWCIGr.isEmpty {
+        EmptyJYGRYC2t97Qi3()
           .frame(maxWidth: .infinity)
           .padding(.vertical, 40)
       } else {
@@ -267,20 +267,20 @@ struct ProfileView: View {
         GridItem(.fixed(mQXBY8dZDtctA), spacing: 16),
       ], spacing: 16
     ) {
-      ForEach(proVm92qjXCvXAr8i6.userVideos) { video in
+      ForEach(proVm92qjXCvXAr8i6.KtIKR8YgWCIGr) { video in
         workCardrCNblfKcj8QRY(video, carwGxraiAwd4LD8s: mQXBY8dZDtctA)
       }
     }
   }
 
-  private func workCardrCNblfKcj8QRY(_ vdPp5gKZ0ZPzQ6O: VideoItem, carwGxraiAwd4LD8s: CGFloat)
+  private func workCardrCNblfKcj8QRY(_ vdPp5gKZ0ZPzQ6O: l9O6Sz7QVA4SDVideoItem, carwGxraiAwd4LD8s: CGFloat)
     -> some View
   {
     Button {
-      router.push(.detail(id: vdPp5gKZ0ZPzQ6O.id))
+      router.push(.vdodetfheedD4mgJl4V(vidROutctPY4KAW9: vdPp5gKZ0ZPzQ6O.id))
     } label: {
       ZStack(alignment: .center) {
-        DynamicImage(imageName: vdPp5gKZ0ZPzQ6O.imageName)
+        DymiimgYKxe1c8TyvAiL(imgMx6GF7oyJoIJA: vdPp5gKZ0ZPzQ6O.iM5aG7eN9aM1eN)
           .scaledToFill()
           .frame(width: carwGxraiAwd4LD8s, height: 200)
           .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
@@ -297,7 +297,7 @@ struct ProfileView: View {
 
         VStack(alignment: .leading, spacing: 0) {
           Spacer()
-          Text(vdPp5gKZ0ZPzQ6O.title)
+          Text(vdPp5gKZ0ZPzQ6O.tR3sT5uV7wX9yZ)
             .font(.footnote)
             .foregroundColor(.white)
             .lineLimit(2)
@@ -317,12 +317,12 @@ struct ProfileView: View {
 
   @ViewBuilder
   private func actionButtonsSection(user: User) -> some View {
-    if proVm92qjXCvXAr8i6.isCurrentUser {
+    if proVm92qjXCvXAr8i6.isCurghxDEHCC3hzYz {
       Button(action: {
         router.push(.wallet)
       }) {
         HStack {
-          Text("Balance: \(d7nokg2HlCh2O.currvj9QRUUPOWY4Ouser?.balance ?? 0)")
+          Text("Balance: \(d7nokg2HlCh2O.currvj9QRUUPOWY4Ouser?.bP2qR4sT6uV8wX ?? 0)")
             .font(.custom("FredokaOne-Regular", size: 18))
             .foregroundColor(.white)
         }
@@ -337,9 +337,9 @@ struct ProfileView: View {
     } else {
       VStack(spacing: 12) {
         Button(action: {
-          proVm92qjXCvXAr8i6.toggleFollow()
+          proVm92qjXCvXAr8i6.togPohodzYKFgGNl()
         }) {
-          Text(proVm92qjXCvXAr8i6.isFollowing ? "Following" : "Follow")
+          Text(proVm92qjXCvXAr8i6.x6tcllx6YBqkU ? "Following" : "Follow")
             .font(.headline)
             .foregroundColor(.white)
             .frame(maxWidth: .infinity)
@@ -369,7 +369,3 @@ struct ProfileView: View {
     }
   }
 }
-
-// #Preview {
-//     ProfileView(proVm92qjXCvXAr8i6: ProfileViewModel(d7nokg2HlCh2O: AuthManagA645b8Y0Aod3aVmod()))
-// }

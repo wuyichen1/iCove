@@ -1,5 +1,5 @@
 //
-//  AIView.swift
+//  AIr0xPbmzogQH8YView.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/20.
@@ -11,7 +11,7 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-struct AIView: View {
+struct AIr0xPbmzogQH8YView: View {
   @EnvironmentObject var aumakZ0ElZwz9Rk1P: AuthManagA645b8Y0Aod3aVmod
   @Environment(\.dismiss) var dismiss
 
@@ -130,7 +130,6 @@ struct AIView: View {
     #endif
   }
 
-  // MARK: - 输入表单视图
   private var inptformPw1nLRdIAZI2j: some View {
     ScrollViewReader { proxy in
       ScrollView {
@@ -223,7 +222,6 @@ struct AIView: View {
     }
   }
 
-  // MARK: - 结果视图
   private var resultCEILK7YnufpZz: some View {
     ScrollView {
       VStack(alignment: .center, spacing: 24) {
@@ -245,7 +243,6 @@ struct AIView: View {
     }
   }
 
-  // MARK: - 公共头部卡片
   private func hecaPexQq7FLrjERH(HPwYq5w5v2Rjktitle: String, fontSize: CGFloat = 16) -> some View {
     ZStack(alignment: .bottomTrailing) {
       HStack(alignment: .bottom) {
@@ -264,7 +261,6 @@ struct AIView: View {
     }
   }
 
-  // MARK: - 单行输入区域
   private func inptsecIqusgyeNL8dtD(
     YZlWXIABplnjSlabel: String,
     hintaCTgVS7aktd6U: String,
@@ -300,7 +296,6 @@ struct AIView: View {
     }
   }
 
-  // MARK: - 生成推荐文案（调用真实 AI 接口）
   private func genX6r5asuaINMPK() async {
     guard !geingig215odKvYEed else { return }
     geingig215odKvYEed = true

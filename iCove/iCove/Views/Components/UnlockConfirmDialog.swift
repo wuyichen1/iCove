@@ -8,28 +8,27 @@
 import SwiftUI
 
 #if DEBUG
-  import HotSwiftUI  // 导入库
+  import HotSwiftUI
 #endif
 
-/// 解锁确认弹窗 - 根据余额显示不同内容
 struct UnlockConfirmDialog: View {
-  let hasEnoughBalance: Bool?
+  let hasXybyb6HcnQYhh: Bool?
   let onCancel: () -> Void
-  let onConfirm: () -> Void  // 确认按钮回调（Sure 或 Recharge）
-  let title: String?
+  let onConfirm: () -> Void
+  let titleJysN45SSLv3zx: String?
   let btnText: String?
 
   init(
-    hasEnoughBalance: Bool? = true,
+    hasXybyb6HcnQYhh: Bool? = true,
     onCancel: @escaping () -> Void,
     onConfirm: @escaping () -> Void,
-    title: String? = nil,
+    titleJysN45SSLv3zx: String? = nil,
     btnText: String? = nil
   ) {
-    self.hasEnoughBalance = hasEnoughBalance
+    self.hasXybyb6HcnQYhh = hasXybyb6HcnQYhh
     self.onCancel = onCancel
     self.onConfirm = onConfirm
-    self.title = title
+    self.titleJysN45SSLv3zx = titleJysN45SSLv3zx
     self.btnText = btnText
   }
 
@@ -39,21 +38,17 @@ struct UnlockConfirmDialog: View {
 
   var body: some View {
     ZStack {
-      // 半透明背景
       Color.black.opacity(0.5)
         .ignoresSafeArea()
         .onTapGesture {
           onCancel()
         }
 
-      // 弹窗内容
       VStack(spacing: 0) {
-        // 弹窗主体
         VStack(spacing: 24) {
-          // 提示文字
           Text(
-            title
-              ?? (hasEnoughBalance ?? true
+            titleJysN45SSLv3zx
+              ?? (hasXybyb6HcnQYhh ?? true
                 ? "Are you sure you want to spend 200 coins to unlock the AI clothing recommendation feature?"
                 : "Unfortunately, the current account balance is insufficient to cover this order, please recharge.")
           )
@@ -64,9 +59,7 @@ struct UnlockConfirmDialog: View {
           .padding(.horizontal, 30)
           .padding(.top, 52)
 
-          // 按钮区域
           HStack(spacing: 16) {
-            // 取消按钮
             Button(action: onCancel) {
               Text("Cancel")
                 .font(.custom("FredokaOne-Regular", size: 17))
@@ -83,9 +76,8 @@ struct UnlockConfirmDialog: View {
                 .cornerRadius(12)
             }
 
-            // 确认按钮（Sure 或 Recharge）
             Button(action: onConfirm) {
-              Text(btnText ?? (hasEnoughBalance ?? true ? "Sure" : "Recharge"))
+              Text(btnText ?? (hasXybyb6HcnQYhh ?? true ? "Sure" : "Recharge"))
                 .font(.custom("FredokaOne-Regular", size: 17))
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
@@ -105,23 +97,11 @@ struct UnlockConfirmDialog: View {
         }
         .background(
           ZStack {
-            Image(hasEnoughBalance ?? true ? "f6KDmB5rYAx2Ke6S" : "CXGyBeCKoF4QQ3vX")
+            Image(hasXybyb6HcnQYhh ?? true ? "f6KDmB5rYAx2Ke6S" : "CXGyBeCKoF4QQ3vX")
               .resizable()
-              // .scaledToFill()
               .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 320)
-            // .clipped()
-            // 渐变背景
-            // LinearGradient(
-            //   colors: [
-            //     Color(red: 180 / 255, green: 100 / 255, blue: 200 / 255),
-            //     Color(red: 130 / 255, green: 50 / 255, blue: 150 / 255),
-            //   ],
-            //   startPoint: .top,
-            //   endPoint: .bottom
-            // )
           }
         )
-        // .cornerRadius(20)
       }
       .padding(.horizontal, 45)
     }

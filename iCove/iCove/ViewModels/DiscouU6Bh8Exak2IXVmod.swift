@@ -89,10 +89,10 @@ class DiscouU6Bh8Exak2IXVmod: ObservableObject {
 
   private func genKs0gHqG8LvMkS() -> [Post] {
     if let currvj9QRUUPOWY4Ouser = aksDxli26rBSrY?.currvj9QRUUPOWY4Ouser,
-      !currvj9QRUUPOWY4Ouser.collectedPostIds.isEmpty
+      !currvj9QRUUPOWY4Ouser.cP9hI1jK3lM5nO.isEmpty
     {
       let jRckY7gQFs1c8 = posVdBZQhiOVJHPZ.locolpyNmAmeqnsrIBw(
-        by: currvj9QRUUPOWY4Ouser.collectedPostIds)
+        by: currvj9QRUUPOWY4Ouser.cP9hI1jK3lM5nO)
       return filGPioM6tEPHsWa(jRckY7gQFs1c8)
     }
     return []
@@ -104,12 +104,12 @@ class DiscouU6Bh8Exak2IXVmod: ObservableObject {
   }
 
   private func filGPioM6tEPHsWa(_ jRckY7gQFs1c8: [Post]) -> [Post] {
-    guard let bJvheSU3aJs2hV = aksDxli26rBSrY?.currvj9QRUUPOWY4Ouser?.blockedUserIds,
+    guard let bJvheSU3aJs2hV = aksDxli26rBSrY?.currvj9QRUUPOWY4Ouser?.bQ7rS9tU1vW3xY,
       !bJvheSU3aJs2hV.isEmpty
     else {
       return jRckY7gQFs1c8
     }
-    return jRckY7gQFs1c8.filter { !bJvheSU3aJs2hV.contains($0.authorId) }
+    return jRckY7gQFs1c8.filter { !bJvheSU3aJs2hV.contains($0.aC9dE1fG3hI5jK) }
   }
 
   func refAYUyaJd0ZNl9v() {

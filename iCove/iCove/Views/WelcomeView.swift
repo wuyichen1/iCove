@@ -51,11 +51,11 @@ struct WelcomeView: View {
       }
     }
     .fullScreenCover(isPresented: $emloginYuHtY3QnSdwzD) {
-      AuthenticationView(initialMode: .signIn)
+      AuthCW5IFQbXt8XViView(initialMode: .S6jCVHP1l4JrX)
         .environmentObject(ayIqvfBR4TwQOWd)
     }
     .fullScreenCover(isPresented: $signupcu6miHNMEZWff) {
-      AuthenticationView(initialMode: .signUp)
+      AuthCW5IFQbXt8XViView(initialMode: .MtR06GhhdHl5i)
         .environmentObject(ayIqvfBR4TwQOWd)
     }
     .alert("Protocol Warning", isPresented: $shoAgraletFqT6q5c4OQ2pp) {
@@ -100,14 +100,14 @@ struct WelcomeView: View {
 
   private var btnZwfu84XCjVrO8: some View {
     VStack(spacing: 16) {
-      PrimaryButton(
+      BtnjDlKDD6h7eI3t(
         title: "Login by email",
         action: {
           hanloggvcL4pkeajAUk()
         },
         width: 260,
       )
-      PrimaryButton(
+      BtnjDlKDD6h7eI3t(
         title: "I'm new",
         action: {
           hannew5V3fPnmA7jUU5()
@@ -215,8 +215,3 @@ struct WelcomeView: View {
     }
   }
 }
-
-// #Preview {
-//     WelcomeView()
-//         .environmentObject(AuthManagA645b8Y0Aod3aVmod())
-// }

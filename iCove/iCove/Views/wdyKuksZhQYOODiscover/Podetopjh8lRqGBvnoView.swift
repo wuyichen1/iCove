@@ -1,5 +1,5 @@
 //
-//  PostDetailView.swift
+//  Podetopjh8lRqGBvnoView.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/16.
@@ -11,7 +11,7 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-struct PostDetailView: View {
+struct Podetopjh8lRqGBvnoView: View {
   let postId: String
   @EnvironmentObject var router: Router
   @EnvironmentObject var vHTdwVFoYw02E: AuthManagA645b8Y0Aod3aVmod
@@ -37,12 +37,12 @@ struct PostDetailView: View {
         .ignoresSafeArea()
 
       VStack(spacing: 0) {
-        TopActionBar(
+        TopcCTKlwHKCaLhH(
           onBack: {
             router.pop()
           },
           isMoreVisible: vHTdwVFoYw02E.currvj9QRUUPOWY4Ouser?.id
-            != pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk?.authorId,
+            != pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk?.aC9dE1fG3hI5jK,
           onMore: {
             if pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk != nil {
               blorepguS2V8VcOeQPJ = true
@@ -64,7 +64,7 @@ struct PostDetailView: View {
               VStack(spacing: 0) {
                 ScrollView(.vertical, showsIndicators: false) {
                   VStack(spacing: 16) {
-                    ForEach(Array(postwGCoqwzwLkvNM.imageNames.enumerated()), id: \.offset) {
+                    ForEach(Array(postwGCoqwzwLkvNM.iT1uV3wX5yZ7aB.enumerated()), id: \.offset) {
                       idxGL8MuMii50ADL, imgNAjvxKLTl4nSq in
                       thumbnailItemUps6rxSn5R7nY(
                         imgwf4vAT3rdxi99: imgNAjvxKLTl4nSq, index: idxGL8MuMii50ADL)
@@ -102,8 +102,8 @@ struct PostDetailView: View {
               .zIndex(1)
 
               VStack(spacing: 0) {
-                if seleIdxtgKrO7Ui0lVyt < postwGCoqwzwLkvNM.imageNames.count {
-                  DynamicImage(imageName: postwGCoqwzwLkvNM.imageNames[seleIdxtgKrO7Ui0lVyt])
+            if seleIdxtgKrO7Ui0lVyt < postwGCoqwzwLkvNM.iT1uV3wX5yZ7aB.count {
+                  DymiimgYKxe1c8TyvAiL(imgMx6GF7oyJoIJA: postwGCoqwzwLkvNM.iT1uV3wX5yZ7aB[seleIdxtgKrO7Ui0lVyt])
                     .id(seleIdxtgKrO7Ui0lVyt)
                     .frame(width: rw87ym5nqW8M0Vf, height: max(0, htM2CV5R4KR4NEh - 160))
                     .clipped()
@@ -111,7 +111,7 @@ struct PostDetailView: View {
                     .contentShape(RoundedRectangle(cornerRadius: 20))
                 }
 
-                Text(postwGCoqwzwLkvNM.content)
+                Text(postwGCoqwzwLkvNM.cL7mN9oP1qR3sT)
                   .font(.system(size: 14))
                   .foregroundColor(.white)
                   .lineLimit(nil)
@@ -135,11 +135,11 @@ struct PostDetailView: View {
     .sheet(isPresented: $blorepguS2V8VcOeQPJ) {
       if let postlWeuXB8KEw026 = pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk {
         ReportBlockBottomSheet(
-          userId: postlWeuXB8KEw026.authorId,
+          userId: postlWeuXB8KEw026.aC9dE1fG3hI5jK,
           isPresented: $blorepguS2V8VcOeQPJ,
           onBlock: {
             if let postlWeuXB8KEw026 = pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk {
-              blouido68FOsXDP7pbb = postlWeuXB8KEw026.authorId
+              blouido68FOsXDP7pbb = postlWeuXB8KEw026.aC9dE1fG3hI5jK
               blodia8kGMTTtIEQeQs = true
             }
           }
@@ -151,18 +151,17 @@ struct PostDetailView: View {
         .presentationDragIndicator(.hidden)
       }
     }
-    .blockUserDialog(isPresented: $blodia8kGMTTtIEQeQs, uidK1uO6OuOGNky0: blouido68FOsXDP7pbb)
+    .blockDiaLcTUIAjgtcOHd(isPresented: $blodia8kGMTTtIEQeQs, uidK1uO6OuOGNky0: blouido68FOsXDP7pbb)
     #if DEBUG
       .enableInjection()
     #endif
-    .onChange(of: vHTdwVFoYw02E.currvj9QRUUPOWY4Ouser?.collectedPostIds) { _, _ in
+    .onChange(of: vHTdwVFoYw02E.currvj9QRUUPOWY4Ouser?.cP9hI1jK3lM5nO) { _, _ in
     }
   }
 
-  // MARK: - Thumbnail Item
   private func thumbnailItemUps6rxSn5R7nY(imgwf4vAT3rdxi99: String, index: Int) -> some View {
     ZStack {
-      DynamicImage(imageName: imgwf4vAT3rdxi99)
+      DymiimgYKxe1c8TyvAiL(imgMx6GF7oyJoIJA: imgwf4vAT3rdxi99)
         .frame(width: 62, height: 88)
         .clipped()
         .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -185,7 +184,6 @@ struct PostDetailView: View {
   }
 }
 
-// MARK: - Post Detail ViewModel
 @MainActor
 class PodetVmodelvjFnkult51bWe: ObservableObject {
   @Published var postJFUcoSpXHIudk: Post?
@@ -206,7 +204,3 @@ class PodetVmodelvjFnkult51bWe: ObservableObject {
     postJFUcoSpXHIudk = poserOAQTiNKfztblq.gepoidnrfBTqdPsaCHv(pidhJnCXP3N9yipf)
   }
 }
-
-// #Preview {
-//     PostDetailView(postId: "test_post_id")
-// }

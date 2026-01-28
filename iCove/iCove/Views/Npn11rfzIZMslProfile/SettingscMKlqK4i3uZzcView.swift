@@ -1,5 +1,5 @@
 //
-//  SettingsView.swift
+//  SettingscMKlqK4i3uZzcView.swift
 //  iCove
 //
 //  Created by yangyang on 2026/1/19.
@@ -11,7 +11,7 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
-struct SettingsView: View {
+struct SettingscMKlqK4i3uZzcView: View {
   @EnvironmentObject var TZn9Psbmx6nlq: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
   @Environment(\.dismiss) var dismiss
@@ -72,7 +72,7 @@ struct SettingsView: View {
 
       if sdelI9WcIDcqYmOFT {
         UnlockConfirmDialog(
-          hasEnoughBalance: nil,
+          hasXybyb6HcnQYhh: nil,
           onCancel: {
             sdelI9WcIDcqYmOFT = false
           },
@@ -81,7 +81,7 @@ struct SettingsView: View {
               await delAnttlypdVYhivb4k5()
             }
           },
-          title:
+          titleJysN45SSLv3zx:
             "Are you sure you want to delete this account? All data will be permanently cleared and cannot be restored.",
           btnText: "Sure",
         )
