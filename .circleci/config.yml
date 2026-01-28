@@ -5,6 +5,7 @@ jobs:
   build-and-upload:
     macos:
       xcode: "16.4.0"
+    working_directory: ~/project/iCove
 
     environment:
       BUNDLE_PATH: vendor/bundle # Bundler 安装路径，方便缓存
