@@ -43,7 +43,7 @@ class AIservCkCeIgWDTOo9Q: AIservCkCeIgWDTOo9Qproc {
           try await Task.sleep(nanoseconds: UInt64(toutIoWys24TdCJy0 * 1_000_000_000))
           throw TouterrZ6GwfFCQXcniA(
             v7IrNjNH3D3cJ:
-              "We're working hard to handle your request! Please wait a moment and try again.")
+              "Just a sec—we're taking care of your request. Try again shortly.")
         }
 
         let resBzOnazX0vIfEY = try await group.next()!
@@ -55,7 +55,7 @@ class AIservCkCeIgWDTOo9Q: AIservCkCeIgWDTOo9Qproc {
     } catch let iRep3OEi3nBt6 as TouterrZ6GwfFCQXcniA {
       return .failFdvRecB9dfUuQ(iRep3OEi3nBt6.v7IrNjNH3D3cJ)
     } catch {
-      return .failFdvRecB9dfUuQ("We hit a small snag - our team is on it.")
+      return .failFdvRecB9dfUuQ("Looks like a small hiccup—we're on it!")
     }
   }
 
