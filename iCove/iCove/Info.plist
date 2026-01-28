@@ -9,7 +9,7 @@
     <key>UILaunchScreen</key>
     <dict>
         <key>UIImageName</key>
-        <string>LaunchImage</string>  <!-- Image Set 名 -->
+        <string>LaunchImage</string> 
     </dict>
 </dict>
 </plist>
