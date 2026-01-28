@@ -57,13 +57,23 @@ platform :ios do
   lane :release do
     on_match
     prepare_gym
+    # gym(
+    #   export_method: export_method,
+    #   # output_directory: "./build",
+    #   # buildlog_path: "./build",
+    #   clean: true,
+    #   silent: true,
+    #   )
     gym(
-      export_method: export_method,
-      # output_directory: "./build",
-      # buildlog_path: "./build",
+      project: "iCove/iCove.xcodeproj",
+      scheme: scheme,                       # 使用环境变量 SCHEME
       clean: true,
-      silent: true,
-      )
+      # configuration: "Release",
+      export_method: export_method,         # 使用环境变量 EXPORT_METHOD
+      # output_directory: "./build",
+      output_name: "iCove.ipa",
+      silent: true
+    )
     deliver(
       skip_metadata: true,
       skip_screenshots: true,
@@ -141,11 +151,9 @@ platform :ios do
     update_code_signing_settings(
       use_automatic_signing: false,
       team_id: "CT76YARQHQ",
-      profile_name: "match AppStore com.jswqsgwlhywrs.iCove",
+      profile_name: profile_name,
       path: "iCove/iCove.xcodeproj",
     )
-    
-
   end
 
 end
