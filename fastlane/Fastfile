@@ -71,7 +71,6 @@ platform :ios do
       # configuration: "Release",
       export_method: export_method,         # 使用环境变量 EXPORT_METHOD
       # output_directory: "./build",
-      output_name: "iCove.ipa",
       silent: true
     )
     deliver(
