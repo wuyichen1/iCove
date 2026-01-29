@@ -97,7 +97,6 @@ platform :ios do
     current_build = latest_testflight_build_number(
       api_key: api_key,
       app_identifier: "com.jswqsgwlhywrs.iCove",  # 你的 bundle ID
-      version: "1.0"  # 你的 CFBundleShortVersionString，如果不确定可以省略
     )
 
     UI.message("当前 App Store Connect / TestFlight 最新 build number 是：#{current_build}")
