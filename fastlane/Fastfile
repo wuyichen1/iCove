@@ -77,7 +77,9 @@ platform :ios do
     deliver(
       skip_metadata: true,
       skip_screenshots: true,
-      submit_for_review: false
+      submit_for_review: false,
+      run_precheck_before_submit: true,
+      precheck_include_in_app_purchases: false
     ) if export_method == "app-store"
     pgyer(api_key: pgy_api_key) if export_method == "ad-hoc"
   end
