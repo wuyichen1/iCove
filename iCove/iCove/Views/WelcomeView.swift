@@ -11,9 +11,13 @@ import SwiftUI
   import HotSwiftUI
 #endif
 
+private let eulakeymTepHY4SOTT3 = "eula_agreed"
+
 struct WelcomeView: View {
   @EnvironmentObject var ayIqvfBR4TwQOWd: AuthManagA645b8Y0Aod3aVmod
   @EnvironmentObject var router: Router
+  @AppStorage(eulakeymTepHY4SOTT3) private var eulaAgreeryIRQyg4g56i = false
+  @State private var showEula5xoi9yF1kCiM = false
   @State private var emloginYuHtY3QnSdwzD = false
   @State private var signupcu6miHNMEZWff = false
   @State private var agreesdFfu5VG1Fq89 = true
@@ -63,6 +67,33 @@ struct WelcomeView: View {
     } message: {
       Text("Please agree to the user agreement and privacy policy before continuing")
     }
+    .onAppear {
+      if !eulaAgreeryIRQyg4g56i {
+        showEula5xoi9yF1kCiM = true
+      }
+    }
+    .overlay {
+      if showEula5xoi9yF1kCiM {
+        EULA8HDmpRmkpG6hView(
+          onCancel: { showEula5xoi9yF1kCiM = false },
+          onAgree: {
+            eulaAgreeryIRQyg4g56i = true
+            UserDefaults.standard.set(true, forKey: eulakeymTepHY4SOTT3)
+            showEula5xoi9yF1kCiM = false
+          },
+          onOpenTermsOfUse: {
+            showEula5xoi9yF1kCiM = false
+            router.push(
+              .agreement(url: "https://app.li65pe2f.link/users", title: "Terms of Use"))
+          },
+          onOpenPrivacyPolicy: {
+            showEula5xoi9yF1kCiM = false
+            router.push(
+              .agreement(url: "https://app.li65pe2f.link/privacy", title: "Privacy Policy"))
+          }
+        )
+      }
+    }
 
     #if DEBUG
       .enableInjection()
@@ -103,14 +134,24 @@ struct WelcomeView: View {
       BtnjDlKDD6h7eI3t(
         title: "Login by email",
         action: {
-          hanloggvcL4pkeajAUk()
+          if !eulaAgreeryIRQyg4g56i {
+            showEula5xoi9yF1kCiM = true
+          }else {
+            hanloggvcL4pkeajAUk()
+          }
+          
         },
         width: 260,
       )
       BtnjDlKDD6h7eI3t(
         title: "I'm new",
         action: {
-          hannew5V3fPnmA7jUU5()
+          if !eulaAgreeryIRQyg4g56i {
+            showEula5xoi9yF1kCiM = true
+          }else {
+            hannew5V3fPnmA7jUU5()
+          }
+          
         },
         isLoading: quicloginVTaKp6fjNjPJH,
         width: 260,
