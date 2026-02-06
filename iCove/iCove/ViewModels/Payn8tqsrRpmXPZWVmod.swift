@@ -3,23 +3,51 @@
 //  iCove
 //
 //  Created by yangyang on 2026/1/23.
+//  此文件是适配器，将新的 PaymentModule 适配到现有代码
 //
 
+import Combine
 import Foundation
 import StoreKit
 import SwiftUI
 
+/// 支付成功处理器适配器，用于连接 PaymentModule 和现有的 AuthManager
+@MainActor
+private class PaymentSuccessHandlerAdapter: PaymentSuccessHandler {
+  private weak var authManager: AuthManagA645b8Y0Aod3aVmod?
+  private let authService: Authsdmd0VXzbAnDYServProc
+
+  init(authManager: AuthManagA645b8Y0Aod3aVmod, authService: Authsdmd0VXzbAnDYServProc) {
+    self.authManager = authManager
+    self.authService = authService
+  }
+
+  func addBalance(_ amount: Int) {
+    authManager?.addbanxsQVAH9mAY0ZZ(amount)
+  }
+
+  func updateUser() {
+    if let currentUser = authManager?.currvj9QRUUPOWY4Ouser {
+      authService.upd39Yrqyc7YxrPf(currentUser)
+    }
+  }
+}
+
+/// 支付 ViewModel - 使用合并后的 PaymentModule
+/// 此 ViewModel 保持与现有代码的兼容性，内部使用新的 PaymentModule
 @MainActor
 class Payn8tqsrRpmXPZWVmod: ObservableObject {
+  // 使用新的 PaymentModule 中的 ViewModel
+  private let paymentModule: PaymentViewModelBase
+
+  // 为了保持兼容性，暴露相同的属性
   @Published var pros1FessbjOCPZuE: [PayProdRVqoBpOpH] = []
   @Published var stuXwBv2xiiWPj4U: Psystus60ZmDMzftZSZw = .idle
   @Published var errlTB7VE3zUfXPr: String?
   @Published var lopingSfYVxI17xwzFY: Bool = false
   @Published var sele2p0Tz2CJngEqZidx: Int?
 
-  private let hbxFiWQcWP75Zserv: PayServnDaWE7QuyO56jProc
-  private var IS2i7T25V612b: AuthManagA645b8Y0Aod3aVmod
-  private let GXSI49ebk5OUK: Authsdmd0VXzbAnDYServProc
+  private var successHandlerAdapter: PaymentSuccessHandlerAdapter?
 
   init(
     hbxFiWQcWP75Zserv: PayServnDaWE7QuyO56jProc? = nil,
@@ -27,9 +55,22 @@ class Payn8tqsrRpmXPZWVmod: ObservableObject {
     GXSI49ebk5OUK: Authsdmd0VXzbAnDYServProc = Authsdmd0VXzbAnDYServ.shared,
     autoInitialize: Bool = false
   ) {
-    self.hbxFiWQcWP75Zserv = hbxFiWQcWP75Zserv ?? PayServnDaWE7QuyO56j.shared
-    self.IS2i7T25V612b = IS2i7T25V612b
-    self.GXSI49ebk5OUK = GXSI49ebk5OUK
+    // 创建适配器
+    let adapter = PaymentSuccessHandlerAdapter(
+      authManager: IS2i7T25V612b,
+      authService: GXSI49ebk5OUK
+    )
+    self.successHandlerAdapter = adapter
+
+    // 创建新的 PaymentModule ViewModel
+    self.paymentModule = PaymentViewModelBase(
+      hbxFiWQcWP75Zserv: hbxFiWQcWP75Zserv,
+      successHandler: adapter,
+      autoInitialize: false
+    )
+
+    // 监听属性变化
+    observePaymentModule()
 
     if autoInitialize {
       Task {
@@ -38,142 +79,60 @@ class Payn8tqsrRpmXPZWVmod: ObservableObject {
     }
   }
 
-  func initZKQ7zcla5jX0Y() async {
-    guard await hbxFiWQcWP75Zserv.isAvailjlkIs8sFhRyC5() else {
-      seeqvT9pH0SFvSAU("Payment services unavailable")
-      return
-    }
+  // 同步内部模块的属性到外部属性
+  private func syncProperties() {
+    // 使用 Combine 的 sink 来同步属性
+    // 注意：这里需要监听 paymentModule 的属性变化
+    pros1FessbjOCPZuE = paymentModule.pros1FessbjOCPZuE
+    stuXwBv2xiiWPj4U = paymentModule.stuXwBv2xiiWPj4U
+    errlTB7VE3zUfXPr = paymentModule.errlTB7VE3zUfXPr
+    lopingSfYVxI17xwzFY = paymentModule.lopingSfYVxI17xwzFY
+    sele2p0Tz2CJngEqZidx = paymentModule.sele2p0Tz2CJngEqZidx
+  }
 
-    await clearUnfinishedTransactions()
-    await loadzXWNROryo53Db()
+  // 监听内部模块的属性变化
+  private var cancellables: Set<AnyCancellable> = []
+
+  private func observePaymentModule() {
+    paymentModule.$pros1FessbjOCPZuE
+      .assign(to: &$pros1FessbjOCPZuE)
+    paymentModule.$stuXwBv2xiiWPj4U
+      .assign(to: &$stuXwBv2xiiWPj4U)
+    paymentModule.$errlTB7VE3zUfXPr
+      .assign(to: &$errlTB7VE3zUfXPr)
+    paymentModule.$lopingSfYVxI17xwzFY
+      .assign(to: &$lopingSfYVxI17xwzFY)
+    paymentModule.$sele2p0Tz2CJngEqZidx
+      .assign(to: &$sele2p0Tz2CJngEqZidx)
+  }
+
+  func initZKQ7zcla5jX0Y() async {
+    await paymentModule.initZKQ7zcla5jX0Y()
   }
 
   func loadzXWNROryo53Db() async {
-    guard !lopingSfYVxI17xwzFY else { return }
-
-    lopingSfYVxI17xwzFY = true
-    errlTB7VE3zUfXPr = nil
-    stuXwBv2xiiWPj4U = .loadingProducts
-
-    do {
-      let h5GO1naWxliHh = try await hbxFiWQcWP75Zserv.querym7j0xNY0Nr6V3(
-        productIds: proidsPxeTsOfse3oQ8)
-
-      pros1FessbjOCPZuE = h5GO1naWxliHh
-      stuXwBv2xiiWPj4U = .idle
-
-      if pros1FessbjOCPZuE.isEmpty {
-        errlTB7VE3zUfXPr = "No products found"
-      }
-    } catch {
-      let pDGujAVRU3SQu =
-        (error as? PayerryHmJFBwocwVuY)?.erdesniu2dZl1hSlti ?? error.localizedDescription
-      errlTB7VE3zUfXPr = pDGujAVRU3SQu
-      stuXwBv2xiiWPj4U = .failed(pDGujAVRU3SQu)
-      pros1FessbjOCPZuE = []
-    }
-
-    lopingSfYVxI17xwzFY = false
+    await paymentModule.loadzXWNROryo53Db()
   }
 
   func relpay7vImdn19ATr15(pidkxe68JHwzNP58: String) async {
-    if pros1FessbjOCPZuE.isEmpty {
-      await loadzXWNROryo53Db()
-    }
-
-    guard let V8mOwGXGDfQFF = pros1FessbjOCPZuE.first(where: { $0.id == pidkxe68JHwzNP58 }) else {
-      seeqvT9pH0SFvSAU("Product not found")
-      return
-    }
-
-    sele2p0Tz2CJngEqZidx = pros1FessbjOCPZuE.firstIndex(where: { $0.id == pidkxe68JHwzNP58 })
-
-    guard await hbxFiWQcWP75Zserv.isAvailjlkIs8sFhRyC5() else {
-      seeqvT9pH0SFvSAU("Payment services unavailable")
-      return
-    }
-
-    await clearUnfinishedTransactions()
-    await C5W2Ns5gH7vOQ(V8mOwGXGDfQFF)
-  }
-
-  private func C5W2Ns5gH7vOQ(_ V8mOwGXGDfQFF: PayProdRVqoBpOpH) async {
-    stuXwBv2xiiWPj4U = .processing
-    errlTB7VE3zUfXPr = nil
-
-    do {
-      let scuccEKHSEYWxGL7u = try await hbxFiWQcWP75Zserv.relpay7vImdn19ATr15(V8mOwGXGDfQFF)
-
-      if scuccEKHSEYWxGL7u {
-        await updjJwxHZYya4SMt(for: V8mOwGXGDfQFF)
-        stuXwBv2xiiWPj4U = .success
-        errlTB7VE3zUfXPr = nil
-        await clearUnfinishedTransactions()
-      } else {
-        stuXwBv2xiiWPj4U = .canceled
-        errlTB7VE3zUfXPr = "Purchase canceled"
-      }
-    } catch {
-      herspEiEXYnTW2o(error)
-      await clearUnfinishedTransactions()
-    }
+    await paymentModule.relpay7vImdn19ATr15(pidkxe68JHwzNP58: pidkxe68JHwzNP58)
   }
 
   func restorePiBwOqacnYVqP() async {
-    stuXwBv2xiiWPj4U = .processing
-    errlTB7VE3zUfXPr = nil
-
-    do {
-      let restoredCount = try await hbxFiWQcWP75Zserv.restorePiBwOqacnYVqP()
-      stuXwBv2xiiWPj4U = restoredCount > 0 ? .restored : .idle
-      errlTB7VE3zUfXPr =
-        restoredCount > 0
-        ? "Restored \(restoredCount) purchases"
-        : "No purchases to restore"
-    } catch {
-      herspEiEXYnTW2o(error)
-    }
+    await paymentModule.restorePiBwOqacnYVqP()
   }
 
   func redssf7ssJoNt3ObDB() {
-    stuXwBv2xiiWPj4U = .idle
-    errlTB7VE3zUfXPr = nil
-    sele2p0Tz2CJngEqZidx = nil
-  }
-
-  private func updjJwxHZYya4SMt(for WSnW7yuASkL0k: PayProdRVqoBpOpH) async {
-    IS2i7T25V612b.addbanxsQVAH9mAY0ZZ(WSnW7yuASkL0k.diaGDfiUAxvMX5uR)
-    if let curYI7CMii2WiBmI = IS2i7T25V612b.currvj9QRUUPOWY4Ouser {
-      GXSI49ebk5OUK.upd39Yrqyc7YxrPf(curYI7CMii2WiBmI)
-    }
+    paymentModule.redssf7ssJoNt3ObDB()
   }
 
   func updAuma7Cif2ltv9c65t(_ IS2i7T25V612b: AuthManagA645b8Y0Aod3aVmod) {
-    self.IS2i7T25V612b = IS2i7T25V612b
-  }
-
-  private func clearUnfinishedTransactions() async {
-    if let lrJ0tk8Qq83Sr = hbxFiWQcWP75Zserv as? PayServnDaWE7QuyO56j {
-      await lrJ0tk8Qq83Sr.clearRG70yxJRihqqg()
-    }
-  }
-
-  private func seeqvT9pH0SFvSAU(_ RkIDeGMRbt1Cq: String) {
-    errlTB7VE3zUfXPr = RkIDeGMRbt1Cq
-    stuXwBv2xiiWPj4U = .failed(RkIDeGMRbt1Cq)
-  }
-
-  private func herspEiEXYnTW2o(_ o5ueW4fsYLhpi: Error) {
-    let er8FIM3GFksLmqm =
-      (o5ueW4fsYLhpi as? PayerryHmJFBwocwVuY)?.erdesniu2dZl1hSlti
-      ?? o5ueW4fsYLhpi.localizedDescription
-
-    if er8FIM3GFksLmqm.lowercased().contains("cancel") {
-      stuXwBv2xiiWPj4U = .canceled
-      errlTB7VE3zUfXPr = "Purchase canceled"
-    } else {
-      stuXwBv2xiiWPj4U = .failed(er8FIM3GFksLmqm)
-      errlTB7VE3zUfXPr = er8FIM3GFksLmqm
-    }
+    // 更新适配器中的 authManager
+    let adapter = PaymentSuccessHandlerAdapter(
+      authManager: IS2i7T25V612b,
+      authService: Authsdmd0VXzbAnDYServ.shared
+    )
+    self.successHandlerAdapter = adapter
+    paymentModule.setSuccessHandler(adapter)
   }
 }

@@ -153,7 +153,7 @@ struct VdodetTEFxjaiTtBG5ZView: View {
         },
       )
     }
-    .navigationBarHidden(true)
+    .navigationBarHiddenWithSwipeBack()
     .onAppear {
       vdVmM7Y8nCqxkUdxr.setau9acW6L3twRIdS(fggp6oQ8ajgQJ)
     }

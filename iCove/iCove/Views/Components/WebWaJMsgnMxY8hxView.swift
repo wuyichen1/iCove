@@ -32,6 +32,8 @@ struct WebWaJMsgnMxY8hxView: UIViewRepresentable {
     if let url = url {
       let request = URLRequest(url: url)
       webJfyREBIxLxV3B.load(request)
+    } else {
+      print("❌ [WebWaJMsgnMxY8hxView] URL 为 nil，无法加载")
     }
     
     return webJfyREBIxLxV3B
@@ -68,12 +70,19 @@ struct WebWaJMsgnMxY8hxView: UIViewRepresentable {
     }
     
     func webJfyREBIxLxV3B(_ webJfyREBIxLxV3B: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+      print("❌ [WebWaJMsgnMxY8hxView] 页面加载失败: \(error.localizedDescription)")
       DispatchQueue.main.async {
         self.parent.isLoading = false
       }
     }
     
     func webJfyREBIxLxV3B(_ webJfyREBIxLxV3B: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+      // 忽略 -999 错误（请求被取消）
+      if let urlError = error as? URLError, urlError.code.rawValue == -999 {
+        return
+      }
+      
+      print("❌ [WebWaJMsgnMxY8hxView] 页面临时加载失败: \(error.localizedDescription)")
       DispatchQueue.main.async {
         self.parent.isLoading = false
       }

@@ -50,7 +50,7 @@ struct EditY3IAsBRQyIZ1dView: View {
           .padding(.vertical, 60)
       }
     }
-    .navigationBarHidden(true)
+    .navigationBarHiddenWithSwipeBack()
     .onAppear {
       if pTN8hZ9kCDZmYuname.isEmpty {
         pTN8hZ9kCDZmYuname = FUmIz00KvBJa2.currvj9QRUUPOWY4Ouser?.uX4yZ6aB8cD0eF ?? ""

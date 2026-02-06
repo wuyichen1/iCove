@@ -76,7 +76,7 @@ struct VideoCallView: View {
         .padding(.bottom, 50)
       }
     }
-    .navigationBarHidden(true)
+    .navigationBarHiddenWithSwipeBack()
     .toolbar(.hidden, for: .tabBar)
     #if DEBUG
       .enableInjection()

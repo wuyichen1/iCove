@@ -130,7 +130,7 @@ struct Podetopjh8lRqGBvnoView: View {
         }
       }
     }
-    .navigationBarHidden(true)
+    .navigationBarHiddenWithSwipeBack()
     .toolbar(.hidden, for: .tabBar)
     .sheet(isPresented: $blorepguS2V8VcOeQPJ) {
       if let postlWeuXB8KEw026 = pdVmA3OLH8q0XtIfY.postJFUcoSpXHIudk {

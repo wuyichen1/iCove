@@ -83,7 +83,7 @@ struct PubVypVDl0eHHL9jView: View {
         }
       }
     }
-    .navigationBarHidden(true)
+    .navigationBarHiddenWithSwipeBack()
     #if DEBUG
       .enableInjection()
     #endif

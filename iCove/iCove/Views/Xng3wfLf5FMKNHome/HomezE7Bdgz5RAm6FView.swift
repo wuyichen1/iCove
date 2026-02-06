@@ -60,7 +60,7 @@ struct HomezE7Bdgz5RAm6FView: View {
 
     }
     .blockDiaLcTUIAjgtcOHd(isPresented: $bloHwHbzDrKcFZIB, uidK1uO6OuOGNky0: blouidlt760IOhzkW9F)
-    .navigationBarHidden(true)
+    .navigationBarHiddenWithSwipeBack()
     .onAppear {
       homeVmjdlzoNirJwfU3.updAuma7Cif2ltv9c65t(aumaCUWZltQs5HPyQ)
     }

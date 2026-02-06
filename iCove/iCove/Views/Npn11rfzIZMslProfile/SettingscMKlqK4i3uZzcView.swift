@@ -87,7 +87,7 @@ struct SettingscMKlqK4i3uZzcView: View {
         )
       }
     }
-    .navigationBarHidden(true)
+    .navigationBarHiddenWithSwipeBack()
     #if DEBUG
       .enableInjection()
     #endif

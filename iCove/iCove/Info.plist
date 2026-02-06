@@ -11,5 +11,55 @@
 		<key>UIImageName</key>
 		<string>LaunchImage</string>
 	</dict>
+
+  <!-- 其他app -->
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>whatsapp</string>
+		<string>instagram</string>
+		<string>fb</string>
+		<string>tiktok</string>
+		<string>comgooglemaps</string>
+		<string>tweetie</string>
+		<string>wechat</string>
+		<string>alipay</string>
+		<string>mqq</string>
+		<string>itms-apps</string>
+		<string>itms</string>
+	</array>
+
+  <!-- 支付 -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb1594082498477934</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>1594082498477934</string>
+	<key>FacebookClientToken</key>
+	<string>7ccf6f49f8da453a18e2ee53bf5dedf3</string>
+	<key>FacebookDisplayName</key>
+	<string>iCove</string>
+	<key>FacebookAutoLogAppEventsEnabled</key>
+	<true/>
+  <!-- end -->
+	
+  <!-- 屏幕方向 -->
+  <key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	
+	<!-- 定位权限 -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app requires the permission to access your location information in order to provide you with more personalized services. Your location data will be strictly confidential and will only be used upon your active authorization, for the purpose of enhancing your overall usage experience.</string>
 </dict>
 </plist>

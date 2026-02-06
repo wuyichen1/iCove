@@ -56,7 +56,7 @@ struct ChatdethDMHn0xZmjWudView: View {
 
       recderrh6YNGOHlUh48d
     }
-    .navigationBarHidden(true)
+    .navigationBarHiddenWithSwipeBack()
     .toolbar(.hidden, for: .tabBar)
     .sheet(isPresented: $repblosheetdd0PsyA3rHbiN) {
       ReportBlockBottomSheet(
@@ -307,20 +307,20 @@ struct ChatdethDMHn0xZmjWudView: View {
       }
 
       // 第三个选项：视频通话 !!!!!!
-      // Button(action: {
-      //   ctdtVmMj14NObPYFLCj.selex31VUBVkwrtCB(.videoCall)
-      //   router.push(.videoCall(conversationId: conversationId, otherUserId: otherUserId))
-      // }) {
-      //   VStack(spacing: 8) {
-      //     Image("FltoQrPQqNaUP6E4")
-      //       .resizable()
-      //       .scaledToFit()
-      //       .padding(8)
-      //   }
-      //   .frame(width: 46, height: 46)
-      //   .background(Color("yinguanglv"))
-      //   .clipShape(Circle())
-      // }
+      Button(action: {
+        ctdtVmMj14NObPYFLCj.selex31VUBVkwrtCB(.videoCallTg9iR4R71BwKK)
+        router.push(.videoCall(conversationId: conversationId, otherUserId: otherUserId))
+      }) {
+        VStack(spacing: 8) {
+          Image("FltoQrPQqNaUP6E4")
+            .resizable()
+            .scaledToFit()
+            .padding(8)
+        }
+        .frame(width: 46, height: 46)
+        .background(Color("yinguanglv"))
+        .clipShape(Circle())
+      }
     }
   }
 

@@ -46,7 +46,7 @@ struct ProfilekgwebDS4EgDnqView: View {
         }
       }
       .blockDiaLcTUIAjgtcOHd(isPresented: $dWGK5bUYeS2aC, uidK1uO6OuOGNky0: bouidSPG3NVxZahTZe)
-      .navigationBarHidden(true)
+      .navigationBarHiddenWithSwipeBack()
       .onChange(of: d7nokg2HlCh2O.currvj9QRUUPOWY4Ouser?.aG3hI5jK7lM9nO) { _, _ in
         if proVm92qjXCvXAr8i6.isCurghxDEHCC3hzYz {
           Task {

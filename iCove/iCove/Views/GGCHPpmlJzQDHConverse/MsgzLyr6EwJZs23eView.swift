@@ -39,7 +39,7 @@ struct MsgzLyr6EwJZs23eView: View {
         }
       }
     }
-    .navigationBarHidden(true)
+    .navigationBarHiddenWithSwipeBack()
     #if DEBUG
       .enableInjection()
     #endif

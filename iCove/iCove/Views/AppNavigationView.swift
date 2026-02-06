@@ -32,9 +32,39 @@ struct AppNavigationView<Content: View>: View {
           destinationView(for: route)
         }
     }
+    .background(NavigationControllerEnabler())
     #if DEBUG
       .enableInjection()
     #endif
+  }
+  
+  /// 用于全局启用侧滑返回手势的辅助视图
+  private struct NavigationControllerEnabler: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> UIViewController {
+      let viewController = UIViewController()
+      return viewController
+    }
+    
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+      DispatchQueue.main.async {
+        // 查找导航控制器并启用侧滑返回
+        if let navigationController = uiViewController.navigationController {
+          navigationController.interactivePopGestureRecognizer?.isEnabled = true
+          navigationController.interactivePopGestureRecognizer?.delegate = nil
+        }
+        
+        // 也检查父视图控制器
+        var parent = uiViewController.parent
+        while parent != nil {
+          if let navController = parent as? UINavigationController {
+            navController.interactivePopGestureRecognizer?.isEnabled = true
+            navController.interactivePopGestureRecognizer?.delegate = nil
+            break
+          }
+          parent = parent?.parent
+        }
+      }
+    }
   }
 
   @ViewBuilder
@@ -99,7 +129,10 @@ struct AppNavigationView<Content: View>: View {
     case .agreement(let url, let title):
       AgreementView(urlString: url, title: title)
         .environmentObject(router)
+        .environmentObject(paymentViewModel)
         .toolbar(.hidden, for: .tabBar)
+        .interactiveDismissDisabled(true) // 禁止手势返回
+        .navigationBarBackButtonHidden(true) // 隐藏返回按钮，实现不可返回跳转
     }
   }
 

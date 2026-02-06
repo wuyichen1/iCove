@@ -109,7 +109,7 @@ struct ReportywNvhJra7xXCDView: View {
         dismissButton: nil
       )
     }
-    .navigationBarHidden(true)
+    .navigationBarHiddenWithSwipeBack()
     #if DEBUG
       .enableInjection()
     #endif

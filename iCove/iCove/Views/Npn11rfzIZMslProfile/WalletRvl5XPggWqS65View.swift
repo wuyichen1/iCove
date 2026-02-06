@@ -68,7 +68,7 @@ struct WalletRvl5XPggWqS65View: View {
           )
       }
     }
-    .navigationBarHidden(true)
+    .navigationBarHiddenWithSwipeBack()
     .onAppear {
       payVmdEt8htQp1V38FI.updAuma7Cif2ltv9c65t(a2pv1DU9eRMWzG)
 

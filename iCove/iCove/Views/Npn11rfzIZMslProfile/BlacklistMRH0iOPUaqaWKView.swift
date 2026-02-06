@@ -48,7 +48,7 @@ struct BlacklistMRH0iOPUaqaWKView: View {
         }
       }
     }
-    .navigationBarHidden(true)
+    .navigationBarHiddenWithSwipeBack()
     .onAppear {
       blcAzRj9NhSBUoqvVmod.loadBlockedUsers(
         blouidFKnKiKBUzjZq0: au8PAPgSVGmoAhD.currvj9QRUUPOWY4Ouser?.bQ7rS9tU1vW3xY ?? [],
