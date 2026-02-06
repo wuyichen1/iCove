@@ -272,6 +272,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		DD3BAB9A2F20D619000A0297 /* Copy Injection Bundle */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
