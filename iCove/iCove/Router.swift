@@ -27,7 +27,6 @@ class Router: ObservableObject {
   @MainActor
   func popToRoot() {
     if path.count > 0 {
-      // 清空导航栈：创建一个新的 NavigationPath
       path = NavigationPath()
     }
   }
