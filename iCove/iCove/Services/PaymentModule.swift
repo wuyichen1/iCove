@@ -111,7 +111,7 @@ let proidsPxeTsOfse3oQ8: [String] = diaPckgscQLNBm8gVonHu.map { $0.pcodedDuCfV7K
 struct PaymentTransactionInfo {
   let transactionID: String
   let serverVerificationData: String
-  let transaction: SKPaymentTransaction  // StoreKit 1 使用 SKPaymentTransaction
+  let transaction: SKPaymentTransaction
 }
 
 protocol PayServnDaWE7QuyO56jProc {

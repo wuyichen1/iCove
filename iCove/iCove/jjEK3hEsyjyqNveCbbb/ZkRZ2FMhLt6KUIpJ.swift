@@ -286,8 +286,8 @@ func b3kf0NctLGhTMsLy() async -> [String: Any]? {
 
   var parameters: [String: Any] = [
     "AdjustAdida": adjustAdid,
-    "a8EgqOe3tZ811hndn": QXpn2II4KVY26Jz2.XUgjT2hpCIlk3FWG.bJ6QpJWei7m3PS8U,
-    "uxKHmC38tcShyr7dv": [
+    "coFgbyiSdwicdjDrn": QXpn2II4KVY26Jz2.XUgjT2hpCIlk3FWG.bJ6QpJWei7m3PS8U,
+    "mxnhbiinjSThSCVsv": [
       "countryCode": Z9WEGtgFinazN4mf.TBxDDNgHitOkdJJa,
       "latitude": Z9WEGtgFinazN4mf.cQ2StaF0zQcVlBmn,
       "longitude": Z9WEGtgFinazN4mf.FNMx3wqn1DVSJXVK,
@@ -300,7 +300,7 @@ func b3kf0NctLGhTMsLy() async -> [String: Any]? {
 
   do {
     var r7GaIhUQKqMwsfAn7 = try await client.I362iKv16BEImWEg(
-      "/opi/v1/w0OzRx8vMGORcSLfal", parameters)
+      "/opi/v1/TrUdUbVwhzhEGozKl", parameters)
 
     if let zDL9EtlUTrkT6iz6 = r7GaIhUQKqMwsfAn7["result"] as? String {
       let d4vJWUFBtYIJvPxWy = zDL9EtlUTrkT6iz6.X46FNGuBG06D9Cdi()
@@ -329,7 +329,7 @@ func IXZJBSPkNrc8pFyR(_ page: Int) async -> [String: Any]? {
     "otherAppNames": el5FpJNqYH9Tz7fW,
     "timezonet": BFY1s3mActpSwfWD,
     "keyboardsk": LnI24PMVofwRqStW,
-    "debug": 0,
+    "debug": 1,
   ]
 
   do {
@@ -359,7 +359,7 @@ func oUwzLYUYJcVFi4s2(_ F9FMPCUxgDxhuVwE: String) async -> [String: Any]? {
   let client = IFdbK0Ld3QGa531m()
 
   let Iz7VFmKbdRxs78Xc: [String: Any] = [
-    "lwMI5UF4xHhThyNOo": F9FMPCUxgDxhuVwE
+    "anEfmGXFDVbvmjwMo": F9FMPCUxgDxhuVwE
   ]
 
   do {
@@ -385,14 +385,14 @@ func TrO9lHV6mtsQchGq(
   }
 
   let parameters: [String: Any] = [
-    "Vgl1hwz8pzJjgjrTt": purchaseID ?? "",
-    "e9yJO0XcAThO1sIfdp": serverVerificationData,
-    "n6sSXJeSKYkEIc05yc": orderCodeString,
+    "NGpdKBdffpOBlUtkt": purchaseID ?? "",
+    "gmgsKfSdaMrnOueLp": serverVerificationData,
+    "zrfUuQWsbpPMnfOsc": orderCodeString,
   ]
 
   do {
     let result = try await RKQ0s1QTwrf8ADOL.I362iKv16BEImWEg(
-      "/opi/v1/xTHFBEEhPNGcB3NPp", parameters)
+      "/opi/v1/EEJVwrjKTdthDZlBp", parameters)
     if let code = result["code"] as? String {
       let isValid = code == "0000"
       if isValid {

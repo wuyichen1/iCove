@@ -14,7 +14,7 @@ class JOiwPsRWJuGsDw4w {
   // 77923858
   static let q5ipAG3FJBQZiLkjr = "77923858"
   static let FdQAOEQbNVql1u09 = "https://opi.li65pe2f.link"
-  static let LyT22mIfpUZoBYnT = "1.1.0"
+  static let LyT22mIfpUZoBYnT = "1.2.0"
 }
 
 struct Kk9VObEVtqyhiffn {

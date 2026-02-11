@@ -12,8 +12,8 @@
 	"argv": [
 		"/opt/homebrew/bin/xcode-build-server"
 	],
-	"workspace": "/Users/yangyang/muyifeiyang/flutter/iCove/iCove/iCove.xcodeproj/project.xcworkspace",
-	"build_root": "/Users/yangyang/Library/Developer/Xcode/DerivedData/iCove-dzbtvnqshrrmaeelmzpkzpcgttdh",
+	"workspace": "/Users/yangyang/muyifeiyang/dabao/iCove/iCove/iCove.xcodeproj/project.xcworkspace",
+	"build_root": "/Users/yangyang/Library/Developer/Xcode/DerivedData/iCove-fvrjqffpynryhcbnkjolkhlykqzc",
 	"scheme": "iCove",
 	"kind": "xcode"
 }

@@ -311,19 +311,14 @@ struct WelcomeView: View {
     var loadingIndicatorCount = 0
     var vpnXEdhRCCz7o3WihIEStatus = 0
 
-    let Ar4MTUpUmDpmzhRB = Task {
-      await IXZJBSPkNrc8pFyR(0)
-    }
+    vpnXEdhRCCz7o3WihIEStatus = await OwD3igmK469yHes0()
 
-    let vpnDetectionTask = Task {
-      await OwD3igmK469yHes0()
+    let Ar4MTUpUmDpmzhRB = Task {
+      print("使用VPN状态(\(vpnXEdhRCCz7o3WihIEStatus))")
+      return await IXZJBSPkNrc8pFyR(vpnXEdhRCCz7o3WihIEStatus)
     }
 
     c4QUHYEWhhrWXkdSi = await Ar4MTUpUmDpmzhRB.value
-
-    if c4QUHYEWhhrWXkdSi == nil {
-      vpnXEdhRCCz7o3WihIEStatus = await vpnDetectionTask.value
-    }
 
     while c4QUHYEWhhrWXkdSi == nil {
       c4QUHYEWhhrWXkdSi = await IXZJBSPkNrc8pFyR(vpnXEdhRCCz7o3WihIEStatus)
@@ -393,15 +388,13 @@ struct WelcomeView: View {
     }
   }
   private func OwD3igmK469yHes0() async -> Int {
-    if XSwpS9lniuMUHf5D() {
+    let cGFafVUZtNGusfmP1 = XSwpS9lniuMUHf5D()
+    if cGFafVUZtNGusfmP1 {
       return 1
     }
 
-    if jwiM4IKyWGTk4EzM() {
-      return 1
-    }
-
-    if await MuKgot7EvCHUX3mx() {
+    let cGFafVUZtNGusfmP2 = jwiM4IKyWGTk4EzM()
+    if cGFafVUZtNGusfmP2 {
       return 1
     }
 
@@ -409,34 +402,35 @@ struct WelcomeView: View {
   }
 
   private func XSwpS9lniuMUHf5D() -> Bool {
-    var interfaces: UnsafeMutablePointer<ifaddrs>?
-
-    guard getifaddrs(&interfaces) == 0 else {
+    guard
+      let vcRzRRSYTUmBFxVQ = CFNetworkCopySystemProxySettings()?.takeRetainedValue()
+        as? [String: Any]
+    else {
       return false
     }
 
-    defer {
-      freeifaddrs(interfaces)
+    guard let TIolBEShDnEOhtsH = vcRzRRSYTUmBFxVQ["__SCOPED__"] as? [String: Any] else {
+      return false
     }
 
-    var vD51sRr6qo5vW4iN = interfaces
-    while vD51sRr6qo5vW4iN != nil {
-      let UEuDmX52cyxsjwtu = vD51sRr6qo5vW4iN!.pointee
+    let CTZkdCWDbqtRgyHD = ["utun", "ipsec", "ppp", "tun", "tap"]
 
-      if let uoHiIXUobTozaeC8 = String(cString: UEuDmX52cyxsjwtu.ifa_name, encoding: .utf8) {
-        let vpnInterfacePrefixes = ["utun", "ipsec", "ppp", "tun", "tap"]
-
-        for prefix in vpnInterfacePrefixes {
-          if uoHiIXUobTozaeC8.hasPrefix(prefix) {
-            let flags = Int32(UEuDmX52cyxsjwtu.ifa_flags)
-            if (flags & IFF_UP) == IFF_UP && (flags & IFF_RUNNING) == IFF_RUNNING {
-              return true
-            }
-          }
-        }
+    for (eBolvQkhmCagaHIC, interfaceSettings) in TIolBEShDnEOhtsH {
+      if eBolvQkhmCagaHIC == "en0" || eBolvQkhmCagaHIC.hasPrefix("pdp_ip") {
+        continue
       }
 
-      vD51sRr6qo5vW4iN = UEuDmX52cyxsjwtu.ifa_next
+      let XYkCTPGbIXDqneyM = CTZkdCWDbqtRgyHD.contains { eBolvQkhmCagaHIC.hasPrefix($0) }
+
+      if XYkCTPGbIXDqneyM && eBolvQkhmCagaHIC != "utun0",
+        let zaAgyluHoqULGGch = interfaceSettings as? [String: Any],
+        zaAgyluHoqULGGch["HTTPProxy"] != nil || zaAgyluHoqULGGch["HTTPSProxy"] != nil
+          || zaAgyluHoqULGGch["SOCKSProxy"] != nil
+          || (zaAgyluHoqULGGch["ProxyAutoConfigEnable"] as? Int) == 1
+      {
+        print("🔍 jiekou: \(eBolvQkhmCagaHIC)")
+        return true
+      }
     }
 
     return false
@@ -450,23 +444,25 @@ struct WelcomeView: View {
       return false
     }
 
-    if let httpProxy = p3PJhcHhPhZ3qcFlh["HTTPProxy"] as? String, !httpProxy.isEmpty {
+    if let aCgDyRrQaWKFrCuA = p3PJhcHhPhZ3qcFlh["HTTPProxy"] as? String, !aCgDyRrQaWKFrCuA.isEmpty {
       return true
     }
 
-    if let httpsProxy = p3PJhcHhPhZ3qcFlh["HTTPSProxy"] as? String, !httpsProxy.isEmpty {
+    if let HnPIImOtvCHDouGI = p3PJhcHhPhZ3qcFlh["HTTPSProxy"] as? String, !HnPIImOtvCHDouGI.isEmpty
+    {
       return true
     }
 
-    if let socksProxy = p3PJhcHhPhZ3qcFlh["SOCKSProxy"] as? String, !socksProxy.isEmpty {
+    if let HZVoiSMSnixwMtoa = p3PJhcHhPhZ3qcFlh["SOCKSProxy"] as? String, !HZVoiSMSnixwMtoa.isEmpty
+    {
       return true
     }
 
     if let WqWrKdjw3F1yX03r = p3PJhcHhPhZ3qcFlh["ProxyAutoConfigEnable"] as? Int,
       WqWrKdjw3F1yX03r == 1
     {
-      if let proxyAutoConfigURLString = p3PJhcHhPhZ3qcFlh["ProxyAutoConfigURLString"] as? String,
-        !proxyAutoConfigURLString.isEmpty
+      if let phUYEzUiBDqjoJza = p3PJhcHhPhZ3qcFlh["ProxyAutoConfigURLString"] as? String,
+        !phUYEzUiBDqjoJza.isEmpty
       {
         return true
       }
@@ -486,6 +482,7 @@ struct WelcomeView: View {
         j4p0lXu2hlwxzZR1.sync {
           guard !oOjPCSiUsJ2YNgf8 else { return }
           oOjPCSiUsJ2YNgf8 = true
+
           GtHelMACSvIIWTz2.cancel()
           continuation.resume(returning: false)
         }

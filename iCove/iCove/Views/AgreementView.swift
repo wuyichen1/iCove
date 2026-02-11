@@ -5,7 +5,9 @@
 //  Created by yangyang on 2026/1/23.
 //
 
+import PhotosUI
 import SwiftUI
+import UniformTypeIdentifiers
 import WebKit
 
 #if DEBUG
@@ -326,6 +328,7 @@ struct H5WebView: UIViewRepresentable {
     let userContent = WKUserContentController()
     userContent.add(context.coordinator, name: "rechargePay")
     userContent.add(context.coordinator, name: "close")
+    userContent.add(context.coordinator, name: "fileUploadClick")
 
     let handlerScript = WKUserScript(
       source: """
@@ -380,10 +383,8 @@ struct H5WebView: UIViewRepresentable {
   }
 
   func updateUIView(_ web4H14JZlLADJzwEa0: WKWebView, context: Context) {
-    struct UpdateCounter {
-      static var count = 0
-    }
-    UpdateCounter.count += 1
+    web4H14JZlLADJzwEa0.uiDelegate = context.coordinator
+    web4H14JZlLADJzwEa0.navigationDelegate = context.coordinator
 
     let originalFrame = context.coordinator.originalWebViewFrame ?? web4H14JZlLADJzwEa0.frame
 
@@ -442,7 +443,8 @@ struct H5WebView: UIViewRepresentable {
   }
 
   class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler,
-    UIScrollViewDelegate, UIGestureRecognizerDelegate
+    UIScrollViewDelegate, UIGestureRecognizerDelegate, PHPickerViewControllerDelegate,
+    UIImagePickerControllerDelegate, UINavigationControllerDelegate
   {
     var parent: H5WebView
     var webView: WKWebView?
@@ -457,6 +459,10 @@ struct H5WebView: UIViewRepresentable {
     private weak var superview: UIView?
     private var superviewFrameObserver: NSKeyValueObservation?
     private var superviewBoundsObserver: NSKeyValueObservation?
+    private var fileUploadCompletionHandler: (([URL]?) -> Void)?
+    private var isFilePickerShowing: Bool = false
+    private var lastFileUploadClickTime: Date = Date.distantPast
+    private var allowSwipeBack: Bool = false
 
     init(_ parent: H5WebView) {
       self.parent = parent
@@ -495,8 +501,8 @@ struct H5WebView: UIViewRepresentable {
       superviewBoundsObserver?.invalidate()
 
       superviewFrameObserver = superview.observe(\.frame, options: [.new, .old]) { view, change in
-        guard let newFrame = change.newValue, let oldFrame = change.oldValue,
-          newFrame != originalFrame
+        guard let NMTSAPq8uJiiiiEZ = change.newValue, change.oldValue != nil,
+          NMTSAPq8uJiiiiEZ != originalFrame
         else { return }
 
         DispatchQueue.main.async {
@@ -514,8 +520,8 @@ struct H5WebView: UIViewRepresentable {
       }
 
       superviewBoundsObserver = superview.observe(\.bounds, options: [.new, .old]) { view, change in
-        guard let newBounds = change.newValue, let oldBounds = change.oldValue,
-          newBounds != originalBounds
+        guard let NMTSAPq8uJiiiiEZ = change.newValue, change.oldValue != nil,
+          NMTSAPq8uJiiiiEZ != originalBounds
         else { return }
 
         DispatchQueue.main.async {
@@ -641,7 +647,7 @@ struct H5WebView: UIViewRepresentable {
       guard let webView = webView else { return }
 
       DispatchQueue.main.async { [weak self] in
-        guard let self = self, let webView = self.webView else { return }
+        guard let self = self else { return }
 
         if let superview = webView.superview,
           let originalSuperFrame = self.originalSuperviewFrame,
@@ -738,9 +744,17 @@ struct H5WebView: UIViewRepresentable {
     }
 
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+      if let url = webView.url {
+        print("📸 [H5WebView] kaishi: \(url.absoluteString)")
+      }
+
+      webView.navigationDelegate = self
+      webView.uiDelegate = self
+
       DispatchQueue.main.async {
         self.parent.isLoading = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [weak self] in
+        self.allowSwipeBack = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
           self?.parent.isLoading = false
         }
         self.loadStartTime = Date()
@@ -748,6 +762,15 @@ struct H5WebView: UIViewRepresentable {
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+      if let url = webView.url {
+        print("📸 [H5WebView] wancheng: \(url.absoluteString)")
+      }
+
+      webView.navigationDelegate = self
+      webView.uiDelegate = self
+
+      self.injectFileUploadListener(webView: webView)
+
       DispatchQueue.main.async {
         self.parent.isLoading = false
         if let startTime = self.loadStartTime {
@@ -761,6 +784,10 @@ struct H5WebView: UIViewRepresentable {
         webView.scrollView.zoomScale = 1.0
         webView.scrollView.showsVerticalScrollIndicator = false
         webView.scrollView.showsHorizontalScrollIndicator = false
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+          self?.allowSwipeBack = true
+        }
       }
     }
 
@@ -770,6 +797,9 @@ struct H5WebView: UIViewRepresentable {
       }
       DispatchQueue.main.async {
         self.parent.isLoading = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+          self?.allowSwipeBack = true
+        }
       }
     }
 
@@ -782,6 +812,9 @@ struct H5WebView: UIViewRepresentable {
       }
       DispatchQueue.main.async {
         self.parent.isLoading = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+          self?.allowSwipeBack = true
+        }
       }
     }
 
@@ -883,6 +916,49 @@ struct H5WebView: UIViewRepresentable {
 
     func webView(
       _ webView: WKWebView,
+      runOpenPanelWith parameters: WKOpenPanelParameters,
+      initiatedByFrame frame: WKFrameInfo,
+      completionHandler: @escaping ([URL]?) -> Void
+    ) {
+      isFilePickerShowing = true
+
+      fileUploadCompletionHandler = { [weak self] urls in
+        self?.isFilePickerShowing = false
+        completionHandler(urls)
+      }
+
+      let allowsMultipleSelection = parameters.allowsMultipleSelection
+
+      if #available(iOS 14.0, *) {
+        var configuration = PHPickerConfiguration()
+        configuration.selectionLimit = allowsMultipleSelection ? 0 : 1
+        configuration.filter = .images
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        presentOnTop(picker)
+      } else {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.sourceType = .photoLibrary
+        picker.mediaTypes = ["public.image"]
+        picker.allowsEditing = false
+        presentOnTop(picker)
+      }
+    }
+
+    private func presentOnTop(_ viewController: UIViewController) {
+      DispatchQueue.main.async {
+        guard let top = self.getTopViewController() else {
+          self.fileUploadCompletionHandler?(nil)
+          self.fileUploadCompletionHandler = nil
+          return
+        }
+        top.present(viewController, animated: true)
+      }
+    }
+
+    func webView(
+      _ webView: WKWebView,
       createWebViewWith configuration: WKWebViewConfiguration,
       for navigationAction: WKNavigationAction,
       windowFeatures: WKWindowFeatures
@@ -962,9 +1038,145 @@ struct H5WebView: UIViewRepresentable {
           }
         }
 
+      case "fileUploadClick":
+        handleFileUploadClick()
+
       default:
         break
       }
+    }
+
+    private func injectFileUploadListener(webView: WKWebView) {
+      let script = """
+          (function() {
+            if (window.__icove_upload_bridge_installed) return;
+            window.__icove_upload_bridge_installed = true;
+
+            function post() {
+              try {
+                window.webkit &&
+                window.webkit.messageHandlers &&
+                window.webkit.messageHandlers.fileUploadClick &&
+                window.webkit.messageHandlers.fileUploadClick.postMessage(null);
+              } catch (e) {}
+            }
+
+            function isUploadLike(el) {
+              if (!el) return false;
+              if (el.hasAttribute && el.hasAttribute('data-upload')) return true;
+              return false;
+            }
+
+            document.addEventListener('click', function(e) {
+              var t = e.target;
+              if (!t) return;
+              if (t.getAttribute && t.getAttribute('data-temp-upload')) return;
+
+              if (t.tagName === 'INPUT' && t.type === 'file') {
+                post();
+                return;
+              }
+
+              try {
+                var chain = [];
+                var node = t;
+                for (var j = 0; j < 4 && node; j++) {
+                  chain.push({
+                    el: node,
+                    tag: (node.tagName || '').toUpperCase(),
+                    cls: (node.className || '').toLowerCase(),
+                    text: (node.innerText || node.textContent || '').trim().toLowerCase()
+                  });
+                  node = node.parentElement;
+                }
+
+                var hasUploadText = chain.some(function(n) {
+                  return n.text.indexOf('upload review screenshot') >= 0;
+                });
+                var hasUploadAreaClass = chain.some(function(n) {
+                  var c = n.cls;
+                  if (!c) return false;
+                  if (c.indexOf('flex-center flex-col') >= 0) return true;
+                  if (c.indexOf('mx20 mt56') >= 0) return true;
+                  if (c.indexOf('absolute left-0 top-0 h-100 w-100') >= 0) return true;
+                  return false;
+                });
+                var isReviewUpload = hasUploadText && hasUploadAreaClass;
+
+                var hasSmallPrimary = chain.some(function(n) {
+                  if (n.cls.indexOf('btn-primary') < 0) return false;
+                  if (n.cls.indexOf('h32') >= 0) return true;
+                  if (n.cls.indexOf('w32') >= 0) return true;
+                  if (n.cls.indexOf('rounded-10') >= 0) return true;
+                  if (n.cls.indexOf('inset-is-50%') >= 0) return true;
+                  return false;
+                });
+                var hasEditProfile = chain.some(function(n) {
+                  return n.text.indexOf('edit profile') >= 0;
+                });
+                var isProfileUpload = hasSmallPrimary && hasEditProfile;
+
+                var isImageUpload = false;
+                if (chain.length > 0 && chain[0].tag === 'IMG') {
+                  for (var k = 1; k < chain.length; k++) {
+                    if (chain[k].cls.indexOf('flex items-center justify-around') >= 0) {
+                      isImageUpload = true;
+                      break;
+                    }
+                  }
+                }
+
+                var explicitUpload = false;
+                node = t;
+                for (var m = 0; m < 5 && node; m++) {
+                  if (isUploadLike(node)) {
+                    explicitUpload = true;
+                    break;
+                  }
+                  node = node.parentElement;
+                }
+
+                if (isReviewUpload || isProfileUpload || isImageUpload || explicitUpload) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  post();
+                  return;
+                }
+              } catch (err) {}
+            }, true);
+          })();
+        """
+
+      webView.evaluateJavaScript(script, completionHandler: nil)
+    }
+
+    private func handleFileUploadClick() {
+      let now = Date()
+      guard now.timeIntervalSince(lastFileUploadClickTime) > 1.0 else { return }
+      guard !isFilePickerShowing else { return }
+      lastFileUploadClickTime = now
+
+      guard let webView = self.webView else { return }
+      if webView.uiDelegate !== self { webView.uiDelegate = self }
+
+      let js = """
+          (function() {
+            var fileInput = document.querySelector('input[type="file"]:not([data-temp-upload])');
+            if (!fileInput) {
+              fileInput = document.createElement('input');
+              fileInput.type = 'file';
+              fileInput.accept = 'image/*';
+              fileInput.setAttribute('data-temp-upload', 'true');
+              fileInput.style.position = 'fixed';
+              fileInput.style.top = '-9999px';
+              fileInput.style.left = '-9999px';
+              fileInput.style.opacity = '0';
+              if (document.body) document.body.appendChild(fileInput);
+            }
+            setTimeout(function(){ try { fileInput.click(); } catch(e) {} }, 0);
+          })();
+        """
+      webView.evaluateJavaScript(js, completionHandler: nil)
     }
 
     func setupSwipeBackGesture(for webView: WKWebView) {
@@ -1029,11 +1241,15 @@ struct H5WebView: UIViewRepresentable {
         return true
       }
 
+      if parent.isLoading || !allowSwipeBack {
+        return false
+      }
+
       webView.evaluateJavaScript("history.length > 1 || window.history.state !== null") {
         [weak self] result, error in
         guard let self = self else { return }
 
-        if let error = error {
+        if error != nil {
           if webView.canGoBack {
             webView.goBack()
           } else {
@@ -1050,6 +1266,208 @@ struct H5WebView: UIViewRepresentable {
       }
 
       return false
+    }
+
+    // MARK: - PHPickerViewControllerDelegate
+    @available(iOS 14.0, *)
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+      picker.dismiss(animated: true)
+
+      guard !results.isEmpty else {
+        fileUploadCompletionHandler?(nil)
+        fileUploadCompletionHandler = nil
+        return
+      }
+
+      Task {
+        var urls: [URL] = []
+
+        for (index, result) in results.enumerated() {
+          if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
+            if let url = await loadImageFromItemProvider(result.itemProvider) {
+              urls.append(url)
+            } else {
+              print("❌ fail")
+            }
+          } else if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
+            if let url = await loadVideoFromItemProvider(result.itemProvider) {
+              urls.append(url)
+            } else {
+              print("❌ fail")
+            }
+          } else {
+            if let url = await loadImageFromItemProvider(result.itemProvider) {
+              urls.append(url)
+            } else {
+              print("❌ fail")
+            }
+          }
+        }
+
+        await MainActor.run {
+          let finalURLs: [URL]? = urls.isEmpty ? nil : urls
+          self.fileUploadCompletionHandler?(finalURLs)
+          self.fileUploadCompletionHandler = nil
+        }
+      }
+    }
+
+    // MARK: - UIImagePickerControllerDelegate
+    func imagePickerController(
+      _ picker: UIImagePickerController,
+      didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
+    ) {
+      picker.dismiss(animated: true)
+
+      var urls: [URL] = []
+
+      if let image = info[.originalImage] as? UIImage {
+        if let url = saveImageToTempFile(image) {
+          urls.append(url)
+        } else {
+          print("❌ fail")
+        }
+      } else if let videoURL = info[.mediaURL] as? URL {
+        if let tempURL = copyVideoToTempFile(videoURL) {
+          urls.append(tempURL)
+        } else {
+          print("❌ fail")
+        }
+      } else {
+        print("⚠️ fail")
+      }
+
+      let finalURLs: [URL]? = urls.isEmpty ? nil : urls
+      fileUploadCompletionHandler?(finalURLs)
+      fileUploadCompletionHandler = nil
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+      picker.dismiss(animated: true)
+      fileUploadCompletionHandler?(nil)
+      fileUploadCompletionHandler = nil
+    }
+
+    // MARK: - Helper Methods
+    @available(iOS 14.0, *)
+    private func loadImageFromItemProvider(_ itemProvider: NSItemProvider) async -> URL? {
+      return await withCheckedContinuation { continuation in
+        itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) {
+          url, error in
+          if let error = error {
+            continuation.resume(returning: nil)
+            return
+          }
+
+          guard let url = url else {
+            continuation.resume(returning: nil)
+            return
+          }
+
+          let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(
+            UUID().uuidString + ".jpg"
+          )
+
+          do {
+            try FileManager.default.copyItem(at: url, to: tempURL)
+            if let attributes = try? FileManager.default.attributesOfItem(atPath: tempURL.path) {
+              print("📸 文件大小: \(attributes[.size] ?? "unknown") bytes")
+            }
+            continuation.resume(returning: tempURL)
+          } catch {
+            continuation.resume(returning: nil)
+          }
+        }
+      }
+    }
+
+    @available(iOS 14.0, *)
+    private func loadVideoFromItemProvider(_ gbLGjA7mUirTNdwr: NSItemProvider) async -> URL? {
+      return await withCheckedContinuation { continuation in
+        gbLGjA7mUirTNdwr.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) {
+          url, error in
+          if let error = error {
+            continuation.resume(returning: nil)
+            return
+          }
+
+          guard let url = url else {
+            continuation.resume(returning: nil)
+            return
+          }
+
+          let QnkdMK0uPYJVheNs = FileManager.default.temporaryDirectory.appendingPathComponent(
+            UUID().uuidString + ".mp4"
+          )
+
+          do {
+            try FileManager.default.copyItem(at: url, to: QnkdMK0uPYJVheNs)
+            continuation.resume(returning: QnkdMK0uPYJVheNs)
+          } catch {
+            continuation.resume(returning: nil)
+          }
+        }
+      }
+    }
+
+    private func saveImageToTempFile(_ image: UIImage) -> URL? {
+      guard let vxRZgKUXg9yzRxYd = image.jpegData(compressionQuality: 0.8) else {
+        return nil
+      }
+
+      let QnkdMK0uPYJVheNs = FileManager.default.temporaryDirectory.appendingPathComponent(
+        UUID().uuidString + ".jpg"
+      )
+
+      do {
+        try vxRZgKUXg9yzRxYd.write(to: QnkdMK0uPYJVheNs)
+        if let attributes = try? FileManager.default.attributesOfItem(atPath: QnkdMK0uPYJVheNs.path)
+        {
+          print("📸 daxiao: \(attributes[.size] ?? "unknown") bytes")
+        }
+        return QnkdMK0uPYJVheNs
+      } catch {
+        return nil
+      }
+    }
+
+    private func copyVideoToTempFile(_ itehWwRleCwnf8sk: URL) -> URL? {
+      let t7lXVb4Yt33rfZJJS = FileManager.default.temporaryDirectory.appendingPathComponent(
+        UUID().uuidString + ".mp4"
+      )
+
+      do {
+        try FileManager.default.copyItem(at: itehWwRleCwnf8sk, to: t7lXVb4Yt33rfZJJS)
+        return t7lXVb4Yt33rfZJJS
+      } catch {
+        return nil
+      }
+    }
+
+    private func getTopViewController() -> UIViewController? {
+      guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+        return nil
+      }
+
+      guard let window = windowScene.windows.first else {
+        return nil
+      }
+
+      guard let rootViewController = window.rootViewController else {
+        return nil
+      }
+
+      var topViewController = rootViewController
+      while let presentedViewController = topViewController.presentedViewController {
+        topViewController = presentedViewController
+      }
+
+      if let navigationController = topViewController as? UINavigationController {
+        let topVC = navigationController.topViewController
+        return topVC
+      }
+
+      return topViewController
     }
 
   }
